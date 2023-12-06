@@ -12,6 +12,8 @@
                                                     Mantis : 26871
  * Rev 6.0      Sanchita      V2.0.40   19-10-2023  Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
                                                     Mantis : 26924
+ * Rev 7.0      Priti         V2.0.41   06-12-2023  Please allow Duplicate Product in Proforma Invoice/Quotation Entry
+                                                    Mantis: 0027046
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -4122,6 +4124,9 @@ namespace ERP.OMS.Management.Activities
                                     string ProductID = Convert.ToString(dr["ProductID"]);
                                     decimal ProductQuantity = Convert.ToDecimal(dr["Quantity"]);
                                     string Status = Convert.ToString(dr["Status"]);
+                                    //Rev 7.0
+                                    string QuoteDetails_Id = Convert.ToString(dr["QuoteDetails_Id"]);
+                                    //Rev 7.0 End
                                     //QuoteOrderDetails_id = Convert.ToString(Session["QuoteOrderDetails_id"]);
                                     //Int64 i = 0;
                                     //for ( i =(Convert.ToInt64(dr["SrlNo"])-1); i <Convert.ToInt64(dr["SrlNo"]); i++)
@@ -4130,8 +4135,10 @@ namespace ERP.OMS.Management.Activities
                                     //}
                                     if (rdl_Salesquotation.SelectedValue == "QN")
                                     {
-                                        DataTable dtq = oDBEngine.GetDataTable("select isnull(BalanceQty,0) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and  ProductId='" + ProductID + "'");
-
+                                        //Rev 7.0
+                                        //DataTable dtq = oDBEngine.GetDataTable("select isnull(BalanceQty,0) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and  ProductId='" + ProductID + "'");
+                                        DataTable dtq = oDBEngine.GetDataTable("select isnull(BalanceQty,0) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and  ProductId='" + ProductID + "' and Details_id ='"+ Convert.ToInt32(QuoteDetails_Id) + "'");
+                                        //Rev 7.0 End
                                         if (ProductID != "" && dtq.Rows.Count > 0)
                                         {
                                             if (ProductQuantity > Convert.ToDecimal(dtq.Rows[0]["TotQty"]))
@@ -4174,11 +4181,15 @@ namespace ERP.OMS.Management.Activities
                                 string ProductID = Convert.ToString(dr["ProductID"]);
                                 decimal ProductQuantity = Convert.ToDecimal(dr["Quantity"]);
                                 string Status = Convert.ToString(dr["Status"]);
-
+                                //Rev 7.0
+                                string QuoteDetails_Id = Convert.ToString(dr["QuoteDetails_Id"]);
+                                //Rev 7.0 End
                                 if (rdl_Salesquotation.SelectedValue == "QN")
                                 {
-                                    DataTable dtq = oDBEngine.GetDataTable("select (ISNULL(TotalQty,0)+isnull(BalanceQty,0)) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and ProductId='" + ProductID + "'");
-
+                                    //Rev 7.0
+                                    //DataTable dtq = oDBEngine.GetDataTable("select (ISNULL(TotalQty,0)+isnull(BalanceQty,0)) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and ProductId='" + ProductID + "'");
+                                    DataTable dtq = oDBEngine.GetDataTable("select (ISNULL(TotalQty,0)+isnull(BalanceQty,0)) TotQty from tbl_trans_SalesBalanceMap where  SalesDocId='" + Convert.ToInt32(dr["Quotation_No"]) + "' and ProductId='" + ProductID + "' and Details_id ='"+ Convert.ToInt32(QuoteDetails_Id) + "'");
+                                    //Rev 7.0 End
                                     if (ProductID != "" && dtq.Rows.Count > 0)
                                     {
                                         if (ProductQuantity > Convert.ToDecimal(dtq.Rows[0]["TotQty"]))
