@@ -5,6 +5,8 @@
 // 4.0  Sanchita    V2.0.40    04-10-2023    0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
 //                                                     New button "Other Condiion" to show instead of "Terms & Condition" Button 
 //                                                     if the settings "Show Other Condition" is set as "Yes"
+//5.0   Priti       V2.0.41    07-12-2023	 0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
+
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -725,7 +727,7 @@ namespace ERP.OMS.Management.Activities
                     //End Rev Rajdip
                     if (Convert.ToString(Request.QueryString["key"]) != "ADD")
                     {
-                       // spnBillDespatch.Style.Add("display", "none;");
+                        // spnBillDespatch.Style.Add("display", "none;");
                         chkSendMail.Visible = false;
                         chkSendMail.Checked = false;
                         lblHeadTitle.Text = "Modify Sales Invoice Cum Challan";
@@ -1508,7 +1510,7 @@ namespace ERP.OMS.Management.Activities
                 //Rev 2.0
                 if (hdnBillDepatchsetting.Value == "1")
                 {
-                   
+
                     LoadBilldespatchAddressEditMode(BillDEspatchTbl);
                 }
                 //Rev 2.0 End
@@ -11671,7 +11673,10 @@ namespace ERP.OMS.Management.Activities
 
                 try
                 {
-                    IRN objIRN = new IRN();
+                    //Rev 5.0
+                    IRNV3 objIRN = new IRNV3();
+                    //IRN objIRN = new IRN();
+                    //Rev 5.0 End
                     using (var client = new HttpClient())
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -11686,40 +11691,61 @@ namespace ERP.OMS.Management.Activities
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        //REV 5.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "vay");
+                        //REV 5.0 END
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            //REV 5.0
+                            //objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            objIRN = JsonConvert.DeserializeObject<IRNV3>(jsonString);
+                            
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
+                            //    IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
 
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //    DBEngine objDb = new DBEngine();
+                            //    objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where invoice_id='" + id.ToString() + "'");
+                            //    grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                            //}
+
+                            if (Convert.ToString(objIRN.data.Irn) != "")
                             {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
-                                IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
-
-                                DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where invoice_id='" + id.ToString() + "'");
+                                 DBEngine objDb = new DBEngine();
+                                objDb.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + objIRN.data.AckNo + "',AckDt='" + objIRN.data.AckDt + "',Irn='" + objIRN.data.Irn + "',SignedInvoice='" + objIRN.data.SignedInvoice + "',SignedQRCode='" + objIRN.data.SignedQRCode + "',Status='" + objIRN.data.Status + "' where invoice_id='" + id.ToString() + "'");
                                 grid.JSProperties["cpSucessIRN"] = "Yes";
-                                grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                                grid.JSProperties["cpSucessIRNNumber"] = objIRN.data.Irn;
                             }
+                            //REV 5.0 END
                         }
                         else
                         {
-                            EinvoiceError err = new EinvoiceError();
+                            //REV 5.0 
+                            EinvoiceErrorV3 err = new EinvoiceErrorV3();
+                            // EinvoiceError err = new EinvoiceError();
+                            //REV 5.0 END
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-
-
+                            //REV 5.0 
+                            //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            err = JsonConvert.DeserializeObject<EinvoiceErrorV3>(jsonString);
+                            //REV 5.0 END
                             DBEngine objDB = new DBEngine();
                             objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI'");
                             if (err.error.type != "ClientRequest")
                             {
-                                foreach (errorlog item in err.error.args.irp_error.details)
+                                //REV 5.0 
+                                //foreach (errorlog item in err.error.args.irp_error.details)
+                                foreach (errorlog item in err.error.args.details)
                                 {
+                                //REV 5.0 END
                                     objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','IRN_GEN','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
                                 }
                             }
@@ -12664,15 +12690,15 @@ namespace ERP.OMS.Management.Activities
             BillDespatch.Rows.Add(BillDespatchDtls);
             dtBill = BillDespatch;
 
-            DataSet dsInst = new DataSet();           
+            DataSet dsInst = new DataSet();
             SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
-            SqlCommand cmd = new SqlCommand("prc_InvoiceDeliveryChallan_AddEditNew", con);            
+            SqlCommand cmd = new SqlCommand("prc_InvoiceDeliveryChallan_AddEditNew", con);
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@Action", "updateBillDespatch");            
+            cmd.Parameters.AddWithValue("@Action", "updateBillDespatch");
             cmd.Parameters.AddWithValue("@BillDespatchDetails", BillDespatch);
             cmd.Parameters.AddWithValue("@SalesInvoice_Id", SalesInvoice_Id);
-            cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);      
-            cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;         
+            cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
+            cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
             cmd.CommandTimeout = 0;
             SqlDataAdapter Adap = new SqlDataAdapter();
             Adap.SelectCommand = cmd;
