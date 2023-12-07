@@ -2,6 +2,8 @@
  * Rev 1.0   Sanchita   V2.0.39     22-09-2023      GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
  *                                                  Mantis: 26843
  *                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataRETM"]
+ *2.0        Priti      V2.0.41     07-12-2023	 0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
+                                                  
  * *****************************************************************************************/
 using System;
 using System.Configuration;
@@ -3111,7 +3113,10 @@ namespace ERP.OMS.Management.Activities
 
                 try
                 {
-                    IRN objIRN = new IRN();
+                    //REV 2.0
+                    //IRN objIRN = new IRN();
+                    IRNV3 objIRN = new IRNV3();
+                    //REV 2.0 END
                     using (var client = new HttpClient())
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -3126,39 +3131,73 @@ namespace ERP.OMS.Management.Activities
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        //REV 2.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-IRP-GSP-CODE", "vay");
+                        //REV 2.0 END
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         if (response.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            //REV 2.0 
+                            //objIRN = response.Content.ReadAsAsync<IRN>().Result;
+                            objIRN = JsonConvert.DeserializeObject<IRNV3>(jsonString);
+                            
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
+                            //    IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
 
-                            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //    DBEngine objDb = new DBEngine();
+                            //    objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where return_id='" + id.ToString() + "'");
+                            //    grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                            //}
+                            if (Convert.ToString(objIRN.data.Irn) != "")
                             {
-                                // Deserialization from JSON  
-                                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
-                                IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
-
                                 DBEngine objDb = new DBEngine();
-                                objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where return_id='" + id.ToString() + "'");
+                                objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET AckNo='" + objIRN.data.AckNo + "',AckDt='" + objIRN.data.AckDt + "',Irn='" + objIRN.data.Irn + "',SignedInvoice='" + objIRN.data.SignedInvoice + "',SignedQRCode='" + objIRN.data.SignedQRCode + "',Status='" + objIRN.data.Status + "' where return_id='" + id.ToString() + "'");
                                 grid.JSProperties["cpSucessIRN"] = "Yes";
-                                grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                                grid.JSProperties["cpSucessIRNNumber"] = objIRN.data.Irn;
                             }
+
+                            //REV 2.0 END
+
+
+                            //using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(objIRN.data)))
+                            //{
+                            //    // Deserialization from JSON  
+                            //    DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(IRNDetails));
+                            //    IRNDetails objIRNDetails = (IRNDetails)deserializer.ReadObject(ms);
+
+                            //    DBEngine objDb = new DBEngine();
+                            //    objDb.GetDataTable("update TBL_TRANS_SALESRETURN SET AckNo='" + objIRNDetails.AckNo + "',AckDt='" + objIRNDetails.AckDt + "',Irn='" + objIRNDetails.Irn + "',SignedInvoice='" + objIRNDetails.SignedInvoice + "',SignedQRCode='" + objIRNDetails.SignedQRCode + "',Status='" + objIRNDetails.Status + "' where return_id='" + id.ToString() + "'");
+                            //    grid.JSProperties["cpSucessIRN"] = "Yes";
+                            //    grid.JSProperties["cpSucessIRNNumber"] = objIRNDetails.Irn;
+                            //}
                         }
                         else
                         {
-                            EinvoiceError err = new EinvoiceError();
+                            //Rev 2.0 
+                           // EinvoiceError err = new EinvoiceError();                            
+                            EinvoiceErrorV3 err = new EinvoiceErrorV3();
+                            //Rev 2.0  END
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             // var data = JsonConvert.DeserializeObject<authtokensOutput>(response.Content.ReadAsStringAsync().Result);
-                            err = response.Content.ReadAsAsync<EinvoiceError>().Result;
-
-
+                            //Rev 2.0  
+                            //err = response.Content.ReadAsAsync<EinvoiceError>().Result;
+                            err = JsonConvert.DeserializeObject<EinvoiceErrorV3>(jsonString);
+                            //Rev 2.0  END
                             DBEngine objDB = new DBEngine();
                             objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SR'");
                             if (err.error.type != "ClientRequest")
                             {
-                                foreach (errorlog item in err.error.args.irp_error.details)
+                                //Rev 2.0  
+                                //foreach (errorlog item in err.error.args.irp_error.details)                                
+                                foreach (errorlog item in err.error.args.details)
+                                //Rev 2.0  END
                                 {
                                     objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SR','IRN_GEN','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
                                 }
