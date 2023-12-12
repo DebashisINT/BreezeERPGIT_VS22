@@ -2,6 +2,8 @@
 //     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
 //     2.0  Priti V2.0.38    07-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
 //     3.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+//     4.0  Priti V2.0.41    11-12-2023  0027086: System is allowing to edit tagged documents in Manufacturing module
+
 //====================================================End Revision History=====================================================================*@
 using Manufacturing.Models.ViewModel.BOMEntryModel;
 using System;
@@ -114,6 +116,12 @@ namespace Manufacturing.Models.ViewModel
         //Rev 3.0
         public Decimal BalQty { get; set; }
         //Rev 3.0 End
+        //Rev 4.0
+        public String QC_No { get; set; }
+        public String StockReceiptNo { get; set; }
+        public String ProductionReceiptNo { get; set; }
+        //Rev 4.0 End
+
     }
 
     public class udtProductionIssueDetails
