@@ -4,6 +4,7 @@
 //     3.0  Priti V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
 //     4.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
 //     5.0  Priti V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
+//     6.0  Priti V2.0.41    11-12-2023  0027086: System is allowing to edit tagged documents in Manufacturing module
 //====================================================End Revision History=====================================================================*@
 
 using BusinessLogicLayer;
@@ -190,6 +191,16 @@ namespace Manufacturing.Controllers
                                 obj.MRPDate = Convert.ToString(row["MRPDate"]);
                                 ViewBag.MRP_ID = Convert.ToString(row["MRP_ID"]);
                                 ViewBag.Unit = Convert.ToString(row["BRANCH_ID"]);
+
+                                //Rev 6.0
+                                obj.QC_No = Convert.ToString(row["QC_No"]);
+                                obj.StockReceiptNo = Convert.ToString(row["StockReceiptNo"]);
+                                obj.ProductionReceiptNo = Convert.ToString(row["ProductionReceiptNo"]);
+
+                                ViewBag.QC_No = Convert.ToString(row["QC_No"]);
+                                ViewBag.StockReceiptNo = Convert.ToString(row["StockReceiptNo"]);
+                                ViewBag.ProductionReceiptNo = Convert.ToString(row["ProductionReceiptNo"]);
+                                //Rev 6.0 End
                             }
                         }
                     }
@@ -216,6 +227,21 @@ namespace Manufacturing.Controllers
             {
                 ViewBag.IsView = 0;
             }
+            //Rev 6.0
+            if (ViewBag.QC_No!="")
+            {
+                ViewBag.IsView = 1;
+            }
+            if (ViewBag.StockReceiptNo != "")
+            {
+                ViewBag.IsView = 1;
+            }
+
+            if (ViewBag.ProductionReceiptNo != "")
+            {
+                ViewBag.IsView = 1;
+            }
+            //Rev 6.0 End
             ViewBag.LastCompany = Convert.ToString(Session["LastCompany"]);
             ViewBag.LastFinancialYear = Convert.ToString(Session["LastFinYear"]);
             ViewBag.ProjectShow = ProjectSelectInEntryModule;
