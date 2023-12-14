@@ -1,6 +1,11 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History =========================================================================
+// 1.0  Priti  V2.0.41    14-12-2023  0027086:System is allowing to edit tagged documents in Manufacturing module
+//====================================================End Revision History=====================================================================
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
+using DevExpress.XtraExport;
 using EntityLayer.CommonELS;
 using Manufacturing.Models;
 using Manufacturing.Models.ViewModel;
@@ -103,7 +108,28 @@ namespace Manufacturing.Controllers
                     DataTable objData;
                     if (objQVC.QualityControlID > 0)
                     {
-                        if(ReceiptFromProductionSkipped=="No")
+                        //Rev 1.0
+                        DataTable objTagg = objQC.GetQCData("QCTaggedOrNot", objQVC.QualityControlID,0);
+                        if (objTagg != null && objTagg.Rows.Count > 0)
+                        {
+                            foreach (DataRow item in objTagg.Rows)
+                            {                                
+                                int IsExist = Convert.ToInt16(item["Exist"]);
+                                if (IsExist > 0)
+                                {
+                                    ViewBag.IsTagg = "Yes";
+                                    
+                                }
+                                else
+                                {
+                                    ViewBag.IsTagg = "No";
+                                    
+                                }
+
+                            }
+                        }
+                        //Rev 1.0 End
+                        if (ReceiptFromProductionSkipped=="No")
                         {
                              objData = objQC.GetQCData("GetQualityControlData", objQVC.QualityControlID, 0);
                         }
@@ -205,6 +231,13 @@ namespace Manufacturing.Controllers
             {
                 ViewBag.IsView = 0;
             }
+            //Rev 1.0 
+            if (ViewBag.IsTagg == "Yes")
+            {
+                ViewBag.IsView = 1;
+            }
+            //Rev 1.0 End
+
             TempData["Count"] = 1;
             TempData.Keep();
             ViewBag.ProjectShow = ProjectSelectInEntryModule;
