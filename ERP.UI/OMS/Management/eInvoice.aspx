@@ -4462,7 +4462,7 @@
                                                                 <Settings AutoFilterCondition="Contains" />
                                                             </dxe:GridViewDataTextColumn>--%>
 
-                                                            <dxe:GridViewDataTextColumn Caption="Challan No" FieldName="ChallanNo"
+                                                           <%-- <dxe:GridViewDataTextColumn Caption="Challan No" FieldName="ChallanNo"
                                                                 VisibleIndex="10" Width="180">
                                                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                                                 </CellStyle>
@@ -4476,9 +4476,9 @@
                                                                 </CellStyle>
                                                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                                                 <Settings AutoFilterCondition="Contains" />
-                                                            </dxe:GridViewDataTextColumn>
+                                                            </dxe:GridViewDataTextColumn>--%>
 
-                                                            <dxe:GridViewDataTextColumn Caption="SRN?" FieldName="isSRN"
+                                                           <%-- <dxe:GridViewDataTextColumn Caption="SRN?" FieldName="isSRN"
                                                                 VisibleIndex="12" Width="50">
                                                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                                                 </CellStyle>
@@ -4524,7 +4524,7 @@
                                                                 </CellStyle>
                                                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                                                 <Settings AutoFilterCondition="Contains" />
-                                                            </dxe:GridViewDataTextColumn>
+                                                            </dxe:GridViewDataTextColumn>--%>
 
 
                                                             <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="EnteredBy"

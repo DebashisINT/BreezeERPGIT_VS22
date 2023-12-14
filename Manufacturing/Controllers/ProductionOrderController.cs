@@ -1,6 +1,7 @@
 ﻿//==================================================== Revision History =========================================================================
 // 1.0  Priti  V2.0.38    19-06-2023  0026367:In Production Order Qty:  1.A New field required in Production Order Module called 'BOMProductionQty'
 // 2.0  Priti  V2.0.39    29-06-2023  0026384:Show valuation rate feature is required in Production Order module
+// 3.0  Priti  V2.0.41    14-12-2023  0027086:System is allowing to edit tagged documents in Manufacturing module
 //====================================================End Revision History=====================================================================
 
 using BusinessLogicLayer;
@@ -103,8 +104,10 @@ namespace Manufacturing.Controllers
                         {                            
                             foreach (DataRow item in objTagg.Rows)
                             {
-                                int Count= Convert.ToInt16(item["Exist"]);
-                                if(Count>0)
+                                //int Count= Convert.ToInt16(item["Exist"]);
+                                int IsExist = Convert.ToInt16(item["Exist"]);
+                                //if (Count>0)
+                                if (IsExist > 0)  
                                 {
                                     ViewBag.IsTagg = "Yes"; 
                                 }

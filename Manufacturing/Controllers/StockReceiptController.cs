@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//==================================================== Revision History =========================================================================
+// 1.0  Priti  V2.0.41    14-12-2023  0027086:System is allowing to edit tagged documents in Manufacturing module
+//====================================================End Revision History=====================================================================
+
+using BusinessLogicLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
@@ -115,6 +119,28 @@ namespace Manufacturing.Controllers
                     DataTable objData;
                     if (objSR.StockReceiptID > 0)
                     {
+                        //Rev 1.0
+                        DataTable objTagg = objSRM.GetStockReceiptData("SRTaggedOrNot", objSR.StockReceiptID, 0);
+                        if (objTagg != null && objTagg.Rows.Count > 0)
+                        {
+                            foreach (DataRow item in objTagg.Rows)
+                            {
+                                int IsExist = Convert.ToInt16(item["Exist"]);
+                                if (IsExist > 0)
+                                {
+                                    ViewBag.IsTagg = "Yes";
+
+                                }
+                                else
+                                {
+                                    ViewBag.IsTagg = "No";
+
+                                }
+
+                            }
+                        }
+                        //Rev 1.0 End
+
                         if (objSR.Doctype == "BOM")
                         {
                             objData = objSRM.GetStockReceiptData("GetStockReceiptDataFromInvoice", objSR.StockReceiptID, 0);
@@ -285,6 +311,13 @@ namespace Manufacturing.Controllers
             {
                 ViewBag.IsView = 0;
             }
+
+            //Rev 1.0 
+            if (ViewBag.IsTagg == "Yes")
+            {
+                ViewBag.IsView = 1;
+            }
+            //Rev 1.0 End
             TempData["Count"] = 1;
             TempData.Keep();
 
