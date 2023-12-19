@@ -10308,7 +10308,16 @@ namespace ERP.OMS.Management
                                 //foreach (errorlog item in err.error.args.irp_error.details)
                                 //REV 5.0 END
                                 {
-                                    objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_UPDATETR','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+                                    if(item.ErrorMessage!=null)
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_UPDATETR','" + item.ErrorCode + "','" + item.ErrorMessage.Replace("'", "''") + "')");
+
+                                    }
+                                    else
+                                    {
+                                        objDB.GetDataTable("INSERT INTO EInvoice_ErrorLog(DOC_ID,DOC_TYPE,ERROR_TYPE,ERROR_CODE,ERROR_MSG) VALUES ('" + id.ToString() + "','SI','EWAYBILL_UPDATETR','" + item.ErrorCode + "','" + item.ErrorMessage + "')");
+
+                                    }
                                 }
                             }
                             else
