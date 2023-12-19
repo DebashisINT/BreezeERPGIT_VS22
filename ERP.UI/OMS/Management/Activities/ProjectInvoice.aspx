@@ -2,6 +2,8 @@
 Rev Number         DATE              VERSION          DEVELOPER          CHANGES
 1.0                04-09-2023        V2.0.39           Priti              25216: Db_Cr mismatch in Project Purchase & Sales Invoice
 2.0                28-09-2023        V2.0.41           Sanchita           Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+3.0                19-12-2023        V2.0.41           Priti              0027109:Project Sales Invoice Round off value not taking properly in the Net Amount calculation
+
 ====================================================== Revision History =============================================--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoice" %>
 
@@ -4147,11 +4149,20 @@ function Save_TaxesClick() {
     document.getElementById('HdChargeProdAmt').value = sumAmount;
     document.getElementById('HdChargeProdNetAmt').value = sumNetAmount;
     //End Here
+    //Rev 3.0
+    //ctxtProductAmount.SetValue(Math.round(sumAmount).toFixed(2));
+    //ctxtProductTaxAmount.SetValue(Math.round(sumTaxAmount).toFixed(2));
+    //ctxtProductDiscount.SetValue(Math.round(sumDiscount).toFixed(2));
+    //ctxtProductNetAmount.SetValue(Math.round(sumNetAmount).toFixed(2));
 
-    ctxtProductAmount.SetValue(Math.round(sumAmount).toFixed(2));
-    ctxtProductTaxAmount.SetValue(Math.round(sumTaxAmount).toFixed(2));
-    ctxtProductDiscount.SetValue(Math.round(sumDiscount).toFixed(2));
-    ctxtProductNetAmount.SetValue(Math.round(sumNetAmount).toFixed(2));
+
+    ctxtProductAmount.SetValue(sumAmount);
+    ctxtProductTaxAmount.SetValue(sumTaxAmount);
+    ctxtProductDiscount.SetValue(sumDiscount);
+    ctxtProductNetAmount.SetValue(sumNetAmount);
+    //Rev 3.0 End
+
+
     clblChargesTaxableGross.SetText("");
     clblChargesTaxableNet.SetText("");
 
