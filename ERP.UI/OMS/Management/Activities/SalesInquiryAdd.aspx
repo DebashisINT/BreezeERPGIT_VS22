@@ -1784,7 +1784,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     </dxe:GridViewCommandColumn>
 
                                                       <%--  Manis 24428--%> 
-                                                     <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="8" Width="5%" ReadOnly="true">
+                                                     <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="Order_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="8" Width="8%" ReadOnly="true">
                                                         <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
                                                             <ClientSideEvents GotFocus="QuantityGotFocus" LostFocus="QuantityTextChange" />
                                                             <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
@@ -1892,7 +1892,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="ProjectRemarks" Width="150" PropertiesTextEdit-MaxLength="5000" VisibleIndex="18">
+                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="ProjectRemarks" Width="10%" PropertiesTextEdit-MaxLength="5000" VisibleIndex="18">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Left">
                                                             <Style HorizontalAlign="Left">
                                                             </Style>

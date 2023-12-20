@@ -1084,6 +1084,11 @@ $(document).ready(function () {
                 line-height: 13px !important;
             }
             /*Rev end 5.0*/
+
+            #ddl_Branch.aspNetDisabled
+            {
+               background: #f3f3f3 !important;
+            }
         </style>
     <%--Rev end 3.0--%>
 </asp:Content>
