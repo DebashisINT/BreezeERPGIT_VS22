@@ -955,6 +955,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             max-width: 100% !important;
         }*/
         /*Rev end 1.0*/
+
+        #popupSODetails_PW-1, #popupPODetails_PW-1
+        {
+            position: fixed !important;
+            left: 30px !important;
+            top: 12px !important;
+        }
     </style>
     <script type="text/javascript">
         $(document).ready(function () {

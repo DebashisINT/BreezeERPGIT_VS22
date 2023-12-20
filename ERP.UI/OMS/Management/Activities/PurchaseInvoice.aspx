@@ -1459,6 +1459,12 @@ function DateCheck() {
             left: 40%;
         }
 
+        #Popup_NoofCopies_PW-1
+        {
+            position: fixed !important;
+            top: 25% !important;
+        }
+
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
