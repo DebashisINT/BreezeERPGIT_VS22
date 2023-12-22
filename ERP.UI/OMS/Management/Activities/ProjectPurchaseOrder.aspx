@@ -1,7 +1,7 @@
 ﻿<%-- ***********************************************************************************************************************************
     Rev 1.0     Sanchita     08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in  Project Purchase Order. refer: 25713
     Rev 2.0     Priti        05-10-2023      V2.0.40     Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
-                                                   
+    Rev 3.0     Sanchita     21-12-2023      V2.0.42     Duplicate Product can't be deleted from the Project Modules. Mantis:                                                
 ****************************************************************************************************************************************** --%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrder" %>
@@ -3238,8 +3238,10 @@ function OnCustomButtonClick(s, e) {
         grid.batchEditApi.StartEdit(globalRowIndex);
         var Bal_Qty=grid.GetEditor('BalQty').GetValue();      
            
-                   
-        if(parseFloat(Bal_Qty)>0)
+        // Rev 3.0
+        //if(parseFloat(Bal_Qty)>0)
+        if (parseFloat(Bal_Qty) == 0)
+        // End of Rev 3.0
         {
             jAlert('Product tagged can not delete.','Alert',function(){
                  

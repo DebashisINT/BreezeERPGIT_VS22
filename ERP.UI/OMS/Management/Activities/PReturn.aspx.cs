@@ -3041,10 +3041,12 @@ namespace ERP.OMS.Management.Activities
                             string sCode = Purchase_BillingShipping.GeteShippingStateCode();
                             //Rev 2.0 End
                             ShippingStateForException = sCode;
-                            if (ShippingStateForException.Trim() != "")
-                            {
-                                ShippingStateForException = ShippingStateForException.Substring(ShippingStateForException.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
-                            }
+                            // Rev 2.0 [Re-work Sanchita - now sCode is comming as only code.]
+                            //if (ShippingStateForException.Trim() != "")
+                            //{
+                            //    ShippingStateForException = ShippingStateForException.Substring(ShippingStateForException.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                            //}
+                            // End of Rev 2.0 [Re-work Sanchita]
                             string incluexclutype = "";
                             string incluexcluitype = Convert.ToString(ddl_AmountAre.Value);
                             if (incluexcluitype == "1")
@@ -4020,10 +4022,12 @@ namespace ERP.OMS.Management.Activities
                     string sstateCode = Purchase_BillingShipping.GeteShippingStateCode();
                     //Rev 2.0 End
                     ShippingState = sstateCode;
-                    if (ShippingState.Trim() != "")
-                    {
-                        ShippingState = ShippingState.Substring(ShippingState.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
-                    }
+                    // Rev 2.0 [Re-work Sanchita - now sCode is comming as only code.]
+                    //if (ShippingState.Trim() != "")
+                    //{
+                    //    ShippingState = ShippingState.Substring(ShippingState.IndexOf("(State Code:")).Replace("(State Code:", "").Replace(")", "");
+                    //}
+                    // End of Rev 2.0 [Re-work Sanchita]
                     #region ##### Old Code -- BillingShipping ######
                     ////if (chkBilling.Checked)
                     ////{

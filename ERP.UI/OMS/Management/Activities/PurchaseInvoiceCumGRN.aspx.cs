@@ -8687,14 +8687,17 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
                 for (int i = 0; i < MultiUOMData.Rows.Count; i++)
                 {
                     DataRow dr = MultiUOMData.Rows[i];
-                    if (lookup_quotation.Value != null)
-                    {
-                        UomDetailsid = Convert.ToString(dr["DetailsId"]);
-                    }
-                    else
-                    {
-                        UomDetailsid = Convert.ToString(dr["SrlNo"]);
-                    }
+                    // Rev Sanchita2112
+                    //if (lookup_quotation.Value != null)
+                    //{
+                    //    UomDetailsid = Convert.ToString(dr["DetailsId"]);
+                    //}
+                    //else
+                    //{
+                    //    UomDetailsid = Convert.ToString(dr["SrlNo"]);
+                    //}
+                    UomDetailsid = Convert.ToString(dr["SrlNo"]);
+                    // End of Rev Sanchita2112
 
                     if (Val == UomDetailsid)
                     {

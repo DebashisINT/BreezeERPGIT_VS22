@@ -2,6 +2,7 @@
 Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
                                                      Mantis : 26806
 Rev 2.0     Sanchita    V2.0.41     28-11-2023       Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+Rev 3.0     Sanchita    V2.0.42     22-12-2023       After generation of IRN Project Sales Invoice currently allowing to EDIT. Mantis: 27111        
  **********************************************************************************************************************--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="ProjectInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectInvoiceList" EnableEventValidation="false" %>
 
@@ -765,23 +766,85 @@ else {
             window.location.href = url;
         }
 
+        // Rev 3.0 (parameter TransDate added)
+        function OnMoreInfoClick(keyValue, TransDate) {
+            // Rev 3.0
+            var ActiveEInvoice = $('#hdnActiveEInvoice').val();
+            if (ActiveEInvoice == "1") {
+                var dateParts = TransDate.split("-");
+                if ((new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= (new Date("01-01-2021"))) {
 
-        function OnMoreInfoClick(keyValue) {
-            var ActiveUser = '<%=Session["userid"]%>'
-            if (ActiveUser != null) {
-                $.ajax({
-                    type: "POST",
-                    url: "ProjectInvoiceList.aspx/GetEditablePermission",
-                    data: "{'ActiveUser':'" + ActiveUser + "'}",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (msg) {
-                        var status = msg.d;
-                        var url = 'ProjectInvoice.aspx?key=' + keyValue + '&Permission=' + status + '&type=SI';
-                        window.location.href = url;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ProjectInvoiceList.aspx/GetEditablePermissionFromEInvoice",
+                        data: "{'ProjectInvoiceID':'" + keyValue + "','Action':'Edit'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            var status = msg.d;
+                            if (status == "Yes") {
+                                var ActiveUser = '<%=Session["userid"]%>'
+                                if (ActiveUser != null) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "ProjectInvoiceList.aspx/GetEditablePermission",
+                                        data: "{'ActiveUser':'" + ActiveUser + "'}",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (msg) {
+                                            var status = msg.d;
+                                            var url = 'ProjectInvoice.aspx?key=' + keyValue + '&Permission=' + status + '&type=SI';
+                                            window.location.href = url;
+                                        }
+                                    });
+                                }
+                            }
+                            else {
+                                jAlert("IRN generated can not edit.");
+                            }
+                        }
+                    });
+                }
+                else {
+                    var ActiveUser = '<%=Session["userid"]%>'
+                    if (ActiveUser != null) {
+                        $.ajax({
+                            type: "POST",
+                            url: "ProjectInvoiceList.aspx/GetEditablePermission",
+                            data: "{'ActiveUser':'" + ActiveUser + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                var status = msg.d;
+                                var url = 'ProjectInvoice.aspx?key=' + keyValue + '&Permission=' + status + '&type=SI';
+                                window.location.href = url;
+                            }
+                        });
                     }
-                });
+                }
+
             }
+            else {
+                // End of Rev 3.0
+                var ActiveUser = '<%=Session["userid"]%>'
+                if (ActiveUser != null) {
+                    $.ajax({
+                        type: "POST",
+                        url: "ProjectInvoiceList.aspx/GetEditablePermission",
+                        data: "{'ActiveUser':'" + ActiveUser + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            var status = msg.d;
+                            var url = 'ProjectInvoice.aspx?key=' + keyValue + '&Permission=' + status + '&type=SI';
+                            window.location.href = url;
+                        }
+                    });
+                }
+            // Rev 3.0
+            }
+            // End of Rev 3.0
         }
 
         ////##### coded by Samrat Roy - 04/05/2017  
@@ -798,12 +861,54 @@ else {
 
         }
 
-        function OnClickDelete(keyValue) {
-            jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
-                if (r == true) {
-                    cGrdQuotation.PerformCallback('Delete~' + keyValue);
+        // Rev 3.0 (parameter TransDate added)
+        function OnClickDelete(keyValue, TransDate) {
+            // Rev 3.0
+            var ActiveEInvoice = $('#hdnActiveEInvoice').val();
+            if (ActiveEInvoice == "1") {
+                var dateParts = TransDate.split("-");
+                if ((new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0])) >= (new Date("01-01-2021"))) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "ProjectInvoiceList.aspx/GetEditablePermissionFromEInvoice",
+                        data: "{'ProjectInvoiceID':'" + keyValue + "','Action':'Delete'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (msg) {
+                            var status = msg.d;
+                            if (status == "Yes") {
+
+                                jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+                                    if (r == true) {
+                                        cGrdQuotation.PerformCallback('Delete~' + keyValue);
+                                    }
+                                });
+                            }
+                            else {
+                                jAlert("IRN generated can not delete.");
+                            }
+                        }
+                    });
                 }
-            });
+                else {
+                    jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+                        if (r == true) {
+                            cGrdQuotation.PerformCallback('Delete~' + keyValue);
+                        }
+                    });
+                }
+            }
+            else {
+            // End of Rev 3.0
+                jConfirm('Confirm delete?', 'Confirmation Dialog', function (r) {
+                    if (r == true) {
+                        cGrdQuotation.PerformCallback('Delete~' + keyValue);
+                    }
+                });
+            // Rev 3.0
+            }
+            // End of Rev 3.0
         }
     </script>
 
@@ -1313,11 +1418,13 @@ else {
                             <% if (rights.CanEdit)
                                { %>
                             <%--Rev 2.0 [style='<%#Eval("Editlock")%>' and <%#Eval("Deletelock")%> added for Edit and Delete respectively ] --%>
-                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>')" class="" style='<%#Eval("Editlock")%>' title="">
+                            <%--Rev 3.0 [,'<%#Eval("TransDate") %>' added] --%>
+                            <a href="javascript:void(0);" onclick="OnMoreInfoClick('<%# Container.KeyValue %>','<%#Eval("TransDate") %>')" class="" style='<%#Eval("Editlock")%>' title="">
                                 <span class='ico editColor'><i class='fa fa-pencil' aria-hidden='true'></i></span><span class='hidden-xs'>Edit</span></a><%} %>
                             <% if (rights.CanDelete)
                                { %>
-                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>')" class="" style='<%#Eval("Deletelock")%>' title="">
+                            <%--Rev 3.0 [,'<%#Eval("TransDate") %>' added] --%>
+                            <a href="javascript:void(0);" onclick="OnClickDelete('<%# Container.KeyValue %>','<%#Eval("TransDate") %>')" class="" style='<%#Eval("Deletelock")%>' title="">
                                 <span class='ico deleteColor'><i class='fa fa-trash' aria-hidden='true'></i></span><span class='hidden-xs'>Delete</span></a><%} %>
                             <%-- <a href="javascript:void(0);" onclick="OnClickCopy('<%# Container.KeyValue %>')" class="pad" title="Copy ">
                             <i class="fa fa-copy"></i></a>--%>
@@ -1733,6 +1840,9 @@ else {
         <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
         <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
         <%--End of Rev 2.0--%>
+        <%--Rev 3.0--%>
+        <asp:HiddenField runat="server" ID="hdnActiveEInvoice" />
+        <%--End of Rev 3.0--%>
     </div>
     <dxe:ASPxPopupControl ID="Popup_EWayBill" runat="server" ClientInstanceName="cPopup_EWayBill"
         Width="400px" HeaderText="Update E-Way Bill" PopupHorizontalAlign="WindowCenter"
