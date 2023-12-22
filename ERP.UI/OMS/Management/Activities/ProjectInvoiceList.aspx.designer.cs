@@ -411,6 +411,15 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.HiddenField hdnLockToDatedelete;
 
         /// <summary>
+        /// hdnActiveEInvoice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnActiveEInvoice;
+
+        /// <summary>
         /// Popup_EWayBill control.
         /// </summary>
         /// <remarks>

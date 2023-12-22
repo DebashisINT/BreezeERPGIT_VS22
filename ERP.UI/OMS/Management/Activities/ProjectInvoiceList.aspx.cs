@@ -2,6 +2,7 @@
  * Rev 1.0      Sanchita    V2.0.39     18/09/2023      Update Transporter Action required in Project Mgmt../ Sales Invoice
  *                                                      Mantis : 26806
  * Rev 2.0      Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ * Rev 3.0      Sanchita    V2.0.42     22-12-2023      After generation of IRN Project Sales Invoice currently allowing to EDIT. Mantis: 27111        
  *******************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -72,6 +73,11 @@ namespace ERP.OMS.Management.Activities
                     GrdQuotation.Columns[27].Visible = false;
                 }
             }
+
+            // Rev 3.0
+            MasterSettings objmaster = new MasterSettings();
+            hdnActiveEInvoice.Value = objmaster.GetSettings("ActiveEInvoice");
+            // End of Rev 3.0
 
             // Rev 2.0
             DataTable dtposTimeEdit = oDBEngine.GetDataTable("SELECT  top 1 convert(varchar(50),Lock_Fromdate,110) LockCon_Fromdate,convert(varchar(50),Lock_Todate,110) LockCon_Todate,convert(varchar(10),Lock_Fromdate,105) Dataedit_Fromdate,convert(varchar(10),Lock_Todate,105) Dataedit_Todate FROM Trans_LockConfigouration_Details WHERE  Type='Edit' and Module_Id=71");
@@ -1084,6 +1090,16 @@ namespace ERP.OMS.Management.Activities
             return "";
         }
         //End of REV 1.0
+        // Rev 3.0
+        [WebMethod]
+        public static string GetEditablePermissionFromEInvoice(string ProjectInvoiceID, string Action)
+        {
+            CRMSalesDtlBL objCRMSalesDtlBL = new CRMSalesDtlBL();
+            string ispermission = "";
+            ispermission = objCRMSalesDtlBL.EditablePermission(Convert.ToInt32(ProjectInvoiceID), Action);
+            return Convert.ToString(ispermission);
+        }
+        // End of Rev 3.0
     }
 
 
