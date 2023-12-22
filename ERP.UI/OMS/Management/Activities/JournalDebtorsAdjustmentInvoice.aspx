@@ -211,7 +211,7 @@
     <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="JS/JournalDebtorsAdjustmentInvoice.js?v=1.6"></script>
+    <script src="JS/JournalDebtorsAdjustmentInvoice.js?v=1.7"></script>
 
 
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">

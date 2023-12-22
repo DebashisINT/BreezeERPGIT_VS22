@@ -1,4 +1,9 @@
-﻿/*****************
+﻿//========================================================== Revision History ============================================================================================
+//   1.0   Priti        V2.0.42     22-12-2023      0027120: Unable to save Adjustment of Documents - Journal with Sales Invoice
+//========================================== End Revision History =======================================================================================================
+
+
+/*****************
 Global variable*/
 
 var ReceiptList = [];
@@ -622,8 +627,11 @@ function GetTotalAdjustedAmount() {
 
         }
     }
-
-    return TotaAdj;
+    //Rev 1.0
+     //return TotaAdj;
+    var TotAmount = (TotaAdj).toFixed(2);   
+    return TotAmount;
+    //Rev 1.0 End
 }
 
 function GridEndCallBack(s, e) {
