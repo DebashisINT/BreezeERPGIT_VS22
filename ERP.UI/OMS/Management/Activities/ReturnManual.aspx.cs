@@ -3,8 +3,8 @@
  *                                                  Mantis: 26843
  *                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataRETM"]
  *2.0        Priti      V2.0.41     07-12-2023	 0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
-                                                  
- * *****************************************************************************************/
+ *3.0        Priti      V2.0.41     15-12-2023   0026779: Adding Transporter Details required in Sale Return-Manual module
+ * ******************************************************************************************************************************************/
 using System;
 using System.Configuration;
 using System.Data;
@@ -37,6 +37,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Text;
+//using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -178,6 +179,7 @@ namespace ERP.OMS.Management.Activities
 
                 }
             }
+           
 
             string MultiUOMSelection = ComBL.GetSystemSettingsResult("MultiUOMSelection");
             if (!String.IsNullOrEmpty(MultiUOMSelection))
@@ -1820,12 +1822,13 @@ namespace ERP.OMS.Management.Activities
 
 
                     //####### Coded By Samrat Roy For Custom Control Data Process #########
-
+                    //REV 3.0
                     if (!string.IsNullOrEmpty(hfControlData.Value))
                     {
                         CommonBL objCommonBL = new CommonBL();
-                        objCommonBL.InsertTransporterControlDetails(Convert.ToInt32(strQuoteID), "SR", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
+                        objCommonBL.InsertTransporterControlDetails(Convert.ToInt32(strQuoteID), "SRM", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
                     }
+                    //REV 3.0 END
                     //Udf Add mode
                     DataTable udfTable = (DataTable)Session["UdfDataOnAdd"];
                     if (udfTable != null)
@@ -1855,7 +1858,7 @@ namespace ERP.OMS.Management.Activities
                             }
                         }
 
-
+                       
 
                         Employee_BL objemployeebal = new Employee_BL();
                         int MailStatus = 0;
@@ -9378,7 +9381,7 @@ namespace ERP.OMS.Management.Activities
                 {
                     int branchindex = 0;
                     int cnt = 0;
-                    foreach (ListItem li in ddl_Branch.Items)
+                    foreach (System.Web.UI.WebControls.ListItem li in ddl_Branch.Items)
                     {
                         if (li.Value == Convert.ToString(Session["userbranchID"]))
                         {
@@ -11719,6 +11722,58 @@ namespace ERP.OMS.Management.Activities
         {
             acbpCrpUdf.JSProperties["cpUDF"] = "true";
             acbpCrpUdf.JSProperties["cpTransport"] = "true";
+
+            //REV 3.0
+            if (Request.QueryString["key"] == "ADD")
+            {
+                #region Transporter
+                DataTable DT = oDBEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Transporter_SRMMandatory' AND IsActive=1");
+                if (DT != null && DT.Rows.Count > 0)
+                {
+                    string IsMandatory = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
+
+                    if (Convert.ToString(Session["TransporterVisibilty"]).Trim() == "Yes")
+                    {
+                        if (IsMandatory == "Yes")
+                        {
+
+                            if (hfControlData.Value.Trim() == "")
+                            {
+                                acbpCrpUdf.JSProperties["cpTransport"] = "false";
+                            }
+
+                            else { acbpCrpUdf.JSProperties["cpTransport"] = "true"; }
+                        }
+                    }
+                    else { acbpCrpUdf.JSProperties["cpTransport"] = "true"; }
+                }
+                #endregion
+            }
+            else
+            {
+                #region transporter
+                DataTable DT = oDBEngine.GetDataTable("Config_SystemSettings", " Variable_Value ", " Variable_Name='Transporter_SRMMandatory' AND IsActive=1");
+                if (DT != null && DT.Rows.Count > 0)
+                {
+                    string IsMandatory = Convert.ToString(DT.Rows[0]["Variable_Value"]).Trim();
+
+                    if (Convert.ToString(Session["TransporterVisibilty"]).Trim() == "Yes")
+                    {
+                        if (IsMandatory == "Yes")
+                        {
+                            if (VehicleDetailsControl.GetControlValue("cmbTransporter") == "")
+                            {
+                                acbpCrpUdf.JSProperties["cpTransport"] = "false";
+                            }
+
+                            else { acbpCrpUdf.JSProperties["cpTransport"] = "true"; }
+                        }
+                    }
+                    else { acbpCrpUdf.JSProperties["cpTransport"] = "true"; }
+                }
+                #endregion
+            }
+            //REV 3.0 END
 
         }
         protected void productLookUp_ItemsRequestedByFilterCondition(object source, ListEditItemsRequestedByFilterConditionEventArgs e)
