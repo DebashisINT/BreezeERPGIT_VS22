@@ -94,6 +94,12 @@ namespace Manufacturing.Controllers
                     ViewBag.Hierarchy = "0";
                 }
             }
+            // Rev 6.0
+            ViewBag.QC_No = "";
+            ViewBag.StockReceiptNo = "";
+            ViewBag.ProductionReceiptNo = "";
+            // End of Rev 6.0
+
             string WorkOrderModuleSkipped = cSOrder.GetSystemSettingsResult("WorkOrderModuleSkipped");
             List<BranchUnit> list = new List<BranchUnit>();
             var datasetobj = objdata.DropDownDetailForBOM("GetUnitDropDownData", Convert.ToString(Session["LastFinYear"]), Convert.ToString(Session["LastCompany"]), Convert.ToString(Session["userbranchHierarchy"]), 0, 0);
@@ -228,16 +234,20 @@ namespace Manufacturing.Controllers
                 ViewBag.IsView = 0;
             }
             //Rev 6.0
-            if (ViewBag.QC_No!="")
-            {
-                ViewBag.IsView = 1;
-            }
-            if (ViewBag.StockReceiptNo != "")
+            //if (ViewBag.QC_No!="")
+            if (ViewBag.QC_No != null && ViewBag.QC_No!="")
             {
                 ViewBag.IsView = 1;
             }
 
-            if (ViewBag.ProductionReceiptNo != "")
+            // if (ViewBag.StockReceiptNo != "")
+            if (ViewBag.StockReceiptNo !=null && ViewBag.StockReceiptNo != "")
+            {
+                ViewBag.IsView = 1;
+            }
+
+            // if (ViewBag.ProductionReceiptNo != "")
+            if (ViewBag.ProductionReceiptNo !=null && ViewBag.ProductionReceiptNo != "")
             {
                 ViewBag.IsView = 1;
             }

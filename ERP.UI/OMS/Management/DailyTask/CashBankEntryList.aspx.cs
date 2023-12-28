@@ -1,5 +1,6 @@
 ﻿//========================================================== Revision History ============================================================================================
-//   1.0   Priti V2.0.36  02-02-2023  0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+//   1.0   Priti        V2.0.36  02-02-2023  0025263: Listing view upgradation required of Cash/Bank Voucher of Accounts & Finance
+//   2.0   Sanchita     V2.0.42  28-12-2023  27134: Cash Bank Voucher MC/CB/00264/2324 is showing "Add" in Audit Trial report but the same document is not showing.
 //========================================== End Revision History =======================================================================================================
 
 
@@ -285,6 +286,9 @@ namespace ERP.OMS.Management.DailyTask
 
             proc.AddVarcharPara("@IBRef", 200, Convert.ToString(Session["IBRef"]));
             proc.AddVarcharPara("@ReturnValue", 200, "0", QueryParameterDirection.Output);
+            // Rev 2.0
+            proc.AddIntegerPara("@UserId", Convert.ToInt32(Session["userid"]));
+            // End of Rev 2.0
             proc.RunActionQuery();
             rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
             return rtrnvalue;
