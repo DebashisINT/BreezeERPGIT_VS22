@@ -2,6 +2,8 @@
 //Rev Number         DATE              VERSION         DEVELOPER           CHANGES
 //1.0                12-06-2023        V2.0.38          Priti            SALES RETURN MNUAL Save & New Button issue.
 //2.0                21-07-2023        V2.0.39          Priti            0026601: Manual Sale Return is getting duplicated after Saving using Alt+X
+//3.0                15-12-2023        V2.0.41          Priti            0026779: Adding Transporter Details required in Sale Return - Manual module
+
 //====================================================== Revision History =============================================
 
 var FocusValue = '0';
@@ -3159,6 +3161,8 @@ function Save_ButtonClick() {
         jAlert("Please Select Project.");
         flag = false;
     }
+   
+
     // Quote Date validation Start
     var sdate = tstartdate.GetValue();
     var edate = tenddate.GetValue();
@@ -3250,8 +3254,8 @@ function Save_ButtonClick() {
                             $('#hdnRefreshType').val('N');
                             $('#hdfIsDelete').val('I');
                             grid.batchEditApi.EndEdit();
-                            grid.UpdateEdit();
-                            //  cacbpCrpUdf.PerformCallback();
+                            //grid.UpdateEdit();
+                              cacbpCrpUdf.PerformCallback();
                             //kaushik
                         }
                     });
@@ -3272,8 +3276,8 @@ function Save_ButtonClick() {
                     $('#hdnRefreshType').val('N');
                     $('#hdfIsDelete').val('I');
                     grid.batchEditApi.EndEdit();
-                    grid.UpdateEdit();
-                    //  cacbpCrpUdf.PerformCallback();
+                    //grid.UpdateEdit();
+                      cacbpCrpUdf.PerformCallback();
                     //kaushik
                 }
             }
@@ -3300,8 +3304,8 @@ function Save_ButtonClick() {
                             $('#hdnRefreshType').val('N');
                             $('#hdfIsDelete').val('I');
                             grid.batchEditApi.EndEdit();
-                            grid.UpdateEdit();
-                            //  cacbpCrpUdf.PerformCallback();
+                            //grid.UpdateEdit();
+                              cacbpCrpUdf.PerformCallback();
                             //kaushik
                         }
                     });
@@ -3321,8 +3325,8 @@ function Save_ButtonClick() {
                     $('#hdnRefreshType').val('N');
                     $('#hdfIsDelete').val('I');
                     grid.batchEditApi.EndEdit();
-                    grid.UpdateEdit();
-                    //  cacbpCrpUdf.PerformCallback();
+                    //grid.UpdateEdit();
+                      cacbpCrpUdf.PerformCallback();
                     //kaushik
                 }
             }
@@ -3336,7 +3340,7 @@ function Save_ButtonClick() {
 }
 
 function SaveExit_ButtonClick() {
-    // 
+    
 
     grid.AddNewRow();
     //REV 2.0
@@ -3376,32 +3380,14 @@ function SaveExit_ButtonClick() {
         jAlert("Please Select Project.");
         flag = false;
     }
-
+    
     // Quote Date validation Start
     var sdate = tstartdate.GetValue();
     var edate = tenddate.GetValue();
 
     var startDate = new Date(sdate);
     var endDate = new Date(edate);
-    //if (sdate == null || sdate == "") {
-    //    flag = false;
-    //    $('#MandatorysDate').attr('style', 'display:block');
-    //}
-    //else { $('#MandatorysDate').attr('style', 'display:none'); }
-    //if (edate == null || sdate == "") {
-    //    flag = false;
-    //    $('#MandatoryEDate').attr('style', 'display:block');
-    //}
-    //else {
-    //    $('#MandatoryEDate').attr('style', 'display:none');
-    //    if (startDate > endDate) {
-
-    //        flag = false;
-    //        $('#MandatoryEgSDate').attr('style', 'display:block');
-    //    }
-    //    else { $('#MandatoryEgSDate').attr('style', 'display:none'); }
-    //}
-    // Quote Date validation End
+   
 
     // Quote Customer validation Start
     var customerId = GetObjectID('hdnCustomerId').value
@@ -3465,8 +3451,8 @@ function SaveExit_ButtonClick() {
                             $('#hdnRefreshType').val('E');
                             $('#hdfIsDelete').val('I');
                             grid.batchEditApi.EndEdit();
-                            grid.UpdateEdit();
-                            //  cacbpCrpUdf.PerformCallback();
+                            //grid.UpdateEdit();
+                              cacbpCrpUdf.PerformCallback();
                             //kaushik
                         }
                     });
@@ -3484,8 +3470,8 @@ function SaveExit_ButtonClick() {
                     $('#hdnRefreshType').val('E');
                     $('#hdfIsDelete').val('I');
                     grid.batchEditApi.EndEdit();
-                    grid.UpdateEdit();
-                    //  cacbpCrpUdf.PerformCallback();
+                    //grid.UpdateEdit();
+                      cacbpCrpUdf.PerformCallback();
                     //kaushik
                 }
             }
@@ -3510,8 +3496,8 @@ function SaveExit_ButtonClick() {
                             $('#hdnRefreshType').val('E');
                             $('#hdfIsDelete').val('I');
                             grid.batchEditApi.EndEdit();
-                            grid.UpdateEdit();
-                            //  cacbpCrpUdf.PerformCallback();
+                            //grid.UpdateEdit();
+                              cacbpCrpUdf.PerformCallback();
                             //kaushik
                         }
                     });
@@ -3527,8 +3513,8 @@ function SaveExit_ButtonClick() {
                     $('#hdnRefreshType').val('E');
                     $('#hdfIsDelete').val('I');
                     grid.batchEditApi.EndEdit();
-                    grid.UpdateEdit();
-                    //  cacbpCrpUdf.PerformCallback();
+                   // grid.UpdateEdit();
+                      cacbpCrpUdf.PerformCallback();
                     //kaushik
                 }
             }

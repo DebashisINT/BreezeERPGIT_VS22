@@ -3,6 +3,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                03-05-2023        V2.0.38           Pallab              26010: Add Sale Return Manual module design modification & check in small device
 2.0                21-07-2023        V2.0.39           Priti               0026601: Manual Sale Return is getting duplicated after Saving using Alt+X
 3.0                01-09-2023        V2.0.39           Priti               0026779: Unable to save Manual Sales Return due to error
+4.0                15-12-2023        V2.0.41           Priti               0026779: Adding Transporter Details required in Sale Return-Manual module
 
 ====================================================== Revision History =============================================--%>
 
@@ -25,7 +26,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <script src="JS/SearchPopupDatatable.js"></script>
 
     <link href="CSS/PosSalesInvoice.css" rel="stylesheet" />
-    <script src="JS/ReturnManual.js?v=2.0"></script>
+    <script src="JS/ReturnManual.js?v=2.2"></script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js" type="text/javascript"></script>
     <style type="text/css">
@@ -2347,8 +2348,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                         <ClientSideEvents Click="function(s, e) {Save_TaxesClick();}" />
                                                     </dxe:ASPxButton>
                                                 </span>
-
                                                 <b><span id="tagged" runat="server" style="display: none; color: red">This Manual Sales Return is tagged in other modules. Cannot Modify data</span></b>
+                                                <%--REV 4.0--%>
+                                                <uc1:VehicleDetailsControl runat="server" ID="VehicleDetailsControl" />
+                                               <%-- REV 4.0 END--%>
                                                 <asp:HiddenField ID="hfControlData" runat="server" />
                                                 <asp:HiddenField runat="server" ID="hfTermsConditionDocType" Value="SRM" />
 
@@ -4235,11 +4238,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     cacbpCrpUdf.cpUDF = null;
                     cacbpCrpUdf.cpTransport = null;
                 }
-                else {
+                else if (cacbpCrpUdf.cpTransport == "false") {
                     LoadingPanel.Hide();
                     jAlert("Transporter is set as Mandatory. Please enter values.", "Alert", function () { $("#exampleModal").modal('show'); });
                     cacbpCrpUdf.cpUDF = null;
                     cacbpCrpUdf.cpTransport = null;
+                    cbtn_SaveRecords.SetVisible(true);
+                    cbtn_SaveRecords_p.SetVisible(true);
+                }
+                else {
+                    grid.UpdateEdit();
                 }
             }
         }
@@ -4987,4 +4995,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField ID="hdnRDECId" runat="server" />
     <asp:HiddenField ID="HiddenField1" runat="server" />
     <asp:HiddenField ID="HdnBackDatedEntryPurchaseGRN" runat="server" />
+    <%--REV 4.0--%>
+    <asp:HiddenField ID="hdnTransporterMandatory" runat="server" />
+     <asp:HiddenField ID="hdnShowTransporter" runat="server" />
+    <%--REV 4.0 END--%>
 </asp:Content>

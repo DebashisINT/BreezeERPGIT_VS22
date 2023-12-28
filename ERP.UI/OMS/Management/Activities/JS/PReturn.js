@@ -1718,11 +1718,12 @@ function taxAmtButnClick(s, e) {
                     ////###### Added By : Samrat Roy ##########
                     //Get Customer Shipping StateCode
                     var shippingStCode = '';
-
-                    var shippingStCode = '';
-                    shippingStCode = cbsSCmbState.GetText();
-                    shippingStCode = shippingStCode.substring(shippingStCode.lastIndexOf('(')).replace('(State Code:', '').replace(')', '').trim();
-
+                    //rev 3.0
+                    shippingStCode = GeteShippingStateCode();
+                    //var shippingStCode = '';
+                    //shippingStCode = cbsSCmbState.GetText();
+                    //shippingStCode = shippingStCode.substring(shippingStCode.lastIndexOf('(')).replace('(State Code:', '').replace(')', '').trim();
+                     //rev 3.0 eND
 
                     //Debjyoti 09032017
                     if (shippingStCode.trim() != '') {
@@ -3284,7 +3285,7 @@ function DiscountTextChange(s, e) {
         ctaxUpdatePanel.PerformCallback('DelQtybySl~' + grid.GetEditor("SrlNo").GetValue());
 
 
-        //Rev 3.0
+       
         var incluexclutype = ''
         var taxtype = cddl_AmountAre.GetValue();
         if (taxtype == '1') {
