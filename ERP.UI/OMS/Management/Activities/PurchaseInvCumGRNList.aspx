@@ -13,7 +13,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Filteration Section Start By Sam--%>
-    <script src="JS/PurchaseInvoice.js?v=1.5"></script>
+    <%--Rev 2.0--%>
+   <%-- <script src="JS/PurchaseInvoice.js?v=1.5"></script>--%>
+     <script src="JS/PurchaseInvoicelist.js?1.5"></script>
+    <%--End of Rev 2.0--%>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
      <%--Rev 2.0--%>
     <script>
