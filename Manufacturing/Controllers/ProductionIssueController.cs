@@ -1,10 +1,11 @@
 ﻿//@*==================================================== Revision History =========================================================================
-//     1.0  Priti V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
-//     2.0  Priti V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
-//     3.0  Priti V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-//     4.0  Priti V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
-//     5.0  Priti V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
-//     6.0  Priti V2.0.41    11-12-2023  0027086: System is allowing to edit tagged documents in Manufacturing module
+//     1.0  Priti       V2.0.36    24-01-2023  0025611:MRP tagging feature required for Issue for Production
+//     2.0  Priti       V2.0.38    11-05-2023  0026074: Some of the issues found in Issue for Production
+//     3.0  Priti       V2.0.38    01-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//     4.0  Priti       V2.0.38    23-06-2023  0026426: Issue in Issue for Production Module at the time of Edit
+//     5.0  Priti       V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
+//     6.0  Priti       V2.0.41    11-12-2023  0027086: System is allowing to edit tagged documents in Manufacturing module
+//     7.0  Sanchita    V2.0.42    28-12-2023  27107: Batch wise stock is not showing upto four decimal places in Issue for Production 
 //====================================================End Revision History=====================================================================*@
 
 using BusinessLogicLayer;
@@ -234,20 +235,15 @@ namespace Manufacturing.Controllers
                 ViewBag.IsView = 0;
             }
             //Rev 6.0
-            //if (ViewBag.QC_No!="")
-            if (ViewBag.QC_No != null && ViewBag.QC_No!="")
+            if (ViewBag.QC_No != "")
             {
                 ViewBag.IsView = 1;
             }
-
-            // if (ViewBag.StockReceiptNo != "")
-            if (ViewBag.StockReceiptNo !=null && ViewBag.StockReceiptNo != "")
+            if (ViewBag.StockReceiptNo != "")
             {
                 ViewBag.IsView = 1;
             }
-
-            // if (ViewBag.ProductionReceiptNo != "")
-            if (ViewBag.ProductionReceiptNo !=null && ViewBag.ProductionReceiptNo != "")
+            if (ViewBag.ProductionReceiptNo != "")
             {
                 ViewBag.IsView = 1;
             }
@@ -2170,19 +2166,28 @@ namespace Manufacturing.Controllers
         public JsonResult getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID)
         {
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
-            string strBranch = Convert.ToString(branch);            
-            string cpstockVal = "0.00";
+            string strBranch = Convert.ToString(branch);
+            // Rev 7.0
+            //string cpstockVal = "0.00";
+            string cpstockVal = "0.0000";
+            // End of Rev 7.0
             try
             {
                 DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotationForWareHouseWiseStock(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ") as branchopenstock");
 
                 if (dt2.Rows.Count > 0)
                 {
-                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                    // Rev 7.0
+                    //cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 4));
+                    // End of Rev 7.0
                 }
                 else
                 {
-                    cpstockVal = "0.00";
+                    // Rev 7.0
+                    //cpstockVal = "0.00";
+                    cpstockVal = "0.0000";
+                    // End of Rev 7.0
                 }
             }
             catch (Exception ex)
@@ -2197,17 +2202,31 @@ namespace Manufacturing.Controllers
         {
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
             string strBranch = Convert.ToString(branch);
-            string cpstockVal = "0.00";
+            // Rev 7.0
+            //string cpstockVal = "0.00";
+            string cpstockVal = "0.0000";
+
+            if (BatchID == null)
+            {
+                BatchID = "0";
+            }
+            // End of Rev 7.0
             try
             {
                 DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
                 if (dt2.Rows.Count > 0)
                 {
-                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                    // Rev 7.0
+                    //cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
+                    cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 4));
+                    // End of Rev 7.0
                 }
                 else
                 {
-                    cpstockVal = "0.00";
+                    // Rev 7.0
+                    //cpstockVal = "0.00";
+                    cpstockVal = "0.0000";
+                    // End of Rev 7.0
                 }
             }
             catch (Exception ex)
