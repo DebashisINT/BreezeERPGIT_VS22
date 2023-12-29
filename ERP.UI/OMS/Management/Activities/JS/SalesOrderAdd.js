@@ -8,6 +8,8 @@
 //                                           Mantis: 26871
 // 6.0  Sanchita    V2.0.40     19-10-2023   Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
 //                                           Mantis: 26924
+// 7.0  Priti       V2.0.42     29-12-2023  GST round off value showing different between Sales Entry and Sales Invoice Print Layout.Mantis: 0027122
+    
 //====================================================End Revision History=====================================================================
 
 $(function () {
@@ -6861,15 +6863,20 @@ function txtPercentageLostFocus(s, e) {
             var sign = cgridTax.GetEditor("Taxes_Name").GetText().substring(totLength - 3);
             if (sign == '(+)') {
                 GlobalCurTaxAmt = parseFloat(cgridTax.GetEditor("Amount").GetValue());
-                cgridTax.GetEditor("Amount").SetValue(parseFloat(ProdAmt * s.GetText()) / 100);
+                //REV 7.0
+                //cgridTax.GetEditor("Amount").SetValue(parseFloat(ProdAmt * s.GetText()) / 100);
+                cgridTax.GetEditor("Amount").SetValue((parseFloat(ProdAmt * s.GetText()) / 100).toFixed(2));
+                //REV 7.0 END
                 //ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + (parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) - GlobalCurTaxAmt));
                 ctxtTaxTotAmt.SetValue(((ctxtTaxTotAmt.GetValue() * 1) + ((ProdAmt * (s.GetText() * 1)) / 100) - (GlobalCurTaxAmt * 1)).toFixed(2));
                 GlobalCurTaxAmt = 0;
             }
             else {
                 GlobalCurTaxAmt = parseFloat(cgridTax.GetEditor("Amount").GetValue());
-                cgridTax.GetEditor("Amount").SetValue((parseFloat(ProdAmt * s.GetText()) / 100) * -1);
-
+                //REV 7.0
+                //cgridTax.GetEditor("Amount").SetValue((parseFloat(ProdAmt * s.GetText()) / 100) * -1);
+                cgridTax.GetEditor("Amount").SetValue(((parseFloat(ProdAmt * s.GetText()) / 100) * -1).toFixed(2));
+                //REV 7.0 END
                 //ctxtTaxTotAmt.SetValue(Math.round(parseFloat(ctxtTaxTotAmt.GetValue()) + ((parseFloat(ProdAmt * parseFloat(s.GetText())) / 100) * -1) - (GlobalCurTaxAmt * -1)));
                 ctxtTaxTotAmt.SetValue(((ctxtTaxTotAmt.GetValue() * 1) + (((ProdAmt * (s.GetText() * 1)) / 100) * -1) - (GlobalCurTaxAmt * -1)).toFixed(2));
                 GlobalCurTaxAmt = 0;

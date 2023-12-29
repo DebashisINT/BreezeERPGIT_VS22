@@ -14,6 +14,8 @@
                                                     Mantis : 26924
  * Rev 7.0      Priti         V2.0.41   06-12-2023  Please allow Duplicate Product in Proforma Invoice/Quotation Entry
                                                     Mantis: 0027046
+ * Rev 8.0      Priti         V2.0.42   29-12-2023  GST round off value showing different between Sales Entry and Sales Invoice Print Layout.
+                                                    Mantis: 0027122
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -4498,7 +4500,10 @@ namespace ERP.OMS.Management.Activities
                                         {
                                             string SerialID = Convert.ToString(dr["SrlNo"]);
                                             string TaxID = Convert.ToString(dr["TaxCode"]);
-                                            decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                            //REV 8.0
+                                            //decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                            decimal _TaxAmount = Convert.ToDecimal(String.Format("{0:0.00}",(dr["TaxAmount"])));
+                                            //REV 8.0 END
                                             string ProductName = Convert.ToString(dr["ProductName"]);
                                             DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
 
@@ -7189,8 +7194,11 @@ namespace ERP.OMS.Management.Activities
                             obj.Taxes_Name = Convert.ToString(dr["Taxes_Name"]) + "(-)";
                         }
 
-                        obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+                        //REV 8.0
+                        //obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
 
+                        obj.Amount = Convert.ToDouble(String.Format("{0:0.00}", (obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100))));
+                        //REV 8.0 END
 
 
 
