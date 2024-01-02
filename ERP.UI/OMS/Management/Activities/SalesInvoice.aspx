@@ -10,6 +10,8 @@
                                                Mantis: 26868
    7.0   Sanchita   V2.0.40     06-10-2023     New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                Mantis : 26871
+   8.0   Priti      V2.0.42     02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                   
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInvoice" %>
@@ -4650,7 +4652,9 @@ $(document).ready(function () {
     <%--Rev 2.0--%>
    <%-- <asp:HiddenField runat="server" ID="hdnIsToleranceInSalesOrder" />--%>
     <%--End of Rev 2.0--%>
-
+     <%-- Rev 8.0--%>
+   <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+  <%-- Rev 8.0 End--%>
      <!--Schedule Modal -->
     <div class="modal fade" id="ScheduleModel" role="dialog">
         <div class="modal-dialog">

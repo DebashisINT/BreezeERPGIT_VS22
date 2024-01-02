@@ -13,6 +13,8 @@
                                                     Mantis: 0026936
 * Rev 8.0       Priti         V2.0.41   05-12-2023  Please allow Duplicate Product in Proforma Invoice/Quotation Entry
                                                     Mantis: 0027046
+* Rev 9.0       Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                    Mantis : 0027050
 
  ***************************************************************************************************************************************/
 using System;
@@ -322,6 +324,21 @@ namespace ERP.OMS.Management.Activities
                         IsLighterCustomePage = "1";
                     }
                 }
+
+                //REV 9.0
+                string IsDuplicateItemAllowedOrNot = ComBL.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 9.0 END
                 ddlInventory.Focus();
                 //#region Sandip Section For Checking User Level for Allow Edit to logging User or Not
                 GetEditablePermission();
@@ -2964,6 +2981,17 @@ namespace ERP.OMS.Management.Activities
                 //    validate = "duplicateProduct";
                 //}
                 //Rev 8.0 End
+
+                //Rev 9.0
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicateRecords)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 9.0 End
+
                 if (ddlInventory.SelectedValue != "N")
                 {
                     foreach (DataRow dr in tempQuotation.Rows)

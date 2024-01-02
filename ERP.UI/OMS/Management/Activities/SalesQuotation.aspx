@@ -10,6 +10,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           Mantis: 26868
 5.0                06-10-2023       V2.0.40            Sanchita           New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                                           Mantis : 26871
+6.0                02-01-2024       V2.0.42            Priti              Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Sales Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="SalesQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesQuotation" %>
@@ -3769,7 +3771,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField runat="server" ID="hdnPlaceShiptoParty" />
     <asp:HiddenField runat="server" ID="hdnQuteMode" />
     <%--Rev work close 06.07.2022 mantise no:25008--%>
-
+    <%-- Rev 6.0--%>
+     <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 6.0 End--%>
     <%--Rev 2.0--%>
     <dxe:ASPxLoadingPanel ID="LoadingPanelMultiUOM" runat="server" ClientInstanceName="LoadingPanelMultiUOM" ContainerElementID="divMultiUOM"
         Modal="True">
