@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿<!--================================================== Revision History =============================================
+Rev Number         DATE              VERSION          DEVELOPER           CHANGES
+1.0                02-01-2024       V2.0.42           Sanchita            Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+====================================================== Revision History =============================================-->
+
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Customer Add</title>
@@ -33,17 +38,20 @@
         .nogap {
             padding: 0px;
         }
+
         .ui-widget-header {
             border: 1px solid #272b3c !important;
             background: #272b3c !important;
             text-align: center;
-            color:#fff;
+            color: #fff;
         }
+
         .ui-widget.ui-widget-content + .ui-widget-overlay {
             z-index: 999998 !important;
             background: #040404;
             opacity: 0.7;
         }
+
         .ui-widget.ui-widget-content {
             min-width: 300px !important;
             min-width: 300px !important;
@@ -51,14 +59,16 @@
             border: none;
             z-index: 999999 !important;
         }
+
         .ui-dialog-buttonset {
             float: none !important;
             text-align: center;
             padding: 0px;
         }
-        ui-dialog-buttonset>button{
-            margin:0 !important;
-            margin-top:3px
+
+        ui-dialog-buttonset > button {
+            margin: 0 !important;
+            margin-top: 3px
         }
     </style>
     <script src="/assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.min.js"></script>
@@ -95,6 +105,7 @@
         .clear {
             clear: both;
         }
+
         .padTble > tbody > tr > td {
             padding-right: 15px;
             padding-bottom: 3px;
@@ -127,8 +138,9 @@
             font-weight: 600 !important;
             width: 90%;
         }
+
         select#cddlSegmentMandatory1, select#cddlSegmentMandatory2, select#cddlSegmentMandatory3, select#cddlSegmentMandatory4, select#cddlSegmentMandatory5 {
-            display:none;
+            display: none;
         }
     </style>
 
@@ -170,9 +182,15 @@
                 <input class="form-control input-sm" placeholder="Unique ID" maxlength="50" id="DocNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniqueCodeCheck()">
             </div>
 
+            <!--Rev 1.0 [ onblur="CheckUniqueCustomerName()" added ] -->
+            <!--[ <div id="uniqueVendorNameMessage" style="display:none">  added ]-->
+            <!-- [onblur="NameForSave()" REMOVED] -->
             <div class="col-md-4">
                 <label>Name</label><label style="color:red">*</label>
-                <input class="form-control input-sm" placeholder="Name" id="Name" type="text" maxlength="50" data-toggle="tooltip" title="Name" onblur="NameForSave()">
+                <input class="form-control input-sm" placeholder="Name" id="Name" onblur="CheckUniqueCustomerName()" type="text" maxlength="50" data-toggle="tooltip" title="Name">
+                <div id="uniqueCustomerNameMessage" style="display:none">
+                    <label id="lblUniqueCustName" style="color:red">Customer Name Already Exists.</label>
+                </div>
             </div>
             <div class="col-md-3">
                 <label>Alternative Code</label>

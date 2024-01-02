@@ -1,4 +1,8 @@
-﻿ 
+﻿//================================================== Revision History =============================================
+// Rev Number  DATE             VERSION       DEVELOPER           CHANGES
+// 1.0         02-01-2024       V2.0.42       Sanchita            Settings required to Check Duplicate Vendor Master Name.Mantis: 27126
+//====================================================== Revision History =============================================
+
        $(document).ready(function () {
            debugger;
            $('#cddlSegmentMandatory1').multiselect({
@@ -1083,6 +1087,11 @@ function SaveVendor() {
                 parent.ParentCustomerOnClose(obj.InternalId, $("#VenName").val(), $("#VenuniqueId").val(), obj.BillingStateText, obj.BillingStateCode, obj.ShippingStateText, obj.ShippingStateCode);
 
             }
+            // Rev 1.0
+            else if (obj.status == "DuplicateVendorName") {
+                jAlert('Duplicate Vendor Name.');
+            }
+            // End of Rev 1.0
             else if (obj.status == "DuplicateGSTIN") {                
                     jAlert('Duplicate GSTIN. ');                 
             }
@@ -1272,6 +1281,7 @@ function CheckUnique() {
 
 function CheckVendorUnique() {
     var uniqueId = $("#VenuniqueId").val();
+    debugger;
     if (uniqueId.trim() != '') {
         $.ajax({
             type: "POST",
@@ -1287,8 +1297,8 @@ function CheckVendorUnique() {
                 if (obj.IsPresent) {
                     $("#VenuniqueId").addClass('alert-danger');
                     $("#VenuniqueId").focus();
-                   
-                   
+
+
                     document.getElementById("uniqueIdMessage").style.display = "block";
                     $("#VenuniqueId").val("");
                 } else {
@@ -1301,9 +1311,45 @@ function CheckVendorUnique() {
             }
         });
     }
+}
+
+// Rev 1.0
+function CheckUniqueVendorName() {
+    debugger;
+    var VenName = $("#VenName").val();
+    var CheckUniqueVendName = false;
+    if (VenName.trim() != '') {
+        $.ajax({
+            type: "POST",
+            url: "/OMS/management/Master/HRrecruitmentagent_general.aspx/CheckUniqueVendorName",
+            data: "{ CategoriesFirstName: '" + VenName + "', Code: 0}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: "true",
+            cache: "false",
+            success: function (msg) {
+                CheckUniqueVendName = msg.d;
+                if (CheckUniqueVendName != true) {
+                    $("#VenName").addClass('alert-danger');
+                    $("#VenName").focus();
+
+
+                    document.getElementById("uniqueVendorNameMessage").style.display = "block";
+                    $("#VenName").val("");
+                } else {
+                    $("#VenName").removeClass('alert-danger');
+                    document.getElementById("uniqueVendorNameMessage").style.display = "none";
+                }
+            },
+            Error: function (x, e) {
+                // On Error
+            }
+        });
+    }
 
 }
 
+// End of Rev 1.0
 
 function billingCopyToshipping() {
     

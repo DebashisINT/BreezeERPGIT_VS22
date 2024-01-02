@@ -1,3 +1,6 @@
+/***********************************************************************************************************
+ * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+ **************************************************************************************************************/
 using System;
 using System.Configuration;
 using System.Data;
@@ -605,6 +608,26 @@ namespace ERP.OMS.Management.Master
                 {
                     DtIncoorporationDtae = Convert.ToDateTime("01-01-1900");
                 }
+                // Rev 1.0
+                if (txtFirstName.Text != "")
+                {
+                    string AllowDuplicateVendorName = ComBL.GetSystemSettingsResult("AllowDuplicateVendorName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateVendorName))
+                    {
+                        if (AllowDuplicateVendorName == "No")
+                        {
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            result = obj.CheckUniqueVendorName(txtFirstName.Text, Convert.ToString(HttpContext.Current.Session["KeyVal"]), "CheckUniqueVendorName");
+
+                            if (!result)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Vendor Name.');", true);
+                                return;
+                            }
+                        }
+                    }
+                }
+                // End of Rev 1.0
                 //Debjyoti GstIN 060217
                 string GSTIN = "";
                 if (radioregistercheck.SelectedValue == "1")
@@ -781,6 +804,26 @@ namespace ERP.OMS.Management.Master
                         valueforReffer = txtReferedBy.Text.Trim();
                     }
 
+                    // Rev 1.0
+                    if (txtFirstName.Text != "")
+                    {
+                        string AllowDuplicateVendorName = ComBL.GetSystemSettingsResult("AllowDuplicateVendorName");
+                        if (!String.IsNullOrEmpty(AllowDuplicateVendorName))
+                        {
+                            if (AllowDuplicateVendorName == "No")
+                            {
+                                BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                                result = obj.CheckUniqueVendorName(txtFirstName.Text, "0", "CheckUniqueVendorName");
+
+                                if (!result)
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Vendor Name.');", true);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    // End of Rev 1.0
 
                     string GSTIN = "";
                     GSTIN = txtGSTIN1.Text.Trim() + txtGSTIN2.Text.Trim() + txtGSTIN3.Text.Trim();
@@ -1125,7 +1168,27 @@ namespace ERP.OMS.Management.Master
             }
             return flag;
         }
+        // Rev 1.0
+        [WebMethod]
+        public static bool CheckUniqueVendorName(string CategoriesFirstName, string Code)
+        {
+            bool flag = false;
+            try
+            {
+                BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                flag = obj.CheckUniqueVendorName(CategoriesFirstName.Trim(), Code, "CheckUniqueVendorName");
 
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+            }
+            return flag;
+        }
+        // End of Rev 1.0
 
         protected void branchGrid_CustomCallback(object sender, ASPxGridViewCustomCallbackEventArgs e)
         {

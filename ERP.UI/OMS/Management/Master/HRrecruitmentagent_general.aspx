@@ -1,6 +1,7 @@
 <%--================================================== Revision History =============================================
-Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                15-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+Rev Number  DATE              VERSION       DEVELOPER           CHANGES
+1.0         15-03-2023        2.0.36        Pallab              25733 : Master pages design modification
+2.0         02-01-2024       V2.0.42        Sanchita            Settings required to Check Duplicate Vendor Master Name. Mantis: 27126
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Vendors/Service Providers" Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -906,6 +907,34 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 }
             });
         }
+
+        // Rev 2.0
+        function UniqueVendorNameCheck() {
+            var code = 0;
+            if (GetObjectID('HdId').value != '') {
+                code = GetObjectID('HdId').value;
+            }
+            var reminderFirstName = ctxtFirstName.GetText();
+            if (reminderFirstName.trim() == '')
+                return;
+            var CheckUniqueVendName = false;
+            $.ajax({
+                type: "POST",
+                url: "HRrecruitmentagent_general.aspx/CheckUniqueVendorName",
+                data: JSON.stringify({ CategoriesFirstName: reminderFirstName, Code: code }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    CheckUniqueVendName = msg.d;
+                    if (CheckUniqueVendName != true) {
+                        jAlert('Vendor Name already exists.');
+                        ctxtFirstName.SetText('');
+                        ctxtFirstName.Focus();
+                    }
+                }
+            });
+        }
+        // End of Rev 2.0
 
         function CallList(obj1, obj2, obj3) {
             if (obj1.value == "") {
@@ -1825,6 +1854,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                     <dxe:ASPxTextBox ID="txtFirstName" runat="server" Width="100%" MaxLength="150" ClientInstanceName="ctxtFirstName" CssClass="upper">
                                                         <%-- <ValidationSettings ValidationGroup="a">
                                                         </ValidationSettings>--%>
+                                                        <%--Rev 2.0--%>
+                                                        <ClientSideEvents LostFocus="function(s, e) {
+	                                                            UniqueVendorNameCheck();
+                                                            }" />
+                                                        <%--End of Rev 2.0--%>
                                                     </dxe:ASPxTextBox>
 
                                                     <span id="MandatoryName" class="pullleftClass fa fa-exclamation-circle iconRed " style="color: red; display: none; position: absolute; right: -20px; top: 5px;"

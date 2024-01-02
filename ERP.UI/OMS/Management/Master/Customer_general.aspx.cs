@@ -1,4 +1,7 @@
-﻿using System;
+﻿/**********************************************************************************************************************
+1.0       02-01-2024    V2.0.42      Sanchita      Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+**************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Web;
@@ -307,6 +310,10 @@ namespace ERP.OMS.Management.Master
             string GSTIN = "";
             GSTIN = txtGSTIN1.Text.Trim() + txtGSTIN2.Text.Trim() + txtGSTIN3.Text.Trim();
 
+            // Rev 1.0
+            CommonBL ComBL = new CommonBL();
+            // End of Rev 1.0
+
             if (txtDOB.Value != null)
             {
                 dtDob = Convert.ToDateTime(txtDOB.Value);
@@ -368,6 +375,27 @@ namespace ERP.OMS.Management.Master
             //end of rev srijeeta
             if (KeyVal_InternalID.Value == "")
             {
+                // Rev 1.0
+                if (txtFirstNmae.Text != "")
+                {
+                    string AllowDuplicateCustomerName = ComBL.GetSystemSettingsResult("AllowDuplicateCustomerName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateCustomerName))
+                    {
+                        if (AllowDuplicateCustomerName == "No")
+                        {
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            Boolean result = obj.CheckUniqueVendorName(txtFirstNmae.Text, "0", "CheckUniqueCustomerName");
+
+                            if (!result)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Customer Name.');", true);
+                                return;
+                            }
+                        }
+                    }
+                }
+                // End of Rev 1.0
+
                 //rev srijeeta
                 //string InternalId = oContactGeneralBL.Insert_ContactGeneral(dd, UccName, "1",
                 //                                      txtFirstNmae.Text.Trim(), txtMiddleName.Text.Trim(), "",
@@ -416,6 +444,27 @@ namespace ERP.OMS.Management.Master
             }
             else
             {
+                // Rev 1.0
+                if (txtFirstNmae.Text != "")
+                {
+                    string AllowDuplicateCustomerName = ComBL.GetSystemSettingsResult("AllowDuplicateCustomerName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateCustomerName))
+                    {
+                        if (AllowDuplicateCustomerName == "No")
+                        {
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            Boolean result = obj.CheckUniqueVendorName(txtFirstNmae.Text, KeyVal_InternalID.Value, "CheckUniqueCustomerName");
+
+                            if (!result)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Customer Name.');", true);
+                                return;
+                            }
+                        }
+                    }
+                }
+                // End of Rev 1.0
+
                 txtClentUcc.ClientEnabled = false;
                 //rev srijeeta
                 //string value = "Statustype='',cnt_ucc='" + txtClentUcc.Text + "', cnt_salutation=1,  cnt_firstName='" + txtFirstNmae.Text + "', cnt_middleName='" + txtMiddleName.Text + "', cnt_lastName='', cnt_shortName='', cnt_branchId=" + Convert.ToInt32(Session["userbranchID"]) + ", cnt_sex=" + cmbGender.SelectedItem.Value + ", cnt_maritalStatus=" + cmbMaritalStatus.SelectedItem.Value + ", cnt_DOB='" + txtDOB.Value + "', cnt_anniversaryDate='" + txtAnniversary.Value + "', cnt_legalStatus=" + cmbLegalStatus.SelectedItem.Value + ", cnt_education=0, cnt_profession=0, cnt_organization='0', cnt_jobResponsibility=0, cnt_designation=0, cnt_industry=0, cnt_contactSource=0, cnt_referedBy='0', cnt_contactType='CL', cnt_contactStatus=" + cmbContactStatus.SelectedItem.Value + ",cnt_RegistrationDate='" + DateTime.Now.ToShortDateString() + "',cnt_rating='0',cnt_reason='0',cnt_bloodgroup='0',WebLogIn='No',PassWord='', lastModifyDate ='" + DateTime.Now.ToShortDateString() + "',cnt_PlaceOfIncorporation='0',cnt_nationality='" + Convert.ToInt32(Convert.ToString(country)) + "',cnt_BusinessComncDate='" + DateTime.Now.ToShortDateString() + "',cnt_OtherOccupation='',cnt_IsCreditHold='" + Creditcard + "',cnt_CreditDays='" + creditDays + "' ,cnt_CreditLimit='" + CreditLimit + "', lastModifyUser=" + HttpContext.Current.Session["userid"] + ",CNT_GSTIN='" + GSTIN + "',cnt_AssociatedEmp= '" + hidAssociatedEmp.Value + "',cnt_mainAccount='" + hndTaxRates_MainAccount_hidden.Value + "',Is_TCSApplicable='" + Convert.ToBoolean(TCSApplicable.Value) + "'";
@@ -722,6 +771,26 @@ namespace ERP.OMS.Management.Master
             //Rev Tanmoy settings wise lead save End
             try
             {
+                // Rev 1.0
+                if (Name != "")
+                {
+                    string AllowDuplicateCustomerName = ComBL.GetSystemSettingsResult("AllowDuplicateCustomerName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateCustomerName))
+                    {
+                        if (AllowDuplicateCustomerName == "No")
+                        {
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            Boolean result = obj.CheckUniqueVendorName(Name, "0", "CheckUniqueCustomerName");
+
+                            if (!result)
+                            {
+                                return new { status = "DuplicateCustomerName", Msg = "Duplicate Customer Name" };
+                            }
+                        }
+                    }
+                }
+                // End of Rev 1.0
+
                 int NumId = 0;
                 NumId = Convert.ToInt32(NumberingId);
                 string entityName = "";
@@ -1117,7 +1186,7 @@ namespace ERP.OMS.Management.Master
             MShortNameCheckingBL mshort = new MShortNameCheckingBL();
             //BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(ConfigurationManager.AppSettings["DBConnectionDefault"]);MULTI
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
-
+            
             DateTime CreateDate = Convert.ToDateTime(oDBEngine.GetDate().ToShortDateString());
             try
             {
@@ -1367,6 +1436,27 @@ namespace ERP.OMS.Management.Master
             try
             {
                 string entityName = "";
+                // Rev 1.0
+                if (Name != "")
+                {
+                    CommonBL ComBL = new CommonBL();
+                    string AllowDuplicateVendorName = ComBL.GetSystemSettingsResult("AllowDuplicateVendorName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateVendorName))
+                    {
+                        if (AllowDuplicateVendorName == "No")
+                        {
+                            bool flag = false;
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            flag = obj.CheckUniqueVendorName(Name, "0", "CheckUniqueVendorName");
+
+                            if (!flag)
+                            {
+                                return new { status = "DuplicateVendorName", Msg = "Duplicate Vendor Name" };
+                            }
+                        }
+                    }
+                }
+                // End of Rev 1.0
                 if (GSTIN != "")
                 {
                     if (ContactGeneralBL.ISUniqueGSTIN("", "0", GSTIN, "DV"))
@@ -1374,7 +1464,7 @@ namespace ERP.OMS.Management.Master
                         return new { status = "DuplicateGSTIN", Msg = "Duplicate GSTIN" };
                     }
                 }
-
+                
                 if (!mshort.CheckUniqueWithtypeContactMaster(UniqueID, "", "MasterContactType", "DV", ref entityName) || !string.IsNullOrEmpty(Convert.ToString(NumberingId)))
                 {
                     //rev srijeeta
