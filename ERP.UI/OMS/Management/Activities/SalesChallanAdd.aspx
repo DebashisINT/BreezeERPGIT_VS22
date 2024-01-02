@@ -14,6 +14,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           Mantis: 26868
 6.0                06-10-2023       V2.0.40            Sanchita           New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                                           Mantis : 26871
+7.0                02-01-2024       V2.0.42            Priti              Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanAdd.aspx.cs"
@@ -11936,5 +11938,8 @@ function ProjectValueChange(s, e) {
     <asp:HiddenField runat="server" ID="hdnEntityType" />
     <asp:HiddenField runat="server" ID="hdAddOrEdit" />
     <asp:HiddenField runat="server" ID="hdnPricingDetail" />
+    <%-- Rev 7.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 7.0 End--%>
     
 </asp:Content>

@@ -11,6 +11,8 @@
                                                     if the settings "Show Other Condition" is set as "Yes"
    Rev 6.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                     Mantis : 26871
+   Rev 7.0      Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                    Mantis : 0027050
  **********************************************************************************************************/--%>
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderAdd.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
     Inherits="ERP.OMS.Management.Activities.SalesOrderAdd" EnableEventValidation="false" %>
@@ -4290,6 +4292,9 @@ function PerformCallToGridBind() {
     <%--Rev work start 24.06.2022 mantise no:0024987--%> 
     <asp:HiddenField runat="server" ID="hdnCoordinate" />
     <%--Rev work start 24.06.2022 mantise no:0024987--%> 
+   <%-- Rev 7.0--%>
+     <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 7.0 End--%>
      <div class="modal fade" id="Segment1Model" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->

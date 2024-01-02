@@ -7,6 +7,8 @@
                                                     if the settings "Show Other Condition" is set as "Yes". Mantis: 0026868
  * Rev 4.0      Sanchita      V2.0.40   06-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                     Mantis : 26871
+ * Rev 5.0      Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                    Mantis : 0027050
  *****************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -301,6 +303,20 @@ namespace ERP.OMS.Management.Activities
             {
 
 
+                //REV 5.0
+                string IsDuplicateItemAllowedOrNot = ComBL.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 5.0 END
                 string ShowPricingDetailsSalesChallan = ComBL.GetSystemSettingsResult("ShowPricingDetailsSalesChallan");
                 if (!String.IsNullOrEmpty(ShowPricingDetailsSalesChallan))
                 {
@@ -3069,12 +3085,16 @@ namespace ERP.OMS.Management.Activities
                     .Where(gr => gr.Count() > 1)
                     .Select(g => g.Key);
 
-                    //foreach (var d in duplicateRecords)
-                    //{
-                    //    validate = "duplicateProduct";
-                    //}
 
-
+                    //Rev 9.0
+                    if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                    {
+                        foreach (var d in duplicateRecords)
+                        {
+                            validate = "duplicateProduct";
+                        }
+                    }
+                    //Rev 9.0 END
 
 
                     decimal DocTotalAmount = 0;

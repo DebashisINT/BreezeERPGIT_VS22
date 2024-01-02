@@ -12,7 +12,8 @@
                                                     Mantis : 26871
 * Rev 8.0      Sanchita      V2.0.40     19-10-2023 Mantis : 26924 Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
 * Rev 9.0      Priti	     V2.0.41     20-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
-                                                         
+* Rev 10.0     Priti         V2.0.42     02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                    Mantis : 0027050                                                       
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -360,6 +361,20 @@ namespace ERP.OMS.Management.Activities
 
             if (!IsPostBack)
             {
+                //REV 10.0
+                string IsDuplicateItemAllowedOrNot = ComBL.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 10.0 END
                 string StockPositionShow = ComBL.GetSystemSettingsResult("StockPositionShow");
                 if (!String.IsNullOrEmpty(StockPositionShow))
                 {
@@ -3233,11 +3248,15 @@ namespace ERP.OMS.Management.Activities
                .Where(gr => gr.Count() > 1)
                .Select(g => g.Key);
 
-                //foreach (var d in duplicateRecords)
-                //{
-                //    validate = "duplicateProduct";
-                //}
-
+                //Rev 10.0
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicateRecords)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 10.0 END
                 if (ddlInventory.SelectedValue != "N" && ddlInventory.SelectedValue != "S")
                 {
                     foreach (DataRow dr in tempQuotation.Rows)
