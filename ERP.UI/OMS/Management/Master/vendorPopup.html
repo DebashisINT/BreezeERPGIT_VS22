@@ -1,4 +1,8 @@
-﻿
+﻿<!--================================================== Revision History =============================================
+ Rev Number  DATE             VERSION       DEVELOPER           CHANGES
+ 1.0         02-01-2024       V2.0.42       Sanchita            Settings required to Check Duplicate Vendor Master Name.Mantis: 27126
+====================================================== Revision History =============================================-->
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,11 +20,11 @@
     <link href="../../../assests/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <script src="../../../assests/js/jquery.min.js"></script>
     <script src="../../../assests/bootstrap/js/bootstrap.min.js"></script>
-   
-   
+
+
     <script type="text/javascript" src="/assests/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../../../assests/js/modalmsg.js"></script>
-  
+
     <style>
         .input-sm {
             margin-bottom: 5px;
@@ -72,30 +76,35 @@
         .nogap {
             padding: 0px;
         }
+
         select#cddlSegmentMandatory1 {
             display: none;
         }
-        
 
-            #Table1 > tbody > tr:nth-child(odd) > td {
-                background: #f1f1f1;
-            }
+
+        #Table1 > tbody > tr:nth-child(odd) > td {
+            background: #f1f1f1;
+        }
+
         #Table1 .multiselect-native-select .dropdown-menu {
             max-height: auto;
             height: 350px;
             overflow: hidden auto;
             width: 400px;
         }
+
         #Table1 .btn-group button.dropdown-toggle {
             text-align: left;
             display: inline-block;
             max-width: 214px;
             overflow: hidden;
         }
+
         .multiselect-container.dropdown-menu li.multiselect-filter {
             padding: 0 10px;
         }
-        #Table1 .multiselect-container.dropdown-menu li   label {
+
+        #Table1 .multiselect-container.dropdown-menu li label {
             font-weight: 400;
             white-space: normal;
             margin-bottom: 4px;
@@ -105,8 +114,8 @@
     <script src="../../../assests/pluggins/bootstrap-multiselect/bootstrap-multiselect.min.js"></script>
     <script src="Js/vendorPopup.js?var=2.0"></script>
     <script src="../../../assests/pluggins/choosen/choosen.min.js"></script>
- 
-  
+
+
     <style>
         .form-group input[type="checkbox"] {
             display: none;
@@ -135,7 +144,6 @@
         .clear {
             clear: both;
         }
-       
     </style>
 
 </head>
@@ -145,7 +153,7 @@
         <div class="panel-body">
 
             <div class="row">
-              
+
                 <div class="col-md-3" id="dvUniqueVendorId">
                     <label>Unique Id </label><label style="color:red">*</label>
                     <input class="form-control input-sm" placeholder="Unique ID" maxlength="80" id="VenuniqueId" onblur="CheckVendorUnique()" type="text" data-toggle="tooltip" title="Unique ID">
@@ -162,7 +170,7 @@
                     </select>
                 </div>
 
-              
+
 
 
                 <div class="col-md-3" id="dvdoc" style="display:none">
@@ -170,10 +178,14 @@
                     <input class="form-control input-sm" placeholder="Unique ID" maxlength="80" id="DocNum" type="text" data-toggle="tooltip" title="Unique ID" onblur="UniqueVendorCodeCheck()">
                 </div>
 
-                
+                <!--Rev 1.0 [ onblur="CheckUniqueVendorName()" added ] -->
+                <!--[ <div id="uniqueVendorNameMessage" style="display:none">  added ]-->
                 <div class="col-md-4">
                     <label>Name</label><label style="color:red">*</label>
-                    <input class="form-control input-sm" placeholder="Name" id="VenName" type="text" maxlength="50" data-toggle="tooltip" title="Name">
+                    <input class="form-control input-sm" placeholder="Name" id="VenName" onblur="CheckUniqueVendorName()" type="text" maxlength="50" data-toggle="tooltip" title="Name">
+                    <div id="uniqueVendorNameMessage" style="display:none">
+                        <label id="lblUniqueVendName" style="color:red">Vendor Name Already Exists.</label>
+                    </div>
                 </div>
                 <!--<rev srijeeta   mantis issue 0024515 >-->
                 <div class="col-md-4" id="altcodee">
@@ -199,8 +211,8 @@
                     </div>
                 </div>
 
-              
-               
+
+
             </div>
             <div id="Table1" class="col-md-4">
                 <label>Preferred Products</label>
@@ -306,7 +318,7 @@
 
                             <div class="col-md-6 nogap">
                                 <label>Pin</label><label style="color:red">*</label>
-                                <input class="form-control input-sm" placeholder="Pin Code" id="VenshippingpinCode" maxlength="6" onblur="VendorshippingPinChange()"  type="text" data-toggle="tooltip" title="Pin Code">
+                                <input class="form-control input-sm" placeholder="Pin Code" id="VenshippingpinCode" maxlength="6" onblur="VendorshippingPinChange()" type="text" data-toggle="tooltip" title="Pin Code">
                             </div>
                             <div class="col-md-6">
                                 <label>Alternative Phone</label>
@@ -315,7 +327,6 @@
                             <div class="clear"></div>
 
                             <!--Mantis Issue 0024200-->
-
                             <!--<div class="col-md-12 nogap">
                                 <label>Address 1</label><label style="color:red">*</label>
                                 <input class="form-control input-sm" placeholder="Address 1" id="VenshippingAddress1" maxlength="50" type="text" data-toggle="tooltip" title="Address 1">

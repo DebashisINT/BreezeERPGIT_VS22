@@ -1,7 +1,11 @@
-﻿using DataAccessLayer;
+﻿/******************************************************************************************************
+ *  Rev 1.0     V2.0.42   Sanchita      02/01/2024    Settings required to Check Duplicate Vendor Master Name. Mantis: 27126
+ ****************************************************************************************************/
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -48,8 +52,39 @@ namespace BusinessLogicLayer
 
         }
 
+        // 1.0
+        public bool CheckUniqueVendorName(string VendName, string code, string action)
+        {
+            ProcedureExecute proc;
 
-//(Convert.ToString(vendorid).Trim(), partyno, "PurchaseInvoice_CheckPartyNo");
+            try
+            {
+                using (proc = new ProcedureExecute("Prc_MShortNameCheckingDtl"))
+                {
+                    proc.AddVarcharPara("@action", 50, action);
+                    proc.AddVarcharPara("@Name", 50, VendName);
+                    proc.AddVarcharPara("@code", 50, code);
+                    proc.AddBooleanPara("@ReturnValue", false, QueryParameterDirection.Output);
+
+                    int i = proc.RunActionQuery();
+                    var retData = Convert.ToBoolean(proc.GetParaValue("@ReturnValue"));
+                    return retData;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            finally
+            {
+                proc = null;
+            }
+        }
+        // End of 1.0
+
+        //(Convert.ToString(vendorid).Trim(), partyno, "PurchaseInvoice_CheckPartyNo");
 
         public bool CheckUniquePartyNo(string vendorid, string partyno, string action, string mode,string pbid)
         {

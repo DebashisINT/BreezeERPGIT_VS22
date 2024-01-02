@@ -1,4 +1,8 @@
-﻿ 
+﻿//================================================== Revision History =============================================
+// Rev Number  DATE             VERSION       DEVELOPER           CHANGES
+// 1.0         02-01-2024       V2.0.42       Sanchita            Settings required to Check Duplicate Customer Master Name.Mantis: 27125
+//====================================================== Revision History =============================================
+
        $(document).ready(function () {
            debugger;
            $('#cddlSegmentMandatory1').multiselect({
@@ -702,6 +706,13 @@ function SaveCustomer() {
                 parent.ParentCustomerOnClose(obj.InternalId, $("#Name").val(), uniqueID, obj.BillingStateText, obj.BillingStateCode, obj.ShippingStateText, obj.ShippingStateCode);
                 
             }
+            // Rev 1.0
+            else if (obj.status == "DuplicateCustomerName") {
+                document.getElementById("btnSaveCust").disabled = false;
+                jAlert('Duplicate Customer Name. ');
+
+            }
+            // End of Rev 1.0
             else if (obj.status == "DuplicateGSTIN") {
                 document.getElementById("btnSaveCust").disabled = false;
                 jAlert('Duplicate GSTIN. ');
@@ -1071,6 +1082,11 @@ function SaveVendor() {
                 parent.ParentCustomerOnClose(obj.InternalId, $("#VenName").val(), $("#VenuniqueId").val(), obj.BillingStateText, obj.BillingStateCode, obj.ShippingStateText, obj.ShippingStateCode);
 
             }
+            // Rev 1.0
+            else if (obj.status == "DuplicateCustomerName") {
+                jAlert('Duplicate Customer Name. ');
+            }
+            // End of Rev 1.0
             else if (obj.status == "DuplicateGSTIN") {                
                     jAlert('Duplicate GSTIN. ');                 
             }
@@ -1257,6 +1273,44 @@ function CheckUnique() {
 
 }
 
+// Rev 1.0
+function CheckUniqueCustomerName() {
+    debugger;
+    var CustName = $("#Name").val();
+    var CheckUniqueCustName = false;
+    if (CustName.trim() != '') {
+        $.ajax({
+            type: "POST",
+            url: "/OMS/management/Master/Contact_general.aspx/CheckUniqueCustomerName",
+            data: "{ CategoriesFirstName: '" + CustName + "', Code: 0}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: "true",
+            cache: "false",
+            success: function (msg) {
+                debugger;
+                CheckUniqueCustName = msg.d;
+                if (CheckUniqueCustName != true) {
+                    $("#Name").addClass('alert-danger');
+                    $("#Name").focus();
+
+                    document.getElementById("uniqueCustomerNameMessage").style.display = "block";
+                    $("#Name").val("");
+                    jAlert("Duplicate Name.Cannot Proceed.");
+                } else {
+                    $("#Name").removeClass('alert-danger');
+                    document.getElementById("uniqueCustomerNameMessage").style.display = "none";
+                    document.getElementById("btnSaveCust").disabled = false;
+                }
+            },
+            Error: function (x, e) {
+                // On Error
+            }
+        });
+    }
+
+}
+// End of Rev 1.0
 
 function CheckVendorUnique() {
     var uniqueId = $("#VenuniqueId").val();

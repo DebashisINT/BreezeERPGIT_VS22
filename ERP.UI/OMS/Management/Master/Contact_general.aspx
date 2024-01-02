@@ -4,6 +4,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 2.0                01-12-2023        2.0.41           Sanchita            The Deductee Type in the Customer Master is becoming 
                                                                           Blank while editing and is also allowed to Save with the Blank Value.
                                                                           Mantis: 27054  
+3.0                02-01-2024       V2.0.42           Sanchita            Settings required to Check Duplicate Customer Master Name. Mantis: 27125
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/Erp.Master" AutoEventWireup="True"
@@ -582,7 +583,35 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             }
         }
 
-
+        // Rev 3.0
+        function UniqueCustomerNameCheck() {
+            debugger;
+            var Mode = document.getElementById('KeyVal_InternalID').value;
+            var code = "0";
+            if (Mode != 'Add') {
+                code = document.getElementById('KeyVal_InternalID').value;
+            }
+            var reminderFirstName = ctxtFirstNmae.GetText();
+            if (reminderFirstName.trim() == '')
+                return;
+            var CheckUniqueCustName = false;
+            $.ajax({
+                type: "POST",
+                url: "Contact_general.aspx/CheckUniqueCustomerName",
+                data: JSON.stringify({ CategoriesFirstName: reminderFirstName, Code: code }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    CheckUniqueCustName = msg.d;
+                    if (CheckUniqueCustName != true) {
+                        jAlert('Customer Name already exists.');
+                        ctxtFirstNmae.SetText('');
+                        ctxtFirstNmae.Focus();
+                    }
+                }
+            });
+        }
+        // End of Rev 3.0
 
         function validateGSTIN() {
             $("#myInput").removeClass("hide");
@@ -3569,6 +3598,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                 <dxe:ASPxTextBox ID="txtFirstNmae" runat="server" Width="100%" MaxLength="100" CssClass="upper" ClientInstanceName="ctxtFirstNmae">
                                                                     <%-- <ValidationSettings ValidationGroup="a">
                                                                         </ValidationSettings>--%>
+                                                                    <%--Rev 3.0--%>
+                                                                    <ClientSideEvents LostFocus="function(s, e) {
+	                                                                        UniqueCustomerNameCheck();
+                                                                        }" />
+                                                                    <%--End of Rev 3.0--%>
                                                                 </dxe:ASPxTextBox>
                                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtFirstNmae" ValidationGroup="contact" SetFocusOnError="false" class="tp28 pullrightClass fa fa-exclamation-circle abs iconRed" ToolTip="Mandatory" ErrorMessage=""></asp:RequiredFieldValidator>
                                                             </div>

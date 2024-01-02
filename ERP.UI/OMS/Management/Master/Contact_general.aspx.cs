@@ -1,3 +1,6 @@
+/***********************************************************************************************************
+ * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+ **************************************************************************************************************/ 
 using System;
 using System.Configuration;
 using System.Data;
@@ -2387,6 +2390,28 @@ namespace ERP.OMS.Management.Master
                 // msgBody = msgBody.Replace("@Date", LDcmbProfession.Text);
                 //msgBody = msgBody.Replace("@Profession", dt_EnteredOn.Value.ToString());
             }
+
+            // Rev 1.0
+            if (txtFirstNmae.Text != "")
+            {
+                string AllowDuplicateVendorName = ComBL.GetSystemSettingsResult("AllowDuplicateVendorName");
+                if (!String.IsNullOrEmpty(AllowDuplicateVendorName))
+                {
+                    if (AllowDuplicateVendorName == "No")
+                    {
+                        bool flag = false;
+                        BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                        flag = obj.CheckUniqueVendorName(txtFirstNmae.Text, Convert.ToString(HttpContext.Current.Session["KeyVal_InternalID"]), "CheckUniqueCustomerName");
+
+                        if (!flag)
+                        {
+                            ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Customer Name.');", true);
+                            return;
+                        }
+                    }
+                }
+            }
+            // End of Rev 1.0
 
             string ContType = "";
             string gstin = "";
@@ -4842,7 +4867,27 @@ namespace ERP.OMS.Management.Master
             return Convert.ToString(IsPresent) + "~" + entityName;
         }
 
+        // Rev 1.0
+        [WebMethod]
+        public static bool CheckUniqueCustomerName(string CategoriesFirstName, string Code)
+        {
+            bool flag = false;
+            try
+            {
+                BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                flag = obj.CheckUniqueVendorName(CategoriesFirstName.Trim(), Code, "CheckUniqueCustomerName");
 
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+            }
+            return flag;
+        }
+        // End of Rev 1.0
 
 
         #region Leads
