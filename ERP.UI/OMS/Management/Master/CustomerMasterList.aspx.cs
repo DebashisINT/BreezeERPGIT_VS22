@@ -792,7 +792,10 @@ namespace ERP.OMS.Management.Master
                     {
                         string CustomerCode = string.Empty;
                         string ContType = "Customer/Client";
-                        string GroupID =string.Empty;
+                        // Rev Sanchita
+                        //string GroupID =string.Empty;
+                        int GroupID = 0;
+                        // End of Rev Sanchita
                         int NumberSchemaId = 0;
                         string ISACTIVE = string.Empty;
                         int SCHEMA_TYPE = 0;
@@ -818,7 +821,10 @@ namespace ERP.OMS.Management.Master
                                 DataTable dtgroupcode = oDBEngine.GetDataTable("SELECT gpm_id FROM TBL_MASTER_GROUPMASTER WHERE  GPM_CODE='" + Convert.ToString(row["Group Code"]) + "'");
                                 if (dtgroupcode.Rows.Count > 0)
                                 {
-                                    GroupID = dtgroupcode.Rows[0]["gpm_id"].ToString();
+                                    // Rev Sanchita
+                                    //GroupID = dtgroupcode.Rows[0]["gpm_id"].ToString();
+                                    GroupID = Convert.ToInt32(dtgroupcode.Rows[0]["gpm_id"]);
+                                    // End of Rev Sanchita
                                 }
                                 /*GroupID Checking close*/
 
@@ -934,7 +940,10 @@ namespace ERP.OMS.Management.Master
                                 string ShippingState = ship_state_id;
                                 string ShippingCnt = ship_countryId;*/
 
-                                string GroupCode = GroupID;
+                                // Rev Sanchita
+                                //string GroupCode = GroupID;
+                                int GroupCode = GroupID;
+                                // End of Rev Sanchita
                                 string UserId = Convert.ToString(HttpContext.Current.Session["userid"]);
                                 string ContactType = Convert.ToString(ContType);
                                

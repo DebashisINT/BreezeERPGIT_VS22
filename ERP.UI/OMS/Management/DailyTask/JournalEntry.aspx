@@ -6,6 +6,7 @@
                                                 in the Journal Details list view 
     5.0     Sanchita    V2.0.40  21-09-2023     26831 : Data Freeze is not working properly for Journal   
     6.0     Priti       V2.0.41  03-11-2023     0026956 : Duplicate Journal got Saved   
+    7.0     Sanchita    V2.0.42  04-01-2023     27150: After deleting any rows from the Journal Voucher along with Blank row Debit and Credit value not refreshing.
 =========================================================End Revision History========================================================================--%>
 
 <%@ Page Title="Journal Entry" EnableEventValidation="false" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalEntry.aspx.cs" Inherits="ERP.OMS.Management.DailyTask.JournalVoucherEntry" %>
@@ -3059,6 +3060,14 @@
                 if (noofvisiblerows != "1") {
                     var debit = grid.batchEditApi.GetCellValue(e.visibleIndex, "WithDrawl");
                     var credit = grid.batchEditApi.GetCellValue(e.visibleIndex, "Receipt");
+                    // Rev 7.0
+                    if (debit == null) {
+                        debit = 0;
+                    }
+                    if (credit == null) {
+                        credit = 0;
+                    }
+                    // End of Rev 7.0
                     if (debit != 0)
                         c_txt_Debit.SetValue(DecimalRoundoff(parseFloat(c_txt_Debit.GetValue()) - parseFloat(debit), 2));
                     if (credit != 0)
@@ -3166,6 +3175,14 @@
                     var credit = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "ReceiptTDS");
                     var UniqueKey = gridTDS.batchEditApi.GetCellValue(e.visibleIndex, "UniqueID");
 
+                    // Rev 7.0
+                    if (debit == null) {
+                        debit = 0;
+                    }
+                    if (credit == null) {
+                        credit = 0;
+                    }
+                    // End of Rev 7.0
                     if (debit != 0)
                         c_txt_DebitTDS.SetValue(DecimalRoundoff(parseFloat(c_txt_DebitTDS.GetValue()) - parseFloat(debit), 2));
                     if (credit != 0)
