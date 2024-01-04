@@ -1,5 +1,12 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+//   1.0   Priti  V2.0.42     04-01-2024     0027146:An error msg required while uploading Customer Balance Adjustment (DN) and Customer Balance Adjustment (CN)
+
+//========================================== End Revision History =======================================================================================================--%>
+
+using BusinessLogicLayer;
 using DataAccessLayer;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +17,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using DevExpress.XtraPrinting;
+using System.Text.RegularExpressions;
 namespace ERP.OMS.Management.Activities
 {
     public partial class DebitInvoice_Import : System.Web.UI.Page
@@ -233,142 +241,216 @@ namespace ERP.OMS.Management.Activities
 
         protected void btnImport_Click(object sender, EventArgs e)
         {
+            //REV 1.0
             string messege = "";
             txtErrorMessege.Text = "";
 
             try
             {
+                string path, path1, FileName, s, time, cannotParse;
+                string FilePath = "";
+                string fName = string.Empty;
+                Boolean HasLog = false;
                 if (OFDBankSelect.FileContent.Length != 0)
                 {
+                    path = String.Empty;
+                    path1 = String.Empty;
+                    FileName = String.Empty;
+                    s = String.Empty;
+                    time = String.Empty;
+                    cannotParse = String.Empty;
+                    string strmodule = "InsertTradeData";
+
                     BusinessLogicLayer.TransctionDescription td = new BusinessLogicLayer.TransctionDescription();
 
-                    string FilePath = Path.GetFullPath(OFDBankSelect.PostedFile.FileName);
-                    string Original_FileName = Path.GetFileName(FilePath);
-                    string FileName = Original_FileName.Substring(0, Original_FileName.Length - 4) + "_" + oconverter.GetAutoGenerateNo() + ".csv";
+                    FilePath = Path.GetFullPath(OFDBankSelect.PostedFile.FileName);
+                    FileName = Path.GetFileName(FilePath);
+                    string fileExtension = Path.GetExtension(FileName);
 
-                    string UploadPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + FileName);
+                    if (fileExtension.ToUpper() != ".XLS" && fileExtension.ToUpper() != ".XLSX")
+                    {
+                        Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Uploaded file format not supported by the system');</script>");
+                        return;
+                    }
+
+                    if (fileExtension.Equals(".xlsx"))
+                    {
+                        fName = FileName.Replace(".xlsx", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xlsx");
+                    }
+
+                    else if (fileExtension.Equals(".xls"))
+                    {
+                        fName = FileName.Replace(".xls", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xls");
+                    }
+
+                    else if (fileExtension.Equals(".csv"))
+                    {
+                        fName = FileName.Replace(".csv", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".csv");
+                    }
+
+                    Session["FileName"] = fName;
+
+                    //String UploadPath = Server.MapPath((Convert.ToString(ConfigurationManager.AppSettings["SaveCSV"]) + Session["FileName"].ToString()));
+                    //OFDBankSelect.PostedFile.SaveAs(UploadPath);
+
+                    string UploadPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) +Session["FileName"].ToString());
                     OFDBankSelect.PostedFile.SaveAs(UploadPath);
 
-                    string[] numberingScheme = (ddl_numberingScheme.SelectedValue).Split(new string[] { "~" }, StringSplitOptions.None);
-                    string strNumberingScheme = numberingScheme[0];
+                    //ClearArray();
 
-                    string strPostingDate = "1990-01-01";
-                    if (dtPostingDate.Date != null) strPostingDate = Convert.ToDateTime(dtPostingDate.Date).ToString("yyyy-MM-dd");
-
-                    string strCompanyID = Convert.ToString(Session["LastCompany"]);
-                    string strFinYear = Convert.ToString(Session["LastFinYear"]);
-                    string strBranch = Convert.ToString(hdnBranchID.Value);
-
-                    string strMainAccount = Convert.ToString(lookup_MainAccount.Value);
-                    string strSubAccount = Convert.ToString(lookup_SubAccount.Value);
-
-                    //UploadPath = "D:\\Peekay\\ERP\\CommonFolder/haldia list updated as on 15th november 2017_636480117697548170.csv";
-                    int strIsComplete = 0;
-                    string strDuplicateList = "";
-
-                    if (Path.GetExtension(FilePath) == ".csv" || Path.GetExtension(FilePath) == ".CSV")
+                    BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+                    try
                     {
-                        ModifyImport(strNumberingScheme, strPostingDate,strCompanyID, strFinYear, strBranch, strMainAccount, strSubAccount, UploadPath, ref strIsComplete, ref strDuplicateList);
+                        HttpPostedFile file = OFDBankSelect.PostedFile;
+                        String extension = Path.GetExtension(FileName);
+
+                      
+                        Import_To_Grid(UploadPath, extension, file);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        strIsComplete = -70;
+                        //HasLog = false;
                     }
 
-                    string[] split;
-                    int i = 1;
-
-                    if (strIsComplete == 1)
-                    {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Import Successfully.');window.location='DebitInvoice_Import.aspx';", true);
-                    }
-                    else if (strIsComplete == -20)
-                    {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Data in excel are mismatch.');", true);
-                    }
-                    else if (strIsComplete == -70)
-                    {
-                        txtErrorMessege.Text = "Only files with following extensions allowed : CSV.";
-                        txtErrorList.Text = "";
-                    }
-                    else if (strIsComplete == -30)
-                    {
-                        split = strDuplicateList.Split(';');
-                        foreach (string item in split)
-                        {
-                            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
-                            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
-                            i++;
-                        }
-
-                        txtErrorMessege.Text = "Following Customer data in excel are mismatch :";
-                        txtErrorList.Text = messege;
-                    }
-                    else if (strIsComplete == -35)
-                    {
-                        split = strDuplicateList.Split(';');
-                        foreach (string item in split)
-                        {
-                            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
-                            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
-                            i++;
-                        }
-
-                        txtErrorMessege.Text = "Following Customer data in excel are duplicate :";
-                        txtErrorList.Text = messege;
-                    }
-                    else if (strIsComplete == -40)
-                    {
-                        split = strDuplicateList.Split(';');
-                        foreach (string item in split)
-                        {
-                            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
-                            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
-                            i++;
-                        }
-
-                        txtErrorMessege.Text = "Following Adjusted Document No. data in excel are mismatch :";
-                        txtErrorList.Text = messege;
-                    }
-                    else if (strIsComplete == -45)
-                    {
-                        split = strDuplicateList.Split(';');
-                        foreach (string item in split)
-                        {
-                            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
-                            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
-                            i++;
-                        }
-
-                        txtErrorMessege.Text = "Following Adjusted Document No. data in excel are duplicate :";
-                        txtErrorList.Text = messege;
-                    }
-                    else if (strIsComplete == -50)
-                    {
-                        split = strDuplicateList.Split(';');
-                        foreach (string item in split)
-                        {
-                            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
-                            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
-                            i++;
-                        }
-
-                        txtErrorMessege.Text = "Following Adjusted Document No. already adjust :";
-                        txtErrorList.Text = messege;
-                    }
-                    else if (strIsComplete == -65)
-                    {
-                        txtErrorList.Text = strDuplicateList;
-                    }
-                    else if (strIsComplete == -10)
-                    {
-                        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Please try again later.');", true);
-                    }
+                   // Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Import Process Successfully Completed!'); ShowLogData('" + HasLog + "');</script>");
                 }
                 else
                 {
-                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Please attach file..');", true);
+                    Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Selected File Cannot Be Blank');</script>");
                 }
+
+                //if (OFDBankSelect.FileContent.Length != 0)
+                //{
+                //    BusinessLogicLayer.TransctionDescription td = new BusinessLogicLayer.TransctionDescription();
+
+                //    string FilePath = Path.GetFullPath(OFDBankSelect.PostedFile.FileName);
+                //    string Original_FileName = Path.GetFileName(FilePath);
+                //    string FileName = Original_FileName.Substring(0, Original_FileName.Length - 4) + "_" + oconverter.GetAutoGenerateNo() + ".csv";
+
+                //    string UploadPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + FileName);
+                //    OFDBankSelect.PostedFile.SaveAs(UploadPath);
+
+                //    string[] numberingScheme = (ddl_numberingScheme.SelectedValue).Split(new string[] { "~" }, StringSplitOptions.None);
+                //    string strNumberingScheme = numberingScheme[0];
+
+                //    string strPostingDate = "1990-01-01";
+                //    if (dtPostingDate.Date != null) strPostingDate = Convert.ToDateTime(dtPostingDate.Date).ToString("yyyy-MM-dd");
+
+                //    string strCompanyID = Convert.ToString(Session["LastCompany"]);
+                //    string strFinYear = Convert.ToString(Session["LastFinYear"]);
+                //    string strBranch = Convert.ToString(hdnBranchID.Value);
+
+                //    string strMainAccount = Convert.ToString(lookup_MainAccount.Value);
+                //    string strSubAccount = Convert.ToString(lookup_SubAccount.Value);
+
+                //    //UploadPath = "D:\\Peekay\\ERP\\CommonFolder/haldia list updated as on 15th november 2017_636480117697548170.csv";
+                //    int strIsComplete = 0;
+                //    string strDuplicateList = "";
+
+                //    if (Path.GetExtension(FilePath) == ".csv" || Path.GetExtension(FilePath) == ".CSV")
+                //    {
+                //        ModifyImport(strNumberingScheme, strPostingDate,strCompanyID, strFinYear, strBranch, strMainAccount, strSubAccount, UploadPath, ref strIsComplete, ref strDuplicateList);
+                //    }
+                //    else
+                //    {
+                //        strIsComplete = -70;
+                //    }
+
+                //    string[] split;
+                //    int i = 1;
+
+                //    if (strIsComplete == 1)
+                //    {
+                //        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Import Successfully.');window.location='DebitInvoice_Import.aspx';", true);
+                //    }
+                //    else if (strIsComplete == -20)
+                //    {
+                //        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Data in excel are mismatch.');", true);
+                //    }
+                //    else if (strIsComplete == -70)
+                //    {
+                //        txtErrorMessege.Text = "Only files with following extensions allowed : CSV.";
+                //        txtErrorList.Text = "";
+                //    }
+                //    else if (strIsComplete == -30)
+                //    {
+                //        split = strDuplicateList.Split(';');
+                //        foreach (string item in split)
+                //        {
+                //            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                //            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                //            i++;
+                //        }
+
+                //        txtErrorMessege.Text = "Following Customer data in excel are mismatch :";
+                //        txtErrorList.Text = messege;
+                //    }
+                //    else if (strIsComplete == -35)
+                //    {
+                //        split = strDuplicateList.Split(';');
+                //        foreach (string item in split)
+                //        {
+                //            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                //            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                //            i++;
+                //        }
+
+                //        txtErrorMessege.Text = "Following Customer data in excel are duplicate :";
+                //        txtErrorList.Text = messege;
+                //    }
+                //    else if (strIsComplete == -40)
+                //    {
+                //        split = strDuplicateList.Split(';');
+                //        foreach (string item in split)
+                //        {
+                //            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                //            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                //            i++;
+                //        }
+
+                //        txtErrorMessege.Text = "Following Adjusted Document No. data in excel are mismatch :";
+                //        txtErrorList.Text = messege;
+                //    }
+                //    else if (strIsComplete == -45)
+                //    {
+                //        split = strDuplicateList.Split(';');
+                //        foreach (string item in split)
+                //        {
+                //            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                //            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                //            i++;
+                //        }
+
+                //        txtErrorMessege.Text = "Following Adjusted Document No. data in excel are duplicate :";
+                //        txtErrorList.Text = messege;
+                //    }
+                //    else if (strIsComplete == -50)
+                //    {
+                //        split = strDuplicateList.Split(';');
+                //        foreach (string item in split)
+                //        {
+                //            if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                //            else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                //            i++;
+                //        }
+
+                //        txtErrorMessege.Text = "Following Adjusted Document No. already adjust :";
+                //        txtErrorList.Text = messege;
+                //    }
+                //    else if (strIsComplete == -65)
+                //    {
+                //        txtErrorList.Text = strDuplicateList;
+                //    }
+                //    else if (strIsComplete == -10)
+                //    {
+                //        ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Please try again later.');", true);
+                //    }
+                //}
+                //else
+                //{
+                //    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Please attach file..');", true);
+                //}
+            //REV 1.0 END
             }
             catch (Exception ex)
             {
@@ -377,7 +459,251 @@ namespace ERP.OMS.Management.Activities
 
             ddl_Branch.SelectedValue = Convert.ToString(hdnBranchID.Value);
         }
-        public void ModifyImport(string NumberingScheme, string PostingDate,string strCompanyID, string strFinYear, string strBranch, string strMainAccount, string strSubAccount, string strPath, ref int strIsComplete, ref string strDuplicateList)
+        //REV 1.0
+        public void Import_To_Grid(string FilePath, string Extension, HttpPostedFile file)
+        {
+            string messege = "";
+            txtErrorMessege.Text = "";
+            Contact objCustomer = new Contact();
+            Boolean Success = false;
+            //Boolean HasLog = false;
+            int loopcounter = 1;
+            string[] numberingScheme = (ddl_numberingScheme.SelectedValue).Split(new string[] { "~" }, StringSplitOptions.None);
+            string strNumberingScheme = numberingScheme[0];
+            string strPostingDate = "1990-01-01";
+            if (dtPostingDate.Date != null) strPostingDate = Convert.ToDateTime(dtPostingDate.Date).ToString("yyyy-MM-dd");
+
+            string strCompanyID = Convert.ToString(Session["LastCompany"]);
+            string strFinYear = Convert.ToString(Session["LastFinYear"]);
+            string strBranch = Convert.ToString(hdnBranchID.Value);
+            string strMainAccount = Convert.ToString(lookup_MainAccount.Value);
+            string strSubAccount = Convert.ToString(lookup_SubAccount.Value);
+            if (file.FileName.Trim() != "")
+            {
+
+                if (Extension.ToUpper() == ".XLS" || Extension.ToUpper() == ".XLSX")
+                {
+                    DataTable dt = new DataTable();
+
+                    using (SpreadsheetDocument spreadSheetDocument = SpreadsheetDocument.Open(FilePath, false))
+                    {
+
+                        Sheet sheet = spreadSheetDocument.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
+                        Worksheet worksheet = (spreadSheetDocument.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
+                        IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+                        foreach (Row row in rows)
+                        {
+                            if (row.RowIndex.Value == 1)
+                            {
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    if (cell.CellValue != null)
+                                    {
+                                        dt.Columns.Add(GetValue(spreadSheetDocument, cell));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                DataRow tempRow = dt.NewRow();
+                                int columnIndex = 0;
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    // Gets the column index of the cell with data
+                                    int cellColumnIndex = (int)GetColumnIndexFromName(GetColumnName(cell.CellReference));
+                                    cellColumnIndex--; //zero based index
+                                    if (columnIndex < cellColumnIndex)
+                                    {
+                                        do
+                                        {
+                                            tempRow[columnIndex] = ""; //Insert blank data here;
+                                            columnIndex++;
+                                        }
+                                        while (columnIndex < cellColumnIndex);
+                                    }
+                                    try
+                                    {
+                                        tempRow[columnIndex] = GetValue(spreadSheetDocument, cell);
+                                    }
+                                    catch
+                                    {
+                                        tempRow[columnIndex] = "";
+                                    }
+
+                                    columnIndex++;
+                                }
+                                dt.Rows.Add(tempRow);
+                            }
+                        }
+                    }
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            loopcounter++;
+                            try
+                            {
+                                string AdjustDocType = Convert.ToString(row["AdjustDocType"]);
+                                string AdjustDocNumber = Convert.ToString(row["AdjustDocNumber"]);
+                                string DocDate = Convert.ToString(row["DocDate"]);
+                                string Customer = Convert.ToString(row["Customer"]);
+                                string Amount = Convert.ToString(row["Amount"]);
+
+
+                                int strIsComplete = 0;
+                                string strDuplicateList = "";
+
+                                
+                                ModifyImport(strNumberingScheme, strPostingDate, strCompanyID, strFinYear, strBranch, strMainAccount, strSubAccount, AdjustDocType, AdjustDocNumber, DocDate, Customer, Amount, ref strIsComplete, ref strDuplicateList);
+                                
+
+                                string[] split;
+                                int i = 1;
+
+                                if (strIsComplete == 1)
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Import Successfully.');window.location='DebitInvoice_Import.aspx';", true);
+                                }
+                                else if (strIsComplete == -20)
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Data in excel are mismatch.');", true);
+                                }
+                                else if (strIsComplete == -70)
+                                {
+                                    txtErrorMessege.Text = "Only files with following extensions allowed : CSV.";
+                                    txtErrorList.Text = "";
+                                }
+                                else if (strIsComplete == -30)
+                                {
+                                    split = strDuplicateList.Split(';');
+                                    foreach (string item in split)
+                                    {
+                                        if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                                        else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                                        i++;
+                                    }
+
+                                    txtErrorMessege.Text = "Following Customer data in excel are mismatch :";
+                                    txtErrorList.Text = messege;
+                                }
+                                else if (strIsComplete == -35)
+                                {
+                                    split = strDuplicateList.Split(';');
+                                    foreach (string item in split)
+                                    {
+                                        if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                                        else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                                        i++;
+                                    }
+
+                                    txtErrorMessege.Text = "Following Customer data in excel are duplicate :";
+                                    txtErrorList.Text = messege;
+                                }
+                                else if (strIsComplete == -40)
+                                {
+                                    split = strDuplicateList.Split(';');
+                                    foreach (string item in split)
+                                    {
+                                        if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                                        else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                                        i++;
+                                    }
+
+                                    txtErrorMessege.Text = "Following Adjusted Document No. data in excel are mismatch :";
+                                    txtErrorList.Text = messege;
+                                }
+                                else if (strIsComplete == -45)
+                                {
+                                    split = strDuplicateList.Split(';');
+                                    foreach (string item in split)
+                                    {
+                                        if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                                        else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                                        i++;
+                                    }
+
+                                    txtErrorMessege.Text = "Following Adjusted Document No. data in excel are duplicate :";
+                                    txtErrorList.Text = messege;
+                                }
+                                else if (strIsComplete == -50)
+                                {
+                                    split = strDuplicateList.Split(';');
+                                    foreach (string item in split)
+                                    {
+                                        if (messege.Trim() == "") messege = Convert.ToString(i) + ". " + item;
+                                        else messege = messege + "</br> " + Convert.ToString(i) + ". " + item;
+                                        i++;
+                                    }
+
+                                    txtErrorMessege.Text = "Following Adjusted Document No. already adjust :";
+                                    txtErrorList.Text = messege;
+                                }
+                                else if (strIsComplete == -65)
+                                {
+                                    txtErrorList.Text = strDuplicateList;
+                                }
+                                else if (strIsComplete == -10)
+                                {
+                                    ScriptManager.RegisterStartupScript(this, this.GetType(), "popup", "jAlert('Please try again later.');", true);
+                                }
+
+
+
+
+
+
+                            }
+                            catch (Exception ex)
+                            {
+                               
+                            
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            //return HasLog;
+        }
+        private string GetValue(SpreadsheetDocument doc, Cell cell)
+        {
+            string value = cell.CellValue.InnerText;
+            if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+            {
+                return doc.WorkbookPart.SharedStringTablePart.SharedStringTable.ChildElements.GetItem(int.Parse(value)).InnerText;
+            }
+            return value;
+        }
+        public static int? GetColumnIndexFromName(string columnName)
+        {
+            //return columnIndex;
+            string name = columnName;
+            int number = 0;
+            int pow = 1;
+            for (int i = name.Length - 1; i >= 0; i--)
+            {
+                number += (name[i] - 'A' + 1) * pow;
+                pow *= 26;
+            }
+            return number;
+        }
+        public static string GetColumnName(string cellReference)
+        {
+            // Create a regular expression to match the column name portion of the cell name.
+            Regex regex = new Regex("[A-Za-z]+");
+            Match match = regex.Match(cellReference);
+
+            return match.Value;
+        }
+        //public void ModifyImport(string NumberingScheme, string PostingDate,string strCompanyID, string strFinYear, string strBranch, string strMainAccount, string strSubAccount, string strPath, ref int strIsComplete, ref string strDuplicateList)
+        public void ModifyImport(string NumberingScheme, string PostingDate, string strCompanyID, string strFinYear, string strBranch, string strMainAccount, string strSubAccount, string AdjustDocType, string AdjustDocNumber, string DocDate, string Customer, string Amount, ref int strIsComplete, ref string strDuplicateList)
+        //REV 1.0 END
         {
             try
             {
@@ -397,10 +723,18 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@BranchID", strBranch);
                 cmd.Parameters.AddWithValue("@MainAccount", strMainAccount);
                 cmd.Parameters.AddWithValue("@SubAccount", strSubAccount);
-                cmd.Parameters.AddWithValue("@FilePath", strPath);
+                //REV 1.0
+                //cmd.Parameters.AddWithValue("@FilePath", strPath);
+                //REV 1.0 END
                 cmd.Parameters.AddWithValue("@DocType", "Dr");
                 cmd.Parameters.AddWithValue("@UserID", Convert.ToString(Session["userid"]));
-
+                //REV 1.0
+                cmd.Parameters.AddWithValue("@_AdjustDocType ", AdjustDocType);
+                cmd.Parameters.AddWithValue("@_AdjustDocNumber", AdjustDocNumber);
+                cmd.Parameters.AddWithValue("@_Customer", Customer);
+                cmd.Parameters.AddWithValue("@_DocDate", DocDate);
+                cmd.Parameters.AddWithValue("@_Amount", Amount);
+                //REV 1.0 END
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
 
@@ -424,13 +758,26 @@ namespace ERP.OMS.Management.Activities
         }
         protected void lnlDownloader_Click(object sender, EventArgs e)
         {
-            string strFileName = "Sample_DebitNote_Import.csv";
+            //REV 1.0
+            //string strFileName = "Sample_DebitNote_Import.csv";
+            //string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
+
+            //Response.ContentType = "application/CSV"; ;
+            //Response.AppendHeader("Content-Disposition", "attachment; filename=DebitNote.csv");
+            //Response.TransmitFile(strPath);
+            //Response.End();
+
+
+            string strFileName = "Sample_DebitNote_Import.xlsx";           
             string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
 
-            Response.ContentType = "application/CSV"; ;
-            Response.AppendHeader("Content-Disposition", "attachment; filename=DebitNote.csv");
+            Response.ContentType = "application/xlsx";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=DebitNote.xlsx");       
             Response.TransmitFile(strPath);
             Response.End();
+            //REV 1.0 END
+
+
         }
         public void SetDateWithFinyearCheck()
         {
