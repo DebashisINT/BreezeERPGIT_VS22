@@ -323,8 +323,11 @@ namespace BusinessLogicLayer
                 string Registered, string GSTIN, string TransactionCategory, string AddressBillType, string EMAILID, string BillingContactPerson, string BillingAddress1, string BillingAddress2,
                 string BillingAddress3,string BillingLandmark, string BillingPhone, string BillingPin, 
                string AddressShipType, string ShippingAddress1, string ShippingAddress2, string ShippingAddress3,string ShippingLandmark, string ShippingPhone,
-               string ShippingPin, string GroupCode, string UserId, string ContactType, int NumberSchemaId)
-              {              
+               // Rev Sanchita
+               //string ShippingPin, string GroupCode, string UserId, string ContactType, int NumberSchemaId)
+               string ShippingPin, int GroupCode, string UserId, string ContactType, int NumberSchemaId)
+                // End of Rev Sanchita
+                {              
                DataSet ds = new DataSet();
                ProcedureExecute proc = new ProcedureExecute("PRC_CUSTOMERIMPORTFROMEXCEL");
                proc.AddVarcharPara("@Action", 100, "InsertCustomerDataFromExcel");
@@ -370,7 +373,10 @@ namespace BusinessLogicLayer
                proc.AddVarcharPara("@ShippingPhone", 200, ShippingPhone);
                proc.AddVarcharPara("@ShippingPin", 200, ShippingPin);              
 
-               proc.AddDecimalPara("@GroupCode", 4, 19, Convert.ToInt32(GroupCode));
+               // Rev Sanchita
+               //proc.AddDecimalPara("@GroupCode", 4, 19, Convert.ToInt32(GroupCode));
+               proc.AddIntegerPara("@GroupCode", GroupCode);
+               // End of Rev Sanchita
                proc.AddIntegerPara("@UserId", Convert.ToInt32(UserId));
                proc.AddVarcharPara("@ContactType",55, ContactType);
                proc.AddIntegerPara("@NumberSchemaId", NumberSchemaId);               
