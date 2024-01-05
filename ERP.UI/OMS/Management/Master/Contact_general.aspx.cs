@@ -2394,19 +2394,41 @@ namespace ERP.OMS.Management.Master
             // Rev 1.0
             if (txtFirstNmae.Text != "")
             {
-                string AllowDuplicateVendorName = ComBL.GetSystemSettingsResult("AllowDuplicateVendorName");
-                if (!String.IsNullOrEmpty(AllowDuplicateVendorName))
+                if (Convert.ToString(Session["requesttype"]) == "Customer/Client")
                 {
-                    if (AllowDuplicateVendorName == "No")
+                    string AllowDuplicateCustomerName = ComBL.GetSystemSettingsResult("AllowDuplicateCustomerName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateCustomerName))
                     {
-                        bool flag = false;
-                        BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
-                        flag = obj.CheckUniqueVendorName(txtFirstNmae.Text, Convert.ToString(HttpContext.Current.Session["KeyVal_InternalID"]), "CheckUniqueCustomerName");
-
-                        if (!flag)
+                        if (AllowDuplicateCustomerName == "No")
                         {
-                            ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Customer Name.');", true);
-                            return;
+                            bool flag = false;
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            flag = obj.CheckUniqueVendorName(txtFirstNmae.Text, Convert.ToString(HttpContext.Current.Session["KeyVal_InternalID"]), "CheckUniqueCustomerName");
+
+                            if (!flag)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Name.');", true);
+                                return;
+                            }
+                        }
+                    }
+                }
+                else if (Convert.ToString(Session["requesttype"]) == "Transporter")
+                {
+                    string AllowDuplicateTransporterName = ComBL.GetSystemSettingsResult("AllowDuplicateTransporterName");
+                    if (!String.IsNullOrEmpty(AllowDuplicateTransporterName))
+                    {
+                        if (AllowDuplicateTransporterName == "No")
+                        {
+                            bool flag = false;
+                            BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
+                            flag = obj.CheckUniqueVendorName(txtFirstNmae.Text, Convert.ToString(HttpContext.Current.Session["KeyVal_InternalID"]), "CheckUniqueTransporterName");
+
+                            if (!flag)
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "redirect", "jAlert('Duplicate Name.');", true);
+                                return;
+                            }
                         }
                     }
                 }
@@ -4871,19 +4893,32 @@ namespace ERP.OMS.Management.Master
         [WebMethod]
         public static bool CheckUniqueCustomerName(string CategoriesFirstName, string Code)
         {
-            bool flag = false;
-            try
-            {
-                BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
-                flag = obj.CheckUniqueVendorName(CategoriesFirstName.Trim(), Code, "CheckUniqueCustomerName");
+            bool flag = true;
 
-            }
-            catch (Exception ex)
+            if (Convert.ToString(System.Web.HttpContext.Current.Session["requesttype"]) == "Customer/Client" || 
+                    Convert.ToString(System.Web.HttpContext.Current.Session["requesttype"]) == "Transporter")
             {
+                try
+                {
+                    BusinessLogicLayer.MShortNameCheckingBL obj = new BusinessLogicLayer.MShortNameCheckingBL();
 
-            }
-            finally
-            {
+                    if (Convert.ToString(System.Web.HttpContext.Current.Session["requesttype"]) == "Customer/Client")
+                    {
+                        flag = obj.CheckUniqueVendorName(CategoriesFirstName.Trim(), Code, "CheckUniqueCustomerName");
+                    }
+                    else if(Convert.ToString(System.Web.HttpContext.Current.Session["requesttype"]) == "Transporter")
+                    {
+                        flag = obj.CheckUniqueVendorName(CategoriesFirstName.Trim(), Code, "CheckUniqueTransporterName");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                }
             }
             return flag;
         }

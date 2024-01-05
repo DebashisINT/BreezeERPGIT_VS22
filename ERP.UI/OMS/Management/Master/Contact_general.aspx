@@ -604,7 +604,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 success: function (msg) {
                     CheckUniqueCustName = msg.d;
                     if (CheckUniqueCustName != true) {
-                        jAlert('Customer Name already exists.');
+                        jAlert('Name already exists.');
                         ctxtFirstNmae.SetText('');
                         ctxtFirstNmae.Focus();
                     }
