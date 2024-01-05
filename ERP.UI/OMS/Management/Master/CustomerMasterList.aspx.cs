@@ -1,4 +1,7 @@
-﻿using System;
+﻿/***********************************************************************************************************
+ * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+ **************************************************************************************************************/
+using System;
 using System.Data;
 using System.Web;
 using DevExpress.Web;
@@ -792,10 +795,10 @@ namespace ERP.OMS.Management.Master
                     {
                         string CustomerCode = string.Empty;
                         string ContType = "Customer/Client";
-                        // Rev Sanchita
+                        // Rev 1.0
                         //string GroupID =string.Empty;
                         int GroupID = 0;
-                        // End of Rev Sanchita
+                        // End of Rev 1.0
                         int NumberSchemaId = 0;
                         string ISACTIVE = string.Empty;
                         int SCHEMA_TYPE = 0;
@@ -821,10 +824,10 @@ namespace ERP.OMS.Management.Master
                                 DataTable dtgroupcode = oDBEngine.GetDataTable("SELECT gpm_id FROM TBL_MASTER_GROUPMASTER WHERE  GPM_CODE='" + Convert.ToString(row["Group Code"]) + "'");
                                 if (dtgroupcode.Rows.Count > 0)
                                 {
-                                    // Rev Sanchita
+                                    // Rev 1.0
                                     //GroupID = dtgroupcode.Rows[0]["gpm_id"].ToString();
                                     GroupID = Convert.ToInt32(dtgroupcode.Rows[0]["gpm_id"]);
-                                    // End of Rev Sanchita
+                                    // End of Rev 1.0
                                 }
                                 /*GroupID Checking close*/
 
@@ -940,10 +943,10 @@ namespace ERP.OMS.Management.Master
                                 string ShippingState = ship_state_id;
                                 string ShippingCnt = ship_countryId;*/
 
-                                // Rev Sanchita
+                                // Rev 1.0
                                 //string GroupCode = GroupID;
                                 int GroupCode = GroupID;
-                                // End of Rev Sanchita
+                                // End of Rev 1.0
                                 string UserId = Convert.ToString(HttpContext.Current.Session["userid"]);
                                 string ContactType = Convert.ToString(ContType);
                                

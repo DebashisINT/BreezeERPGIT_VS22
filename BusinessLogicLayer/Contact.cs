@@ -1,4 +1,7 @@
-﻿using System;
+﻿/***********************************************************************************************************
+ * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+ **************************************************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -323,10 +326,10 @@ namespace BusinessLogicLayer
                 string Registered, string GSTIN, string TransactionCategory, string AddressBillType, string EMAILID, string BillingContactPerson, string BillingAddress1, string BillingAddress2,
                 string BillingAddress3,string BillingLandmark, string BillingPhone, string BillingPin, 
                string AddressShipType, string ShippingAddress1, string ShippingAddress2, string ShippingAddress3,string ShippingLandmark, string ShippingPhone,
-               // Rev Sanchita
+               // Rev 1.0
                //string ShippingPin, string GroupCode, string UserId, string ContactType, int NumberSchemaId)
                string ShippingPin, int GroupCode, string UserId, string ContactType, int NumberSchemaId)
-                // End of Rev Sanchita
+                // End of Rev 1.0
                 {              
                DataSet ds = new DataSet();
                ProcedureExecute proc = new ProcedureExecute("PRC_CUSTOMERIMPORTFROMEXCEL");
@@ -373,10 +376,10 @@ namespace BusinessLogicLayer
                proc.AddVarcharPara("@ShippingPhone", 200, ShippingPhone);
                proc.AddVarcharPara("@ShippingPin", 200, ShippingPin);              
 
-               // Rev Sanchita
+               // Rev 1.0
                //proc.AddDecimalPara("@GroupCode", 4, 19, Convert.ToInt32(GroupCode));
                proc.AddIntegerPara("@GroupCode", GroupCode);
-               // End of Rev Sanchita
+               // End of Rev 1.0
                proc.AddIntegerPara("@UserId", Convert.ToInt32(UserId));
                proc.AddVarcharPara("@ContactType",55, ContactType);
                proc.AddIntegerPara("@NumberSchemaId", NumberSchemaId);               

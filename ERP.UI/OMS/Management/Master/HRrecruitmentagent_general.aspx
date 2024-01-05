@@ -927,7 +927,7 @@ Rev Number  DATE              VERSION       DEVELOPER           CHANGES
                 success: function (msg) {
                     CheckUniqueVendName = msg.d;
                     if (CheckUniqueVendName != true) {
-                        jAlert('Vendor Name already exists.');
+                        jAlert('Name already exists.');
                         ctxtFirstName.SetText('');
                         ctxtFirstName.Focus();
                     }
