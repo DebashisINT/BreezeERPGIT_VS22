@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                07-04-2023        2.0.37           Pallab              25943: Customer Balance Adjustment (CN) module design modification
+2.0                10-01-2024        V2.0.42          Priti               0027146:An error msg required while uploading Customer Balance Adjustment (DN) and Customer Balance Adjustment (CN)
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Customer Balance Adj. (CN)" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CreditInvoice_Import.aspx.cs" Inherits="ERP.OMS.Management.Activities.CreditInvoice_Import" %>
@@ -661,7 +663,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
             <div style="clear: both">
                 <div class="col-md-2 lblmTop8">
-                    <label>Choose File</label>&nbsp;&nbsp;<span style="color: red">(Only .CSV File)</span>
+                    <label>Choose File</label>&nbsp;&nbsp;
+                    <%--rev 2.0--%>
+                  <%--  <span style="color: red">(Only .CSV File)</span>--%>
+                   <%-- Rev 2.0 END--%>
                     <div>
                         <asp:FileUpload ID="OFDBankSelect" runat="server" Width="100%" />
                     </div>
