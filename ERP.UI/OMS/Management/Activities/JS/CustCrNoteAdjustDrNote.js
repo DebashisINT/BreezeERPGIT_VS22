@@ -554,7 +554,10 @@ function ValidateEntry() {
         jAlert("Adjusted Amount must be greater than zero.", "Alert", function () { cAdjAmt.Focus(); });
         return false;
     }
-    if (parseFloat(cAdjAmt.GetValue()) != GetTotalAdjustedAmount()) {
+    // Rev Sanchita 
+    //if (parseFloat(cAdjAmt.GetValue()) != GetTotalAdjustedAmount()) {
+    if (parseFloat(cAdjAmt.GetValue()) != GetTotalAdjustedAmount().toFixed(2)) {
+        // End of Rev Sanchita
         jAlert("Mismatch detected in Adjusted Amount and Adjustment Amount.", "Alert", function () { cAdjAmt.Focus(); });
         return false;
     }
