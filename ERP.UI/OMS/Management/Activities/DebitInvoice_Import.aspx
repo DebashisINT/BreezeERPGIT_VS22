@@ -660,7 +660,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </div>
             <div style="clear: both">
                 <div class="col-md-2 lblmTop8">
-                    <label>Choose File</label>&nbsp;&nbsp;<span style="color: red">(Only .CSV File)</span>
+                   <%-- <label>Choose File</label>&nbsp;&nbsp;<span style="color: red">(Only .CSV File)</span>--%>
+                     <label>Choose File</label>
                     <div>
                         <asp:FileUpload ID="OFDBankSelect" runat="server" Width="100%" />
                     </div>
