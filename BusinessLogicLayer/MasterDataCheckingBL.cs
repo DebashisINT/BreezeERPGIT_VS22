@@ -293,7 +293,20 @@ namespace BusinessLogicLayer
             rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
             return rtrnvalue;
         }
-
+        // Rev Sanchita
+        public int CheckTransactionExist_LeadOrContact(string internalid)
+        {
+            int i;
+            int rtrnvalue = 0;
+            ProcedureExecute proc = new ProcedureExecute("prc_CheckMasterData");
+            proc.AddNVarcharPara("@action", 100, "CheckTransactionExist_LeadOrContact");
+            proc.AddNVarcharPara("@cnt_internalId", 30, internalid);
+            proc.AddVarcharPara("@ReturnValue", 200, "0", QueryParameterDirection.Output);
+            i = proc.RunActionQuery();
+            rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+        }
+        // End of Rev Sanchita
         #endregion  MasterDeleteLeadOrContact
 
         public int DeleteIndustry(int id)
