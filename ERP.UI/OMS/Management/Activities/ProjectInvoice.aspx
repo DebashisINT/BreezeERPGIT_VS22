@@ -23,6 +23,13 @@ Rev Number         DATE              VERSION          DEVELOPER          CHANGES
     </style>
 
     <style type="text/css">
+
+        /*.dxgvRBB .dxgvEmptyDataRow_PlasticBlue.dxgvBELVR > td.dxgv, .dxgvRBB .dxgvDataRow_PlasticBlue.dxgvBELVR > td.dxgv, .dxgvRBB .dxgvGroupRow_PlasticBlue.dxgvBELVR > td.dxgv, .dxgvRBB .dxgvSelectedRow_PlasticBlue.dxgvBELVR > td.dxgv, .dxgvRBB .dxgvFocusedRow_PlasticBlue.dxgvBELVR > td.dxgv
+        {
+            height: 50px !important;
+        }*/
+
+
         #grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {
             display: none !important;
         }
@@ -6783,6 +6790,7 @@ function fn_Edit(keyValue) {
                                                 OnHtmlRowPrepared="grid_HtmlRowPrepared"
                                                 SettingsPager-Mode="ShowAllRecords" Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="150">
                                                 <SettingsPager Visible="false"></SettingsPager>
+                                                <Styles><InlineEditCell Paddings-Padding="0px" /></Styles>
                                                 <Columns>
                                                     <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="3%" VisibleIndex="0" Caption="#">
                                                         <CustomButtons>
