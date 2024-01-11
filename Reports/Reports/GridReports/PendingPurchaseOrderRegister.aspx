@@ -468,9 +468,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             /* padding: 10px 0; */
             border-radius: 4px;
             text-align: center;
-            line-height: 19px;
+            line-height: 18px;
             z-index: 0;
         }
+
+        .dxpc-contentWrapper .simple-select::after {
+    top: 20px !important;
+}
         .simple-select {
             position: relative;
         }

@@ -2920,9 +2920,15 @@ body {
 .dxeBase_PlasticBlue, .dxeErrorCell_PlasticBlue {
 font-family: 'Roboto', sans-serif 
 }
-.wordWrap td{
-         word-break:break-word;
+.dxeBase_PlasticBlue {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    margin-bottom: 0 !important;
+    line-height: 20px !important;
 }
+    .wordWrap td {
+        word-break: break-word;
+    }
 /*.full-grid, #grid {
     width:100% !important;
 }*/
