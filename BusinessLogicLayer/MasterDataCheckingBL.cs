@@ -1,4 +1,7 @@
-﻿using System;
+﻿/****************************************************************************************************************************
+ * 1.0    11-01-2024       V2.0.42     Sanchita     Customer Transaction Category should not be changed after making any transaction with the customers. Mantis: 27169
+ * *******************************************************************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -293,7 +296,7 @@ namespace BusinessLogicLayer
             rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
             return rtrnvalue;
         }
-        // Rev Sanchita
+        // Rev 1.0
         public int CheckTransactionExist_LeadOrContact(string internalid)
         {
             int i;
@@ -306,7 +309,7 @@ namespace BusinessLogicLayer
             rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
             return rtrnvalue;
         }
-        // End of Rev Sanchita
+        // End of Rev 1.0
         #endregion  MasterDeleteLeadOrContact
 
         public int DeleteIndustry(int id)
