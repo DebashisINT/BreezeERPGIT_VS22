@@ -1,6 +1,7 @@
 /***********************************************************************************************************
  * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
- **************************************************************************************************************/ 
+ * 2.0    11-01-2024       V2.0.42     Sanchita     Customer Transaction Category should not be changed after making any transaction with the customers. Mantis: 27169
+ **************************************************************************************************************/
 using System;
 using System.Configuration;
 using System.Data;
@@ -962,6 +963,21 @@ namespace ERP.OMS.Management.Master
 
 
                             }
+
+                            // Rev 2.0
+                            MasterDataCheckingBL objMasterDataCheckingBL = new MasterDataCheckingBL();
+
+                            int TransactionExist = objMasterDataCheckingBL.CheckTransactionExist_LeadOrContact(InternalId[0, 0]);
+                            if (TransactionExist < 0)
+                            {
+                                cmbTransCategory.ClientEnabled = false;
+
+                            }
+                            else
+                            {
+                                cmbTransCategory.ClientEnabled = true;
+                            }
+                            // End of Rev 2.0
                         }
 
                     }
