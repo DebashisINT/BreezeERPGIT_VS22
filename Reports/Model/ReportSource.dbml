@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=PK02122020;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PK02122020ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.v_ReportCustomer" Member="v_ReportCustomers">
     <Type Name="v_ReportCustomer">
       <Column Name="Nid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -2049,52 +2048,6 @@
       <Column Name="REQUESTEDON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="APPROVEDON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="APPROVEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.SALESQUOTATIONREGISTERDETSUM_REPORT" Member="SALESQUOTATIONREGISTERDETSUM_REPORTs">
-    <Type Name="SALESQUOTATIONREGISTERDETSUM_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SEQ" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="TRANTYPE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="PQROWNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PRODROWNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCHIDORDERBY" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCHNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PARTYCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PARTYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SALESMAN_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SQ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SQNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SQDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="REFERENCE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PRODID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PRODUCTDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PRODUCTCLASS_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="QTY" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
-      <Column Name="STOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="MULTQTY" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
-      <Column Name="CONVFACTOR" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
-      <Column Name="MULTIUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="RATE" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="GROSAMOUNT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="TAX_MISC" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="SGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="IGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="UTGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="OTHER_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="TOTALAMOUNT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
-      <Column Name="CITY_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="STATE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="COU_COUNTRY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SHIP_TO_PARTY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="INV_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="INV_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="RECEIPTNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RECEIPTDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.TCSREGISTER_REPORT" Member="TCSREGISTER_REPORTs">
@@ -4325,6 +4278,55 @@
       <Column Name="BALALTQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
       <Column Name="DETAILID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
       <Column Name="INOUTTYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SALESQUOTATIONREGISTERDETSUM_REPORT" Member="SALESQUOTATIONREGISTERDETSUM_REPORTs">
+    <Type Name="SALESQUOTATIONREGISTERDETSUM_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TRANTYPE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PQROWNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PRODROWNO" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCHIDORDERBY" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCHNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PARTYCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PARTYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SALESMAN_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SQ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SQNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SQDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="REFERENCE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PRODUCTDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODUCTCLASS_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="QTY" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="STOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="MULTQTY" Type="System.Decimal" DbType="Decimal(18,3)" CanBeNull="true" />
+      <Column Name="CONVFACTOR" Type="System.Decimal" DbType="Decimal(18,5)" CanBeNull="true" />
+      <Column Name="MULTIUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="RATE" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="GROSAMOUNT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="TAX_MISC" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="SGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="IGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="UTGST_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="OTHER_AMT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="TOTALAMOUNT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+      <Column Name="CITY_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="STATE" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="COU_COUNTRY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SHIP_TO_PARTY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="INV_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="INV_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="RECEIPTNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RECEIPTDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="CITYNAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="STATENAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="COUNTRYNAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">
