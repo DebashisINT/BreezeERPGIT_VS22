@@ -10078,7 +10078,10 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //rev 5.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
+                        //rev 5.0 End
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         var response = client.PostAsync("https://solo.enriched-api.vayana.com/basic/ewb/v1.0/v1.03/update-part-b", stringContent).Result;
@@ -10922,7 +10925,10 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //rev 5.0
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
+                        //rev 5.0 End
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         var response = client.PostAsync("/basic/ewb/v1.0/v1.03/update-part-b", stringContent).Result;
@@ -11067,7 +11073,10 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //Rev Cancel EwayBill (v3.0)
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
+                        //Rev Cancel EwayBill (v3.0) End
                         var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
                         //var response = client.PostAsync(IrnGenerationUrl, stringContent).Result;
                         var response = client.PostAsync("/basic/ewb/v1.0/v1.03/update-part-b", stringContent).Result;
@@ -11197,7 +11206,10 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //Rev DownloadEwayBill EwayBill (v3.0)
+                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "vay");
+                        //Rev DownloadEwayBill EwayBill (v3.0) End
                         var response = client.GetAsync(IrnEwaybillDownloadUrl + eWaybillNumber).Result;
                         //var file = client.GetStreamAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
                         //var response = await client.GetAsync(uri);
@@ -11972,7 +11984,8 @@ namespace ERP.OMS.Management
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSTIN", IRN_API_GSTIN);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-USERNAME", IRN_API_UserId);
                         client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-PWD", IRN_API_Password);
-                        client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        //client.DefaultRequestHeaders.Add("X-FLYNN-N-EWB-GSP-CODE", "clayfin");
+                        
                         var response = client.GetAsync(IrnEwaybillDownloadUrl + eWaybillNumber).Result;
                         //var file = client.GetStreamAsync("https://solo.enriched-api.vayana.com/enriched/tasks/v1.0/download/" + objIRN.data.task_id).Result;
                         //var response = await client.GetAsync(uri);
