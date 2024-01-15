@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿/*************************************************************************************************************************************************
+ * 1.0      15-01-2024        2.0.42           Sanchita            27124: Customer Shipping City, State & Country is need to shown in Sales Proforma/Quotation Register 
+ * **********************************************************************************************************************************/
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -310,52 +313,101 @@ namespace Reports.Reports.GridReports
                 e.QueryableSource = q;
             }
 
+            // Rev 1.0
+            //string strsummary = (chkSummary.Checked) ? "1" : "0";
+            //if (Convert.ToString(strsummary) == "1")
+            //{
+            //    ShowGrid.Columns[15].Visible = false;
+            //    ShowGrid.Columns[16].Visible = false;
+            //    ShowGrid.Columns[17].Visible = false;
+            //    ShowGrid.Columns[18].Visible = false;
+            //    ShowGrid.Columns[19].Visible = false;
+            //    ShowGrid.Columns[20].Visible = false;
+            //    ShowGrid.Columns[21].Visible = false;
+            //    ShowGrid.Columns[22].Visible = false;
+            //}
+            //else
+            //{
+            //    ShowGrid.Columns[15].Visible = true;
+            //    ShowGrid.Columns[16].Visible = true;
+            //    ShowGrid.Columns[17].Visible = true;
+            //    ShowGrid.Columns[18].Visible = true;
+            //    ShowGrid.Columns[19].Visible = true;
+            //    ShowGrid.Columns[20].Visible = true;
+            //    ShowGrid.Columns[21].Visible = true;
+            //    ShowGrid.Columns[22].Visible = true;
+            //}
+
+            //string strMUOM = (chkMUOM.Checked) ? "1" : "0";
+            //if (Convert.ToString(strMUOM) == "1")
+            //{
+            //    ShowGrid.Columns[19].Visible = true;
+            //    ShowGrid.Columns[20].Visible = true;
+            //    ShowGrid.Columns[21].Visible = true;
+            //}
+            //else
+            //{
+            //    ShowGrid.Columns[19].Visible = false;
+            //    ShowGrid.Columns[20].Visible = false;
+            //    ShowGrid.Columns[21].Visible = false;
+            //}
+
+            //if(chkCreateBy.Checked==false)
+            //{
+            //    ShowGrid.Columns[31].Visible = false;
+            //}
+            //else
+            //{
+            //    ShowGrid.Columns[31].Visible = true;
+            //}
+
             string strsummary = (chkSummary.Checked) ? "1" : "0";
             if (Convert.ToString(strsummary) == "1")
             {
-                ShowGrid.Columns[15].Visible = false;
-                ShowGrid.Columns[16].Visible = false;
-                ShowGrid.Columns[17].Visible = false;
                 ShowGrid.Columns[18].Visible = false;
                 ShowGrid.Columns[19].Visible = false;
                 ShowGrid.Columns[20].Visible = false;
                 ShowGrid.Columns[21].Visible = false;
                 ShowGrid.Columns[22].Visible = false;
+                ShowGrid.Columns[23].Visible = false;
+                ShowGrid.Columns[24].Visible = false;
+                ShowGrid.Columns[25].Visible = false;
             }
             else
             {
-                ShowGrid.Columns[15].Visible = true;
-                ShowGrid.Columns[16].Visible = true;
-                ShowGrid.Columns[17].Visible = true;
                 ShowGrid.Columns[18].Visible = true;
                 ShowGrid.Columns[19].Visible = true;
                 ShowGrid.Columns[20].Visible = true;
                 ShowGrid.Columns[21].Visible = true;
                 ShowGrid.Columns[22].Visible = true;
+                ShowGrid.Columns[23].Visible = true;
+                ShowGrid.Columns[24].Visible = true;
+                ShowGrid.Columns[25].Visible = true;
             }
 
             string strMUOM = (chkMUOM.Checked) ? "1" : "0";
             if (Convert.ToString(strMUOM) == "1")
             {
-                ShowGrid.Columns[19].Visible = true;
-                ShowGrid.Columns[20].Visible = true;
-                ShowGrid.Columns[21].Visible = true;
+                ShowGrid.Columns[22].Visible = true;
+                ShowGrid.Columns[23].Visible = true;
+                ShowGrid.Columns[24].Visible = true;
             }
             else
             {
-                ShowGrid.Columns[19].Visible = false;
-                ShowGrid.Columns[20].Visible = false;
-                ShowGrid.Columns[21].Visible = false;
+                ShowGrid.Columns[22].Visible = false;
+                ShowGrid.Columns[23].Visible = false;
+                ShowGrid.Columns[24].Visible = false;
             }
 
-            if(chkCreateBy.Checked==false)
+            if (chkCreateBy.Checked == false)
             {
-                ShowGrid.Columns[31].Visible = false;
+                ShowGrid.Columns[34].Visible = false;
             }
             else
             {
-                ShowGrid.Columns[31].Visible = true;
+                ShowGrid.Columns[34].Visible = true;
             }
+            // End of Rev 1.0
         }
 
         #endregion

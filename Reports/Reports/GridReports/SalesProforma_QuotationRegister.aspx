@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                27-04-2023        2.0.38           Pallab              25961: Sales Proforma/Quotation Register module zoom popup upper part visible issue fix-
+3.0                15-01-2024        2.0.42           Sanchita            27124: Customer Shipping City, State & Country is need to shown in Sales Proforma/Quotation Register 
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesProforma_QuotationRegister.aspx.cs" Inherits="Reports.Reports.GridReports.SalesProforma_QuotationRegister" %>
@@ -1101,7 +1102,24 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     </CellStyle>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="7" FieldName="SQNO" Width="130px" Caption="Pro. / Quo. No." >
+                                <%--Rev 3.0--%>
+                                <dxe:GridViewDataTextColumn Caption="Shipping City" Width="120px" FieldName="CITYNAME_SH" VisibleIndex="7" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Shipping State" Width="120px" FieldName="STATENAME_SH" VisibleIndex="8" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn Caption="Shipping Country" Width="100px" FieldName="COUNTRYNAME_SH" VisibleIndex="9" >
+                                    <CellStyle CssClass="gridcellleft" Wrap="true">
+                                    </CellStyle>
+                                </dxe:GridViewDataTextColumn> 
+                                <%--End of Rev 3.0--%>
+
+                                <dxe:GridViewDataTextColumn VisibleIndex="10" FieldName="SQNO" Width="130px" Caption="Pro. / Quo. No." >
                                     <CellStyle HorizontalAlign="Left">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -1116,26 +1134,26 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="SQDATE" VisibleIndex="8" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
+                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="SQDATE" VisibleIndex="11" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataDateColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Type" Width="200px" FieldName="TRANTYPE" VisibleIndex="9" >
+                                 <dxe:GridViewDataTextColumn Caption="Type" Width="200px" FieldName="TRANTYPE" VisibleIndex="12" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="200px" FieldName="SALESMAN_NAME" VisibleIndex="10" >
+                                <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="200px" FieldName="SALESMAN_NAME" VisibleIndex="13" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Reference" Width="200px" FieldName="REFERENCE" VisibleIndex="11" >
+                                <dxe:GridViewDataTextColumn Caption="Reference" Width="200px" FieldName="REFERENCE" VisibleIndex="14" >
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn VisibleIndex="12" FieldName="RECEIPTNO" Width="130px" Caption="Receipt No." >
+                                 <dxe:GridViewDataTextColumn VisibleIndex="15" FieldName="RECEIPTNO" Width="130px" Caption="Receipt No." >
                                     <CellStyle HorizontalAlign="Left">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -1143,110 +1161,110 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="RECEIPTDATE" VisibleIndex="13" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
+                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="RECEIPTDATE" VisibleIndex="16" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataDateColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="14" FieldName="INV_NO" Width="130px" Caption="Invoice No." >
+                                <dxe:GridViewDataTextColumn VisibleIndex="17" FieldName="INV_NO" Width="130px" Caption="Invoice No." >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="INV_DATE" VisibleIndex="15" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
+                                <dxe:GridViewDataDateColumn Caption="Date" Width="100px" FieldName="INV_DATE" VisibleIndex="18" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataDateColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Item Name" FieldName="PRODUCTDESC" Width="300px" VisibleIndex="16">
+                                <dxe:GridViewDataTextColumn Caption="Item Name" FieldName="PRODUCTDESC" Width="300px" VisibleIndex="19">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Item Class" FieldName="PRODUCTCLASS_NAME" Width="200px" VisibleIndex="17">
+                                <dxe:GridViewDataTextColumn Caption="Item Class" FieldName="PRODUCTCLASS_NAME" Width="200px" VisibleIndex="20">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="QTY" Caption="Qty." Width="100px" VisibleIndex="18">
+                                <dxe:GridViewDataTextColumn FieldName="QTY" Caption="Qty." Width="100px" VisibleIndex="21">
                                     <PropertiesTextEdit DisplayFormatString="0.000"></PropertiesTextEdit>
                                       <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                 
-                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="STOCKUOM" Width="100px" VisibleIndex="19">
+                                <dxe:GridViewDataTextColumn Caption="UOM" FieldName="STOCKUOM" Width="100px" VisibleIndex="22">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Multi UOM" FieldName="MULTIUOM" Width="100px" VisibleIndex="20">
+                                <dxe:GridViewDataTextColumn Caption="Multi UOM" FieldName="MULTIUOM" Width="100px" VisibleIndex="23">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                 
-                                 <dxe:GridViewDataTextColumn FieldName="MULTQTY" Caption="Multi Qty." Width="80px" VisibleIndex="21">
+                                 <dxe:GridViewDataTextColumn FieldName="MULTQTY" Caption="Multi Qty." Width="80px" VisibleIndex="24">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                       <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn FieldName="CONVFACTOR" Caption="Conv. Factor" Width="80px" VisibleIndex="22">
+                                 <dxe:GridViewDataTextColumn FieldName="CONVFACTOR" Caption="Conv. Factor" Width="80px" VisibleIndex="25">
                                     <PropertiesTextEdit DisplayFormatString="0.00000"></PropertiesTextEdit>
                                       <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="100px" VisibleIndex="23">
+                                <dxe:GridViewDataTextColumn FieldName="RATE" Caption="Rate" Width="100px" VisibleIndex="26">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="GROSAMOUNT" Caption="Value" Width="100px" VisibleIndex="24">
+                                <dxe:GridViewDataTextColumn FieldName="GROSAMOUNT" Caption="Value" Width="100px" VisibleIndex="27">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST" Width="100px" VisibleIndex="25">
+                                <dxe:GridViewDataTextColumn FieldName="CGST_AMT" Caption="CGST" Width="100px" VisibleIndex="28">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST" Width="100px" VisibleIndex="26">
+                                <dxe:GridViewDataTextColumn FieldName="SGST_AMT" Caption="SGST" Width="100px" VisibleIndex="29">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST" Width="100px" VisibleIndex="27">
+                                <dxe:GridViewDataTextColumn FieldName="IGST_AMT" Caption="IGST" Width="100px" VisibleIndex="30">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST" Width="100px" VisibleIndex="28">
+                                <dxe:GridViewDataTextColumn FieldName="UTGST_AMT" Caption="UTGST" Width="100px" VisibleIndex="31">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OTHER_AMT" Caption="Other Charges(Line)" Width="130px" VisibleIndex="29">
+                                <dxe:GridViewDataTextColumn FieldName="OTHER_AMT" Caption="Other Charges(Line)" Width="130px" VisibleIndex="32">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TAX_MISC" Caption="Tax Misc.(Global)" Width="100px" VisibleIndex="30">
+                                <dxe:GridViewDataTextColumn FieldName="TAX_MISC" Caption="Tax Misc.(Global)" Width="100px" VisibleIndex="33">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                
-                                <dxe:GridViewDataTextColumn FieldName="TOTALAMOUNT" Caption="Total Value" Width="100px" VisibleIndex="31">
+                                <dxe:GridViewDataTextColumn FieldName="TOTALAMOUNT" Caption="Total Value" Width="100px" VisibleIndex="34">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Created by" Width="160px" FieldName="CREATEDBY" VisibleIndex="32">
+                                <dxe:GridViewDataTextColumn Caption="Created by" Width="160px" FieldName="CREATEDBY" VisibleIndex="35">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                             </Columns>
