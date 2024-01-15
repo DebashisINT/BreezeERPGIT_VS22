@@ -942,14 +942,6 @@ namespace Reports.Model
 			}
 		}
 		
-		public System.Data.Linq.Table<ORDERTODELIVERY_REPORT> ORDERTODELIVERY_REPORTs
-		{
-			get
-			{
-				return this.GetTable<ORDERTODELIVERY_REPORT>();
-			}
-		}
-		
 		public System.Data.Linq.Table<TRIALONNETBALANCE_REPORT> TRIALONNETBALANCE_REPORTs
 		{
 			get
@@ -1235,6 +1227,14 @@ namespace Reports.Model
 			get
 			{
 				return this.GetTable<BRANCHWHWISESTOCKDETSUM_REPORT>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ORDERTODELIVERY_REPORT> ORDERTODELIVERY_REPORTs
+		{
+			get
+			{
+				return this.GetTable<ORDERTODELIVERY_REPORT>();
 			}
 		}
 		
@@ -44607,933 +44607,6 @@ namespace Reports.Model
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ORDERTODELIVERY_REPORT")]
-	public partial class ORDERTODELIVERY_REPORT
-	{
-		
-		private System.Nullable<int> _USERID;
-		
-		private System.Nullable<int> _SEQ;
-		
-		private System.Nullable<long> _BRANCH_ID;
-		
-		private string _BRANCH_DESCRIPTION;
-		
-		private System.Nullable<long> _QUOTE_ID;
-		
-		private string _PITYPE;
-		
-		private string _PIQUOTATION_NO;
-		
-		private string _PIQUOTATION_DATE;
-		
-		private string _PICREATEDDATE;
-		
-		private string _PICREATEDBY;
-		
-		private string _SOTYPE;
-		
-		private string _SONO;
-		
-		private string _SODATE;
-		
-		private string _PARTYNAME;
-		
-		private System.Nullable<long> _PROJ_ID;
-		
-		private string _PROJ_NAME;
-		
-		private string _SOCREATEDDATE;
-		
-		private string _SOCREATEDBY;
-		
-		private string _SOPRINTSTAGEUPDATEBY;
-		
-		private string _SOPRINTSTAGEUPDATEON;
-		
-		private string _READYTOINVUPDATEBY;
-		
-		private string _READYTOINVUPDATEON;
-		
-		private string _APPROVEDBY;
-		
-		private string _APPROVEDDATE;
-		
-		private string _APPROVEDDURATION;
-		
-		private System.Nullable<long> _INVOICE_ID;
-		
-		private string _SITYPE;
-		
-		private string _SINO;
-		
-		private string _SIDATE;
-		
-		private string _SICREATEDDATE;
-		
-		private string _SICREATEDBY;
-		
-		private string _SIDURATION;
-		
-		private string _SIEWAYBILLNUMBER;
-		
-		private System.Nullable<decimal> _SIEWAYBILLVALUE;
-		
-		private string _SIEWAYBILLDATE;
-		
-		private System.Nullable<long> _CHALLAN_ID;
-		
-		private string _SCTYPE;
-		
-		private string _SCNO;
-		
-		private string _SCDATE;
-		
-		private string _SCCREATEDDATE;
-		
-		private string _SCCREATEDBY;
-		
-		private string _SCDURATION;
-		
-		private string _TRANSPORTER;
-		
-		private string _SITRANSPORTER;
-		
-		private string _LRNO;
-		
-		private string _LRDATE;
-		
-		private string _VEHICLEOUTDATE;
-		
-		private string _TRCREATEDDATE;
-		
-		private string _TRCREATEDBY;
-		
-		private string _TRDURATION;
-		
-		private System.Nullable<long> _SOID;
-		
-		public ORDERTODELIVERY_REPORT()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
-		public System.Nullable<int> USERID
-		{
-			get
-			{
-				return this._USERID;
-			}
-			set
-			{
-				if ((this._USERID != value))
-				{
-					this._USERID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
-		public System.Nullable<int> SEQ
-		{
-			get
-			{
-				return this._SEQ;
-			}
-			set
-			{
-				if ((this._SEQ != value))
-				{
-					this._SEQ = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_ID", DbType="BigInt")]
-		public System.Nullable<long> BRANCH_ID
-		{
-			get
-			{
-				return this._BRANCH_ID;
-			}
-			set
-			{
-				if ((this._BRANCH_ID != value))
-				{
-					this._BRANCH_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_DESCRIPTION", DbType="NVarChar(300)")]
-		public string BRANCH_DESCRIPTION
-		{
-			get
-			{
-				return this._BRANCH_DESCRIPTION;
-			}
-			set
-			{
-				if ((this._BRANCH_DESCRIPTION != value))
-				{
-					this._BRANCH_DESCRIPTION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QUOTE_ID", DbType="BigInt")]
-		public System.Nullable<long> QUOTE_ID
-		{
-			get
-			{
-				return this._QUOTE_ID;
-			}
-			set
-			{
-				if ((this._QUOTE_ID != value))
-				{
-					this._QUOTE_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PITYPE", DbType="NVarChar(10)")]
-		public string PITYPE
-		{
-			get
-			{
-				return this._PITYPE;
-			}
-			set
-			{
-				if ((this._PITYPE != value))
-				{
-					this._PITYPE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIQUOTATION_NO", DbType="NVarChar(50)")]
-		public string PIQUOTATION_NO
-		{
-			get
-			{
-				return this._PIQUOTATION_NO;
-			}
-			set
-			{
-				if ((this._PIQUOTATION_NO != value))
-				{
-					this._PIQUOTATION_NO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIQUOTATION_DATE", DbType="NVarChar(10)")]
-		public string PIQUOTATION_DATE
-		{
-			get
-			{
-				return this._PIQUOTATION_DATE;
-			}
-			set
-			{
-				if ((this._PIQUOTATION_DATE != value))
-				{
-					this._PIQUOTATION_DATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PICREATEDDATE", DbType="NVarChar(10)")]
-		public string PICREATEDDATE
-		{
-			get
-			{
-				return this._PICREATEDDATE;
-			}
-			set
-			{
-				if ((this._PICREATEDDATE != value))
-				{
-					this._PICREATEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PICREATEDBY", DbType="NVarChar(300)")]
-		public string PICREATEDBY
-		{
-			get
-			{
-				return this._PICREATEDBY;
-			}
-			set
-			{
-				if ((this._PICREATEDBY != value))
-				{
-					this._PICREATEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOTYPE", DbType="NVarChar(10)")]
-		public string SOTYPE
-		{
-			get
-			{
-				return this._SOTYPE;
-			}
-			set
-			{
-				if ((this._SOTYPE != value))
-				{
-					this._SOTYPE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SONO", DbType="NVarChar(50)")]
-		public string SONO
-		{
-			get
-			{
-				return this._SONO;
-			}
-			set
-			{
-				if ((this._SONO != value))
-				{
-					this._SONO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SODATE", DbType="NVarChar(10)")]
-		public string SODATE
-		{
-			get
-			{
-				return this._SODATE;
-			}
-			set
-			{
-				if ((this._SODATE != value))
-				{
-					this._SODATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARTYNAME", DbType="NVarChar(300)")]
-		public string PARTYNAME
-		{
-			get
-			{
-				return this._PARTYNAME;
-			}
-			set
-			{
-				if ((this._PARTYNAME != value))
-				{
-					this._PARTYNAME = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PROJ_ID", DbType="BigInt")]
-		public System.Nullable<long> PROJ_ID
-		{
-			get
-			{
-				return this._PROJ_ID;
-			}
-			set
-			{
-				if ((this._PROJ_ID != value))
-				{
-					this._PROJ_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PROJ_NAME", DbType="NVarChar(300)")]
-		public string PROJ_NAME
-		{
-			get
-			{
-				return this._PROJ_NAME;
-			}
-			set
-			{
-				if ((this._PROJ_NAME != value))
-				{
-					this._PROJ_NAME = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOCREATEDDATE", DbType="NVarChar(10)")]
-		public string SOCREATEDDATE
-		{
-			get
-			{
-				return this._SOCREATEDDATE;
-			}
-			set
-			{
-				if ((this._SOCREATEDDATE != value))
-				{
-					this._SOCREATEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOCREATEDBY", DbType="NVarChar(300)")]
-		public string SOCREATEDBY
-		{
-			get
-			{
-				return this._SOCREATEDBY;
-			}
-			set
-			{
-				if ((this._SOCREATEDBY != value))
-				{
-					this._SOCREATEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOPRINTSTAGEUPDATEBY", DbType="NVarChar(300)")]
-		public string SOPRINTSTAGEUPDATEBY
-		{
-			get
-			{
-				return this._SOPRINTSTAGEUPDATEBY;
-			}
-			set
-			{
-				if ((this._SOPRINTSTAGEUPDATEBY != value))
-				{
-					this._SOPRINTSTAGEUPDATEBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOPRINTSTAGEUPDATEON", DbType="NVarChar(10)")]
-		public string SOPRINTSTAGEUPDATEON
-		{
-			get
-			{
-				return this._SOPRINTSTAGEUPDATEON;
-			}
-			set
-			{
-				if ((this._SOPRINTSTAGEUPDATEON != value))
-				{
-					this._SOPRINTSTAGEUPDATEON = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_READYTOINVUPDATEBY", DbType="NVarChar(300)")]
-		public string READYTOINVUPDATEBY
-		{
-			get
-			{
-				return this._READYTOINVUPDATEBY;
-			}
-			set
-			{
-				if ((this._READYTOINVUPDATEBY != value))
-				{
-					this._READYTOINVUPDATEBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_READYTOINVUPDATEON", DbType="NVarChar(10)")]
-		public string READYTOINVUPDATEON
-		{
-			get
-			{
-				return this._READYTOINVUPDATEON;
-			}
-			set
-			{
-				if ((this._READYTOINVUPDATEON != value))
-				{
-					this._READYTOINVUPDATEON = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDBY", DbType="NVarChar(300)")]
-		public string APPROVEDBY
-		{
-			get
-			{
-				return this._APPROVEDBY;
-			}
-			set
-			{
-				if ((this._APPROVEDBY != value))
-				{
-					this._APPROVEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDDATE", DbType="NVarChar(10)")]
-		public string APPROVEDDATE
-		{
-			get
-			{
-				return this._APPROVEDDATE;
-			}
-			set
-			{
-				if ((this._APPROVEDDATE != value))
-				{
-					this._APPROVEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDDURATION", DbType="NVarChar(100)")]
-		public string APPROVEDDURATION
-		{
-			get
-			{
-				return this._APPROVEDDURATION;
-			}
-			set
-			{
-				if ((this._APPROVEDDURATION != value))
-				{
-					this._APPROVEDDURATION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_INVOICE_ID", DbType="BigInt")]
-		public System.Nullable<long> INVOICE_ID
-		{
-			get
-			{
-				return this._INVOICE_ID;
-			}
-			set
-			{
-				if ((this._INVOICE_ID != value))
-				{
-					this._INVOICE_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SITYPE", DbType="NVarChar(10)")]
-		public string SITYPE
-		{
-			get
-			{
-				return this._SITYPE;
-			}
-			set
-			{
-				if ((this._SITYPE != value))
-				{
-					this._SITYPE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SINO", DbType="NVarChar(50)")]
-		public string SINO
-		{
-			get
-			{
-				return this._SINO;
-			}
-			set
-			{
-				if ((this._SINO != value))
-				{
-					this._SINO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIDATE", DbType="NVarChar(10)")]
-		public string SIDATE
-		{
-			get
-			{
-				return this._SIDATE;
-			}
-			set
-			{
-				if ((this._SIDATE != value))
-				{
-					this._SIDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SICREATEDDATE", DbType="NVarChar(10)")]
-		public string SICREATEDDATE
-		{
-			get
-			{
-				return this._SICREATEDDATE;
-			}
-			set
-			{
-				if ((this._SICREATEDDATE != value))
-				{
-					this._SICREATEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SICREATEDBY", DbType="NVarChar(300)")]
-		public string SICREATEDBY
-		{
-			get
-			{
-				return this._SICREATEDBY;
-			}
-			set
-			{
-				if ((this._SICREATEDBY != value))
-				{
-					this._SICREATEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIDURATION", DbType="NVarChar(100)")]
-		public string SIDURATION
-		{
-			get
-			{
-				return this._SIDURATION;
-			}
-			set
-			{
-				if ((this._SIDURATION != value))
-				{
-					this._SIDURATION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLNUMBER", DbType="NVarChar(100)")]
-		public string SIEWAYBILLNUMBER
-		{
-			get
-			{
-				return this._SIEWAYBILLNUMBER;
-			}
-			set
-			{
-				if ((this._SIEWAYBILLNUMBER != value))
-				{
-					this._SIEWAYBILLNUMBER = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLVALUE", DbType="Decimal(18,2)")]
-		public System.Nullable<decimal> SIEWAYBILLVALUE
-		{
-			get
-			{
-				return this._SIEWAYBILLVALUE;
-			}
-			set
-			{
-				if ((this._SIEWAYBILLVALUE != value))
-				{
-					this._SIEWAYBILLVALUE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLDATE", DbType="NVarChar(10)")]
-		public string SIEWAYBILLDATE
-		{
-			get
-			{
-				return this._SIEWAYBILLDATE;
-			}
-			set
-			{
-				if ((this._SIEWAYBILLDATE != value))
-				{
-					this._SIEWAYBILLDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHALLAN_ID", DbType="BigInt")]
-		public System.Nullable<long> CHALLAN_ID
-		{
-			get
-			{
-				return this._CHALLAN_ID;
-			}
-			set
-			{
-				if ((this._CHALLAN_ID != value))
-				{
-					this._CHALLAN_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCTYPE", DbType="NVarChar(10)")]
-		public string SCTYPE
-		{
-			get
-			{
-				return this._SCTYPE;
-			}
-			set
-			{
-				if ((this._SCTYPE != value))
-				{
-					this._SCTYPE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCNO", DbType="NVarChar(50)")]
-		public string SCNO
-		{
-			get
-			{
-				return this._SCNO;
-			}
-			set
-			{
-				if ((this._SCNO != value))
-				{
-					this._SCNO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCDATE", DbType="NVarChar(10)")]
-		public string SCDATE
-		{
-			get
-			{
-				return this._SCDATE;
-			}
-			set
-			{
-				if ((this._SCDATE != value))
-				{
-					this._SCDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCCREATEDDATE", DbType="NVarChar(10)")]
-		public string SCCREATEDDATE
-		{
-			get
-			{
-				return this._SCCREATEDDATE;
-			}
-			set
-			{
-				if ((this._SCCREATEDDATE != value))
-				{
-					this._SCCREATEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCCREATEDBY", DbType="NVarChar(300)")]
-		public string SCCREATEDBY
-		{
-			get
-			{
-				return this._SCCREATEDBY;
-			}
-			set
-			{
-				if ((this._SCCREATEDBY != value))
-				{
-					this._SCCREATEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCDURATION", DbType="NVarChar(100)")]
-		public string SCDURATION
-		{
-			get
-			{
-				return this._SCDURATION;
-			}
-			set
-			{
-				if ((this._SCDURATION != value))
-				{
-					this._SCDURATION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRANSPORTER", DbType="NVarChar(300)")]
-		public string TRANSPORTER
-		{
-			get
-			{
-				return this._TRANSPORTER;
-			}
-			set
-			{
-				if ((this._TRANSPORTER != value))
-				{
-					this._TRANSPORTER = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SITRANSPORTER", DbType="NVarChar(300)")]
-		public string SITRANSPORTER
-		{
-			get
-			{
-				return this._SITRANSPORTER;
-			}
-			set
-			{
-				if ((this._SITRANSPORTER != value))
-				{
-					this._SITRANSPORTER = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LRNO", DbType="NVarChar(150)")]
-		public string LRNO
-		{
-			get
-			{
-				return this._LRNO;
-			}
-			set
-			{
-				if ((this._LRNO != value))
-				{
-					this._LRNO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LRDATE", DbType="NVarChar(10)")]
-		public string LRDATE
-		{
-			get
-			{
-				return this._LRDATE;
-			}
-			set
-			{
-				if ((this._LRDATE != value))
-				{
-					this._LRDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VEHICLEOUTDATE", DbType="NVarChar(20)")]
-		public string VEHICLEOUTDATE
-		{
-			get
-			{
-				return this._VEHICLEOUTDATE;
-			}
-			set
-			{
-				if ((this._VEHICLEOUTDATE != value))
-				{
-					this._VEHICLEOUTDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRCREATEDDATE", DbType="NVarChar(10)")]
-		public string TRCREATEDDATE
-		{
-			get
-			{
-				return this._TRCREATEDDATE;
-			}
-			set
-			{
-				if ((this._TRCREATEDDATE != value))
-				{
-					this._TRCREATEDDATE = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRCREATEDBY", DbType="NVarChar(300)")]
-		public string TRCREATEDBY
-		{
-			get
-			{
-				return this._TRCREATEDBY;
-			}
-			set
-			{
-				if ((this._TRCREATEDBY != value))
-				{
-					this._TRCREATEDBY = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRDURATION", DbType="NVarChar(100)")]
-		public string TRDURATION
-		{
-			get
-			{
-				return this._TRDURATION;
-			}
-			set
-			{
-				if ((this._TRDURATION != value))
-				{
-					this._TRDURATION = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOID", DbType="BigInt")]
-		public System.Nullable<long> SOID
-		{
-			get
-			{
-				return this._SOID;
-			}
-			set
-			{
-				if ((this._SOID != value))
-				{
-					this._SOID = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TRIALONNETBALANCE_REPORT")]
 	public partial class TRIALONNETBALANCE_REPORT
 	{
@@ -69883,6 +68956,951 @@ namespace Reports.Model
 				if ((this._INOUTTYPE != value))
 				{
 					this._INOUTTYPE = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ORDERTODELIVERY_REPORT")]
+	public partial class ORDERTODELIVERY_REPORT
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<long> _BRANCH_ID;
+		
+		private string _BRANCH_DESCRIPTION;
+		
+		private System.Nullable<long> _QUOTE_ID;
+		
+		private string _PITYPE;
+		
+		private string _PIQUOTATION_NO;
+		
+		private string _PIQUOTATION_DATE;
+		
+		private string _PICREATEDDATE;
+		
+		private string _PICREATEDBY;
+		
+		private string _SOTYPE;
+		
+		private string _SONO;
+		
+		private string _SODATE;
+		
+		private string _PARTYCODE;
+		
+		private string _PARTYNAME;
+		
+		private System.Nullable<long> _PROJ_ID;
+		
+		private string _PROJ_NAME;
+		
+		private string _SOCREATEDDATE;
+		
+		private string _SOCREATEDBY;
+		
+		private string _SOPRINTSTAGEUPDATEBY;
+		
+		private string _SOPRINTSTAGEUPDATEON;
+		
+		private string _READYTOINVUPDATEBY;
+		
+		private string _READYTOINVUPDATEON;
+		
+		private string _APPROVEDBY;
+		
+		private string _APPROVEDDATE;
+		
+		private string _APPROVEDDURATION;
+		
+		private System.Nullable<long> _INVOICE_ID;
+		
+		private string _SITYPE;
+		
+		private string _SINO;
+		
+		private string _SIDATE;
+		
+		private string _SICREATEDDATE;
+		
+		private string _SICREATEDBY;
+		
+		private string _SIDURATION;
+		
+		private string _SIEWAYBILLNUMBER;
+		
+		private System.Nullable<decimal> _SIEWAYBILLVALUE;
+		
+		private string _SIEWAYBILLDATE;
+		
+		private System.Nullable<long> _CHALLAN_ID;
+		
+		private string _SCTYPE;
+		
+		private string _SCNO;
+		
+		private string _SCDATE;
+		
+		private string _SCCREATEDDATE;
+		
+		private string _SCCREATEDBY;
+		
+		private string _SCDURATION;
+		
+		private string _TRANSPORTER;
+		
+		private string _SITRANSPORTER;
+		
+		private string _LRNO;
+		
+		private string _LRDATE;
+		
+		private string _VEHICLEOUTDATE;
+		
+		private string _TRCREATEDDATE;
+		
+		private string _TRCREATEDBY;
+		
+		private string _TRDURATION;
+		
+		private System.Nullable<long> _SOID;
+		
+		public ORDERTODELIVERY_REPORT()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_ID", DbType="BigInt")]
+		public System.Nullable<long> BRANCH_ID
+		{
+			get
+			{
+				return this._BRANCH_ID;
+			}
+			set
+			{
+				if ((this._BRANCH_ID != value))
+				{
+					this._BRANCH_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BRANCH_DESCRIPTION", DbType="NVarChar(300)")]
+		public string BRANCH_DESCRIPTION
+		{
+			get
+			{
+				return this._BRANCH_DESCRIPTION;
+			}
+			set
+			{
+				if ((this._BRANCH_DESCRIPTION != value))
+				{
+					this._BRANCH_DESCRIPTION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QUOTE_ID", DbType="BigInt")]
+		public System.Nullable<long> QUOTE_ID
+		{
+			get
+			{
+				return this._QUOTE_ID;
+			}
+			set
+			{
+				if ((this._QUOTE_ID != value))
+				{
+					this._QUOTE_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PITYPE", DbType="NVarChar(10)")]
+		public string PITYPE
+		{
+			get
+			{
+				return this._PITYPE;
+			}
+			set
+			{
+				if ((this._PITYPE != value))
+				{
+					this._PITYPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIQUOTATION_NO", DbType="NVarChar(50)")]
+		public string PIQUOTATION_NO
+		{
+			get
+			{
+				return this._PIQUOTATION_NO;
+			}
+			set
+			{
+				if ((this._PIQUOTATION_NO != value))
+				{
+					this._PIQUOTATION_NO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PIQUOTATION_DATE", DbType="NVarChar(10)")]
+		public string PIQUOTATION_DATE
+		{
+			get
+			{
+				return this._PIQUOTATION_DATE;
+			}
+			set
+			{
+				if ((this._PIQUOTATION_DATE != value))
+				{
+					this._PIQUOTATION_DATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PICREATEDDATE", DbType="NVarChar(10)")]
+		public string PICREATEDDATE
+		{
+			get
+			{
+				return this._PICREATEDDATE;
+			}
+			set
+			{
+				if ((this._PICREATEDDATE != value))
+				{
+					this._PICREATEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PICREATEDBY", DbType="NVarChar(300)")]
+		public string PICREATEDBY
+		{
+			get
+			{
+				return this._PICREATEDBY;
+			}
+			set
+			{
+				if ((this._PICREATEDBY != value))
+				{
+					this._PICREATEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOTYPE", DbType="NVarChar(10)")]
+		public string SOTYPE
+		{
+			get
+			{
+				return this._SOTYPE;
+			}
+			set
+			{
+				if ((this._SOTYPE != value))
+				{
+					this._SOTYPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SONO", DbType="NVarChar(50)")]
+		public string SONO
+		{
+			get
+			{
+				return this._SONO;
+			}
+			set
+			{
+				if ((this._SONO != value))
+				{
+					this._SONO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SODATE", DbType="NVarChar(10)")]
+		public string SODATE
+		{
+			get
+			{
+				return this._SODATE;
+			}
+			set
+			{
+				if ((this._SODATE != value))
+				{
+					this._SODATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARTYCODE", DbType="NVarChar(80)")]
+		public string PARTYCODE
+		{
+			get
+			{
+				return this._PARTYCODE;
+			}
+			set
+			{
+				if ((this._PARTYCODE != value))
+				{
+					this._PARTYCODE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PARTYNAME", DbType="NVarChar(300)")]
+		public string PARTYNAME
+		{
+			get
+			{
+				return this._PARTYNAME;
+			}
+			set
+			{
+				if ((this._PARTYNAME != value))
+				{
+					this._PARTYNAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PROJ_ID", DbType="BigInt")]
+		public System.Nullable<long> PROJ_ID
+		{
+			get
+			{
+				return this._PROJ_ID;
+			}
+			set
+			{
+				if ((this._PROJ_ID != value))
+				{
+					this._PROJ_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PROJ_NAME", DbType="NVarChar(300)")]
+		public string PROJ_NAME
+		{
+			get
+			{
+				return this._PROJ_NAME;
+			}
+			set
+			{
+				if ((this._PROJ_NAME != value))
+				{
+					this._PROJ_NAME = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOCREATEDDATE", DbType="NVarChar(10)")]
+		public string SOCREATEDDATE
+		{
+			get
+			{
+				return this._SOCREATEDDATE;
+			}
+			set
+			{
+				if ((this._SOCREATEDDATE != value))
+				{
+					this._SOCREATEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOCREATEDBY", DbType="NVarChar(300)")]
+		public string SOCREATEDBY
+		{
+			get
+			{
+				return this._SOCREATEDBY;
+			}
+			set
+			{
+				if ((this._SOCREATEDBY != value))
+				{
+					this._SOCREATEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOPRINTSTAGEUPDATEBY", DbType="NVarChar(300)")]
+		public string SOPRINTSTAGEUPDATEBY
+		{
+			get
+			{
+				return this._SOPRINTSTAGEUPDATEBY;
+			}
+			set
+			{
+				if ((this._SOPRINTSTAGEUPDATEBY != value))
+				{
+					this._SOPRINTSTAGEUPDATEBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOPRINTSTAGEUPDATEON", DbType="NVarChar(30)")]
+		public string SOPRINTSTAGEUPDATEON
+		{
+			get
+			{
+				return this._SOPRINTSTAGEUPDATEON;
+			}
+			set
+			{
+				if ((this._SOPRINTSTAGEUPDATEON != value))
+				{
+					this._SOPRINTSTAGEUPDATEON = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_READYTOINVUPDATEBY", DbType="NVarChar(300)")]
+		public string READYTOINVUPDATEBY
+		{
+			get
+			{
+				return this._READYTOINVUPDATEBY;
+			}
+			set
+			{
+				if ((this._READYTOINVUPDATEBY != value))
+				{
+					this._READYTOINVUPDATEBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_READYTOINVUPDATEON", DbType="NVarChar(30)")]
+		public string READYTOINVUPDATEON
+		{
+			get
+			{
+				return this._READYTOINVUPDATEON;
+			}
+			set
+			{
+				if ((this._READYTOINVUPDATEON != value))
+				{
+					this._READYTOINVUPDATEON = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDBY", DbType="NVarChar(300)")]
+		public string APPROVEDBY
+		{
+			get
+			{
+				return this._APPROVEDBY;
+			}
+			set
+			{
+				if ((this._APPROVEDBY != value))
+				{
+					this._APPROVEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDDATE", DbType="NVarChar(10)")]
+		public string APPROVEDDATE
+		{
+			get
+			{
+				return this._APPROVEDDATE;
+			}
+			set
+			{
+				if ((this._APPROVEDDATE != value))
+				{
+					this._APPROVEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_APPROVEDDURATION", DbType="NVarChar(100)")]
+		public string APPROVEDDURATION
+		{
+			get
+			{
+				return this._APPROVEDDURATION;
+			}
+			set
+			{
+				if ((this._APPROVEDDURATION != value))
+				{
+					this._APPROVEDDURATION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_INVOICE_ID", DbType="BigInt")]
+		public System.Nullable<long> INVOICE_ID
+		{
+			get
+			{
+				return this._INVOICE_ID;
+			}
+			set
+			{
+				if ((this._INVOICE_ID != value))
+				{
+					this._INVOICE_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SITYPE", DbType="NVarChar(10)")]
+		public string SITYPE
+		{
+			get
+			{
+				return this._SITYPE;
+			}
+			set
+			{
+				if ((this._SITYPE != value))
+				{
+					this._SITYPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SINO", DbType="NVarChar(50)")]
+		public string SINO
+		{
+			get
+			{
+				return this._SINO;
+			}
+			set
+			{
+				if ((this._SINO != value))
+				{
+					this._SINO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIDATE", DbType="NVarChar(10)")]
+		public string SIDATE
+		{
+			get
+			{
+				return this._SIDATE;
+			}
+			set
+			{
+				if ((this._SIDATE != value))
+				{
+					this._SIDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SICREATEDDATE", DbType="NVarChar(10)")]
+		public string SICREATEDDATE
+		{
+			get
+			{
+				return this._SICREATEDDATE;
+			}
+			set
+			{
+				if ((this._SICREATEDDATE != value))
+				{
+					this._SICREATEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SICREATEDBY", DbType="NVarChar(300)")]
+		public string SICREATEDBY
+		{
+			get
+			{
+				return this._SICREATEDBY;
+			}
+			set
+			{
+				if ((this._SICREATEDBY != value))
+				{
+					this._SICREATEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIDURATION", DbType="NVarChar(100)")]
+		public string SIDURATION
+		{
+			get
+			{
+				return this._SIDURATION;
+			}
+			set
+			{
+				if ((this._SIDURATION != value))
+				{
+					this._SIDURATION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLNUMBER", DbType="NVarChar(100)")]
+		public string SIEWAYBILLNUMBER
+		{
+			get
+			{
+				return this._SIEWAYBILLNUMBER;
+			}
+			set
+			{
+				if ((this._SIEWAYBILLNUMBER != value))
+				{
+					this._SIEWAYBILLNUMBER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLVALUE", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> SIEWAYBILLVALUE
+		{
+			get
+			{
+				return this._SIEWAYBILLVALUE;
+			}
+			set
+			{
+				if ((this._SIEWAYBILLVALUE != value))
+				{
+					this._SIEWAYBILLVALUE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SIEWAYBILLDATE", DbType="NVarChar(10)")]
+		public string SIEWAYBILLDATE
+		{
+			get
+			{
+				return this._SIEWAYBILLDATE;
+			}
+			set
+			{
+				if ((this._SIEWAYBILLDATE != value))
+				{
+					this._SIEWAYBILLDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CHALLAN_ID", DbType="BigInt")]
+		public System.Nullable<long> CHALLAN_ID
+		{
+			get
+			{
+				return this._CHALLAN_ID;
+			}
+			set
+			{
+				if ((this._CHALLAN_ID != value))
+				{
+					this._CHALLAN_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCTYPE", DbType="NVarChar(10)")]
+		public string SCTYPE
+		{
+			get
+			{
+				return this._SCTYPE;
+			}
+			set
+			{
+				if ((this._SCTYPE != value))
+				{
+					this._SCTYPE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCNO", DbType="NVarChar(50)")]
+		public string SCNO
+		{
+			get
+			{
+				return this._SCNO;
+			}
+			set
+			{
+				if ((this._SCNO != value))
+				{
+					this._SCNO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCDATE", DbType="NVarChar(10)")]
+		public string SCDATE
+		{
+			get
+			{
+				return this._SCDATE;
+			}
+			set
+			{
+				if ((this._SCDATE != value))
+				{
+					this._SCDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCCREATEDDATE", DbType="NVarChar(10)")]
+		public string SCCREATEDDATE
+		{
+			get
+			{
+				return this._SCCREATEDDATE;
+			}
+			set
+			{
+				if ((this._SCCREATEDDATE != value))
+				{
+					this._SCCREATEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCCREATEDBY", DbType="NVarChar(300)")]
+		public string SCCREATEDBY
+		{
+			get
+			{
+				return this._SCCREATEDBY;
+			}
+			set
+			{
+				if ((this._SCCREATEDBY != value))
+				{
+					this._SCCREATEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SCDURATION", DbType="NVarChar(100)")]
+		public string SCDURATION
+		{
+			get
+			{
+				return this._SCDURATION;
+			}
+			set
+			{
+				if ((this._SCDURATION != value))
+				{
+					this._SCDURATION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRANSPORTER", DbType="NVarChar(300)")]
+		public string TRANSPORTER
+		{
+			get
+			{
+				return this._TRANSPORTER;
+			}
+			set
+			{
+				if ((this._TRANSPORTER != value))
+				{
+					this._TRANSPORTER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SITRANSPORTER", DbType="NVarChar(300)")]
+		public string SITRANSPORTER
+		{
+			get
+			{
+				return this._SITRANSPORTER;
+			}
+			set
+			{
+				if ((this._SITRANSPORTER != value))
+				{
+					this._SITRANSPORTER = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LRNO", DbType="NVarChar(150)")]
+		public string LRNO
+		{
+			get
+			{
+				return this._LRNO;
+			}
+			set
+			{
+				if ((this._LRNO != value))
+				{
+					this._LRNO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LRDATE", DbType="NVarChar(10)")]
+		public string LRDATE
+		{
+			get
+			{
+				return this._LRDATE;
+			}
+			set
+			{
+				if ((this._LRDATE != value))
+				{
+					this._LRDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VEHICLEOUTDATE", DbType="NVarChar(20)")]
+		public string VEHICLEOUTDATE
+		{
+			get
+			{
+				return this._VEHICLEOUTDATE;
+			}
+			set
+			{
+				if ((this._VEHICLEOUTDATE != value))
+				{
+					this._VEHICLEOUTDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRCREATEDDATE", DbType="NVarChar(10)")]
+		public string TRCREATEDDATE
+		{
+			get
+			{
+				return this._TRCREATEDDATE;
+			}
+			set
+			{
+				if ((this._TRCREATEDDATE != value))
+				{
+					this._TRCREATEDDATE = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRCREATEDBY", DbType="NVarChar(300)")]
+		public string TRCREATEDBY
+		{
+			get
+			{
+				return this._TRCREATEDBY;
+			}
+			set
+			{
+				if ((this._TRCREATEDBY != value))
+				{
+					this._TRCREATEDBY = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TRDURATION", DbType="NVarChar(100)")]
+		public string TRDURATION
+		{
+			get
+			{
+				return this._TRDURATION;
+			}
+			set
+			{
+				if ((this._TRDURATION != value))
+				{
+					this._TRDURATION = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SOID", DbType="BigInt")]
+		public System.Nullable<long> SOID
+		{
+			get
+			{
+				return this._SOID;
+			}
+			set
+			{
+				if ((this._SOID != value))
+				{
+					this._SOID = value;
 				}
 			}
 		}
