@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=PK02122020;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PK02122020ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.v_ReportCustomer" Member="v_ReportCustomers">
     <Type Name="v_ReportCustomer">
       <Column Name="Nid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -2746,61 +2747,6 @@
       <Column Name="FOR_LOCATION" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.ORDERTODELIVERY_REPORT" Member="ORDERTODELIVERY_REPORTs">
-    <Type Name="ORDERTODELIVERY_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="BRANCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCH_DESCRIPTION" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="QUOTE_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PITYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="PIQUOTATION_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PIQUOTATION_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="PICREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="PICREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SOTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SONO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SODATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="PARTYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SOCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SOCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SOPRINTSTAGEUPDATEBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SOPRINTSTAGEUPDATEON" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="READYTOINVUPDATEBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="READYTOINVUPDATEON" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="APPROVEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="APPROVEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="APPROVEDDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="INVOICE_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SITYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SINO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SIDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SICREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SICREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SIDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SIEWAYBILLNUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SIEWAYBILLVALUE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
-      <Column Name="SIEWAYBILLDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="CHALLAN_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="SCTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SCNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SCDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SCCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SCCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SCDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="TRANSPORTER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SITRANSPORTER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="LRNO" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="LRDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="VEHICLEOUTDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="TRCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="TRCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="TRDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SOID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.TRIALONNETBALANCE_REPORT" Member="TRIALONNETBALANCE_REPORTs">
     <Type Name="TRIALONNETBALANCE_REPORT">
       <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -4327,6 +4273,62 @@
       <Column Name="CITYNAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
       <Column Name="STATENAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
       <Column Name="COUNTRYNAME_SH" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ORDERTODELIVERY_REPORT" Member="ORDERTODELIVERY_REPORTs">
+    <Type Name="ORDERTODELIVERY_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BRANCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCH_DESCRIPTION" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="QUOTE_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PITYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PIQUOTATION_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PIQUOTATION_DATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PICREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PICREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SOTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SONO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SODATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="PARTYCODE" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="PARTYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SOCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SOCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SOPRINTSTAGEUPDATEBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SOPRINTSTAGEUPDATEON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="READYTOINVUPDATEBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="READYTOINVUPDATEON" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="APPROVEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="APPROVEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="APPROVEDDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="INVOICE_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SITYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SINO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SIDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SICREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SICREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SIDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SIEWAYBILLNUMBER" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SIEWAYBILLVALUE" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="SIEWAYBILLDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="CHALLAN_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SCTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SCNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SCDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SCCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SCCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SCDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TRANSPORTER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SITRANSPORTER" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="LRNO" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="LRDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="VEHICLEOUTDATE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="TRCREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="TRCREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="TRDURATION" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SOID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">

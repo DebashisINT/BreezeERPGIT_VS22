@@ -1,8 +1,9 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History =============================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                27-04-2023        2.0.38           Pallab              25957: Order To Delivery module zoom popup upper part visible issue fix
-====================================================== Revision History =============================================--%>
+3.0                17-01-2024        2.0.42           Debashis            0027128: Customer Code column is required in the Order to Delivery report.
+====================================================== Revision History =============================================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="OrderToDelivery.aspx.cs" Inherits="Reports.Reports.GridReports.OrderToDelivery" %>
 
@@ -1058,77 +1059,85 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
+
+                                <%--Rev 3.0 Mantis: 0027128--%>
+                                <dxe:GridViewDataTextColumn Caption="Customer Code" FieldName="PARTYCODE" Width="200px" VisibleIndex="8" >
+                                    <CellStyle HorizontalAlign="Left"></CellStyle>
+                                     <HeaderStyle HorizontalAlign="Left" />
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 3.0 Mantis: 0027128--%>
                                
-                                <dxe:GridViewDataTextColumn Caption="Customer" FieldName="PARTYNAME" Width="350px" VisibleIndex="8" >
+                                <dxe:GridViewDataTextColumn Caption="Customer" FieldName="PARTYNAME" Width="350px" VisibleIndex="9" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="PROJ_NAME" Width="200px" VisibleIndex="9">
+                                 <dxe:GridViewDataTextColumn Caption="Project Name" FieldName="PROJ_NAME" Width="200px" VisibleIndex="10">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                               
-                                <dxe:GridViewDataTextColumn VisibleIndex="10" FieldName="SOCREATEDDATE" Caption="Entered On" Width="100px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="11" FieldName="SOCREATEDDATE" Caption="Entered On" Width="100px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SOCREATEDBY" Width="80px" VisibleIndex="11" >
+                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SOCREATEDBY" Width="80px" VisibleIndex="12" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Print Stage Updated By" FieldName="SOPRINTSTAGEUPDATEBY" Width="130px" VisibleIndex="12" >
+                                <dxe:GridViewDataTextColumn Caption="Print Stage Updated By" FieldName="SOPRINTSTAGEUPDATEBY" Width="130px" VisibleIndex="13" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="13" FieldName="SOPRINTSTAGEUPDATEON" Caption="Updated On" Width="90px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="14" FieldName="SOPRINTSTAGEUPDATEON" Caption="Updated On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Ready To Inv. Updated By" FieldName="READYTOINVUPDATEBY" Width="150px" VisibleIndex="14" >
+                                <dxe:GridViewDataTextColumn Caption="Ready To Inv. Updated By" FieldName="READYTOINVUPDATEBY" Width="150px" VisibleIndex="15" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="15" FieldName="READYTOINVUPDATEON" Caption="Updated On" Width="90px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="16" FieldName="READYTOINVUPDATEON" Caption="Updated On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                 
-                                <dxe:GridViewDataTextColumn Caption="Approved By" FieldName="APPROVEDBY" Width="80px" VisibleIndex="16" >
+                                <dxe:GridViewDataTextColumn Caption="Approved By" FieldName="APPROVEDBY" Width="80px" VisibleIndex="17" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn VisibleIndex="17" FieldName="APPROVEDDATE" Caption="Approved On" Width="90px">
+                                 <dxe:GridViewDataTextColumn VisibleIndex="18" FieldName="APPROVEDDATE" Caption="Approved On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Approval Duration" FieldName="APPROVEDDURATION" Width="110px" VisibleIndex="18" >
+                                 <dxe:GridViewDataTextColumn Caption="Approval Duration" FieldName="APPROVEDDURATION" Width="110px" VisibleIndex="19" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                               <dxe:GridViewDataTextColumn VisibleIndex="19" FieldName="SINO" Width="130px" Caption="Sales Invoice No." >
+                               <dxe:GridViewDataTextColumn VisibleIndex="20" FieldName="SINO" Width="130px" Caption="Sales Invoice No." >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
@@ -1140,51 +1149,51 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                    <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                             
-                                 <dxe:GridViewDataTextColumn VisibleIndex="20" FieldName="SIDATE" Caption="Sales Invoice Date" Width="110px">
+                                 <dxe:GridViewDataTextColumn VisibleIndex="21" FieldName="SIDATE" Caption="Sales Invoice Date" Width="110px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="21" FieldName="SICREATEDDATE" Caption="Entered On" Width="90px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="22" FieldName="SICREATEDDATE" Caption="Entered On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SICREATEDBY" Width="80px" VisibleIndex="22" >
+                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SICREATEDBY" Width="80px" VisibleIndex="23" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Invoice Duration" FieldName="SIDURATION" Width="100px" VisibleIndex="23" >
+                                <dxe:GridViewDataTextColumn Caption="Invoice Duration" FieldName="SIDURATION" Width="100px" VisibleIndex="24" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="E-Way Bill No" FieldName="SIEWAYBILLNUMBER" Width="100px" VisibleIndex="24" >
+                                <dxe:GridViewDataTextColumn Caption="E-Way Bill No" FieldName="SIEWAYBILLNUMBER" Width="100px" VisibleIndex="25" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="E-Way Bill Amount" FieldName="SIEWAYBILLVALUE" Width="120px" VisibleIndex="25" >
+                                <dxe:GridViewDataTextColumn Caption="E-Way Bill Amount" FieldName="SIEWAYBILLVALUE" Width="120px" VisibleIndex="26" >
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="E-Way Bill Date" FieldName="SIEWAYBILLDATE" Width="90px" VisibleIndex="26" >
+                                <dxe:GridViewDataTextColumn Caption="E-Way Bill Date" FieldName="SIEWAYBILLDATE" Width="90px" VisibleIndex="27" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="27" FieldName="SCNO" Width="130px" Caption="Sale Challan No." >
+                                <dxe:GridViewDataTextColumn VisibleIndex="28" FieldName="SCNO" Width="130px" Caption="Sale Challan No." >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
                                     <DataItemTemplate>
@@ -1196,70 +1205,70 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                             
-                                 <dxe:GridViewDataTextColumn VisibleIndex="28" FieldName="SCDATE" Caption="Sale Challan Date" Width="110px">
+                                 <dxe:GridViewDataTextColumn VisibleIndex="29" FieldName="SCDATE" Caption="Sale Challan Date" Width="110px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="29" FieldName="SCCREATEDDATE" Caption="Entered On" Width="90px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="30" FieldName="SCCREATEDDATE" Caption="Entered On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SCCREATEDBY" Width="80px" VisibleIndex="30" >
+                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="SCCREATEDBY" Width="80px" VisibleIndex="31" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Challan Duration" FieldName="SCDURATION" Width="100px" VisibleIndex="31" >
+                                <dxe:GridViewDataTextColumn Caption="Challan Duration" FieldName="SCDURATION" Width="100px" VisibleIndex="32" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn Caption="Transporter Name(Invoice)" FieldName="SITRANSPORTER" Width="170px" VisibleIndex="32">
+                                 <dxe:GridViewDataTextColumn Caption="Transporter Name(Invoice)" FieldName="SITRANSPORTER" Width="170px" VisibleIndex="33">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Transporter Name(Delivery)" FieldName="TRANSPORTER" Width="250px" VisibleIndex="33" >
+                                <dxe:GridViewDataTextColumn Caption="Transporter Name(Delivery)" FieldName="TRANSPORTER" Width="250px" VisibleIndex="34" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="CN/Bilty/LR No." FieldName="LRNO" Width="130px" VisibleIndex="34">
+                                <dxe:GridViewDataTextColumn Caption="CN/Bilty/LR No." FieldName="LRNO" Width="130px" VisibleIndex="35">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataDateColumn Caption="LR Date" Width="100px" FieldName="LRDATE" VisibleIndex="35" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
+                                <dxe:GridViewDataDateColumn Caption="LR Date" Width="100px" FieldName="LRDATE" VisibleIndex="36" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataDateColumn>
 
-                                 <dxe:GridViewDataTextColumn VisibleIndex="36" FieldName="VEHICLEOUTDATE" Caption="Out Date/Time" Width="130px">
+                                 <dxe:GridViewDataTextColumn VisibleIndex="37" FieldName="VEHICLEOUTDATE" Caption="Out Date/Time" Width="130px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                 <dxe:GridViewDataTextColumn VisibleIndex="37" FieldName="TRCREATEDDATE" Caption="Entered On" Width="90px">
+                                 <dxe:GridViewDataTextColumn VisibleIndex="38" FieldName="TRCREATEDDATE" Caption="Entered On" Width="90px">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Left" />
                                     <EditFormSettings Visible="False" />
                                      <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="TRCREATEDBY" Width="80px" VisibleIndex="38" >
+                                <dxe:GridViewDataTextColumn Caption="Entered By" FieldName="TRCREATEDBY" Width="80px" VisibleIndex="39" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left"/>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Delivery Duration" FieldName="TRDURATION" Width="100px" VisibleIndex="39" >
+                                <dxe:GridViewDataTextColumn Caption="Delivery Duration" FieldName="TRDURATION" Width="100px" VisibleIndex="40" >
                                     <CellStyle HorizontalAlign="Left"></CellStyle>
                                      <HeaderStyle HorizontalAlign="Left" />
                                     <Settings AutoFilterCondition="Contains" />
