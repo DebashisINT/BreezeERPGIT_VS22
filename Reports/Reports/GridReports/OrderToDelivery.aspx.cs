@@ -1,4 +1,9 @@
-﻿using DevExpress.Web;
+﻿#region ==========================Revision History====================================================================================================
+//1.0   v2 .0.42    Debashis    17/01/2024      Customer Code column is required in the Order to Delivery report.
+//                                              Refer: 0027128
+#endregion =======================End Revision History================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -21,6 +26,7 @@ using DevExpress.XtraPrinting;
 using DevExpress.Export;
 using System.Drawing;
 using Reports.Model;
+using Org.BouncyCastle.Ocsp;
 
 namespace Reports.Reports.GridReports
 {
@@ -51,7 +57,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGridList.Columns[8].Visible = true;
+                    //Rev 1.0 Mantis: 0027128
+                    //ShowGridList.Columns[8].Visible = true;
+                    ShowGridList.Columns[9].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027128
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -59,7 +68,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGridList.Columns[8].Visible = false;
+                    //Rev 1.0 Mantis: 0027128
+                    //ShowGridList.Columns[8].Visible = false;
+                    ShowGridList.Columns[9].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027128
                     hdnProjectSelection.Value = "0";
                 }
             }
@@ -560,24 +572,40 @@ namespace Reports.Reports.GridReports
 
             if (chkSOPrintStage.Checked == false)
             {
-                ShowGridList.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[11].Visible = false;
+                //ShowGridList.Columns[12].Visible = false;
                 ShowGridList.Columns[12].Visible = false;
+                ShowGridList.Columns[13].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
-                ShowGridList.Columns[11].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[11].Visible = true;
+                //ShowGridList.Columns[12].Visible = true;
                 ShowGridList.Columns[12].Visible = true;
+                ShowGridList.Columns[13].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
 
             if (chkReadyToInv.Checked == false)
             {
-                ShowGridList.Columns[13].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[13].Visible = false;
+                //ShowGridList.Columns[14].Visible = false;
                 ShowGridList.Columns[14].Visible = false;
+                ShowGridList.Columns[15].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
-                ShowGridList.Columns[13].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[13].Visible = true;
+                //ShowGridList.Columns[14].Visible = true;
                 ShowGridList.Columns[14].Visible = true;
+                ShowGridList.Columns[15].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
 
             if (chkInvoice.Checked == false)
@@ -595,7 +623,15 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[18].Visible = false;
                 //ShowGridList.Columns[19].Visible = false;
                 //ShowGridList.Columns[20].Visible = false;
-                ShowGridList.Columns[18].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[18].Visible = false;
+                //ShowGridList.Columns[19].Visible = false;
+                //ShowGridList.Columns[20].Visible = false;
+                //ShowGridList.Columns[21].Visible = false;
+                //ShowGridList.Columns[22].Visible = false;
+                //ShowGridList.Columns[23].Visible = false;
+                //ShowGridList.Columns[24].Visible = false;
+                //ShowGridList.Columns[25].Visible = false;
                 ShowGridList.Columns[19].Visible = false;
                 ShowGridList.Columns[20].Visible = false;
                 ShowGridList.Columns[21].Visible = false;
@@ -603,6 +639,8 @@ namespace Reports.Reports.GridReports
                 ShowGridList.Columns[23].Visible = false;
                 ShowGridList.Columns[24].Visible = false;
                 ShowGridList.Columns[25].Visible = false;
+                ShowGridList.Columns[26].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
@@ -619,7 +657,15 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[18].Visible = true;
                 //ShowGridList.Columns[19].Visible = true;
                 //ShowGridList.Columns[20].Visible = true;
-                ShowGridList.Columns[18].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[18].Visible = true;
+                //ShowGridList.Columns[19].Visible = true;
+                //ShowGridList.Columns[20].Visible = true;
+                //ShowGridList.Columns[21].Visible = true;
+                //ShowGridList.Columns[22].Visible = true;
+                //ShowGridList.Columns[23].Visible = true;
+                //ShowGridList.Columns[24].Visible = true;
+                //ShowGridList.Columns[25].Visible = true;
                 ShowGridList.Columns[19].Visible = true;
                 ShowGridList.Columns[20].Visible = true;
                 ShowGridList.Columns[21].Visible = true;
@@ -627,6 +673,8 @@ namespace Reports.Reports.GridReports
                 ShowGridList.Columns[23].Visible = true;
                 ShowGridList.Columns[24].Visible = true;
                 ShowGridList.Columns[25].Visible = true;
+                ShowGridList.Columns[26].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
 
             if (chkChallan.Checked == false)
@@ -641,11 +689,18 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[23].Visible = false;
                 //ShowGridList.Columns[24].Visible = false;
                 //ShowGridList.Columns[25].Visible = false;
-                ShowGridList.Columns[26].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[26].Visible = false;
+                //ShowGridList.Columns[27].Visible = false;
+                //ShowGridList.Columns[28].Visible = false;
+                //ShowGridList.Columns[29].Visible = false;
+                //ShowGridList.Columns[30].Visible = false;
                 ShowGridList.Columns[27].Visible = false;
                 ShowGridList.Columns[28].Visible = false;
                 ShowGridList.Columns[29].Visible = false;
                 ShowGridList.Columns[30].Visible = false;
+                ShowGridList.Columns[31].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
@@ -659,11 +714,18 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[23].Visible = true;
                 //ShowGridList.Columns[24].Visible = true;
                 //ShowGridList.Columns[25].Visible = true;
-                ShowGridList.Columns[26].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[26].Visible = true;
+                //ShowGridList.Columns[27].Visible = true;
+                //ShowGridList.Columns[28].Visible = true;
+                //ShowGridList.Columns[29].Visible = true;
+                //ShowGridList.Columns[30].Visible = true;
                 ShowGridList.Columns[27].Visible = true;
                 ShowGridList.Columns[28].Visible = true;
                 ShowGridList.Columns[29].Visible = true;
                 ShowGridList.Columns[30].Visible = true;
+                ShowGridList.Columns[31].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
 
             if (chkApprov.Checked == false)
@@ -671,18 +733,28 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[11].Visible = false;
                 //ShowGridList.Columns[12].Visible = false;
                 //ShowGridList.Columns[13].Visible = false;
-                ShowGridList.Columns[15].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[15].Visible = false;
+                //ShowGridList.Columns[16].Visible = false;
+                //ShowGridList.Columns[17].Visible = false;
                 ShowGridList.Columns[16].Visible = false;
                 ShowGridList.Columns[17].Visible = false;
+                ShowGridList.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
                 //ShowGridList.Columns[11].Visible = true;
                 //ShowGridList.Columns[12].Visible = true;
                 //ShowGridList.Columns[13].Visible = true;
-                ShowGridList.Columns[15].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[15].Visible = true;
+                //ShowGridList.Columns[16].Visible = true;
+                //ShowGridList.Columns[17].Visible = true;
                 ShowGridList.Columns[16].Visible = true;
                 ShowGridList.Columns[17].Visible = true;
+                ShowGridList.Columns[18].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
 
             if (chkTransport.Checked == false)
@@ -701,7 +773,15 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[32].Visible = false;
                 //ShowGridList.Columns[33].Visible = false;
                 //ShowGridList.Columns[34].Visible = false;
-                ShowGridList.Columns[31].Visible = false;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[31].Visible = false;
+                //ShowGridList.Columns[32].Visible = false;
+                //ShowGridList.Columns[33].Visible = false;
+                //ShowGridList.Columns[34].Visible = false;
+                //ShowGridList.Columns[35].Visible = false;
+                //ShowGridList.Columns[36].Visible = false;
+                //ShowGridList.Columns[37].Visible = false;
+                //ShowGridList.Columns[38].Visible = false;
                 ShowGridList.Columns[32].Visible = false;
                 ShowGridList.Columns[33].Visible = false;
                 ShowGridList.Columns[34].Visible = false;
@@ -709,6 +789,8 @@ namespace Reports.Reports.GridReports
                 ShowGridList.Columns[36].Visible = false;
                 ShowGridList.Columns[37].Visible = false;
                 ShowGridList.Columns[38].Visible = false;
+                ShowGridList.Columns[39].Visible = false;
+                //End of Rev 1.0 Mantis: 0027128
             }
             else
             {
@@ -726,7 +808,15 @@ namespace Reports.Reports.GridReports
                 //ShowGridList.Columns[32].Visible = true;
                 //ShowGridList.Columns[33].Visible = true;
                 //ShowGridList.Columns[34].Visible = true;
-                ShowGridList.Columns[31].Visible = true;
+                //Rev 1.0 Mantis: 0027128
+                //ShowGridList.Columns[31].Visible = true;
+                //ShowGridList.Columns[32].Visible = true;
+                //ShowGridList.Columns[33].Visible = true;
+                //ShowGridList.Columns[34].Visible = true;
+                //ShowGridList.Columns[35].Visible = true;
+                //ShowGridList.Columns[36].Visible = true;
+                //ShowGridList.Columns[37].Visible = true;
+                //ShowGridList.Columns[38].Visible = true;
                 ShowGridList.Columns[32].Visible = true;
                 ShowGridList.Columns[33].Visible = true;
                 ShowGridList.Columns[34].Visible = true;
@@ -734,6 +824,8 @@ namespace Reports.Reports.GridReports
                 ShowGridList.Columns[36].Visible = true;
                 ShowGridList.Columns[37].Visible = true;
                 ShowGridList.Columns[38].Visible = true;
+                ShowGridList.Columns[39].Visible = true;
+                //End of Rev 1.0 Mantis: 0027128
             }
         }
         #endregion
