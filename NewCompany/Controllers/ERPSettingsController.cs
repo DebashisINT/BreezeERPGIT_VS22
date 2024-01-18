@@ -1,5 +1,9 @@
-﻿using BusinessLogicLayer;
+﻿/***********************************************************************************************************************************
+ * Rev 1.0      V2.0.43     18-01-2024   Sanchita   ERP setting page should integrated in the settings module of ERP - Mantis: 27176
+ * *****************************************************************************************************************************/
+using BusinessLogicLayer;
 using DevExpress.Web.Mvc;
+using EntityLayer.CommonELS;
 using NewCompany.Models;
 using System;
 using System.Collections.Generic;
@@ -13,8 +17,18 @@ namespace NewCompany.Controllers
 {
     public class ERPSettingsController : Controller
     {
+        // Rev 1.0
+        UserRightsForPage rights = new UserRightsForPage();
+        // End of Rev 1.0
+
         public ActionResult ERPGridBind()
         {
+            // Rev 1.0
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine(string.Empty);
+            rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSessionMVC("/ERPGridBind", "ERPSettings");
+            ViewBag.CanEdit = rights.CanEdit;
+            // End of Rev 1.0
+
             ErpSettingList ErpSetL = new ErpSettingList();
             MasterDbEngine mdb = new MasterDbEngine();
             DataTable dt = new DataTable();
