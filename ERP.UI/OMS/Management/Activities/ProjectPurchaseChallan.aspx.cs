@@ -1,4 +1,9 @@
-﻿using BusinessLogicLayer;
+﻿/**************************************************************************Revision History***********************************************************************
+ *Rev 1.0     Priti    V2.0.40      06-10-2023     	0026854: Data Freeze Required for Project Sale Invoice & Project Purchase Invoice
+ *Rev 2.0     Priti    V2.0.42      11-01-2024      Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
+ **********************************************************************************End Revision History***************************************************************/
+using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
 using DataAccessLayer;
 using DevExpress.Web;
@@ -148,6 +153,20 @@ namespace ERP.OMS.Management.Activities
 
                 if (!IsPostBack)
                 {
+                    //REV 2.0
+                    string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                    if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                    {
+                        if (IsDuplicateItemAllowedOrNot == "Yes")
+                        {
+                            hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                        }
+                        else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                        {
+                            hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                        }
+                    }
+                    //REV 2.0 END
                     //VendorDataSource.ConnectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
                     //ProductDataSource.ConnectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
 
@@ -2089,6 +2108,25 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 #endregion
+
+                //Rev 2.0
+                DataView dvDataDuplicate = new DataView(_tempTransactiondt);
+                dvDataDuplicate.RowFilter = "Status<>'D'";
+                DataTable dt_tempQuotation = dvDataDuplicate.ToTable();
+                var duplicate_Records = dt_tempQuotation.AsEnumerable()
+               .GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
+               .Where(gr => gr.Count() > 1)
+                .Select(g => g.Key);
+
+
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicate_Records)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 2.0 END
 
                 // Rev Mantis Issue 24061 [ "NetAmountExceed" added in validate check ]
                 if (validate == "outrange" || validate == "checkPartyInvoice" || validate == "duplicateProduct" || validate == "nullQuantity" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateSerial" || validate == "TCMandatory" || validate == "nullPurchasePrice" || validate == "transporteMandatory" || validate == "PurchaseOrderMandatory" || validate == "ExceedQuantity" || validate == "NetAmountExceed")

@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                17-04-2023        2.0.37           Pallab              25834: Add Purchase Order module design modification
+1.0                17-04-2023        V2.0.37           Pallab              25834: Add Purchase Order module design modification
+2.0                02-01-2024        V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="PurchaseOrder" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseOrder.aspx.cs"
@@ -5316,4 +5318,7 @@ function acpContactPersonPhoneEndCall(s, e) {
     <%--Mantis Issue 25235--%>
     <asp:HiddenField ID="hdnVendorRequiredInPurchaseIndent" runat="server" />
     <%--End of Mantis Issue 25235--%>
+    <%-- Rev 2.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 2.0 End--%>
 </asp:Content>

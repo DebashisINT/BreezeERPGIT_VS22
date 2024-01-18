@@ -5,7 +5,10 @@
  * Rev 2.0   Priti      V2.0.40     25-10-2023      Global level round off is not coming while tagging GRN into the Invoice. 
  *                                                  Mantis: 0026898
  * Rev 3.0   Sanchita   V2.0.41     10-11-2023      While adding an item to an existing Purchase Invoice getting an error. Mantis :26975                                                 
+ * Rev 4.0   Priti      V2.0.42     11-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
  * *****************************************************************************************/
+
 using System;
 using System.Configuration;
 using System.Data;
@@ -245,6 +248,20 @@ namespace ERP.OMS.Management.Activities
             }
             if (!IsPostBack)
             {
+                //REV 4.0
+                string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 4.0 END
                 string ForBranchTaggingPurchase = cbl.GetSystemSettingsResult("ForBranchTaggingPurchase");
 
                 if (!String.IsNullOrEmpty(ForBranchTaggingPurchase))
@@ -6144,6 +6161,27 @@ if (!string.IsNullOrEmpty(txtPro_Code.Text.Trim()) && !string.IsNullOrEmpty(txtP
 
                     }
                 }
+
+
+                //Rev 4.0
+                DataView dvDataDuplicate = new DataView(tempPurchaseInvoice);
+                dvDataDuplicate.RowFilter = "Status<>'D'";
+                DataTable dt_tempQuotation = dvDataDuplicate.ToTable();
+                var duplicate_Records = dt_tempQuotation.AsEnumerable()
+               .GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
+               .Where(gr => gr.Count() > 1)
+                .Select(g => g.Key);
+
+
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicate_Records)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 4.0 END
+
 
                 // Rev Mantis Issue 24061 [ "NetAmountExceed" added]
                 if (validate == "AddressProblem" || validate == "outrange" || validate == "nullQuantity" || validate == "duplicateProduct" || validate == "duplicate" || validate == "transporteMandatory" || validate == "TCMandatory" || validate == "VendorAddressProblem" || validate == "BillingShippingNull" || validate == "ChallanTaggingMandatory" || validate == "checkMultiUOMData" || validate == "checkAcurateTaxAmount" || validate == "NetAmountExceed" || validate == "TDSMandatory")

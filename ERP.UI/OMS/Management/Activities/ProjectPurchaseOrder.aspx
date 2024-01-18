@@ -1,7 +1,9 @@
 ﻿<%-- ***********************************************************************************************************************************
     Rev 1.0     Sanchita     08/03/2023      V2.0.37     The Qty in the Grid becomes zero once the Addl Desc is added or edited in  Project Purchase Order. refer: 25713
     Rev 2.0     Priti        05-10-2023      V2.0.40     Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
-    Rev 3.0     Sanchita     21-12-2023      V2.0.42     Duplicate Product can't be deleted from the Project Modules. Mantis:                                                
+    Rev 3.0     Sanchita     21-12-2023      V2.0.42     Duplicate Product can't be deleted from the Project Modules. Mantis: 
+    Rev 4.0     Priti        11-01-2024      V2.0.42     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ****************************************************************************************************************************************** --%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseOrder" %>
@@ -7967,6 +7969,8 @@ function cmbContactPersonEndCall(s, e) {
     <asp:HiddenField ID="hdnProjectMandatory" runat="server" />
 
     <asp:HiddenField ID="hdnApprovalReqInq" runat="server" />
-
+    <%-- Rev 4.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 4.0 End--%>
 </asp:Content>
 

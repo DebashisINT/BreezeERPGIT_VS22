@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                13-04-2023        2.0.37           Pallab              25822: Add Purchase Quotation page design modification
+1.0                13-04-2023        V2.0.37           Pallab              25822: Add Purchase Quotation page design modification
+2.0                02-01-2024        V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="PurchaseQuotation.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseQuotation" %>
@@ -3169,5 +3171,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <asp:HiddenField runat="server" ID="hdnApproveStatus" />
     <asp:HiddenField runat="server" ID="hdnEditId" />
    <asp:HiddenField ID="hdnProjectMandatory" runat="server" />
+
+ <%-- Rev 2.0--%>
+ <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+ <%-- Rev 2.0 End--%>
 </asp:Content>
 

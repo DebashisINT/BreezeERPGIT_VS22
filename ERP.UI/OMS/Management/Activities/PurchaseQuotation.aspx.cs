@@ -2,7 +2,8 @@
  * Rev 1.0       Sanchita    V2.0.39     22-09-2023    GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
  *                                                     Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPQ"]
  *                                                     Mantis: 26843
- * 
+ *Rev 2.0        Priti       V2.0.42     02-01-2024      A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                       Mantis : 0027050  
  * *******************************************************************************************************************/
 using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
@@ -204,6 +205,21 @@ namespace ERP.OMS.Management.Activities
                         dvReject.Style.Add("display", "none");
                     }
                 }
+
+                //REV 2.0
+                string IsDuplicateItemAllowedOrNot = ComBL.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 2.0 END
 
                 Session["SO_ProductDetails"] = null;
                 //CountrySelect.ConnectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
@@ -2907,11 +2923,15 @@ namespace ERP.OMS.Management.Activities
                .Where(gr => gr.Count() > 1)
                .Select(g => g.Key);
 
-                //foreach (var d in duplicateRecords)
-                //{
-                //    validate = "duplicateProduct";
-                //}
-
+                //Rev 2.0
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicateRecords)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 2.0 End
                 if (ddlInventory.SelectedValue != "N")
                 {
                     foreach (DataRow dr in tempQuotation.Rows)

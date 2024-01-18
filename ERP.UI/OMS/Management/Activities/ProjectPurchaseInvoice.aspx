@@ -1,6 +1,8 @@
 ﻿<%--/*************************************************************************************************************************************************
  *  Rev 1.0     Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
- *************************************************************************************************************************************************/--%>
+ *  Rev 2.0     Priti       V2.0.42     11-01-2024       Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
+*************************************************************************************************************************************************/--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" CodeBehind="ProjectPurchaseInvoice.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectPurchaseInvoice" %>
 
@@ -14330,4 +14332,7 @@ function ddl_AmountAre_valueChange() {
     <%--Rev Mantis Issue 24061--%>
     <asp:HiddenField runat="server" ID="hdnPurchaseOrderItemNegative" />
     <%--End of Rev Mantis Issue 24061--%>
+    <%-- Rev 2.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 2.0 End--%>
 </asp:Content>

@@ -4,6 +4,9 @@
 // 3.0   V2.0.38    Priti       11-04-2023      0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
 // 4.0   V2.0.39    Sanchita    22-09-2023      GST is showing Zero in the TAX Window whereas GST in the Grid calculated. Mantis: 26843
 //                                              Session["MultiUOMData"] has been renamed to Session["MultiUOMDataGRN"]
+// 5.0   V2.0.42    Priti       02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
+
 * *******************************************************************************************************************************/
 
 
@@ -185,6 +188,20 @@ namespace ERP.OMS.Management.Activities
 
                 if (!IsPostBack)
                 {
+                    //REV 5.0
+                    string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                    if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                    {
+                        if (IsDuplicateItemAllowedOrNot == "Yes")
+                        {
+                            hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                        }
+                        else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                        {
+                            hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                        }
+                    }
+                    //REV 5.0 END
                     string ForBranchTaggingPurchase = cbl.GetSystemSettingsResult("ForBranchTaggingPurchase");
 
                     if (!String.IsNullOrEmpty(ForBranchTaggingPurchase))
@@ -2780,6 +2797,24 @@ namespace ERP.OMS.Management.Activities
                 }
 
                 #endregion
+                //Rev 5.0
+                DataView dvDataDuplicate = new DataView(_tempTransactiondt);
+                dvDataDuplicate.RowFilter = "Status<>'D'";
+                DataTable dt_tempQuotation = dvDataDuplicate.ToTable();
+                var duplicate_Records = dt_tempQuotation.AsEnumerable()
+               .GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
+               .Where(gr => gr.Count() > 1)
+                .Select(g => g.Key);
+
+               
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicate_Records)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 5.0 END
 
                 if (CheckPartyTagged(strVendor, strPartyInvoice) == true)
                 {
