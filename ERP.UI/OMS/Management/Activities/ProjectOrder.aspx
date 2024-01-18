@@ -1,5 +1,6 @@
 ﻿<%--/*************************************************************************************************************************************************
  *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *  Rev 2.0     Sanchita    V2.0.43     18-01-2024      Duplicate Product can't be deleted from the Project Modules. Mantis: 27118
  *************************************************************************************************************************************************/--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="ProjectOrder.aspx.cs" Inherits="ERP.OMS.Management.Activities.ProjectOrder" %>
@@ -8876,7 +8877,8 @@ function fn_Edit(keyValue) {
                                                     <Settings VerticalScrollBarMode="Auto" />
                                                     <SettingsBehavior AllowDragDrop="False" AllowSort="False" />
                                                     <Columns>
-                                                        <dxe:GridViewCommandColumn Caption=" " ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="3%">
+                                                        <%--Rev 2.0 [width changed from 3% to 30px ] --%>
+                                                        <dxe:GridViewCommandColumn Caption=" " ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="30px">
                                                             <CustomButtons>
                                                                 <dxe:GridViewCommandColumnCustomButton ID="CustomDelete" Image-Url="/assests/images/crs.png" Text=" ">
                                                                     <Image Url="/assests/images/crs.png">
@@ -8889,7 +8891,8 @@ function fn_Edit(keyValue) {
                                                                 </dxe:ASPxHyperLink>
                                                             </HeaderCaptionTemplate>
                                                         </dxe:GridViewCommandColumn>
-                                                        <dxe:GridViewDataTextColumn Caption="Sl" FieldName="SrlNo" ReadOnly="true" Width="4%">
+                                                        <%--Rev 2.0 [width changed from 4% to 50px ] --%>
+                                                        <dxe:GridViewDataTextColumn Caption="Sl" FieldName="SrlNo" ReadOnly="true" Width="50px">
                                                             <PropertiesTextEdit>
                                                             </PropertiesTextEdit>
                                                         </dxe:GridViewDataTextColumn>
@@ -8981,7 +8984,8 @@ function fn_Edit(keyValue) {
                                                             <ClientSideEvents LostFocus="DiscountTextChange" />
                                                         </PropertiesSpinEdit>
                                                     </dxe:GridViewDataSpinEditColumn>--%>
-                                                        <dxe:GridViewDataTextColumn Caption="Discount" FieldName="Discount" HeaderStyle-HorizontalAlign="Right" Width="10%">
+                                                        <%--Rev 2.0 [width changed from 10% to 100px ] --%>
+                                                        <dxe:GridViewDataTextColumn Caption="Discount" FieldName="Discount" HeaderStyle-HorizontalAlign="Right" Width="100px">
                                                             <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
                                                                 <MaskSettings AllowMouseWheel="False" Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" />
                                                                 <ClientSideEvents GotFocus="DiscountGotFocus" LostFocus="DiscountTextChange" />
