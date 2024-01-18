@@ -214,7 +214,20 @@ namespace ERP.OMS.Management.Activities
 
             if (!IsPostBack)
             {
-
+                //REV 2.0
+                string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 2.0 END
                 string ProjAlertForRetention = cbl.GetSystemSettingsResult("ProjAlertForRetention");
                 if (!String.IsNullOrEmpty(ProjAlertForRetention))
                 {
