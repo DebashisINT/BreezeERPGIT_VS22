@@ -1,8 +1,11 @@
 ﻿/**************************************************************************************************************************
-* Rev 1.0       Priti      V2.0.39      11-07-2023     0026549:A setting is required to enter the backdated entries in Purchase Indent
-* Rev 2.0       Sanchita    V2.0.39     22-09-2023     GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
+* Rev 1.0       Priti      V2.0.39     11-07-2023     0026549:A setting is required to enter the backdated entries in Purchase Indent
+* Rev 2.0       Sanchita   V2.0.39     22-09-2023     GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
  *                                                     Session["MultiUOMData"] has been renamed to Session["MultiUOMDataIND"]
  *                                                     Mantis: 26843
+ *Rev 3.0       Priti      V2.0.42     02-01-2024      Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+ *Rev 4.0       Priti      V2.0.42     02-01-2024      A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+                                                       Mantis : 0027050                                                   
 * ************************************************************************************************************************/
 using System;
 using System.Collections.Generic;
@@ -291,6 +294,22 @@ namespace ERP.OMS.Management.Activities
             rights = BusinessLogicLayer.CommonBLS.CommonBL.GetUserRightSession("/management/Activities/PurchaseIndent.aspx");
             if (!IsPostBack)
             {
+                //REV 4.0
+                string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 4.0 END
+
+
                 string ForBranchTaggingPurchase = cbl.GetSystemSettingsResult("ForBranchTaggingPurchase");
 
                 if (!String.IsNullOrEmpty(ForBranchTaggingPurchase))
@@ -1596,11 +1615,15 @@ namespace ERP.OMS.Management.Activities
                 .Where(gr => gr.Count() > 1)
                  .Select(g => g.Key);
 
-                foreach (var d in duplicateRecords)
+                //Rev 4.0
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
                 {
-                    validate = "duplicateProduct";
+                    foreach (var d in duplicateRecords)
+                    {
+                        validate = "duplicateProduct";
+                    }
                 }
-
+                //Rev 4.0 END
 
                 if (hddnMultiUOMSelection.Value == "1")
                 {

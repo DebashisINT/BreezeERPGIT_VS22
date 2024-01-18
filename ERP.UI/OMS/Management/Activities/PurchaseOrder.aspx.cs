@@ -3,6 +3,8 @@
 //Rev 2.0      Sanchita   V2.0.39   22-09-2023     GST is showing Zero in the TAX Window whereas GST in the Grid calculated. 
 //                                                 Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPO"]
 //                                                 Mantis: 26843
+//Rev 3.0      Priti      V2.0.42   02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+//Rev 4.0      Priti      V2.0.43   16-01-2024     Mantis : 0027183 After saving purchase order by availing the "Copy" features document number saving as "Auto"
 //====================================================End Revision History=====================================================================
 using System;
 using System.Configuration;
@@ -221,15 +223,10 @@ namespace ERP.OMS.Management.Activities
                 if (ProjectMandatoryInEntry == "Yes")
                 {
                     hdnProjectMandatory.Value = "1";
-
-
-
                 }
                 else if (ProjectMandatoryInEntry.ToUpper().Trim() == "NO")
                 {
                     hdnProjectMandatory.Value = "0";
-
-
                 }
             }
 
@@ -329,6 +326,21 @@ namespace ERP.OMS.Management.Activities
 
             if (!IsPostBack)
             {
+                //REV 3.0
+                string IsDuplicateItemAllowedOrNot = cbl.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
+                if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
+                {
+                    if (IsDuplicateItemAllowedOrNot == "Yes")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "1";
+                    }
+                    else if (IsDuplicateItemAllowedOrNot.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsDuplicateItemAllowedOrNot.Value = "0";
+                    }
+                }
+                //REV 3.0 END
+
                 string ForBranchTaggingPurchase = cbl.GetSystemSettingsResult("ForBranchTaggingPurchase");
 
                 if (!String.IsNullOrEmpty(ForBranchTaggingPurchase))
@@ -630,44 +642,7 @@ namespace ERP.OMS.Management.Activities
                     grid.DataSource = GetPurchaseOrderBatch();
                     grid.DataBind();
 
-                    //Add fro Approval By Tanmoy	
-                    //if (Request.QueryString["AppStat"] != null && Request.QueryString["AppStat"] == "ProjApprove")
-                    //{
-                    //    lblHeading.Text = "Approve Purchase Order";
-                    //    hdnProjectApproval.Value = "ProjApprove";
-                    //    btn_SaveRecords.Visible = false;
-                    //    btnSaveExit.Visible = false;
-                    //}
-                    //Add fro Approval By Tanmoy
-
-                    //if (IsPITransactionExist(Request.QueryString["key"]))
-                    //{
-                    //    if (hdnApprovalsetting.Value == "0")
-                    //    {
-                    //        grid.JSProperties["cpBtnVisible"] = "false";
-                    //        btn_SaveRecords.Visible = false;
-                    //        btnSaveExit.Visible = false;
-                    //        tagged.Style.Add("display", "block");
-                    //    }
-                    //}
-                   
-                    //if (Request.QueryString["req"] != null && Request.QueryString["req"] == "V")
-                    //{
-                    //    lblHeading.Text = "View Purchase Order";
-                    //    lbl_quotestatusmsg.Text = "*** View Mode Only";
-                    //    btn_SaveRecords.Visible = false;
-                    //    btnSaveExit.Visible = false;
-                    //    lbl_quotestatusmsg.Visible = true;
-                    //}
-                    //#endregion
-                    //if (Convert.ToString(hddnDocumentIdTagged.Value) == "1")
-                    //{
-                    //    lblHeading.Text = "View Purchase Order";
-                    //    lbl_quotestatusmsg.Text = "*** Used in other module.";
-                    //    btn_SaveRecords.Visible = false;
-                    //    btnSaveExit.Visible = false;
-                    //    lbl_quotestatusmsg.Visible = true;
-                    //}
+                    
 
                     dt_Quotation.Text = "";
                     taggingList.Text = "";
@@ -675,6 +650,9 @@ namespace ERP.OMS.Management.Activities
                     rdl_Salesquotation.SelectedValue = "";
 
                     ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "GridCallBack()", true);
+                    //Rev 4.0
+                    hdnApproveStatus.Value = "0";
+                    //REV 4.0 END
                 }
                 //End of Mantis Issue 24920
                 else
@@ -4030,10 +4008,15 @@ namespace ERP.OMS.Management.Activities
                .Where(gr => gr.Count() > 1)
                 .Select(g => g.Key);
 
-                foreach (var d in duplicateRecords)
+                //Rev 3.0
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
                 {
-                    validate = "duplicateProduct";
+                    foreach (var d in duplicateRecords)
+                    {
+                        validate = "duplicateProduct";
+                    }
                 }
+                //Rev 3.0 End
                 if (ddlInventory.SelectedValue != "N")
                 {
                     foreach (DataRow dr in tempQuotation.Rows)

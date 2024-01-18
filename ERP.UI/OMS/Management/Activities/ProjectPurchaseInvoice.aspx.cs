@@ -1,5 +1,7 @@
 ﻿/*************************************************************************************************************************************************
  *  Rev 1.0     Sanchita    V2.0.41     28-11-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *  Rev 2.0     Priti       V2.0.42     11-01-2024      Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
  *************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -4888,6 +4890,29 @@ namespace ERP.OMS.Management.Activities
 
                 // Rev Mantis Issue 24061 [ "NetAmountExceed" added]
                 // Mantis Issue 24274 [   "TDSMandatory" added ]
+
+                //Rev 2.0
+                DataView dvDataDuplicate = new DataView(tempPurchaseInvoice);
+                dvDataDuplicate.RowFilter = "Status<>'D'";
+                DataTable dt_tempQuotation = dvDataDuplicate.ToTable();
+                var duplicate_Records = dt_tempQuotation.AsEnumerable()
+               .GroupBy(r => r["ProductID"]) //coloumn name which has the duplicate values
+               .Where(gr => gr.Count() > 1)
+                .Select(g => g.Key);
+
+
+                if (hdnIsDuplicateItemAllowedOrNot.Value == "0")
+                {
+                    foreach (var d in duplicate_Records)
+                    {
+                        validate = "duplicateProduct";
+                    }
+                }
+                //Rev 2.0 END
+
+
+
+
                 if (validate == "AddressProblem" || validate == "outrange" || validate == "nullQuantity" || validate == "duplicateProduct" || validate == "duplicate" || validate == "transporteMandatory" || validate == "TCMandatory" || validate == "VendorAddressProblem" || validate == "BillingShippingNull" || validate == "NetAmountExceed" || validate == "TDSMandatory")
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;

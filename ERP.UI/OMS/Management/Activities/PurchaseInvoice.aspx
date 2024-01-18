@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-05-2023        V2.0.37           Pallab              26040: Add Purchase Invoice module design modification & check in small device
 2.0                25-10-2023        V2.0.40           Priti               0026898:Global level round off is not coming while tagging GRN into the Invoice. 
+3.0                11-01-2024        V2.0.42           Priti               0027050: A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                  
 ====================================================== Revision History =============================================--%>
 
@@ -23,22 +24,23 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
     <script src="../../../assests/pluggins/choosen/choosen.min.js"></script>
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <%-- <script src="../../Tax%20Details/Js/TaxDetailsItemlevel.js" type="text/javascript"></script>--%>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelPurchase.js"></script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
-   <%-- <script src="JS/SearchPopup.js"></script>--%>
+    <%-- <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
     <script src="JS/PurchaseInvoiceAdd.js?v=4.3"></script>
     <style type="text/css">
         .CUSTOM-CLASS .tooltip-inner {
-            background:#268c7e
+            background: #268c7e
         }
+
         .statusBar a:first-child {
             display: none;
         }
-        
+
         .inline {
             display: inline !important;
         }
@@ -107,7 +109,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             display: inline-block;
         }
 
-       #grid_DXMainTable > tbody > tr > td.abcd, #grid_DXMainTable > tbody > tr > td:nth-child(26){
+        #grid_DXMainTable > tbody > tr > td.abcd, #grid_DXMainTable > tbody > tr > td:nth-child(26) {
             display: none !important;
         }
 
@@ -419,13 +421,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             font-weight: 600;
             color: #b11212;
         }
-          .mlableWh{
+
+        .mlableWh {
             padding-top: 22px;
-            display:inline-block
+            display: inline-block
         }
-        .mlableWh>input +span {
-            white-space: nowrap;
-        }
+
+            .mlableWh > input + span {
+                white-space: nowrap;
+            }
     </style>
     <style type="text/css">
         #Popup_Empcitys_active_DXPWMB-1 {
@@ -510,7 +514,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         var taxSchemeUpdatedDate = '<%=Convert.ToString(Cache["SchemeMaxDate"])%>';
 
 
-      
+
         function SetLostFocusonDemand(e) {
             if ((new Date($("#hdnLockFromDate").val()) <= cPLQuoteDate.GetDate()) && (cPLQuoteDate.GetDate() <= new Date($("#hdnLockToDate").val()))) {
                 jAlert("DATA is Freezed between  " + $("#hdnDatafrom").val() + " to " + $("#hdnDatato").val());
@@ -704,8 +708,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                         cPLQuoteDate.SetMinDate(new Date(fromdate));
                         cPLQuoteDate.SetMaxDate(new Date(todate));
-                  
-                      
+
+
 
                         //cPLQuoteDate.SetMinDate(new Date(fromdate));
                         //cPLQuoteDate.SetMaxDate(new Date(todate));
@@ -714,68 +718,67 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         if (schemetype == '0') {
 
                             document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = false;
-                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
 
 
-                             if ($('#<%=hdnManual.ClientID %>').val() == 'N') {
-                                 cPLQuoteDate.SetEnabled(false);
-                             }
-                             else if ($('#<%=hdnManual.ClientID %>').val() == 'Y') {
-                        cPLQuoteDate.SetEnabled(true);
-                    }
-                    $("#txtVoucherNo").focus();
-                }
-                else if (schemetype == '1') {
+                            if ($('#<%=hdnManual.ClientID %>').val() == 'N') {
+                                cPLQuoteDate.SetEnabled(false);
+                            }
+                            else if ($('#<%=hdnManual.ClientID %>').val() == 'Y') {
+                                cPLQuoteDate.SetEnabled(true);
+                            }
+                            $("#txtVoucherNo").focus();
+                        }
+                        else if (schemetype == '1') {
 
-                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Auto";
-                             if (cPLQuoteDate.clientEnabled == false) {
-                                 ctxt_Refference.Focus();
-                             }
-                             else {
-                                 cPLQuoteDate.Focus();
-                             }
-                             $("#MandatoryBillNo").hide();
-                             if ($('#<%=hdnAuto.ClientID %>').val() == 'N') {
-                        cPLQuoteDate.SetEnabled(false);
-                    }
-                    else if ($('#<%=hdnAuto.ClientID %>').val() == 'Y') {
-                        cPLQuoteDate.SetEnabled(true);
-                    }
-                    if ($("#HdnBackDatedEntryPurchaseGRN").val() == "1")
-                    {
-                        cPLQuoteDate.SetEnabled(true);
-                    }
-                    else {
-                        if ($("#hdnBackdateddate").val() != "0" && $("#hdnBackdateddate").val() != "") {
-                            var Days = $("#hdnBackdateddate").val();
-                            var today = cPLQuoteDate.GetDate();
-                            var newdate = cPLQuoteDate.GetDate();
-                            newdate.setDate(today.getDate() - Math.round(Days));
-                            cPLQuoteDate.SetMinDate(newdate);
-                            cPLQuoteDate.SetMaxDate(new Date(todate));
-                            cPLQuoteDate.SetEnabled(true);
-                         }
-                        else {
-                            cPLQuoteDate.SetEnabled(false);
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Auto";
+                            if (cPLQuoteDate.clientEnabled == false) {
+                                ctxt_Refference.Focus();
+                            }
+                            else {
+                                cPLQuoteDate.Focus();
+                            }
+                            $("#MandatoryBillNo").hide();
+                            if ($('#<%=hdnAuto.ClientID %>').val() == 'N') {
+                                cPLQuoteDate.SetEnabled(false);
+                            }
+                            else if ($('#<%=hdnAuto.ClientID %>').val() == 'Y') {
+                                cPLQuoteDate.SetEnabled(true);
+                            }
+                            if ($("#HdnBackDatedEntryPurchaseGRN").val() == "1") {
+                                cPLQuoteDate.SetEnabled(true);
+                            }
+                            else {
+                                if ($("#hdnBackdateddate").val() != "0" && $("#hdnBackdateddate").val() != "") {
+                                    var Days = $("#hdnBackdateddate").val();
+                                    var today = cPLQuoteDate.GetDate();
+                                    var newdate = cPLQuoteDate.GetDate();
+                                    newdate.setDate(today.getDate() - Math.round(Days));
+                                    cPLQuoteDate.SetMinDate(newdate);
+                                    cPLQuoteDate.SetMaxDate(new Date(todate));
+                                    cPLQuoteDate.SetEnabled(true);
+                                }
+                                else {
+                                    cPLQuoteDate.SetEnabled(false);
+                                }
+                            }
+
+                        }
+                        else if (schemetype == '2') {
+
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Datewise";
+                        }
+                        else if (schemetype == 'n') {
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                            document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
                         }
                     }
-
-                }
-                else if (schemetype == '2') {
-
-                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Datewise";
-                }
-                else if (schemetype == 'n') {
-                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
-                }
-                     }
-                 });
-}
-else {
-    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                });
+            }
+            else {
+                document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
                 document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
                 document.getElementById('ddl_Branch').value = '<%=Session["userbranchID"]%>';
             }
@@ -809,231 +812,261 @@ else {
                 if (vendorid != null && vendorid != '') {
 
                     if ($('#<%=hdnADDEditMode.ClientID %>').val() != 'Edit') {
-                         mode = 'A'
-                     }
-                     else {
-                         mode = 'E'
-                         PBid = "<%=Convert.ToString(Session["PurchaseInvoice_Id"])%>"
-            }
-            if (document.getElementById('hdnAllowDuplicatePartyInvoiceNo').value == 0) {
-                $.ajax({
-                    type: "POST",
-                    url: "purchaseinvoice.aspx/CheckUniquePartyNo",
-                    data: JSON.stringify({ vendorid: vendorid, partyno: partyno, mode: mode, PBid: PBid }),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,
-                    success: function (msg) {
-                        var data = msg.d;
+                        mode = 'A'
+                    }
+                    else {
+                        mode = 'E'
+                        PBid = "<%=Convert.ToString(Session["PurchaseInvoice_Id"])%>"
+                    }
+                    if (document.getElementById('hdnAllowDuplicatePartyInvoiceNo').value == 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: "purchaseinvoice.aspx/CheckUniquePartyNo",
+                            data: JSON.stringify({ vendorid: vendorid, partyno: partyno, mode: mode, PBid: PBid }),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            success: function (msg) {
+                                var data = msg.d;
 
-                        if (data == true) {
-                            $("#DuplicatePartyinvno").show();
-                            ctxt_partyInvNo.SetText('');
-                            ctxt_partyInvNo.Focus();
+                                if (data == true) {
+                                    $("#DuplicatePartyinvno").show();
+                                    ctxt_partyInvNo.SetText('');
+                                    ctxt_partyInvNo.Focus();
+                                }
+                                else {
+                                    $("#DuplicatePartyinvno").hide();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+            else {
+                $("#MandatorysPartyinvno").hide();
+            }
+        }
+        function PerformCallToGridBind() {
+            //debugger;
+            if ($('#<%=hdnADDEditMode.ClientID %>').val() != 'Edit') {
+        var loadingmade = $('#<%=hdnADDEditMode.ClientID %>').val();
+        $("#rdl_PurchaseInvoice_0").prop('checked', true);
+        grid.PerformCallback('BindGridOnQuotation' + '~' + '@');
+        $('#hdnPageStatus').val('Quoteupdate');
+        cProductsPopup.Hide();
+        cddlPosGstInvoice.SetEnabled(false);
+        ctxtVendorName.SetEnabled(false);
+
+        //#### added by Samrat Roy for Transporter Control #############
+        var quote_Id = gridquotationLookup.gridView.GetSelectedKeysOnPage();
+        if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
+                    callTransporterControl(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
+                }
+                if (quote_Id.length > 0) {
+                    //Chinmoy edited below line
+                    GetPurchaseAddress(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
+                    // BSDocTagging(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
+                }
+
+
+                if (quote_Id.length > 0) {
+                    BindOrderProjectdata(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
+                }
+
+
+                if ($("#btn_TermsCondition").is(":visible")) {
+                    callTCControl(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
+                }
+            }
+            else {
+                cProductsPopup.Hide();
+            }
+            return false;
+        }
+        function OnEndCallback(s, e) {
+            debugger;
+            var pageStatus = document.getElementById('hdnPageStatus').value;
+            var value = document.getElementById('hdnRefreshType').value;
+            var pageStatus = document.getElementById('hdnPageStatus').value;
+            LoadingPanel.Hide();
+            if (grid.cpComponent) {
+                if (grid.cpComponent == 'true') {
+                    grid.cpComponent = null;
+                    $('#<%=hdfIsComp.ClientID %>').val('');
+                    OnAddNewClick();
+                    debugger;
+                }
+            }
+            if (grid.cpSaveSuccessOrFail == "outrange") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Can Not Add More Quotation Number as Quotation Scheme Exausted.<br />Update The Scheme and Try Again');
+            }
+            else if (grid.cpSaveSuccessOrFail == "AddressProblem") {
+                cbtn_SaveRecords.SetEnabled(true);
+                page.tabs[1].SetEnabled(true);
+                jAlert("Billing and Shipping Address can not be blank.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
+                grid.cpSaveSuccessOrFail = null;
+                OnAddNewClick();
+            }
+
+
+            else if (grid.cpSaveSuccessOrFail == "BillingShippingNull") {
+                cbtn_SaveRecords.SetEnabled(true);
+                page.tabs[1].SetEnabled(true);
+                jAlert("Billing Shipping Address can not be blank.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
+                grid.cpSaveSuccessOrFail = null;
+                OnAddNewClick();
+            }
+            //Rev Bapi add Condition ddl_VendorType.value!="I"
+            else if (grid.cpSaveSuccessOrFail == "TDSMandatory") {
+                grid.cpSaveSuccessOrFail = null;
+                ShowTDS();
+                grid.cpSaveSuccessOrFail = '';
+            }
+
+
+            else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                var SrlNo = grid.cpcheckMultiUOMData;
+                var msg = "Please add Alt. Qty for SL No. " + SrlNo;
+                grid.cpcheckMultiUOMData = null;
+                jAlert(msg);
+                grid.cpSaveSuccessOrFail = '';
+            }
+            else if (grid.cpSaveSuccessOrFail == "AddLock") {
+                LoadingPanel.Hide();
+                jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
+                OnAddNewClick();
+            }
+            // Rev Mantis Issue 24061
+            else if (grid.cpSaveSuccessOrFail == "NetAmountExceed") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                jAlert('Net Amount of selected Product from tagged document.<br />Cannot enter Net Amount more than Purchase Order Net Amount .');
+                grid.cpSaveSuccessOrFail = '';
+            }
+            // End of Rev Mantis Issue 24061
+            else if (grid.cpSaveSuccessOrFail == "duplicateProduct") {
+                OnAddNewClick();
+                cbtn_SaveRecords.SetEnabled(true);
+                jAlert("Duplicate Product not allowed.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
+                grid.cpSaveSuccessOrFail = null;
+            }
+            else if (grid.cpSaveSuccessOrFail == "checkAcurateTaxAmount") {
+                OnAddNewClick();
+                grid.cpSaveSuccessOrFail = null;
+                jAlert('Check GST Calculated for Item ' + grid.cpProductName + ' at line ' + grid.cpSerialNo);
+                grid.cpSaveSuccessOrFail = '';
+                grid.cpSerialNo = '';
+                grid.cpProductName = '';
+            }
+            else if (grid.cpSaveSuccessOrFail == "transporteMandatory") {
+
+                cbtn_SaveRecords.SetEnabled(true);
+                jAlert("Transporter is set as Mandatory. Please enter values.", "Alert", function () { $("#exampleModal").modal('show'); });
+                grid.cpSaveSuccessOrFail = null;
+
+            }
+            else if (grid.cpSaveSuccessOrFail == "TCMandatory") {
+                cbtn_SaveRecords.SetEnabled(true);
+                jAlert("Terms and Condition is set as Mandatory. Please enter values.", "Alert", function () { $("#TermsConditionseModal").modal('show'); });
+                grid.cpSaveSuccessOrFail = null;
+                grid.batchEditApi.StartEdit(0, 2);
+            }
+            else if (grid.cpSaveSuccessOrFail == "duplicate") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Can Not Save as Duplicate Quotation Numbe No. Found');
+            }
+            else if (grid.cpSaveSuccessOrFail == "errorInsert") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Please try after sometime.');
+            }
+            else if (grid.cpSaveSuccessOrFail == "EmptyProject") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Please select project.');
+            }
+            else if (grid.cpSaveSuccessOrFail == "ChallanTaggingMandatory") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('GRN tagging is mandatory, Cannot proceed.');
+            }
+
+            else if (grid.cpSaveSuccessOrFail == "Ponotexist") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Cannot Save. Selected Purchase Indent(s) in this document do not exist.');
+            }
+            //Registered Vendor Address Checking 
+            else if (grid.cpSaveSuccessOrFail == "VendorAddressProblem") {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('You must enter Vendor Billing and Shipping in Vendor Master and set as default to proceed further.');
+            }
+            else if (grid.cpRVMechMainAc == '-20') {
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                jAlert('Reverse Charge is applicable here. No ledger is found mapped for posting within Masters->Accounts->Tax Component Scheme->"Reverse Charge Posting Ledger". Cannot Proceed.');
+                OnAddNewClick();
+            }
+            else if (grid.cpReturnLedgerAmt == '-3') {
+                var dramt = 0;
+                var cramt = 0;
+                if (grid.cpDRAmt != null) {
+                    dramt = grid.cpDRAmt
+                }
+                if (grid.cpCRAmt != null) {
+                    cramt = grid.cpCRAmt
+                }
+                cbtn_SaveRecords.SetEnabled(true);
+                grid.batchEditApi.StartEdit(0, 2);
+                //jAlert('Db toatl= ' + dramt + '.......Cr total= ' + cramt + ' Mismatch Detected.<br/>Cannot Save.');
+                jAlert('Mismatch detected in total of Debit & Credit Values.<br/>Cannot Save.');
+                grid.cpReturnLedgerAmt = null;
+                grid.cpDRAmt = null;
+                grid.cpCRAmt = null;
+                OnAddNewClick();
+            }
+            else {
+                debugger;
+                var PurchaseOrder_Number = grid.cpPurchaseOrderNo;
+                var Quote_ID = grid.cpGeneratedInvoice;
+                var Order_Msg = "Purchase Invoice No. " + PurchaseOrder_Number + " saved.";
+                if (value == "E") {
+                    cbtn_SaveRecords.SetEnabled(true);
+                    if (grid.cpApproverStatus == "approve") {
+                        window.parent.popup.Hide();
+                        window.parent.cgridPendingApproval.PerformCallback();
+                    }
+                    else if (grid.cpApproverStatus == "rejected") {
+                        window.parent.popup.Hide();
+                        window.parent.cgridPendingApproval.PerformCallback();
+                    }
+                    // window.location.assign("PurchaseInvoicelist.aspx");
+                    if (PurchaseOrder_Number != "") {
+                        jAlert(Order_Msg, 'Alert Dialog: [PurchaseInvoice]', function (r) {
+                            if (r == true) {
+                                if ($('#<%=hdnPBAutoPrint.ClientID %>').val() == "1") {
+                            NewExit = 'E';
+                            cPopup_NoofCopies.Show();
                         }
                         else {
-                            $("#DuplicatePartyinvno").hide();
+                            grid.cpPurchaseOrderNo = null;
+                            grid.cpGeneratedInvoice = null;
+                            window.location.assign("PurchaseInvoicelist.aspx");
                         }
                     }
                 });
             }
+            else {
+                window.location.assign("PurchaseInvoicelist.aspx");
+            }
         }
-    }
-    else {
-        $("#MandatorysPartyinvno").hide();
-    }
-}
-function PerformCallToGridBind() {
-    //debugger;
-    if ($('#<%=hdnADDEditMode.ClientID %>').val() != 'Edit') {
-        var loadingmade = $('#<%=hdnADDEditMode.ClientID %>').val();
-        $("#rdl_PurchaseInvoice_0").prop('checked', true);
-                 grid.PerformCallback('BindGridOnQuotation' + '~' + '@');
-                 $('#hdnPageStatus').val('Quoteupdate');
-                 cProductsPopup.Hide();
-                 cddlPosGstInvoice.SetEnabled(false);
-                 ctxtVendorName.SetEnabled(false);
-
-                 //#### added by Samrat Roy for Transporter Control #############
-                 var quote_Id = gridquotationLookup.gridView.GetSelectedKeysOnPage();
-                 if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
-                     callTransporterControl(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
-                 }
-                 if (quote_Id.length > 0) {
-                     //Chinmoy edited below line
-                     GetPurchaseAddress(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
-                     // BSDocTagging(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
-                 }
-
-
-                 if (quote_Id.length > 0) {
-                     BindOrderProjectdata(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
-                 }
-
-
-                 if ($("#btn_TermsCondition").is(":visible")) {
-                     callTCControl(quote_Id[0], $("#rdl_PurchaseInvoice").find(":checked").val());
-                 }
-             }
-             else {
-                 cProductsPopup.Hide();
-             }
-             return false;
-         }
-        function OnEndCallback(s, e) {
-            debugger;
-             var pageStatus = document.getElementById('hdnPageStatus').value;
-             var value = document.getElementById('hdnRefreshType').value;
-             var pageStatus = document.getElementById('hdnPageStatus').value;
-             LoadingPanel.Hide();
-             if (grid.cpComponent) {
-                 if (grid.cpComponent == 'true') {
-                     grid.cpComponent = null;
-                     $('#<%=hdfIsComp.ClientID %>').val('');
-                     OnAddNewClick();
-                     debugger;
-        }
-    }
-    if (grid.cpSaveSuccessOrFail == "outrange") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Can Not Add More Quotation Number as Quotation Scheme Exausted.<br />Update The Scheme and Try Again');
-    }
-    else if (grid.cpSaveSuccessOrFail == "AddressProblem") {
-        cbtn_SaveRecords.SetEnabled(true);
-        page.tabs[1].SetEnabled(true);
-        jAlert("Billing and Shipping Address can not be blank.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
-        grid.cpSaveSuccessOrFail = null;
-        OnAddNewClick();
-    }
-
-
-    else if (grid.cpSaveSuccessOrFail == "BillingShippingNull") {
-        cbtn_SaveRecords.SetEnabled(true);
-        page.tabs[1].SetEnabled(true);
-        jAlert("Billing Shipping Address can not be blank.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
-        grid.cpSaveSuccessOrFail = null;
-        OnAddNewClick();
-    }
-        //Rev Bapi add Condition ddl_VendorType.value!="I"
-    else if (grid.cpSaveSuccessOrFail == "TDSMandatory") {
-        grid.cpSaveSuccessOrFail = null;
-        ShowTDS();
-        grid.cpSaveSuccessOrFail = '';
-    }
-
-
-    else if (grid.cpSaveSuccessOrFail == "checkMultiUOMData") {
-        OnAddNewClick();
-        grid.cpSaveSuccessOrFail = null;
-        var SrlNo = grid.cpcheckMultiUOMData;
-        var msg = "Please add Alt. Qty for SL No. " + SrlNo;
-        grid.cpcheckMultiUOMData = null;
-        jAlert(msg);
-        grid.cpSaveSuccessOrFail = '';
-    }
-    else if (grid.cpSaveSuccessOrFail == "AddLock") {
-        LoadingPanel.Hide();
-        jAlert('DATA is Freezed between ' + grid.cpAddLockStatus);
-        OnAddNewClick();
-    }
-    // Rev Mantis Issue 24061
-    else if (grid.cpSaveSuccessOrFail == "NetAmountExceed") {
-        OnAddNewClick();
-        grid.cpSaveSuccessOrFail = null;
-        jAlert('Net Amount of selected Product from tagged document.<br />Cannot enter Net Amount more than Purchase Order Net Amount .');
-        grid.cpSaveSuccessOrFail = '';
-    }
-     // End of Rev Mantis Issue 24061
-    else if (grid.cpSaveSuccessOrFail == "duplicateProduct") {
-        OnAddNewClick();
-        cbtn_SaveRecords.SetEnabled(true);
-        jAlert("Duplicate Product not allowed.Save unsuccessful.", "Alert", function () { $("#exampleModal").modal('show'); });
-        grid.cpSaveSuccessOrFail = null;
-    }
-    else if (grid.cpSaveSuccessOrFail == "checkAcurateTaxAmount") {
-        OnAddNewClick();
-        grid.cpSaveSuccessOrFail = null;
-        jAlert('Check GST Calculated for Item ' + grid.cpProductName + ' at line ' + grid.cpSerialNo);
-        grid.cpSaveSuccessOrFail = '';
-        grid.cpSerialNo = '';
-        grid.cpProductName = '';
-    }
-    else if (grid.cpSaveSuccessOrFail == "transporteMandatory") {
-
-        cbtn_SaveRecords.SetEnabled(true);
-        jAlert("Transporter is set as Mandatory. Please enter values.", "Alert", function () { $("#exampleModal").modal('show'); });
-        grid.cpSaveSuccessOrFail = null;
-
-    }
-    else if (grid.cpSaveSuccessOrFail == "TCMandatory") {
-        cbtn_SaveRecords.SetEnabled(true);
-        jAlert("Terms and Condition is set as Mandatory. Please enter values.", "Alert", function () { $("#TermsConditionseModal").modal('show'); });
-        grid.cpSaveSuccessOrFail = null;
-        grid.batchEditApi.StartEdit(0, 2);
-    }
-    else if (grid.cpSaveSuccessOrFail == "duplicate") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Can Not Save as Duplicate Quotation Numbe No. Found');
-    }
-    else if (grid.cpSaveSuccessOrFail == "errorInsert") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Please try after sometime.');
-    }
-    else if (grid.cpSaveSuccessOrFail == "EmptyProject") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Please select project.');
-    }
-    else if (grid.cpSaveSuccessOrFail == "ChallanTaggingMandatory") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('GRN tagging is mandatory, Cannot proceed.');
-    }
-
-    else if (grid.cpSaveSuccessOrFail == "Ponotexist") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Cannot Save. Selected Purchase Indent(s) in this document do not exist.');
-    }
-        //Registered Vendor Address Checking 
-    else if (grid.cpSaveSuccessOrFail == "VendorAddressProblem") {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('You must enter Vendor Billing and Shipping in Vendor Master and set as default to proceed further.');
-    }
-    else if (grid.cpRVMechMainAc == '-20') {
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        jAlert('Reverse Charge is applicable here. No ledger is found mapped for posting within Masters->Accounts->Tax Component Scheme->"Reverse Charge Posting Ledger". Cannot Proceed.');
-        OnAddNewClick();
-    }
-    else if (grid.cpReturnLedgerAmt == '-3') {
-        var dramt = 0;
-        var cramt = 0;
-        if (grid.cpDRAmt != null) {
-            dramt = grid.cpDRAmt
-        }
-        if (grid.cpCRAmt != null) {
-            cramt = grid.cpCRAmt
-        }
-        cbtn_SaveRecords.SetEnabled(true);
-        grid.batchEditApi.StartEdit(0, 2);
-        //jAlert('Db toatl= ' + dramt + '.......Cr total= ' + cramt + ' Mismatch Detected.<br/>Cannot Save.');
-        jAlert('Mismatch detected in total of Debit & Credit Values.<br/>Cannot Save.');
-        grid.cpReturnLedgerAmt = null;
-        grid.cpDRAmt = null;
-        grid.cpCRAmt = null;
-        OnAddNewClick();
-    }
-    else {
-        debugger;
-        var PurchaseOrder_Number = grid.cpPurchaseOrderNo;
-        var Quote_ID = grid.cpGeneratedInvoice;
-        var Order_Msg = "Purchase Invoice No. " + PurchaseOrder_Number + " saved.";
-        if (value == "E") {
+        else if (value == "N") {
             cbtn_SaveRecords.SetEnabled(true);
             if (grid.cpApproverStatus == "approve") {
                 window.parent.popup.Hide();
@@ -1043,56 +1076,26 @@ function PerformCallToGridBind() {
                 window.parent.popup.Hide();
                 window.parent.cgridPendingApproval.PerformCallback();
             }
-            // window.location.assign("PurchaseInvoicelist.aspx");
+
+
             if (PurchaseOrder_Number != "") {
+
                 jAlert(Order_Msg, 'Alert Dialog: [PurchaseInvoice]', function (r) {
                     if (r == true) {
                         if ($('#<%=hdnPBAutoPrint.ClientID %>').val() == "1") {
-                                     NewExit = 'E';
+                                     NewExit = 'N';
                                      cPopup_NoofCopies.Show();
                                  }
                                  else {
                                      grid.cpPurchaseOrderNo = null;
                                      grid.cpGeneratedInvoice = null;
-                                     window.location.assign("PurchaseInvoicelist.aspx");
+                                     window.location.assign("purchaseinvoice.aspx?key=ADD&&InvType=" + $('#ddlInventory').val());
                                  }
+                                 //grid.cpPurchaseOrderNo = null;
+                                 //grid.cpGeneratedInvoice = null;
+                                 //window.location.assign("purchaseinvoice.aspx?key=ADD&&InvType=" + $('#ddlInventory').val());
                              }
                          });
-                     }
-                     else {
-                         window.location.assign("PurchaseInvoicelist.aspx");
-                     }
-                 }
-                 else if (value == "N") {
-                     cbtn_SaveRecords.SetEnabled(true);
-                     if (grid.cpApproverStatus == "approve") {
-                         window.parent.popup.Hide();
-                         window.parent.cgridPendingApproval.PerformCallback();
-                     }
-                     else if (grid.cpApproverStatus == "rejected") {
-                         window.parent.popup.Hide();
-                         window.parent.cgridPendingApproval.PerformCallback();
-                     }
-
-
-                     if (PurchaseOrder_Number != "") {
-
-                         jAlert(Order_Msg, 'Alert Dialog: [PurchaseInvoice]', function (r) {
-                             if (r == true) {
-                                 if ($('#<%=hdnPBAutoPrint.ClientID %>').val() == "1") {
-                            NewExit = 'N';
-                            cPopup_NoofCopies.Show();
-                        }
-                        else {
-                            grid.cpPurchaseOrderNo = null;
-                            grid.cpGeneratedInvoice = null;
-                            window.location.assign("purchaseinvoice.aspx?key=ADD&&InvType=" + $('#ddlInventory').val());
-                        }
-                        //grid.cpPurchaseOrderNo = null;
-                        //grid.cpGeneratedInvoice = null;
-                        //window.location.assign("purchaseinvoice.aspx?key=ADD&&InvType=" + $('#ddlInventory').val());
-                    }
-                });
             }
             else {
                 window.location.assign("purchaseinvoice.aspx?key=ADD&&InvType=" + $('#ddlInventory').val());
@@ -1104,187 +1107,186 @@ function PerformCallToGridBind() {
                     OnAddNewClick();
                     grid.batchEditApi.EndEdit();
                     $('#<%=hdnPageStatus.ClientID %>').val('');
-                             var val = '<%= Session["schemavaluePB"] %>';
-                             if (val != '') {
-                                 $.ajax({
-                                     type: "POST",
-                                     url: 'PurchaseInvoice.aspx/getSchemeType',
-                                     contentType: "application/json; charset=utf-8",
-                                     dataType: "json",
-                                     data: "{sel_scheme_id:\"" + val + "\"}",
-                                     success: function (type) {
-                                         var schemetypeValue = type.d;
-                                         var schemetype = schemetypeValue.toString().split('~')[0];
-                                         var schemelength = schemetypeValue.toString().split('~')[1];
-                                         $('#txtVoucherNo').attr('maxLength', schemelength);
-                                         if (schemetype == '0') {
-                                             document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = false;
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
-                                    $("#txtVoucherNo").focus();
-                                    if ($('#<%=hdnManual.ClientID %>').val() == 'N') {
-                                        cPLQuoteDate.SetEnabled(false);
-                                    }
-                                    else if ($('#<%=hdnManual.ClientID %>').val() == 'Y') {
-                                        cPLQuoteDate.SetEnabled(true);
-                                    }
-                                }
-                                else if (schemetype == '1') {
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Auto";
-                                    cPLQuoteDate.Focus();
-                                    $("#MandatoryBillNo").hide();
-                                    if ($('#<%=hdnAuto.ClientID %>').val() == 'N') {
-                                        cPLQuoteDate.SetEnabled(false);
-                                    }
-                                    else if ($('#<%=hdnAuto.ClientID %>').val() == 'Y') {
-                                        cPLQuoteDate.SetEnabled(true);
-                                    }
-                                }
-                                else if (schemetype == '2') {
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Datewise";
-                                }
-                                else if (schemetype == 'n') {
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
-                                    document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
-                                }
-                            }
-                        });
-        }
-    }
-}
-else if (pageStatus == "update") {
-    OnAddNewClick();
-    $('#<%=hdnPageStatus.ClientID %>').val('');
-}
-else if (pageStatus == "Quoteupdate") {
-    cProductsPopup.Hide();
-    grid.StartEditRow(0);
-    $('#<%=hdnPageStatus.ClientID %>').val('');
-}
-else if (pageStatus == "delete") {
-    var inventoryItem = $('#ddlInventory').val();
-    if (inventoryItem == 'N') {
-        var schemeid = cddl_TdsScheme.GetValue()
-    }
-    OnAddNewClick();
-    $('#<%=hdnPageStatus.ClientID %>').val('');
-}
-
-}
-}
-    if (grid.cpdelete != null && grid.cpdelete != '' && grid.cpdelete != undefined) {
-        if (grid.cpdelete == 'Y') {
-            $('#<%=hdnDeleteSrlNo.ClientID %>').val('');
-        }
-    }
-    var inventoryItem = $('#ddlInventory').val();
-    if (inventoryItem != 'N') {
-        if (gridquotationLookup.GetValue() != null) {
-            grid.GetEditor('ProductName').SetEnabled(false);
-            grid.GetEditor('Description').SetEnabled(false);
-            grid.StartEditRow(0);
-            $('#<%=hdnPageStatus.ClientID %>').val('');
-        }
-    }
-    if (cchk_reversemechenism.GetValue()) {
-        grid.GetEditor('TaxAmount').SetEnabled(false);
-    }
-    if (grid.cpPurchaseorderbindnewrow == "yes") {
-        grid.AddNewRow();
-        var noofvisiblerows = grid.GetVisibleRowsOnPage(); // all newly created rows have -ve index -1 , -2 etc
-        var tbQuotation = grid.GetEditor("SrlNo");
-        tbQuotation.SetValue(noofvisiblerows);
-        grid.cpPurchaseorderbindnewrow = null;
-    }
-    if (grid.cpOrderRunningBalance) {
-        var RunningBalance = grid.cpOrderRunningBalance;
-        var RunningSpliteDetails = RunningBalance.split("~");
-        grid.cpOrderRunningBalance = null;
-        var SUM_ChargesAmount = RunningSpliteDetails[0];
-        var SUM_Amount = RunningSpliteDetails[1];
-        var SUM_TaxAmount = RunningSpliteDetails[3];
-        var SUM_TotalAmount = RunningSpliteDetails[4];
-        var SUM_ProductQuantity = parseFloat(RunningSpliteDetails[6]).toFixed(2);
-        cTaxableAmtval.SetValue(SUM_Amount);
-        cTaxAmtval.SetValue(SUM_TaxAmount);
-        ctxt_Charges.SetValue(SUM_ChargesAmount);
-        cOtherTaxAmtval.SetValue(SUM_ChargesAmount);
-        cInvValue.SetValue(SUM_TotalAmount);
-       
-        cTotalQty.SetValue(SUM_ProductQuantity);
-
-         //Rev 2.0
-       // cTotalAmt.SetValue(SUM_TotalAmount);
-        var SUM_Total_Amount = RunningSpliteDetails[7];
-        cTotalAmt.SetValue(SUM_Total_Amount);
-        //Rev 2.0 End
-    }
-}
-function ddl_Currency_Rate_Change() {
-    var Campany_ID = '<%=Session["LastCompany"]%>';
-    var LocalCurrency = '<%=Session["LocalCurrency"]%>';
-    var basedCurrency = LocalCurrency.split("~");
-    var Currency_ID = $("#ddl_Currency").val();
-    if (Currency_ID == basedCurrency[0]) {
-        ctxtRate.SetValue("0.00");
-        ctxtRate.SetEnabled(false);
-    }
-    else {
-        $.ajax({
-            type: "POST",
-            url: "purchaseinvoice.aspx/GetRate",
-            data: JSON.stringify({ Currency_ID: Currency_ID, Campany_ID: Campany_ID, basedCurrency: basedCurrency[0] }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                var data = msg.d;
-                ctxtRate.SetValue(data);
-            }
-        });
-        ctxtRate.SetEnabled(true);
-    }
-}
-
-function DateCheck() {
-    var invtype = $('#ddlInventory').val();
-    var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
-    
-    var endDate = cPLQuoteDate.GetValue();
-    var str = $.datepicker.formatDate('yy-mm-dd', endDate);
-    var checkval = cchk_reversemechenism.GetChecked();
-    //var key = gridLookup.GetValue()
-    var key = GetObjectID('hdnCustomerId').value;
-    // Waiting for Dirction Start
-
-    // Waiting for Dirction  End 
-    if (gridquotationLookup.GetValue() != null) {
-
-        jConfirm('Documents tagged are to be automatically De-selected. Confirm ?', 'Confirmation Dialog', function (r) {
-            if (r == true) {
-                page.SetActiveTabIndex(0);
-                $('.dxeErrorCellSys').addClass('abc');
-                var startDate = new Date();
-                startDate = cPLQuoteDate.GetDate().format('yyyy/MM/dd');
-                cQuotationComponentPanel.PerformCallback('DateCheckOnChanged' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
-                var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
-                //var key = gridLookup.GetValue()
-                var key = GetObjectID('hdnCustomerId').value;
-
-                if (key != null && key != '') {
-                    var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() :"";
-                    if(type!="")
-                    {
-                        cQuotationComponentPanel.PerformCallback('BindComponentGrid' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
+                    var val = '<%= Session["schemavaluePB"] %>';
+                    if (val != '') {
+                        $.ajax({
+                            type: "POST",
+                            url: 'PurchaseInvoice.aspx/getSchemeType',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            data: "{sel_scheme_id:\"" + val + "\"}",
+                            success: function (type) {
+                                var schemetypeValue = type.d;
+                                var schemetype = schemetypeValue.toString().split('~')[0];
+                                var schemelength = schemetypeValue.toString().split('~')[1];
+                                $('#txtVoucherNo').attr('maxLength', schemelength);
+                                if (schemetype == '0') {
+                                    document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = false;
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
+                                             $("#txtVoucherNo").focus();
+                                             if ($('#<%=hdnManual.ClientID %>').val() == 'N') {
+                                                 cPLQuoteDate.SetEnabled(false);
+                                             }
+                                             else if ($('#<%=hdnManual.ClientID %>').val() == 'Y') {
+                                                 cPLQuoteDate.SetEnabled(true);
+                                             }
+                                         }
+                                         else if (schemetype == '1') {
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Auto";
+                                             cPLQuoteDate.Focus();
+                                             $("#MandatoryBillNo").hide();
+                                             if ($('#<%=hdnAuto.ClientID %>').val() == 'N') {
+                                                 cPLQuoteDate.SetEnabled(false);
+                                             }
+                                             else if ($('#<%=hdnAuto.ClientID %>').val() == 'Y') {
+                                                 cPLQuoteDate.SetEnabled(true);
+                                             }
+                                         }
+                                         else if (schemetype == '2') {
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "Datewise";
+                                         }
+                                         else if (schemetype == 'n') {
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').disabled = true;
+                                             document.getElementById('<%= txtVoucherNo.ClientID %>').value = "";
+                                         }
+                                     }
+                                 });
                     }
-                else{
-                        jAlert('Please Check Radio Button Value.')
-                        return;
-                    }
-                    
                 }
-                grid.PerformCallback('GridBlank');
-                if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
+            }
+            else if (pageStatus == "update") {
+                OnAddNewClick();
+                $('#<%=hdnPageStatus.ClientID %>').val('');
+            }
+            else if (pageStatus == "Quoteupdate") {
+                cProductsPopup.Hide();
+                grid.StartEditRow(0);
+                $('#<%=hdnPageStatus.ClientID %>').val('');
+            }
+            else if (pageStatus == "delete") {
+                var inventoryItem = $('#ddlInventory').val();
+                if (inventoryItem == 'N') {
+                    var schemeid = cddl_TdsScheme.GetValue()
+                }
+                OnAddNewClick();
+                $('#<%=hdnPageStatus.ClientID %>').val('');
+                    }
+
+                }
+            }
+            if (grid.cpdelete != null && grid.cpdelete != '' && grid.cpdelete != undefined) {
+                if (grid.cpdelete == 'Y') {
+                    $('#<%=hdnDeleteSrlNo.ClientID %>').val('');
+                }
+            }
+            var inventoryItem = $('#ddlInventory').val();
+            if (inventoryItem != 'N') {
+                if (gridquotationLookup.GetValue() != null) {
+                    grid.GetEditor('ProductName').SetEnabled(false);
+                    grid.GetEditor('Description').SetEnabled(false);
+                    grid.StartEditRow(0);
+                    $('#<%=hdnPageStatus.ClientID %>').val('');
+                }
+            }
+            if (cchk_reversemechenism.GetValue()) {
+                grid.GetEditor('TaxAmount').SetEnabled(false);
+            }
+            if (grid.cpPurchaseorderbindnewrow == "yes") {
+                grid.AddNewRow();
+                var noofvisiblerows = grid.GetVisibleRowsOnPage(); // all newly created rows have -ve index -1 , -2 etc
+                var tbQuotation = grid.GetEditor("SrlNo");
+                tbQuotation.SetValue(noofvisiblerows);
+                grid.cpPurchaseorderbindnewrow = null;
+            }
+            if (grid.cpOrderRunningBalance) {
+                var RunningBalance = grid.cpOrderRunningBalance;
+                var RunningSpliteDetails = RunningBalance.split("~");
+                grid.cpOrderRunningBalance = null;
+                var SUM_ChargesAmount = RunningSpliteDetails[0];
+                var SUM_Amount = RunningSpliteDetails[1];
+                var SUM_TaxAmount = RunningSpliteDetails[3];
+                var SUM_TotalAmount = RunningSpliteDetails[4];
+                var SUM_ProductQuantity = parseFloat(RunningSpliteDetails[6]).toFixed(2);
+                cTaxableAmtval.SetValue(SUM_Amount);
+                cTaxAmtval.SetValue(SUM_TaxAmount);
+                ctxt_Charges.SetValue(SUM_ChargesAmount);
+                cOtherTaxAmtval.SetValue(SUM_ChargesAmount);
+                cInvValue.SetValue(SUM_TotalAmount);
+
+                cTotalQty.SetValue(SUM_ProductQuantity);
+
+                //Rev 2.0
+                // cTotalAmt.SetValue(SUM_TotalAmount);
+                var SUM_Total_Amount = RunningSpliteDetails[7];
+                cTotalAmt.SetValue(SUM_Total_Amount);
+                //Rev 2.0 End
+            }
+        }
+        function ddl_Currency_Rate_Change() {
+            var Campany_ID = '<%=Session["LastCompany"]%>';
+    var LocalCurrency = '<%=Session["LocalCurrency"]%>';
+            var basedCurrency = LocalCurrency.split("~");
+            var Currency_ID = $("#ddl_Currency").val();
+            if (Currency_ID == basedCurrency[0]) {
+                ctxtRate.SetValue("0.00");
+                ctxtRate.SetEnabled(false);
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "purchaseinvoice.aspx/GetRate",
+                    data: JSON.stringify({ Currency_ID: Currency_ID, Campany_ID: Campany_ID, basedCurrency: basedCurrency[0] }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        var data = msg.d;
+                        ctxtRate.SetValue(data);
+                    }
+                });
+                ctxtRate.SetEnabled(true);
+            }
+        }
+
+        function DateCheck() {
+            var invtype = $('#ddlInventory').val();
+            var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
+
+            var endDate = cPLQuoteDate.GetValue();
+            var str = $.datepicker.formatDate('yy-mm-dd', endDate);
+            var checkval = cchk_reversemechenism.GetChecked();
+            //var key = gridLookup.GetValue()
+            var key = GetObjectID('hdnCustomerId').value;
+            // Waiting for Dirction Start
+
+            // Waiting for Dirction  End 
+            if (gridquotationLookup.GetValue() != null) {
+
+                jConfirm('Documents tagged are to be automatically De-selected. Confirm ?', 'Confirmation Dialog', function (r) {
+                    if (r == true) {
+                        page.SetActiveTabIndex(0);
+                        $('.dxeErrorCellSys').addClass('abc');
+                        var startDate = new Date();
+                        startDate = cPLQuoteDate.GetDate().format('yyyy/MM/dd');
+                        cQuotationComponentPanel.PerformCallback('DateCheckOnChanged' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
+                        var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
+                        //var key = gridLookup.GetValue()
+                        var key = GetObjectID('hdnCustomerId').value;
+
+                        if (key != null && key != '') {
+                            var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
+                            if (type != "") {
+                                cQuotationComponentPanel.PerformCallback('BindComponentGrid' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
+                            }
+                            else {
+                                jAlert('Please Check Radio Button Value.')
+                                return;
+                            }
+
+                        }
+                        grid.PerformCallback('GridBlank');
+                        if ("<%=Convert.ToString(Session["TransporterVisibilty"])%>" == "Yes") {
                     clearTransporter(); disc
                 }
                 ccmbGstCstVat.PerformCallback();
@@ -1292,25 +1294,25 @@ function DateCheck() {
                 ctaxUpdatePanel.PerformCallback('DeleteAllTax');
             }
         });
-    }
-    else {
-        var startDate = new Date();
-        startDate = cPLQuoteDate.GetValueString();
-        //var key = gridLookup.GetValue()
-        var key = GetObjectID('hdnCustomerId').value;
-        if (key != "" && key != null) {
-            var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
-            var componentType = gridquotationLookup.GetGridView().GetRowKey(gridquotationLookup.GetGridView().GetFocusedRowIndex());
-            cQuotationComponentPanel.PerformCallback('DateCheckOnChanged' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
-            if (key != null && key != '' && type != "") {
-                cQuotationComponentPanel.PerformCallback('BindComponentGrid' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
             }
-            if (componentType != null && componentType != '') {
-                grid.PerformCallback('GridBlank');
+            else {
+                var startDate = new Date();
+                startDate = cPLQuoteDate.GetValueString();
+                //var key = gridLookup.GetValue()
+                var key = GetObjectID('hdnCustomerId').value;
+                if (key != "" && key != null) {
+                    var type = ($("[id$='rdl_PurchaseInvoice']").find(":checked").val() != null) ? $("[id$='rdl_PurchaseInvoice']").find(":checked").val() : "";
+                    var componentType = gridquotationLookup.GetGridView().GetRowKey(gridquotationLookup.GetGridView().GetFocusedRowIndex());
+                    cQuotationComponentPanel.PerformCallback('DateCheckOnChanged' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
+                    if (key != null && key != '' && type != "") {
+                        cQuotationComponentPanel.PerformCallback('BindComponentGrid' + '~' + key + '~' + startDate + '~' + 'DateCheck' + '~' + type + '~' + invtype);
+                    }
+                    if (componentType != null && componentType != '') {
+                        grid.PerformCallback('GridBlank');
+                    }
+                }
             }
         }
-    }
-}
         //Rev Bapi
         $(document).ready(function () {
 
@@ -1342,101 +1344,94 @@ function DateCheck() {
             font-size: 14px !important;
             margin-right: 36px;
         }
-        #dvInvoicedetAmount> span {
-            padding: 2px 10px;
-        }
-        #dvInvoicedetAmount> span:first-child{
-            display: block;
-            font-weight: 500;
-            background: #2296d1;
-            color: #fff;
-            font-size: 12px;
-        }
+
+            #dvInvoicedetAmount > span {
+                padding: 2px 10px;
+            }
+
+                #dvInvoicedetAmount > span:first-child {
+                    display: block;
+                    font-weight: 500;
+                    background: #2296d1;
+                    color: #fff;
+                    font-size: 12px;
+                }
     </style>
 
     <%--Rev 1.0--%>
     <link href="/assests/css/custom/newcustomstyle.css" rel="stylesheet" />
-    
+
     <style>
-        select
-        {
+        select {
             z-index: 1;
         }
 
         #grid {
             max-width: 98% !important;
         }
-        #FormDate , #toDate , #dtTDate , #dt_PLQuote , #dt_PartyDate , #dt_partyInvDt , #dt_EntryDate
-        {
+
+        #FormDate, #toDate, #dtTDate, #dt_PLQuote, #dt_PartyDate, #dt_partyInvDt, #dt_EntryDate {
             position: relative;
             z-index: 1;
             background: transparent;
         }
 
-        #FormDate_B-1 , #toDate_B-1 , #dtTDate_B-1 , #dt_PLQuote_B-1 , #dt_PartyDate_B-1 , #dt_partyInvDt_B-1 , #dt_EntryDate_B-1
-        {
+        #FormDate_B-1, #toDate_B-1, #dtTDate_B-1, #dt_PLQuote_B-1, #dt_PartyDate_B-1, #dt_partyInvDt_B-1, #dt_EntryDate_B-1 {
             background: transparent !important;
             border: none;
             width: 30px;
             padding: 10px !important;
         }
 
-        #FormDate_B-1 #FormDate_B-1Img , #toDate_B-1 #toDate_B-1Img , #dtTDate_B-1 #dtTDate_B-1Img , #dt_PLQuote_B-1 #dt_PLQuote_B-1Img ,
-        #dt_PartyDate_B-1 #dt_PartyDate_B-1Img , #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img, #dt_EntryDate_B-1 #dt_EntryDate_B-1Img
-        {
-            display: none;
-        }
+            #FormDate_B-1 #FormDate_B-1Img, #toDate_B-1 #toDate_B-1Img, #dtTDate_B-1 #dtTDate_B-1Img, #dt_PLQuote_B-1 #dt_PLQuote_B-1Img,
+            #dt_PartyDate_B-1 #dt_PartyDate_B-1Img, #dt_partyInvDt_B-1 #dt_partyInvDt_B-1Img, #dt_EntryDate_B-1 #dt_EntryDate_B-1Img {
+                display: none;
+            }
 
         /*select
         {
             -webkit-appearance: auto;
         }*/
 
-        .calendar-icon
-        {
-                right: 20px;
-                bottom: 8px;
+        .calendar-icon {
+            right: 20px;
+            bottom: 8px;
         }
-        .padTabtype2 > tbody > tr > td
-        {
+
+        .padTabtype2 > tbody > tr > td {
             vertical-align: bottom;
         }
-        #rdl_Salesquotation
-        {
+
+        #rdl_Salesquotation {
             margin-top: 0px;
         }
 
-        .lblmTop8>span, .lblmTop8>label
-        {
+        .lblmTop8 > span, .lblmTop8 > label {
             margin-top: 0 !important;
         }
 
         .col-md-2, .col-md-4 {
-    margin-bottom: 10px;
-}
-
-        .simple-select::after
-        {
-                top: 26px;
+            margin-bottom: 10px;
         }
 
-        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue
-        {
+        .simple-select::after {
+            top: 26px;
+        }
+
+        .dxeErrorFrameWithoutError_PlasticBlue.dxeControlsCell_PlasticBlue {
             padding: 0;
         }
 
-        .aspNetDisabled
-        {
+        .aspNetDisabled {
             background: #f3f3f3 !important;
         }
 
         .backSelect {
-    background: #42b39e !important;
-}
+            background: #42b39e !important;
+        }
 
-        #ddlInventory
-        {
-                -webkit-appearance: auto;
+        #ddlInventory {
+            -webkit-appearance: auto;
         }
 
         /*.wid-90
@@ -1447,24 +1442,20 @@ function DateCheck() {
         {
             width: 97%;
         }*/
-        .newLbl
-        {
-                margin: 3px 0 !important;
+        .newLbl {
+            margin: 3px 0 !important;
         }
 
-        .ui-widget.ui-widget-content
-        {
+        .ui-widget.ui-widget-content {
             position: fixed;
             top: 40%;
             left: 40%;
         }
 
-        #Popup_NoofCopies_PW-1
-        {
+        #Popup_NoofCopies_PW-1 {
             position: fixed !important;
             top: 25% !important;
         }
-
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
@@ -1472,158 +1463,158 @@ function DateCheck() {
     <%--Rev 1.0: "outer-div-main" class add --%>
     <div class="outer-div-main clearfix">
         <div class="panel-heading">
-        <div class="panel-title clearfix">
-            <h3 class="pull-left">
-                <span class="">
-                    <asp:Label ID="lblHeading" runat="server" Text="Add Purchase Invoice"></asp:Label>
+            <div class="panel-title clearfix">
+                <h3 class="pull-left">
+                    <span class="">
+                        <asp:Label ID="lblHeading" runat="server" Text="Add Purchase Invoice"></asp:Label>
 
-                </span>
-            </h3>
+                    </span>
+                </h3>
 
-            <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
-                <div class="Top clearfix">
-                    <ul>
+                <div id="pageheaderContent" class="scrollHorizontal pull-right reverse wrapHolder content horizontal-images" style="display: none;" runat="server">
+                    <div class="Top clearfix">
+                        <ul>
 
-                        <li>
-                            <div class="lblHolder" id="divContactPhone" style="display: none;" runat="server">
-                                <table>
-                                    <tr>
-                                        <td>Contact Person's Phone</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblContactPhone" runat="server" Text="N/A" CssClass="classout"></asp:Label></td>
-                                    </tr>
-                                </table>
-                            </div>
+                            <li>
+                                <div class="lblHolder" id="divContactPhone" style="display: none;" runat="server">
+                                    <table>
+                                        <tr>
+                                            <td>Contact Person's Phone</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblContactPhone" runat="server" Text="N/A" CssClass="classout"></asp:Label></td>
+                                        </tr>
+                                    </table>
+                                </div>
 
-                        </li>
-                        <li>
-                            <div class="lblHolder" id="divOutstanding" style="display: none;" runat="server">
-                                <table>
-                                    <tr>
-                                        <td>Receivable</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblOutstanding" runat="server" Text="0.0" CssClass="classout"></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
+                            </li>
+                            <li>
+                                <div class="lblHolder" id="divOutstanding" style="display: none;" runat="server">
+                                    <table>
+                                        <tr>
+                                            <td>Receivable</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblOutstanding" runat="server" Text="0.0" CssClass="classout"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
 
-                        <li>
-                            <div class="lblHolder" id="divAvailableStk" style="display: none;">
-                                <table>
-                                    <tr>
-                                        <td>Available Stock</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblAvailableStkPro" runat="server" Text="0.0"></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lblHolder" id="divPacking" style="display: none;">
-                                <table>
-                                    <tr>
-                                        <td>Packing Quantity</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblPackingStk" runat="server"></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lblHolder" id="divGSTN" style="display: none;" runat="server">
-                                <table>
-                                    <tr>
-                                        <td>GST Registed?</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblGSTIN" runat="server" Text=""></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul style="display: none;">
-                        <li>
-                            <div class="lblHolder">
-                                <table>
-                                    <tr>
-                                        <td>Selected Unit</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="Label1" runat="server"></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lblHolder">
-                                <table>
-                                    <tr>
-                                        <td>Selected Product</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblProduct" runat="server"></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="lblHolder">
-                                <table>
-                                    <tr>
-                                        <td>Stock Quantity</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <asp:Label ID="lblStkQty" runat="server" Text="0.00"></asp:Label>
-                                            <asp:Label ID="lblStkUOM" runat="server" Text=" "></asp:Label>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </li>
-                    </ul>
+                            <li>
+                                <div class="lblHolder" id="divAvailableStk" style="display: none;">
+                                    <table>
+                                        <tr>
+                                            <td>Available Stock</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblAvailableStkPro" runat="server" Text="0.0"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder" id="divPacking" style="display: none;">
+                                    <table>
+                                        <tr>
+                                            <td>Packing Quantity</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblPackingStk" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder" id="divGSTN" style="display: none;" runat="server">
+                                    <table>
+                                        <tr>
+                                            <td>GST Registed?</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblGSTIN" runat="server" Text=""></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul style="display: none;">
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tr>
+                                            <td>Selected Unit</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="Label1" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tr>
+                                            <td>Selected Product</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblProduct" runat="server"></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tr>
+                                            <td>Stock Quantity</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <asp:Label ID="lblStkQty" runat="server" Text="0.00"></asp:Label>
+                                                <asp:Label ID="lblStkUOM" runat="server" Text=" "></asp:Label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div runat="server" id="dvInvoicedetAmount">
-                <span onclick="InvoiceDetails()" title="InvoiceDetails">Invoice Details</span>
-                <span id="InvAmount" runat="server"></span>
-            </div>
-            <div id="ApprovalCross" runat="server" class="crossBtn">
-                <a href=""><i class="fa fa-times"></i></a>
+                <div runat="server" id="dvInvoicedetAmount">
+                    <span onclick="InvoiceDetails()" title="InvoiceDetails">Invoice Details</span>
+                    <span id="InvAmount" runat="server"></span>
+                </div>
+                <div id="ApprovalCross" runat="server" class="crossBtn">
+                    <a href=""><i class="fa fa-times"></i></a>
 
+                </div>
+                <%--<div id="divcross1" runat="server" class="crossBtn" margin-left: 50px;">--%>
+                <div id="crossdiv" runat="server" class="crossBtn">
+                    <a href="purchaseinvoicelist.aspx"><i class="fa fa-times"></i></a>
+                </div>
+                <%--</div>--%>
             </div>
-            <%--<div id="divcross1" runat="server" class="crossBtn" margin-left: 50px;">--%>
-            <div id="crossdiv" runat="server" class="crossBtn">
-                <a href="purchaseinvoicelist.aspx"><i class="fa fa-times"></i></a>
-            </div>
-            <%--</div>--%>
+
         </div>
-
-    </div>
 
         <div class="form_main row clearfix">
 
-        
-        <%--<div class="row">--%>
+
+            <%--<div class="row">--%>
             <dxe:ASPxPageControl ID="ASPxPageControl1" runat="server" ClientInstanceName="page" Width="100%">
                 <TabPages>
                     <dxe:TabPage Name="General" Text="General">
@@ -1675,8 +1666,8 @@ function DateCheck() {
                                         </dxe:ASPxDateEdit>
                                         <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
                                         <%--Rev 1.0--%>
-                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                                    <%--Rev end 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon" />
+                                        <%--Rev end 1.0--%>
                                     </div>
                                     <%--Rev 1.0: "simple-select" class add --%>
                                     <div class="col-md-2 lblmTop8 simple-select">
@@ -1687,14 +1678,14 @@ function DateCheck() {
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-md-2 lblmTop8" id="DivForUnit" runat="server">
-                                         <dxe:ASPxLabel ID="ASPxLabel14" runat="server" Text="For Unit">
+                                        <dxe:ASPxLabel ID="ASPxLabel14" runat="server" Text="For Unit">
                                         </dxe:ASPxLabel>
-                                       
-                                            <asp:DropDownList ID="ddlForBranch" runat="server"  Width="100%">                                                
-                                            </asp:DropDownList>
-                                       
+
+                                        <asp:DropDownList ID="ddlForBranch" runat="server" Width="100%">
+                                        </asp:DropDownList>
+
                                     </div>
-                                     <div style="clear: both"></div>
+                                    <div style="clear: both"></div>
                                     <div class="col-md-2 lblmTop8">
                                         <dxe:ASPxLabel ID="lbl_Refference" runat="server" Text="Reference">
                                         </dxe:ASPxLabel>
@@ -1702,13 +1693,13 @@ function DateCheck() {
                                         </dxe:ASPxTextBox>
                                     </div>
 
-                                   
+
                                     <div class="col-md-2">
                                         <dxe:ASPxLabel ID="lbl_Customer" runat="server" Text="Vendor">
                                         </dxe:ASPxLabel>
                                         <span style="color: red;">*</span>
                                         <% if (rightsVendor.CanAdd)
-                                           { %>
+                                            { %>
                                         <a href="#" onclick="AddVendorClick()" style="left: -12px; top: 20px; font-size: 16px;"><i id="openlink" runat="server" class="fa fa-plus-circle" aria-hidden="true"></i></a>
                                         <% } %>
                                         <dxe:ASPxButtonEdit ID="txtVendorName" runat="server" ReadOnly="true" ClientInstanceName="ctxtVendorName" Width="100%">
@@ -1801,7 +1792,7 @@ function DateCheck() {
                                                     <span id="MandatoryEgSDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Party Invoice Date can not be greater than Invoice Date"></span>
                                                     <%--                                            <span id="MandatoryDate" class="PODate  pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>--%>
                                                     <%--Rev 1.0--%>
-                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
+                                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon" />
                                                     <%--Rev end 1.0--%>
                                                 </div>
 
@@ -1949,7 +1940,7 @@ function DateCheck() {
                                         </div>
                                     </div>
 
-                                    
+
 
                                     <div class="col-md-2  hide">
 
@@ -2035,8 +2026,8 @@ function DateCheck() {
                                         </dxe:ASPxLabel>
                                         <dxe:ASPxComboBox ID="ddl_vendortype" runat="server" ClientInstanceName="cddl_vendortype" Width="100%" ClientEnabled="false">
                                             <Items>
-                                                <dxe:ListEditItem Text="None" Value="R"  />
-                                                <dxe:ListEditItem Text="Composite" Value="C"    />
+                                                <dxe:ListEditItem Text="None" Value="R" />
+                                                <dxe:ListEditItem Text="Composite" Value="C" />
                                                 <dxe:ListEditItem Text="Import" Value="I" />
                                             </Items>
                                         </dxe:ASPxComboBox>
@@ -2050,8 +2041,8 @@ function DateCheck() {
                                             </ButtonStyle>
                                         </dxe:ASPxDateEdit>
                                         <%--Rev 1.0--%>
-                                    <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                                    <%--Rev end 1.0--%>
+                                        <img src="/assests/images/calendar-icon.png" class="calendar-icon" />
+                                        <%--Rev end 1.0--%>
                                     </div>
                                     <div class="col-md-2 lblmTop8">
                                         <dxe:ASPxLabel ID="ASPxLabel13" runat="server" Text="Place Of Supply[GST]">
@@ -2113,7 +2104,7 @@ function DateCheck() {
                                                     <%--GotFocus="function(s,e){gridquotationLookup.ShowDropDown();}"--%>
                                                 </dxe:PanelContent>
                                             </PanelCollection>
-                                           
+
                                         </dxe:ASPxCallbackPanel>
                                         <%--  <dx:LinqServerModeDataSource ID="EntityServerModeDataOverheadCost" runat="server" OnSelecting="EntityServerModeDataOverheadCost_Selecting"
                                             ContextTypeName="ERPDataClassesDataContext" TableName="v_OverHeadCostPurchaseServiceInvoice" />--%>
@@ -2279,8 +2270,8 @@ function DateCheck() {
                                                         <CellStyle HorizontalAlign="Right">
                                                         </CellStyle>
                                                     </dxe:GridViewDataTextColumn>
-                                                     
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="InvoiceDetails_AltUOM" ReadOnly="true" VisibleIndex="10" Width="100px" >
+
+                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="InvoiceDetails_AltUOM" ReadOnly="true" VisibleIndex="10" Width="100px">
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
@@ -2409,13 +2400,18 @@ function DateCheck() {
                                                         <CellStyle Wrap="True" CssClass="abcd"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
 
-                                                    <dxe:GridViewDataTextColumn FieldName="ProductID" PropertiesTextEdit-ValidationSettings-ErrorImage-IconID="ghg" Caption="hidden Field Id" VisibleIndex="28" ReadOnly="True" Width="0" PropertiesTextEdit-Height="15px" PropertiesTextEdit-Style-CssClass="abcd">
-                                                        <CellStyle Wrap="True" CssClass="abcd"></CellStyle>
-                                                    </dxe:GridViewDataTextColumn>
+
                                                     <%-- Rev Mantis Issue 24061 --%>
                                                     <dxe:GridViewDataTextColumn FieldName="Balance_Amount" Caption="Balance Amount" VisibleIndex="29" ReadOnly="True" Width="0">
                                                     </dxe:GridViewDataTextColumn>
                                                     <%-- End of Rev Mantis Issue 24061 --%>
+
+                                                    <dxe:GridViewDataTextColumn FieldName="ProductID" PropertiesTextEdit-ValidationSettings-ErrorImage-IconID="ghg" 
+                                                        Caption="hidden Field Id" 
+                                                        VisibleIndex="30" ReadOnly="True" Width="0" 
+                                                         PropertiesTextEdit-Style-CssClass="abcd">
+                                                       <%-- <CellStyle Wrap="True" CssClass="abcd"></CellStyle>--%>
+                                                    </dxe:GridViewDataTextColumn>
 
                                                     <%-- <dxe:GridViewDataTextColumn Caption="Quotation No" FieldName="Indent" Width="0"  VisibleIndex="13">
                                                 <PropertiesTextEdit >
@@ -2579,7 +2575,7 @@ function DateCheck() {
                                                         <dxe:ASPxButton ID="ASPxButton10" ClientInstanceName="cbtn_TCS" runat="server" AutoPostBack="False" Text="Add TC&#818;S" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                             <ClientSideEvents Click="function(s, e) {ShowTCS();}" />
                                                         </dxe:ASPxButton>
-                                                         <dxe:ASPxButton ID="ASPxButton11" ClientInstanceName="cbtn_TDS" runat="server" AutoPostBack="False" Text="Add TD&#818;S" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                        <dxe:ASPxButton ID="ASPxButton11" ClientInstanceName="cbtn_TDS" runat="server" AutoPostBack="False" Text="Add TD&#818;S" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                             <ClientSideEvents Click="function(s, e) {ShowTDS();}" />
                                                         </dxe:ASPxButton>
                                                     </span>
@@ -2677,851 +2673,851 @@ function DateCheck() {
             </dxe:ASPxPageControl>
         </div>
         <%--InlineTax--%>
-        </div>
-        <dxe:ASPxPopupControl ID="aspxTaxpopUp" runat="server" ClientInstanceName="caspxTaxpopUp"
-            Width="850px" HeaderText="Select Tax" PopupHorizontalAlign="WindowCenter"
-            PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
-            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
-            <HeaderTemplate>
-                <span style="color: #fff"><strong>Select Tax</strong></span>
-                <dxe:ASPxImage ID="ASPxImage1" runat="server" ImageUrl="/assests/images/closePop.png" Cursor="pointer" CssClass="popUpHeader pull-right">
-                    <ClientSideEvents Click="function(s, e){ 
+    </div>
+    <dxe:ASPxPopupControl ID="aspxTaxpopUp" runat="server" ClientInstanceName="caspxTaxpopUp"
+        Width="850px" HeaderText="Select Tax" PopupHorizontalAlign="WindowCenter"
+        PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+        Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+        <HeaderTemplate>
+            <span style="color: #fff"><strong>Select Tax</strong></span>
+            <dxe:ASPxImage ID="ASPxImage1" runat="server" ImageUrl="/assests/images/closePop.png" Cursor="pointer" CssClass="popUpHeader pull-right">
+                <ClientSideEvents Click="function(s, e){ 
                                                             cgridTax.CancelEdit();
                                                             caspxTaxpopUp.Hide();
                                                         }" />
-                </dxe:ASPxImage>
-            </HeaderTemplate>
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                    <asp:HiddenField runat="server" ID="setCurrentProdCode" />
-                    <asp:HiddenField runat="server" ID="HdSerialNo" />
-                    <asp:HiddenField runat="server" ID="hdnInvWiseSlno" />
-                    <asp:HiddenField runat="server" ID="HdProdGrossAmt" />
-                    <asp:HiddenField runat="server" ID="HdProdNetAmt" />
-                    <%-- <asp:HiddenField ID="hdnPageStatus1" runat="server" />--%>
-                    <%-- Added by Sam to show default cursor after save--%>
-                    <%-- <asp:HiddenField ID="hdnschemeid" runat="server" />--%>
-                    <asp:HiddenField ID="hdnDeleteSrlNo" runat="server" />
-                    <asp:HiddenField ID="hdnADDEditMode" runat="server" />
-                    <%--<asp:HiddenField ID="hdnprevqty" runat="server" />--%>
-                    <%-- Added by Sam to show default cursor after save--%>
-                    <div id="content-6">
-                        <div class="col-sm-3">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Gross Amount
-                                                    <dxe:ASPxLabel ID="ASPxLabel5" runat="server" Text="(Taxable)" ClientInstanceName="clblTaxableGross"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <dxe:ASPxLabel ID="lblTaxProdGrossAmt" runat="server" Text="" ClientInstanceName="clblTaxProdGrossAmt"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3 gstGrossAmount hide">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>GST</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <dxe:ASPxLabel ID="lblGstForGross" runat="server" Text="" ClientInstanceName="clblGstForGross"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Discount</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <dxe:ASPxLabel ID="lblTaxDiscount" runat="server" Text="" ClientInstanceName="clblTaxDiscount"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-3">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Amount
-                                                    <dxe:ASPxLabel ID="ASPxLabel6" runat="server" Text="(Taxable)" ClientInstanceName="clblTaxableNet"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <dxe:ASPxLabel ID="lblProdNetAmt" runat="server" Text="" ClientInstanceName="clblProdNetAmt"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2 gstNetAmount hide">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>GST</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <dxe:ASPxLabel ID="lblGstForNet" runat="server" Text="" ClientInstanceName="clblGstForNet"></dxe:ASPxLabel>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <%--Error Message--%>
-                    <div id="ContentErrorMsg">
-                        <div class="col-sm-8">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Status
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax Code/Charges Not defined.
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-                    <table style="width: 100%;">
-                        <tr>
-                            <td colspan="2"></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2"></td>
-                        </tr>
-
-
-                        <tr style="display: none">
-                            <td><span><strong>Product Basic Amount</strong></span></td>
-                            <td>
-                                <dxe:ASPxTextBox ID="txtprodBasicAmt" MaxLength="80" ClientInstanceName="ctxtprodBasicAmt" ReadOnly="true"
-                                    runat="server" Width="50%">
-                                    <MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" />
-                                </dxe:ASPxTextBox>
-                            </td>
-                        </tr>
-
-                        <tr class="cgridTaxClass">
-                            <td colspan="3">
-                                <dxe:ASPxGridView runat="server" OnBatchUpdate="taxgrid_BatchUpdate" KeyFieldName="Taxes_ID" ClientInstanceName="cgridTax" ID="aspxGridTax"
-                                    Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" SettingsPager-Mode="ShowAllRecords" OnCustomCallback="cgridTax_CustomCallback"
-                                    Settings-ShowFooter="false" AutoGenerateColumns="False" OnCellEditorInitialize="aspxGridTax_CellEditorInitialize" OnHtmlRowCreated="aspxGridTax_HtmlRowCreated"
-                                    OnRowInserting="taxgrid_RowInserting" OnRowUpdating="taxgrid_RowUpdating" OnRowDeleting="taxgrid_RowDeleting">
-                                    <Settings VerticalScrollableHeight="150" VerticalScrollBarMode="Auto"></Settings>
-                                    <SettingsBehavior AllowDragDrop="False" AllowSort="False"></SettingsBehavior>
-                                    <SettingsPager Visible="false"></SettingsPager>
-                                    <Columns>
-                                        <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="Taxes_Name" ReadOnly="true" Caption="Tax Component ID">
-                                        </dxe:GridViewDataTextColumn>
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="taxCodeName" ReadOnly="true" Caption="Tax Component Name">
-                                        </dxe:GridViewDataTextColumn>
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="calCulatedOn" ReadOnly="true" Caption="Calculated On">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-                                        <%--<dxe:GridViewDataComboBoxColumn Caption="percentage" FieldName="TaxField" VisibleIndex="2">
-                                                <PropertiesComboBox ClientInstanceName="cTaxes_Name" ValueField="Taxes_ID" TextField="Taxes_Name" DropDownStyle="DropDown">
-                                                    <ClientSideEvents SelectedIndexChanged="cmbtaxCodeindexChange"
-                                                        GotFocus="CmbtaxClick" />
-                                                </PropertiesComboBox>
-                                            </dxe:GridViewDataComboBoxColumn>--%>
-                                        <dxe:GridViewDataTextColumn Caption="Percentage" FieldName="TaxField" VisibleIndex="4">
-                                            <PropertiesTextEdit DisplayFormatString="0.000" Style-HorizontalAlign="Right">
-                                                <ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..999&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="Amount" Caption="Amount" ReadOnly="true">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <ClientSideEvents LostFocus="taxAmountLostFocus" GotFocus="taxAmountGotFocus" />
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-                                    </Columns>
-                                    <%--  <SettingsPager Mode="ShowAllRecords"></SettingsPager>--%>
-                                    <SettingsDataSecurity AllowEdit="true" />
-                                    <SettingsEditing Mode="Batch">
-                                        <BatchEditSettings EditMode="row" />
-                                    </SettingsEditing>
-                                    <ClientSideEvents EndCallback=" cgridTax_EndCallBack " RowClick="GetTaxVisibleIndex" />
-
-                                </dxe:ASPxGridView>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <table class="InlineTaxClass hide">
-                                    <tr class="GstCstvatClass" style="">
-                                        <td style="padding-top: 10px; padding-bottom: 15px; padding-right: 25px"><span><strong>GST</strong></span></td>
-                                        <td style="padding-top: 10px; padding-bottom: 15px;">
-                                            <dxe:ASPxComboBox ID="cmbGstCstVat" ClientInstanceName="ccmbGstCstVat" runat="server" SelectedIndex="-1"
-                                                ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" TextFormatString="{0}"
-                                                ClearButton-DisplayMode="Always" OnCallback="cmbGstCstVat_Callback">
-
-                                                <Columns>
-                                                    <dxe:ListBoxColumn FieldName="Taxes_Name" Caption="Tax Component ID" Width="250" />
-                                                    <dxe:ListBoxColumn FieldName="TaxCodeName" Caption="Tax Component Name" Width="250" />
-
-                                                </Columns>
-
-                                                <%--<ClientSideEvents SelectedIndexChanged="cmbGstCstVatChange"
-                                                    GotFocus="CmbtaxClick" />--%>
-                                            </dxe:ASPxComboBox>
-
-
-
-                                        </td>
-                                        <td style="padding-left: 15px; padding-top: 10px; padding-bottom: 15px; padding-right: 25px">
-                                            <dxe:ASPxTextBox ID="txtGstCstVat" MaxLength="80" ClientInstanceName="ctxtGstCstVat" ReadOnly="true" Text="0.00"
-                                                runat="server" Width="100%">
-                                                <MaskSettings Mask="<-999999999..999999999>.<0..99>" AllowMouseWheel="false" />
-                                            </dxe:ASPxTextBox>
-
-
-                                        </td>
-                                        <td>
-                                            <input type="button" onclick="recalculateTax()" class="btn btn-info btn-small RecalculateInline" value="Recalculate GST" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <div class="pull-left">
-
-                                    <dxe:ASPxButton ID="Button1" ClientInstanceName="cButton1" runat="server" AutoPostBack="False" Text="OK" CssClass="btn btn-primary mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
-                                        <ClientSideEvents Click="function(s, e) {return BatchUpdate();}" />
-                                    </dxe:ASPxButton>
-
-                                    <dxe:ASPxButton ID="Button3" ClientInstanceName="cButton3" runat="server" AutoPostBack="False" Text="Cancel" CssClass="btn btn-danger mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
-                                        <ClientSideEvents Click="function(s, e) {cgridTax.CancelEdit(); caspxTaxpopUp.Hide(); return false;}" />
-                                    </dxe:ASPxButton>
-                                </div>
-                                <table class="pull-right">
+            </dxe:ASPxImage>
+        </HeaderTemplate>
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+                <asp:HiddenField runat="server" ID="setCurrentProdCode" />
+                <asp:HiddenField runat="server" ID="HdSerialNo" />
+                <asp:HiddenField runat="server" ID="hdnInvWiseSlno" />
+                <asp:HiddenField runat="server" ID="HdProdGrossAmt" />
+                <asp:HiddenField runat="server" ID="HdProdNetAmt" />
+                <%-- <asp:HiddenField ID="hdnPageStatus1" runat="server" />--%>
+                <%-- Added by Sam to show default cursor after save--%>
+                <%-- <asp:HiddenField ID="hdnschemeid" runat="server" />--%>
+                <asp:HiddenField ID="hdnDeleteSrlNo" runat="server" />
+                <asp:HiddenField ID="hdnADDEditMode" runat="server" />
+                <%--<asp:HiddenField ID="hdnprevqty" runat="server" />--%>
+                <%-- Added by Sam to show default cursor after save--%>
+                <div id="content-6">
+                    <div class="col-sm-3">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
                                     <tr>
-                                        <td style="padding-top: 10px; padding-right: 5px"><strong>Total Charges</strong></td>
-                                        <td>
-                                            <dxe:ASPxTextBox ID="txtTaxTotAmt" MaxLength="80" ClientInstanceName="ctxtTaxTotAmt" Text="0.00" ReadOnly="true"
-                                                runat="server" Width="100%" CssClass="pull-left mTop">
-                                                <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <%--<MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" /> --%>
-                                            </dxe:ASPxTextBox>
-
+                                        <td>Gross Amount
+                                                    <dxe:ASPxLabel ID="ASPxLabel5" runat="server" Text="(Taxable)" ClientInstanceName="clblTaxableGross"></dxe:ASPxLabel>
                                         </td>
                                     </tr>
-                                </table>
-
-
-                                <div class="clear"></div>
-                            </td>
-                        </tr>
-
-                    </table>
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-            <ContentStyle VerticalAlign="Top" CssClass="pad"></ContentStyle>
-            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
-        </dxe:ASPxPopupControl>
-        <dxe:ASPxCallbackPanel runat="server" ID="taxUpdatePanel" ClientInstanceName="ctaxUpdatePanel" OnCallback="taxUpdatePanel_Callback">
-            <PanelCollection>
-                <dxe:PanelContent runat="server">
-                </dxe:PanelContent>
-            </PanelCollection>
-            <ClientSideEvents EndCallback="ctaxUpdatePanelEndCall" />
-        </dxe:ASPxCallbackPanel>
-
-        <%--ChargesTax--%>
-        <dxe:ASPxPopupControl ID="Popup_Taxes" runat="server" ClientInstanceName="cPopup_Taxes"
-            Width="900px" Height="300px" HeaderText="Purchase Invoice Taxes" PopupHorizontalAlign="WindowCenter"
-            BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
-            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
-            ContentStyle-CssClass="pad">
-            <ContentStyle VerticalAlign="Top" CssClass="pad">
-            </ContentStyle>
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                    <div class="Top clearfix">
-                        <div id="content-5" class="col-md-12  wrapHolder content horizontal-images" style="width: 100%; margin-right: 0;">
-                            <ul>
-                                <li>
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Gross Amount Total
-                                                                <dxe:ASPxLabel ID="ASPxLabel7" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesTaxableGross"></dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="txtProductAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductAmount">
-                                                        </dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                                <li class="lblChargesGSTforGross">
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>GST</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="lblChargesGSTforGross" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesGSTforGross">
-                                                        </dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Total Discount</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="txtProductDiscount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductDiscount">
-                                                        </dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Total Charges</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="txtProductTaxAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductTaxAmount"></dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Net Amount Total
-                                                                <dxe:ASPxLabel ID="ASPxLabel8" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesTaxableNet"></dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="txtProductNetAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductNetAmount"></dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                                <li class="lblChargesGSTforNet">
-                                    <div class="lblHolder">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>GST</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <dxe:ASPxLabel ID="lblChargesGSTforNet" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesGSTforNet">
-                                                        </dxe:ASPxLabel>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                            </ul>
+                                    <tr>
+                                        <td>
+                                            <dxe:ASPxLabel ID="lblTaxProdGrossAmt" runat="server" Text="" ClientInstanceName="clblTaxProdGrossAmt"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="clear">
-                        </div>
-                        <%--Error Msg--%>
+                    </div>
 
-                        <div class="col-md-8" id="ErrorMsgCharges">
-                            <div class="lblHolder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Status
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tax Code/Charges Not Defined.
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
+                    <div class="col-sm-3 gstGrossAmount hide">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>GST</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <dxe:ASPxLabel ID="lblGstForGross" runat="server" Text="" ClientInstanceName="clblGstForGross"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
-                        <div class="clear">
+                    <div class="col-sm-3">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Discount</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <dxe:ASPxLabel ID="lblTaxDiscount" runat="server" Text="" ClientInstanceName="clblTaxDiscount"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-md-12 gridTaxClass" style="">
-                            <dxe:ASPxGridView runat="server" KeyFieldName="TaxID" ClientInstanceName="gridTax" ID="gridTax"
-                                Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false"
-                                Settings-ShowFooter="false" OnCustomCallback="gridTax_CustomCallback" OnBatchUpdate="gridTax_BatchUpdate"
-                                OnRowInserting="gridTax_RowInserting" OnRowUpdating="gridTax_RowUpdating" OnRowDeleting="gridTax_RowDeleting"
-                                OnDataBinding="gridTax_DataBinding">
+                    </div>
+
+
+                    <div class="col-sm-3">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Amount
+                                                    <dxe:ASPxLabel ID="ASPxLabel6" runat="server" Text="(Taxable)" ClientInstanceName="clblTaxableNet"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <dxe:ASPxLabel ID="lblProdNetAmt" runat="server" Text="" ClientInstanceName="clblProdNetAmt"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 gstNetAmount hide">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>GST</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <dxe:ASPxLabel ID="lblGstForNet" runat="server" Text="" ClientInstanceName="clblGstForNet"></dxe:ASPxLabel>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <%--Error Message--%>
+                <div id="ContentErrorMsg">
+                    <div class="col-sm-8">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Status
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax Code/Charges Not defined.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <table style="width: 100%;">
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+
+
+                    <tr style="display: none">
+                        <td><span><strong>Product Basic Amount</strong></span></td>
+                        <td>
+                            <dxe:ASPxTextBox ID="txtprodBasicAmt" MaxLength="80" ClientInstanceName="ctxtprodBasicAmt" ReadOnly="true"
+                                runat="server" Width="50%">
+                                <MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" />
+                            </dxe:ASPxTextBox>
+                        </td>
+                    </tr>
+
+                    <tr class="cgridTaxClass">
+                        <td colspan="3">
+                            <dxe:ASPxGridView runat="server" OnBatchUpdate="taxgrid_BatchUpdate" KeyFieldName="Taxes_ID" ClientInstanceName="cgridTax" ID="aspxGridTax"
+                                Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" SettingsPager-Mode="ShowAllRecords" OnCustomCallback="cgridTax_CustomCallback"
+                                Settings-ShowFooter="false" AutoGenerateColumns="False" OnCellEditorInitialize="aspxGridTax_CellEditorInitialize" OnHtmlRowCreated="aspxGridTax_HtmlRowCreated"
+                                OnRowInserting="taxgrid_RowInserting" OnRowUpdating="taxgrid_RowUpdating" OnRowDeleting="taxgrid_RowDeleting">
                                 <Settings VerticalScrollableHeight="150" VerticalScrollBarMode="Auto"></Settings>
+                                <SettingsBehavior AllowDragDrop="False" AllowSort="False"></SettingsBehavior>
                                 <SettingsPager Visible="false"></SettingsPager>
                                 <Columns>
-                                    <dxe:GridViewDataTextColumn FieldName="TaxName" Caption="Tax" VisibleIndex="0" Width="40%" ReadOnly="true">
+                                    <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="Taxes_Name" ReadOnly="true" Caption="Tax Component ID">
                                     </dxe:GridViewDataTextColumn>
-                                    <dxe:GridViewDataTextColumn FieldName="calCulatedOn" Caption="Calculated On" VisibleIndex="0" Width="20%" ReadOnly="true">
+
+                                    <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="taxCodeName" ReadOnly="true" Caption="Tax Component Name">
+                                    </dxe:GridViewDataTextColumn>
+
+                                    <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="calCulatedOn" ReadOnly="true" Caption="Calculated On">
                                         <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
                                         </PropertiesTextEdit>
                                         <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
                                     </dxe:GridViewDataTextColumn>
-
-                                    <dxe:GridViewDataTextColumn FieldName="Percentage" Caption="Percentage" VisibleIndex="1" Width="20%">
-                                        <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.000">
+                                    <%--<dxe:GridViewDataComboBoxColumn Caption="percentage" FieldName="TaxField" VisibleIndex="2">
+                                                <PropertiesComboBox ClientInstanceName="cTaxes_Name" ValueField="Taxes_ID" TextField="Taxes_Name" DropDownStyle="DropDown">
+                                                    <ClientSideEvents SelectedIndexChanged="cmbtaxCodeindexChange"
+                                                        GotFocus="CmbtaxClick" />
+                                                </PropertiesComboBox>
+                                            </dxe:GridViewDataComboBoxColumn>--%>
+                                    <dxe:GridViewDataTextColumn Caption="Percentage" FieldName="TaxField" VisibleIndex="4">
+                                        <PropertiesTextEdit DisplayFormatString="0.000" Style-HorizontalAlign="Right">
+                                            <ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />
                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..999&gt;" AllowMouseWheel="false" />
-                                            <ClientSideEvents LostFocus="PercentageTextChange" />
-                                            <ClientSideEvents />
                                         </PropertiesTextEdit>
                                         <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
                                     </dxe:GridViewDataTextColumn>
-                                    <dxe:GridViewDataTextColumn FieldName="Amount" Caption="Amount" VisibleIndex="2" Width="20%">
-                                        <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00">
+
+                                    <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="Amount" Caption="Amount" ReadOnly="true">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <ClientSideEvents LostFocus="taxAmountLostFocus" GotFocus="taxAmountGotFocus" />
                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            <ClientSideEvents LostFocus="QuotationTaxAmountTextChange" GotFocus="QuotationTaxAmountGotFocus" />
                                         </PropertiesTextEdit>
                                         <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
                                     </dxe:GridViewDataTextColumn>
                                 </Columns>
-                                <ClientSideEvents EndCallback="OnTaxEndCallback" />
+                                <%--  <SettingsPager Mode="ShowAllRecords"></SettingsPager>--%>
                                 <SettingsDataSecurity AllowEdit="true" />
-                                <SettingsEditing Mode="Batch" NewItemRowPosition="Bottom">
-                                    <BatchEditSettings ShowConfirmOnLosingChanges="false" EditMode="row" />
+                                <SettingsEditing Mode="Batch">
+                                    <BatchEditSettings EditMode="row" />
                                 </SettingsEditing>
-                                <Styles>
-                                    <StatusBar CssClass="statusBar">
-                                    </StatusBar>
-                                </Styles>
+                                <ClientSideEvents EndCallback=" cgridTax_EndCallBack " RowClick="GetTaxVisibleIndex" />
+
                             </dxe:ASPxGridView>
-                        </div>
-                        <div class="col-md-12">
-                            <table style="" class="chargesDDownTaxClass">
-                                <tr class="chargeGstCstvatClass">
-                                    <td style="padding-top: 10px; padding-right: 25px"><span><strong>GST</strong></span></td>
-                                    <td style="padding-top: 10px; width: 200px;">
-                                        <dxe:ASPxComboBox ID="cmbGstCstVatcharge" ClientInstanceName="ccmbGstCstVatcharge" runat="server" SelectedIndex="0"
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <table class="InlineTaxClass hide">
+                                <tr class="GstCstvatClass" style="">
+                                    <td style="padding-top: 10px; padding-bottom: 15px; padding-right: 25px"><span><strong>GST</strong></span></td>
+                                    <td style="padding-top: 10px; padding-bottom: 15px;">
+                                        <dxe:ASPxComboBox ID="cmbGstCstVat" ClientInstanceName="ccmbGstCstVat" runat="server" SelectedIndex="-1"
                                             ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" TextFormatString="{0}"
-                                            OnCallback="cmbGstCstVatcharge_Callback">
+                                            ClearButton-DisplayMode="Always" OnCallback="cmbGstCstVat_Callback">
+
                                             <Columns>
                                                 <dxe:ListBoxColumn FieldName="Taxes_Name" Caption="Tax Component ID" Width="250" />
                                                 <dxe:ListBoxColumn FieldName="TaxCodeName" Caption="Tax Component Name" Width="250" />
 
                                             </Columns>
-                                            <%-- <ClientSideEvents SelectedIndexChanged="ChargecmbGstCstVatChange"
-                                                GotFocus="chargeCmbtaxClick" />--%>
+
+                                            <%--<ClientSideEvents SelectedIndexChanged="cmbGstCstVatChange"
+                                                    GotFocus="CmbtaxClick" />--%>
                                         </dxe:ASPxComboBox>
 
 
 
                                     </td>
-                                    <td style="padding-left: 15px; padding-top: 10px; width: 200px;">
-                                        <dxe:ASPxTextBox ID="txtGstCstVatCharge" MaxLength="80" ClientInstanceName="ctxtGstCstVatCharge" ReadOnly="true" Text="0.00"
+                                    <td style="padding-left: 15px; padding-top: 10px; padding-bottom: 15px; padding-right: 25px">
+                                        <dxe:ASPxTextBox ID="txtGstCstVat" MaxLength="80" ClientInstanceName="ctxtGstCstVat" ReadOnly="true" Text="0.00"
                                             runat="server" Width="100%">
+                                            <MaskSettings Mask="<-999999999..999999999>.<0..99>" AllowMouseWheel="false" />
+                                        </dxe:ASPxTextBox>
 
+
+                                    </td>
+                                    <td>
+                                        <input type="button" onclick="recalculateTax()" class="btn btn-info btn-small RecalculateInline" value="Recalculate GST" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div class="pull-left">
+
+                                <dxe:ASPxButton ID="Button1" ClientInstanceName="cButton1" runat="server" AutoPostBack="False" Text="OK" CssClass="btn btn-primary mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                    <ClientSideEvents Click="function(s, e) {return BatchUpdate();}" />
+                                </dxe:ASPxButton>
+
+                                <dxe:ASPxButton ID="Button3" ClientInstanceName="cButton3" runat="server" AutoPostBack="False" Text="Cancel" CssClass="btn btn-danger mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                    <ClientSideEvents Click="function(s, e) {cgridTax.CancelEdit(); caspxTaxpopUp.Hide(); return false;}" />
+                                </dxe:ASPxButton>
+                            </div>
+                            <table class="pull-right">
+                                <tr>
+                                    <td style="padding-top: 10px; padding-right: 5px"><strong>Total Charges</strong></td>
+                                    <td>
+                                        <dxe:ASPxTextBox ID="txtTaxTotAmt" MaxLength="80" ClientInstanceName="ctxtTaxTotAmt" Text="0.00" ReadOnly="true"
+                                            runat="server" Width="100%" CssClass="pull-left mTop">
                                             <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            <%--<MaskSettings Mask="<-999999999..999999999>.<0..99>" AllowMouseWheel="false" />--%>
+                                            <%--<MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" /> --%>
                                         </dxe:ASPxTextBox>
 
                                     </td>
-                                    <td style="padding-left: 15px; padding-top: 10px">
-                                        <input type="button" onclick="recalculateTaxCharge()" class="btn btn-info btn-small RecalculateCharge" value="Recalculate GST" />
-                                    </td>
                                 </tr>
                             </table>
-                        </div>
-                        <div class="clear">
-                            <br />
-                        </div>
 
 
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
 
-                        <div class="col-sm-3">
-                            <div>
-                                <dxe:ASPxButton ID="btn_SaveTax" ClientInstanceName="cbtn_SaveTax" runat="server" AccessKey="X" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
-                                    <ClientSideEvents Click="function(s, e) {Save_TaxClick();}" />
-                                </dxe:ASPxButton>
-                                <dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_tax_cancel" runat="server" AutoPostBack="False" Text="Cancel" CssClass="btn btn-danger" UseSubmitBehavior="False">
-                                    <ClientSideEvents Click="function(s, e) {cPopup_Taxes.Hide();}" />
-                                </dxe:ASPxButton>
-                            </div>
-                        </div>
+                </table>
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+        <ContentStyle VerticalAlign="Top" CssClass="pad"></ContentStyle>
+        <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+    </dxe:ASPxPopupControl>
+    <dxe:ASPxCallbackPanel runat="server" ID="taxUpdatePanel" ClientInstanceName="ctaxUpdatePanel" OnCallback="taxUpdatePanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="ctaxUpdatePanelEndCall" />
+    </dxe:ASPxCallbackPanel>
 
-                        <div class="col-sm-9">
-                            <table class="pull-right">
-                                <tr>
-                                    <td style="padding-right: 30px"><strong>Total Charges</strong></td>
-                                    <td>
-                                        <div>
-                                            <dxe:ASPxTextBox ID="txtQuoteTaxTotalAmt" runat="server" Width="100%" ClientInstanceName="ctxtQuoteTaxTotalAmt" Text="0.00" HorizontalAlign="Right" Font-Size="12px" ReadOnly="true">
-                                                <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <%-- <MaskSettings Mask="<0..999999999999g>.<0..99g>" />--%>
-                                            </dxe:ASPxTextBox>
-                                        </div>
+    <%--ChargesTax--%>
+    <dxe:ASPxPopupControl ID="Popup_Taxes" runat="server" ClientInstanceName="cPopup_Taxes"
+        Width="900px" Height="300px" HeaderText="Purchase Invoice Taxes" PopupHorizontalAlign="WindowCenter"
+        BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+        Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
+        ContentStyle-CssClass="pad">
+        <ContentStyle VerticalAlign="Top" CssClass="pad">
+        </ContentStyle>
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+                <div class="Top clearfix">
+                    <div id="content-5" class="col-md-12  wrapHolder content horizontal-images" style="width: 100%; margin-right: 0;">
+                        <ul>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Gross Amount Total
+                                                                <dxe:ASPxLabel ID="ASPxLabel7" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesTaxableGross"></dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="txtProductAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductAmount">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li class="lblChargesGSTforGross">
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>GST</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="lblChargesGSTforGross" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesGSTforGross">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Discount</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="txtProductDiscount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductDiscount">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Charges</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="txtProductTaxAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductTaxAmount"></dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Net Amount Total
+                                                                <dxe:ASPxLabel ID="ASPxLabel8" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesTaxableNet"></dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="txtProductNetAmount" runat="server" Text="ASPxLabel" ClientInstanceName="ctxtProductNetAmount"></dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                            <li class="lblChargesGSTforNet">
+                                <div class="lblHolder">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>GST</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <dxe:ASPxLabel ID="lblChargesGSTforNet" runat="server" Text="ASPxLabel" ClientInstanceName="clblChargesGSTforNet">
+                                                    </dxe:ASPxLabel>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="clear">
+                    </div>
+                    <%--Error Msg--%>
 
-                                    </td>
-                                    <td style="padding-right: 30px; padding-left: 5px"><strong>Total Amount</strong></td>
-                                    <td>
-                                        <div>
-                                            <dxe:ASPxTextBox ID="txtTotalAmount" runat="server" Width="100%" ClientInstanceName="ctxtTotalAmount" Text="0.00" HorizontalAlign="Right" Font-Size="12px" ReadOnly="true">
-                                                <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <%--<MaskSettings Mask="<0..999999999999g>.<0..99g>" />--%>
-                                            </dxe:ASPxTextBox>
-                                        </div>
-                                    </td>
-
-                                </tr>
+                    <div class="col-md-8" id="ErrorMsgCharges">
+                        <div class="lblHolder">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Status
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax Code/Charges Not Defined.
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
-                        <div class="col-sm-2" style="padding-top: 8px;">
-                            <span></span>
-                        </div>
-                        <div class="col-sm-4">
-                        </div>
-                        <div class="col-sm-2" style="padding-top: 8px;">
-                            <span></span>
-                        </div>
-                        <div class="col-sm-4">
+
+                    </div>
+
+                    <div class="clear">
+                    </div>
+                    <div class="col-md-12 gridTaxClass" style="">
+                        <dxe:ASPxGridView runat="server" KeyFieldName="TaxID" ClientInstanceName="gridTax" ID="gridTax"
+                            Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false"
+                            Settings-ShowFooter="false" OnCustomCallback="gridTax_CustomCallback" OnBatchUpdate="gridTax_BatchUpdate"
+                            OnRowInserting="gridTax_RowInserting" OnRowUpdating="gridTax_RowUpdating" OnRowDeleting="gridTax_RowDeleting"
+                            OnDataBinding="gridTax_DataBinding">
+                            <Settings VerticalScrollableHeight="150" VerticalScrollBarMode="Auto"></Settings>
+                            <SettingsPager Visible="false"></SettingsPager>
+                            <Columns>
+                                <dxe:GridViewDataTextColumn FieldName="TaxName" Caption="Tax" VisibleIndex="0" Width="40%" ReadOnly="true">
+                                </dxe:GridViewDataTextColumn>
+                                <dxe:GridViewDataTextColumn FieldName="calCulatedOn" Caption="Calculated On" VisibleIndex="0" Width="20%" ReadOnly="true">
+                                    <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                    </PropertiesTextEdit>
+                                    <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn FieldName="Percentage" Caption="Percentage" VisibleIndex="1" Width="20%">
+                                    <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.000">
+                                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..999&gt;" AllowMouseWheel="false" />
+                                        <ClientSideEvents LostFocus="PercentageTextChange" />
+                                        <ClientSideEvents />
+                                    </PropertiesTextEdit>
+                                    <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                </dxe:GridViewDataTextColumn>
+                                <dxe:GridViewDataTextColumn FieldName="Amount" Caption="Amount" VisibleIndex="2" Width="20%">
+                                    <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.00">
+                                        <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                        <ClientSideEvents LostFocus="QuotationTaxAmountTextChange" GotFocus="QuotationTaxAmountGotFocus" />
+                                    </PropertiesTextEdit>
+                                    <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                </dxe:GridViewDataTextColumn>
+                            </Columns>
+                            <ClientSideEvents EndCallback="OnTaxEndCallback" />
+                            <SettingsDataSecurity AllowEdit="true" />
+                            <SettingsEditing Mode="Batch" NewItemRowPosition="Bottom">
+                                <BatchEditSettings ShowConfirmOnLosingChanges="false" EditMode="row" />
+                            </SettingsEditing>
+                            <Styles>
+                                <StatusBar CssClass="statusBar">
+                                </StatusBar>
+                            </Styles>
+                        </dxe:ASPxGridView>
+                    </div>
+                    <div class="col-md-12">
+                        <table style="" class="chargesDDownTaxClass">
+                            <tr class="chargeGstCstvatClass">
+                                <td style="padding-top: 10px; padding-right: 25px"><span><strong>GST</strong></span></td>
+                                <td style="padding-top: 10px; width: 200px;">
+                                    <dxe:ASPxComboBox ID="cmbGstCstVatcharge" ClientInstanceName="ccmbGstCstVatcharge" runat="server" SelectedIndex="0"
+                                        ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" TextFormatString="{0}"
+                                        OnCallback="cmbGstCstVatcharge_Callback">
+                                        <Columns>
+                                            <dxe:ListBoxColumn FieldName="Taxes_Name" Caption="Tax Component ID" Width="250" />
+                                            <dxe:ListBoxColumn FieldName="TaxCodeName" Caption="Tax Component Name" Width="250" />
+
+                                        </Columns>
+                                        <%-- <ClientSideEvents SelectedIndexChanged="ChargecmbGstCstVatChange"
+                                                GotFocus="chargeCmbtaxClick" />--%>
+                                    </dxe:ASPxComboBox>
+
+
+
+                                </td>
+                                <td style="padding-left: 15px; padding-top: 10px; width: 200px;">
+                                    <dxe:ASPxTextBox ID="txtGstCstVatCharge" MaxLength="80" ClientInstanceName="ctxtGstCstVatCharge" ReadOnly="true" Text="0.00"
+                                        runat="server" Width="100%">
+
+                                        <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                        <%--<MaskSettings Mask="<-999999999..999999999>.<0..99>" AllowMouseWheel="false" />--%>
+                                    </dxe:ASPxTextBox>
+
+                                </td>
+                                <td style="padding-left: 15px; padding-top: 10px">
+                                    <input type="button" onclick="recalculateTaxCharge()" class="btn btn-info btn-small RecalculateCharge" value="Recalculate GST" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="clear">
+                        <br />
+                    </div>
+
+
+
+                    <div class="col-sm-3">
+                        <div>
+                            <dxe:ASPxButton ID="btn_SaveTax" ClientInstanceName="cbtn_SaveTax" runat="server" AccessKey="X" AutoPostBack="False" Text="Save" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                <ClientSideEvents Click="function(s, e) {Save_TaxClick();}" />
+                            </dxe:ASPxButton>
+                            <dxe:ASPxButton ID="ASPxButton4" ClientInstanceName="cbtn_tax_cancel" runat="server" AutoPostBack="False" Text="Cancel" CssClass="btn btn-danger" UseSubmitBehavior="False">
+                                <ClientSideEvents Click="function(s, e) {cPopup_Taxes.Hide();}" />
+                            </dxe:ASPxButton>
                         </div>
                     </div>
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
-        </dxe:ASPxPopupControl>
-        <%--   Inline Tax End    --%>
 
-        <%--   Warehouse     --%>
-        <dxe:ASPxPopupControl ID="ASPxPopupControl3" runat="server" ClientInstanceName="cPopup_WarehousePC"
-            Width="900px" HeaderText="Stock Details" PopupHorizontalAlign="WindowCenter" Height="500px"
-            BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
-            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
-            ContentStyle-CssClass="pad">
-            <ContentStyle VerticalAlign="Top" CssClass="pad">
-            </ContentStyle>
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                    <div class="Top clearfix">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="lblHolder">
-                                    <table>
-                                        <tr>
-                                            <td>Selected Unit</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <asp:Label ID="lblbranchName" runat="server"></asp:Label></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="lblHolder">
-                                    <table>
-                                        <tr>
-                                            <td>Selected Product</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <asp:Label ID="lblpro" runat="server"></asp:Label></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="lblHolder">
-                                    <table>
-                                        <tr>
-                                            <td>Available Stock</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <asp:Label ID="lblAvailableStk" runat="server" Text="0.0"></asp:Label></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="lblHolder">
-                                    <table>
-                                        <tr>
-                                            <td>Entered Stock</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <asp:Label ID="lblopeningstock" runat="server" Text="0.0000"></asp:Label></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="clear">
-                            <br />
-                        </div>
-                        <div class="clearfix">
-                            <div class="row manAb">
-                                <div class="blockone">
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatorCmbWarehousetxt">Warehouse</span>
-                                        </div>
-                                        <div class="Left_Content relative" style="">
-                                            <%-- <dxe:ASPxTextBox ID="txtwarehousname" runat="server" Width="80%" ClientInstanceName="ctxtwarehousname" HorizontalAlign="Left" Font-Size="12px">
-                                    </dxe:ASPxTextBox>--%>
-                                            <dxe:ASPxComboBox ID="CmbWarehouse" EnableIncrementalFiltering="True" ClientInstanceName="cCmbWarehouse" SelectedIndex="0"
-                                                TextField="WarehouseName" ValueField="WarehouseID" runat="server" Width="100%" OnCallback="CmbWarehouse_Callback">
-                                                <ClientSideEvents ValueChanged="function(s,e){CmbWarehouse_ValueChange(s)}" EndCallback="function(s,e){endcallcmware(s)}"></ClientSideEvents>
-
-                                            </dxe:ASPxComboBox>
-                                            <span id="RequiredFieldValidatorCmbWarehouse" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatorCmbWarehouseQuantity">Quantity</span>
-                                        </div>
-                                        <div class="Left_Content" style="">
-                                            <dxe:ASPxTextBox ID="txtqnty" runat="server" Width="100%" ClientInstanceName="ctxtqnty" HorizontalAlign="Left" Font-Size="12px">
-                                                <MaskSettings Mask="<0..999999999>.<0..9999>" IncludeLiterals="DecimalSymbol" />
-                                                <ClientSideEvents TextChanged="function(s,e){changedqnty(s)}" LostFocus="function(s,e){Setenterfocuse(s)}" KeyPress="function(s, e) {Keypressevt();}" />
-                                            </dxe:ASPxTextBox>
-                                            <span id="RequiredFieldValidatortxtwareqntity" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                                <div class="blocktwo">
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatortxtbatchtxt">Batch</span>
-                                        </div>
-                                        <div class="Left_Content relative" style="">
-                                            <dxe:ASPxTextBox ID="txtbatch" runat="server" Width="100%" ClientInstanceName="ctxtbatch" HorizontalAlign="Left" Font-Size="12px" MaxLength="49">
-                                                <ClientSideEvents TextChanged="function(s,e){chnagedbtach(s)}" KeyPress="function(s, e) {Keypressevt();}" />
-                                            </dxe:ASPxTextBox>
-                                            <span id="RequiredFieldValidatortxtbatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 blocktwoqntity">
-                                        <div>
-                                            <span id="RequiredFieldValidatorbatchQuantity">Quantity</span>
-                                        </div>
-                                        <div class="Left_Content" style="">
-                                            <dxe:ASPxTextBox ID="batchqnty" runat="server" Width="100%" ClientInstanceName="ctxtbatchqnty" HorizontalAlign="Left" Font-Size="12px">
-                                                <MaskSettings Mask="<0..999999999>.<0..9999>" IncludeLiterals="DecimalSymbol" />
-                                                <ClientSideEvents TextChanged="function(s,e){changedqntybatch(s)}" />
-                                            </dxe:ASPxTextBox>
-                                            <span id="RequiredFieldValidatortxtbatchqntity" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatortxtbatchtxtmkgdate">Manufacture Date</span>
-                                        </div>
-                                        <div class="Left_Content" style="">
-                                            <%--<dxe:ASPxTextBox ID="txtmkgdate" runat="server" Width="80%" ClientInstanceName="ctxtmkgdate" HorizontalAlign="Left" Font-Size="12px">
-                                    </dxe:ASPxTextBox>--%>
-                                            <dxe:ASPxDateEdit ID="txtmkgdate" runat="server" Width="100%" EditFormat="custom" UseMaskBehavior="True" ClientInstanceName="ctxtmkgdate" AllowNull="true" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy">
-                                                <ButtonStyle Width="13px">
-                                                </ButtonStyle>
-
-                                            </dxe:ASPxDateEdit>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatortxtbatchtxtexpdate">Expiry Date</span>
-                                        </div>
-                                        <div class="Left_Content" style="">
-                                            <%-- <dxe:ASPxTextBox ID="txtexpirdate" runat="server" Width="80%" ClientInstanceName="ctxtexpirdate" HorizontalAlign="Left" Font-Size="12px">
-                                    </dxe:ASPxTextBox>--%>
-                                            <dxe:ASPxDateEdit ID="txtexpirdate" runat="server" Width="100%" EditFormat="custom" UseMaskBehavior="True" ClientInstanceName="ctxtexpirdate" AllowNull="true" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy">
-                                                <ButtonStyle Width="13px">
-                                                </ButtonStyle>
-
-                                            </dxe:ASPxDateEdit>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                                <div class="blockthree">
-                                    <div class="col-md-3">
-                                        <div>
-                                            <span id="RequiredFieldValidatortxtserialtxt">Serial No</span>
-                                        </div>
-                                        <div class="Left_Content relative" style="">
-                                            <dxe:ASPxTextBox ID="ASPxTextBox1" runat="server" Width="100%" ClientInstanceName="ctxtserial" HorizontalAlign="Left" Font-Size="12px" MaxLength="49">
-                                                <ClientSideEvents KeyPress="function(s, e) {Keypressevt();}" />
-                                            </dxe:ASPxTextBox>
-                                            <span id="RequiredFieldValidatortxtserial" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                    <div class="col-sm-9">
+                        <table class="pull-right">
+                            <tr>
+                                <td style="padding-right: 30px"><strong>Total Charges</strong></td>
+                                <td>
                                     <div>
+                                        <dxe:ASPxTextBox ID="txtQuoteTaxTotalAmt" runat="server" Width="100%" ClientInstanceName="ctxtQuoteTaxTotalAmt" Text="0.00" HorizontalAlign="Right" Font-Size="12px" ReadOnly="true">
+                                            <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <%-- <MaskSettings Mask="<0..999999999999g>.<0..99g>" />--%>
+                                        </dxe:ASPxTextBox>
                                     </div>
-                                    <div class=" clearfix" style="padding-top: 11px;">
-                                        <dxe:ASPxButton ID="ASPxButton5" ClientInstanceName="cbtnaddWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary pull-left" UseSubmitBehavior="False">
-                                            <ClientSideEvents Click="function(s, e) {SaveWarehouse();}" />
-                                        </dxe:ASPxButton>
 
-                                        <dxe:ASPxButton ID="ASPxButton6" ClientInstanceName="cbtnrefreshWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Clear Entries" CssClass="btn btn-primary pull-left" UseSubmitBehavior="False">
-                                            <ClientSideEvents Click="function(s, e) {Clraear();}" />
-                                        </dxe:ASPxButton>
+                                </td>
+                                <td style="padding-right: 30px; padding-left: 5px"><strong>Total Amount</strong></td>
+                                <td>
+                                    <div>
+                                        <dxe:ASPxTextBox ID="txtTotalAmount" runat="server" Width="100%" ClientInstanceName="ctxtTotalAmount" Text="0.00" HorizontalAlign="Right" Font-Size="12px" ReadOnly="true">
+                                            <MaskSettings Mask="&lt;-999999999..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <%--<MaskSettings Mask="<0..999999999999g>.<0..99g>" />--%>
+                                        </dxe:ASPxTextBox>
+                                    </div>
+                                </td>
 
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-2" style="padding-top: 8px;">
+                        <span></span>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-2" style="padding-top: 8px;">
+                        <span></span>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                </div>
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+        <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+    </dxe:ASPxPopupControl>
+    <%--   Inline Tax End    --%>
+
+    <%--   Warehouse     --%>
+    <dxe:ASPxPopupControl ID="ASPxPopupControl3" runat="server" ClientInstanceName="cPopup_WarehousePC"
+        Width="900px" HeaderText="Stock Details" PopupHorizontalAlign="WindowCenter" Height="500px"
+        BackColor="white" PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+        Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
+        ContentStyle-CssClass="pad">
+        <ContentStyle VerticalAlign="Top" CssClass="pad">
+        </ContentStyle>
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+                <div class="Top clearfix">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="lblHolder">
+                                <table>
+                                    <tr>
+                                        <td>Selected Unit</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="lblbranchName" runat="server"></asp:Label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="lblHolder">
+                                <table>
+                                    <tr>
+                                        <td>Selected Product</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="lblpro" runat="server"></asp:Label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="lblHolder">
+                                <table>
+                                    <tr>
+                                        <td>Available Stock</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="lblAvailableStk" runat="server" Text="0.0"></asp:Label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="lblHolder">
+                                <table>
+                                    <tr>
+                                        <td>Entered Stock</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:Label ID="lblopeningstock" runat="server" Text="0.0000"></asp:Label></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="clear">
+                        <br />
+                    </div>
+                    <div class="clearfix">
+                        <div class="row manAb">
+                            <div class="blockone">
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatorCmbWarehousetxt">Warehouse</span>
+                                    </div>
+                                    <div class="Left_Content relative" style="">
+                                        <%-- <dxe:ASPxTextBox ID="txtwarehousname" runat="server" Width="80%" ClientInstanceName="ctxtwarehousname" HorizontalAlign="Left" Font-Size="12px">
+                                    </dxe:ASPxTextBox>--%>
+                                        <dxe:ASPxComboBox ID="CmbWarehouse" EnableIncrementalFiltering="True" ClientInstanceName="cCmbWarehouse" SelectedIndex="0"
+                                            TextField="WarehouseName" ValueField="WarehouseID" runat="server" Width="100%" OnCallback="CmbWarehouse_Callback">
+                                            <ClientSideEvents ValueChanged="function(s,e){CmbWarehouse_ValueChange(s)}" EndCallback="function(s,e){endcallcmware(s)}"></ClientSideEvents>
+
+                                        </dxe:ASPxComboBox>
+                                        <span id="RequiredFieldValidatorCmbWarehouse" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatorCmbWarehouseQuantity">Quantity</span>
+                                    </div>
+                                    <div class="Left_Content" style="">
+                                        <dxe:ASPxTextBox ID="txtqnty" runat="server" Width="100%" ClientInstanceName="ctxtqnty" HorizontalAlign="Left" Font-Size="12px">
+                                            <MaskSettings Mask="<0..999999999>.<0..9999>" IncludeLiterals="DecimalSymbol" />
+                                            <ClientSideEvents TextChanged="function(s,e){changedqnty(s)}" LostFocus="function(s,e){Setenterfocuse(s)}" KeyPress="function(s, e) {Keypressevt();}" />
+                                        </dxe:ASPxTextBox>
+                                        <span id="RequiredFieldValidatortxtwareqntity" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="blocktwo">
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatortxtbatchtxt">Batch</span>
+                                    </div>
+                                    <div class="Left_Content relative" style="">
+                                        <dxe:ASPxTextBox ID="txtbatch" runat="server" Width="100%" ClientInstanceName="ctxtbatch" HorizontalAlign="Left" Font-Size="12px" MaxLength="49">
+                                            <ClientSideEvents TextChanged="function(s,e){chnagedbtach(s)}" KeyPress="function(s, e) {Keypressevt();}" />
+                                        </dxe:ASPxTextBox>
+                                        <span id="RequiredFieldValidatortxtbatch" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 blocktwoqntity">
+                                    <div>
+                                        <span id="RequiredFieldValidatorbatchQuantity">Quantity</span>
+                                    </div>
+                                    <div class="Left_Content" style="">
+                                        <dxe:ASPxTextBox ID="batchqnty" runat="server" Width="100%" ClientInstanceName="ctxtbatchqnty" HorizontalAlign="Left" Font-Size="12px">
+                                            <MaskSettings Mask="<0..999999999>.<0..9999>" IncludeLiterals="DecimalSymbol" />
+                                            <ClientSideEvents TextChanged="function(s,e){changedqntybatch(s)}" />
+                                        </dxe:ASPxTextBox>
+                                        <span id="RequiredFieldValidatortxtbatchqntity" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
                                     </div>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatortxtbatchtxtmkgdate">Manufacture Date</span>
+                                    </div>
+                                    <div class="Left_Content" style="">
+                                        <%--<dxe:ASPxTextBox ID="txtmkgdate" runat="server" Width="80%" ClientInstanceName="ctxtmkgdate" HorizontalAlign="Left" Font-Size="12px">
+                                    </dxe:ASPxTextBox>--%>
+                                        <dxe:ASPxDateEdit ID="txtmkgdate" runat="server" Width="100%" EditFormat="custom" UseMaskBehavior="True" ClientInstanceName="ctxtmkgdate" AllowNull="true" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy">
+                                            <ButtonStyle Width="13px">
+                                            </ButtonStyle>
+
+                                        </dxe:ASPxDateEdit>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatortxtbatchtxtexpdate">Expiry Date</span>
+                                    </div>
+                                    <div class="Left_Content" style="">
+                                        <%-- <dxe:ASPxTextBox ID="txtexpirdate" runat="server" Width="80%" ClientInstanceName="ctxtexpirdate" HorizontalAlign="Left" Font-Size="12px">
+                                    </dxe:ASPxTextBox>--%>
+                                        <dxe:ASPxDateEdit ID="txtexpirdate" runat="server" Width="100%" EditFormat="custom" UseMaskBehavior="True" ClientInstanceName="ctxtexpirdate" AllowNull="true" DisplayFormatString="dd-MM-yyyy" EditFormatString="dd-MM-yyyy">
+                                            <ButtonStyle Width="13px">
+                                            </ButtonStyle>
+
+                                        </dxe:ASPxDateEdit>
+                                    </div>
+                                </div>
                             </div>
-                            <br />
+                            <div class="clear"></div>
+                            <div class="blockthree">
+                                <div class="col-md-3">
+                                    <div>
+                                        <span id="RequiredFieldValidatortxtserialtxt">Serial No</span>
+                                    </div>
+                                    <div class="Left_Content relative" style="">
+                                        <dxe:ASPxTextBox ID="ASPxTextBox1" runat="server" Width="100%" ClientInstanceName="ctxtserial" HorizontalAlign="Left" Font-Size="12px" MaxLength="49">
+                                            <ClientSideEvents KeyPress="function(s, e) {Keypressevt();}" />
+                                        </dxe:ASPxTextBox>
+                                        <span id="RequiredFieldValidatortxtserial" title="Mandatory" class="tp2 fa fa-exclamation-circle iconRed" style="display: none;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                </div>
+                                <div class=" clearfix" style="padding-top: 11px;">
+                                    <dxe:ASPxButton ID="ASPxButton5" ClientInstanceName="cbtnaddWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Add" CssClass="btn btn-primary pull-left" UseSubmitBehavior="False">
+                                        <ClientSideEvents Click="function(s, e) {SaveWarehouse();}" />
+                                    </dxe:ASPxButton>
+
+                                    <dxe:ASPxButton ID="ASPxButton6" ClientInstanceName="cbtnrefreshWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="Clear Entries" CssClass="btn btn-primary pull-left" UseSubmitBehavior="False">
+                                        <ClientSideEvents Click="function(s, e) {Clraear();}" />
+                                    </dxe:ASPxButton>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
 
 
-                            <div class="clearfix">
-                                <dxe:ASPxGridView ID="GrdWarehousePC" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False" SettingsBehavior-AllowSort="false"
-                                    Width="100%" ClientInstanceName="cGrdWarehousePC" OnCustomCallback="GrdWarehousePC_CustomCallback" OnDataBinding="GrdWarehousePC_DataBinding">
-                                    <Columns>
-                                        <dxe:GridViewDataTextColumn Caption="Warehouse Name" FieldName="viewWarehouseName"
-                                            VisibleIndex="0">
-                                        </dxe:GridViewDataTextColumn>
+                        <div class="clearfix">
+                            <dxe:ASPxGridView ID="GrdWarehousePC" runat="server" KeyFieldName="SrlNo" AutoGenerateColumns="False" SettingsBehavior-AllowSort="false"
+                                Width="100%" ClientInstanceName="cGrdWarehousePC" OnCustomCallback="GrdWarehousePC_CustomCallback" OnDataBinding="GrdWarehousePC_DataBinding">
+                                <Columns>
+                                    <dxe:GridViewDataTextColumn Caption="Warehouse Name" FieldName="viewWarehouseName"
+                                        VisibleIndex="0">
+                                    </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn Caption="Batch Number" FieldName="viewBatchNo"
-                                            VisibleIndex="2">
-                                        </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Batch Number" FieldName="viewBatchNo"
+                                        VisibleIndex="2">
+                                    </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataDateColumn Caption="Manufacture Date" FieldName="viewMFGDate"
-                                            VisibleIndex="2">
-                                            <Settings AllowHeaderFilter="False" />
-                                            <PropertiesDateEdit DisplayFormatString="dd-MM-yyyy"></PropertiesDateEdit>
-                                        </dxe:GridViewDataDateColumn>
+                                    <dxe:GridViewDataDateColumn Caption="Manufacture Date" FieldName="viewMFGDate"
+                                        VisibleIndex="2">
+                                        <Settings AllowHeaderFilter="False" />
+                                        <PropertiesDateEdit DisplayFormatString="dd-MM-yyyy"></PropertiesDateEdit>
+                                    </dxe:GridViewDataDateColumn>
 
-                                        <dxe:GridViewDataDateColumn Caption="Expiry Date" FieldName="viewExpiryDate"
-                                            VisibleIndex="2">
-                                            <Settings AllowHeaderFilter="False" />
-                                            <PropertiesDateEdit DisplayFormatString="dd-MM-yyyy"></PropertiesDateEdit>
-                                        </dxe:GridViewDataDateColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="viewQuantity"
-                                            VisibleIndex="3">
-                                            <Settings ShowInFilterControl="False" />
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="Quantity"
-                                            VisibleIndex="5">
-                                            <Settings ShowInFilterControl="False" />
-                                        </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataDateColumn Caption="Expiry Date" FieldName="viewExpiryDate"
+                                        VisibleIndex="2">
+                                        <Settings AllowHeaderFilter="False" />
+                                        <PropertiesDateEdit DisplayFormatString="dd-MM-yyyy"></PropertiesDateEdit>
+                                    </dxe:GridViewDataDateColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="viewQuantity"
+                                        VisibleIndex="3">
+                                        <Settings ShowInFilterControl="False" />
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Quantity" FieldName="Quantity"
+                                        VisibleIndex="5">
+                                        <Settings ShowInFilterControl="False" />
+                                    </dxe:GridViewDataTextColumn>
 
-                                        <dxe:GridViewDataTextColumn Caption="Serial Number" FieldName="viewSerialNo"
-                                            VisibleIndex="4">
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Action" FieldName="SrlNo" CellStyle-VerticalAlign="Middle" VisibleIndex="6" CellStyle-HorizontalAlign="Center" Settings-ShowFilterRowMenu="False" Settings-AllowHeaderFilter="False" Settings-AllowAutoFilter="False" Width="100px">
-                                            <EditFormSettings Visible="False" />
-                                            <DataItemTemplate>
-                                                <a href="javascript:void(0);" onclick="UpdateWarehousebatchserial(<%#Eval("SrlNo")%>,'<%#Eval("WarehouseID")%>','<%#Eval("BatchNo")%>','<%#Eval("SerialNo")%>','<%#Eval("isnew")%>','<%#Eval("viewQuantity")%>','<%#Eval("Quantity")%>')" title="update Details" class="pad">
-                                                    <img src="../../../assests/images/Edit.png" />
-                                                </a>
-                                                <a href="javascript:void(0);" onclick="DeleteWarehousebatchserial(<%#Eval("SrlNo")%>,'<%#Eval("BatchWarehouseID")%>','<%#Eval("viewQuantity")%>',<%#Eval("Quantity")%>,'<%#Eval("WarehouseID")%>','<%#Eval("BatchNo")%>')" title="delete Details" class="pad">
-                                                    <img src="../../../assests/images/crs.png" />
-                                                </a>
-                                            </DataItemTemplate>
+                                    <dxe:GridViewDataTextColumn Caption="Serial Number" FieldName="viewSerialNo"
+                                        VisibleIndex="4">
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Action" FieldName="SrlNo" CellStyle-VerticalAlign="Middle" VisibleIndex="6" CellStyle-HorizontalAlign="Center" Settings-ShowFilterRowMenu="False" Settings-AllowHeaderFilter="False" Settings-AllowAutoFilter="False" Width="100px">
+                                        <EditFormSettings Visible="False" />
+                                        <DataItemTemplate>
+                                            <a href="javascript:void(0);" onclick="UpdateWarehousebatchserial(<%#Eval("SrlNo")%>,'<%#Eval("WarehouseID")%>','<%#Eval("BatchNo")%>','<%#Eval("SerialNo")%>','<%#Eval("isnew")%>','<%#Eval("viewQuantity")%>','<%#Eval("Quantity")%>')" title="update Details" class="pad">
+                                                <img src="../../../assests/images/Edit.png" />
+                                            </a>
+                                            <a href="javascript:void(0);" onclick="DeleteWarehousebatchserial(<%#Eval("SrlNo")%>,'<%#Eval("BatchWarehouseID")%>','<%#Eval("viewQuantity")%>',<%#Eval("Quantity")%>,'<%#Eval("WarehouseID")%>','<%#Eval("BatchNo")%>')" title="delete Details" class="pad">
+                                                <img src="../../../assests/images/crs.png" />
+                                            </a>
+                                        </DataItemTemplate>
 
-                                        </dxe:GridViewDataTextColumn>
-                                    </Columns>
-                                    <ClientSideEvents EndCallback="function(s,e) { cGrdWarehousePCShowError(s.cpInsertError);}" />
-                                    <%-- <SettingsPager NumericButtonCount="20" PageSize="10" ShowSeparators="True">
+                                    </dxe:GridViewDataTextColumn>
+                                </Columns>
+                                <ClientSideEvents EndCallback="function(s,e) { cGrdWarehousePCShowError(s.cpInsertError);}" />
+                                <%-- <SettingsPager NumericButtonCount="20" PageSize="10" ShowSeparators="True">
                                     <FirstPageButton Visible="True">
                                     </FirstPageButton>
                                     <LastPageButton Visible="True">
                                     </LastPageButton>
                                 </SettingsPager>--ShowFilterRow="true" ShowFilterRowMenu="true" --%>
-                                    <SettingsPager Mode="ShowAllRecords" />
-                                    <Settings ShowGroupPanel="false" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" VerticalScrollBarMode="Visible" VerticalScrollableHeight="190" />
-                                    <SettingsLoadingPanel Text="Please Wait..." />
-                                </dxe:ASPxGridView>
-                            </div>
-                            <br />
-                            <div class="Center_Content" style="">
-                                <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="S&#818;ave & Exit" AccessKey="S" CssClass="btn btn-primary" UseSubmitBehavior="False">
-                                    <ClientSideEvents Click="function(s, e) {SaveWarehouseAll();}" />
-                                </dxe:ASPxButton>
-
-
-                            </div>
+                                <SettingsPager Mode="ShowAllRecords" />
+                                <Settings ShowGroupPanel="false" ShowStatusBar="Hidden" ShowHorizontalScrollBar="False" VerticalScrollBarMode="Visible" VerticalScrollableHeight="190" />
+                                <SettingsLoadingPanel Text="Please Wait..." />
+                            </dxe:ASPxGridView>
                         </div>
-                        <%-- <div class="text-center">
+                        <br />
+                        <div class="Center_Content" style="">
+                            <dxe:ASPxButton ID="ASPxButton7" ClientInstanceName="cbtnWarehouse" Width="50px" runat="server" AutoPostBack="False" Text="S&#818;ave & Exit" AccessKey="S" CssClass="btn btn-primary" UseSubmitBehavior="False">
+                                <ClientSideEvents Click="function(s, e) {SaveWarehouseAll();}" />
+                            </dxe:ASPxButton>
+
+
+                        </div>
+                    </div>
+                    <%-- <div class="text-center">
                         <table class="pull-right">
                             <tr>
                                 <td style="padding-right: 15px"><strong>Total</strong></td>
@@ -3532,133 +3528,133 @@ function DateCheck() {
                             </tr>
                         </table>
                     </div>--%>
-                    </div>
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
-        </dxe:ASPxPopupControl>
-        <div id="hdnFieldWareHouse">
-            <asp:HiddenField ID="hdfProductIDPC" runat="server" />
-            <asp:HiddenField ID="hdfstockidPC" runat="server" />
-            <asp:HiddenField ID="hdfopeningstockPC" runat="server" />
-            <asp:HiddenField ID="hdbranchIDPC" runat="server" />
-            <asp:HiddenField ID="hdnselectedbranch" runat="server" Value="0" />
-            <asp:HiddenField ID="HdChargeProdAmt" runat="server" />
-            <asp:HiddenField ID="HdChargeProdNetAmt" runat="server" />
-            <asp:HiddenField ID="hdnProductQuantity" runat="server" />
+                </div>
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+        <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+    </dxe:ASPxPopupControl>
+    <div id="hdnFieldWareHouse">
+        <asp:HiddenField ID="hdfProductIDPC" runat="server" />
+        <asp:HiddenField ID="hdfstockidPC" runat="server" />
+        <asp:HiddenField ID="hdfopeningstockPC" runat="server" />
+        <asp:HiddenField ID="hdbranchIDPC" runat="server" />
+        <asp:HiddenField ID="hdnselectedbranch" runat="server" Value="0" />
+        <asp:HiddenField ID="HdChargeProdAmt" runat="server" />
+        <asp:HiddenField ID="HdChargeProdNetAmt" runat="server" />
+        <asp:HiddenField ID="hdnProductQuantity" runat="server" />
 
-            <asp:HiddenField ID="hdniswarehouse" runat="server" />
-            <asp:HiddenField ID="hdnisbatch" runat="server" />
-            <asp:HiddenField ID="hdnisserial" runat="server" />
-            <asp:HiddenField ID="hdndefaultID" runat="server" />
+        <asp:HiddenField ID="hdniswarehouse" runat="server" />
+        <asp:HiddenField ID="hdnisbatch" runat="server" />
+        <asp:HiddenField ID="hdnisserial" runat="server" />
+        <asp:HiddenField ID="hdndefaultID" runat="server" />
 
-            <asp:HiddenField ID="hdnoldrowcount" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnoldrowcount" runat="server" Value="0" />
 
-            <asp:HiddenField ID="hdntotalqntyPC" runat="server" Value="0" />
+        <asp:HiddenField ID="hdntotalqntyPC" runat="server" Value="0" />
 
-            <%-- Sam New Modification For Qty Checking--%>
-            <asp:HiddenField ID="wbsqtychecking" runat="server" Value="1" />
-            <%--<asp:HiddenField ID="producttype" runat="server" Value="" />--%>
-            <%--Sam New Modification For Qty Checking--%>
-            <asp:HiddenField ID="hdnoldwarehousname" runat="server" />
-            <asp:HiddenField ID="hdnoldbatchno" runat="server" />
-            <asp:HiddenField ID="hidencountforserial" runat="server" />
-            <asp:HiddenField ID="hdnbatchchanged" runat="server" Value="0" />
+        <%-- Sam New Modification For Qty Checking--%>
+        <asp:HiddenField ID="wbsqtychecking" runat="server" Value="1" />
+        <%--<asp:HiddenField ID="producttype" runat="server" Value="" />--%>
+        <%--Sam New Modification For Qty Checking--%>
+        <asp:HiddenField ID="hdnoldwarehousname" runat="server" />
+        <asp:HiddenField ID="hdnoldbatchno" runat="server" />
+        <asp:HiddenField ID="hidencountforserial" runat="server" />
+        <asp:HiddenField ID="hdnbatchchanged" runat="server" Value="0" />
 
-            <asp:HiddenField ID="hdnrate" runat="server" Value="0" />
-            <asp:HiddenField ID="hdnvalue" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnrate" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnvalue" runat="server" Value="0" />
 
-            <%--<asp:HiddenField ID="oldhdnoldwarehousname" runat="server" Value="0" />--%>
+        <%--<asp:HiddenField ID="oldhdnoldwarehousname" runat="server" Value="0" />--%>
 
-            <%--<asp:HiddenField ID="oldhidencountforserial" runat="server" Value="0" />--%>
-            <%--<asp:HiddenField ID="oldhdnbatchchanged" runat="server" Value="0" />--%>
-            <asp:HiddenField ID="hdnstrUOM" runat="server" />
-            <asp:HiddenField ID="hdnenterdopenqnty" runat="server" />
-            <asp:HiddenField ID="hdnnewenterqntity" runat="server" />
+        <%--<asp:HiddenField ID="oldhidencountforserial" runat="server" Value="0" />--%>
+        <%--<asp:HiddenField ID="oldhdnbatchchanged" runat="server" Value="0" />--%>
+        <asp:HiddenField ID="hdnstrUOM" runat="server" />
+        <asp:HiddenField ID="hdnenterdopenqnty" runat="server" />
+        <asp:HiddenField ID="hdnnewenterqntity" runat="server" />
 
-            <asp:HiddenField ID="hdnisoldupdate" runat="server" />
-            <asp:HiddenField ID="hdncurrentslno" runat="server" />
-            <asp:HiddenField ID="oldopeningqntity" runat="server" Value="0" />
-            <asp:HiddenField ID="hdnisedited" runat="server" />
+        <asp:HiddenField ID="hdnisoldupdate" runat="server" />
+        <asp:HiddenField ID="hdncurrentslno" runat="server" />
+        <asp:HiddenField ID="oldopeningqntity" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnisedited" runat="server" />
 
-            <asp:HiddenField ID="hdnisnewupdate" runat="server" />
+        <asp:HiddenField ID="hdnisnewupdate" runat="server" />
 
-            <asp:HiddenField ID="hdnisviewqntityhas" runat="server" />
-            <asp:HiddenField ID="hdndeleteqnity" runat="server" Value="0" />
-            <asp:HiddenField ID="hdnisolddeleted" runat="server" Value="false" />
+        <asp:HiddenField ID="hdnisviewqntityhas" runat="server" />
+        <asp:HiddenField ID="hdndeleteqnity" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnisolddeleted" runat="server" Value="false" />
 
-            <%--<asp:HiddenField ID="hdnisreduing" runat="server" Value="false" />--%>
-            <%-- <asp:HiddenField ID="hdnoutstock" runat="server" Value="0" />--%>
+        <%--<asp:HiddenField ID="hdnisreduing" runat="server" Value="false" />--%>
+        <%-- <asp:HiddenField ID="hdnoutstock" runat="server" Value="0" />--%>
 
-            <asp:HiddenField ID="hdnpcslno" runat="server" Value="0" />
-        </div>
+        <asp:HiddenField ID="hdnpcslno" runat="server" Value="0" />
+    </div>
 
-        <%--   Warehouse End    --%>
+    <%--   Warehouse End    --%>
 
-        <%-- HiddenField --%>
-        <div>
-            <asp:HiddenField ID="hdfLookupCustomer" runat="server" />
-            <asp:HiddenField ID="hdfIsDelete" runat="server" />
-            <asp:HiddenField ID="hdfIsComp" runat="server" />
-            <asp:HiddenField ID="hdnPageStatus" runat="server" />
-            <asp:HiddenField ID="hdfProductID" runat="server" />
-            <asp:HiddenField ID="hdfProductType" runat="server" />
-            <asp:HiddenField ID="hdfProductSerialID" runat="server" />
-            <asp:HiddenField ID="hdnRefreshType" runat="server" />
-            <asp:HiddenField ID="hdnCustomerId" runat="server" />
-            <%--Mantis Issue 24432--%>
-            <asp:HiddenField ID="hdnPageEditId" runat="server" />
-            <%--End of Mantis Issue 24432--%>
+    <%-- HiddenField --%>
+    <div>
+        <asp:HiddenField ID="hdfLookupCustomer" runat="server" />
+        <asp:HiddenField ID="hdfIsDelete" runat="server" />
+        <asp:HiddenField ID="hdfIsComp" runat="server" />
+        <asp:HiddenField ID="hdnPageStatus" runat="server" />
+        <asp:HiddenField ID="hdfProductID" runat="server" />
+        <asp:HiddenField ID="hdfProductType" runat="server" />
+        <asp:HiddenField ID="hdfProductSerialID" runat="server" />
+        <asp:HiddenField ID="hdnRefreshType" runat="server" />
+        <asp:HiddenField ID="hdnCustomerId" runat="server" />
+        <%--Mantis Issue 24432--%>
+        <asp:HiddenField ID="hdnPageEditId" runat="server" />
+        <%--End of Mantis Issue 24432--%>
 
-            <asp:HiddenField ID="hdnProjectSelectInEntryModule" runat="server" />
-            <%--added by sam to delete the noninventory item and its session detail from grid--%>
+        <asp:HiddenField ID="hdnProjectSelectInEntryModule" runat="server" />
+        <%--added by sam to delete the noninventory item and its session detail from grid--%>
 
-            <asp:HiddenField ID="hdinvetorttype" runat="server" />
-            <%-- added by sam to delete the noninventory item and its session detail from grid--%>
-        </div>
-        <%-- HiddenField End--%>
-        <%--UDF--%>
-        <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server"
-            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="popup" Height="630px"
-            Width="600px" HeaderText="Add/Modify UDF" Modal="true" AllowResize="true" ResizingMode="Postponed">
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-        </dxe:ASPxPopupControl>
-        <asp:HiddenField runat="server" ID="IsUdfpresent" />
-        <asp:HiddenField runat="server" ID="Keyval_internalId" />
-        <%--End UDF--%>
-        <%--Batch Product Popup Start--%>
+        <asp:HiddenField ID="hdinvetorttype" runat="server" />
+        <%-- added by sam to delete the noninventory item and its session detail from grid--%>
+    </div>
+    <%-- HiddenField End--%>
+    <%--UDF--%>
+    <dxe:ASPxPopupControl ID="ASPXPopupControl" runat="server"
+        CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" ClientInstanceName="popup" Height="630px"
+        Width="600px" HeaderText="Add/Modify UDF" Modal="true" AllowResize="true" ResizingMode="Postponed">
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+    </dxe:ASPxPopupControl>
+    <asp:HiddenField runat="server" ID="IsUdfpresent" />
+    <asp:HiddenField runat="server" ID="Keyval_internalId" />
+    <%--End UDF--%>
+    <%--Batch Product Popup Start--%>
 
-        <dxe:ASPxPopupControl ID="ProductpopUp" runat="server" ClientInstanceName="cProductpopUp"
-            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="400"
-            Width="1000" HeaderText="Select Product " AllowResize="true" ResizingMode="Postponed" Modal="true">
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                    <label><strong>Search By Product Name (4 Char)</strong></label>
-                    <%--  DataSourceID="ProductDataSource"--%>
-                    <dxe:ASPxCallbackPanel runat="server" ID="productPanel" ClientInstanceName="cproductPanel" OnCallback="productPanel_Callback">
-                        <PanelCollection>
+    <dxe:ASPxPopupControl ID="ProductpopUp" runat="server" ClientInstanceName="cProductpopUp"
+        CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="400"
+        Width="1000" HeaderText="Select Product " AllowResize="true" ResizingMode="Postponed" Modal="true">
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+                <label><strong>Search By Product Name (4 Char)</strong></label>
+                <%--  DataSourceID="ProductDataSource"--%>
+                <dxe:ASPxCallbackPanel runat="server" ID="productPanel" ClientInstanceName="cproductPanel" OnCallback="productPanel_Callback">
+                    <PanelCollection>
 
-                            <dxe:PanelContent runat="server">
+                        <dxe:PanelContent runat="server">
 
-                                <dxe:ASPxComboBox ID="productLookUp" runat="server" EnableCallbackMode="true" CallbackPageSize="5"
-                                    ValueType="System.String" ValueField="Products_ID" ClientInstanceName="cproductLookUp" Width="92%"
-                                    DropDownStyle="DropDown" DropDownRows="5" ItemStyle-Wrap="True">
-                                    <Columns>
-                                        <dxe:ListBoxColumn FieldName="Products_Name" Caption="Name" Width="400px" />
-                                        <dxe:ListBoxColumn FieldName="IsInventory" Caption="Inventory" Width="90px" />
-                                        <dxe:ListBoxColumn FieldName="HSNSAC" Caption="HSN/SAC" Width="100px" />
-                                        <dxe:ListBoxColumn FieldName="ClassCode" Caption="Class" Width="100px" />
-                                        <dxe:ListBoxColumn FieldName="BrandName" Caption="Brand" Width="100px" />
-                                        <dxe:ListBoxColumn FieldName="sProducts_isInstall" Caption="Installation Reqd." Width="100px" />
-                                    </Columns>
-                                    <ClientSideEvents ValueChanged="ProductSelected" KeyDown="ProductlookUpKeyDown" GotFocus="function(s,e){cproductLookUp.ShowDropDown();}" />
+                            <dxe:ASPxComboBox ID="productLookUp" runat="server" EnableCallbackMode="true" CallbackPageSize="5"
+                                ValueType="System.String" ValueField="Products_ID" ClientInstanceName="cproductLookUp" Width="92%"
+                                DropDownStyle="DropDown" DropDownRows="5" ItemStyle-Wrap="True">
+                                <Columns>
+                                    <dxe:ListBoxColumn FieldName="Products_Name" Caption="Name" Width="400px" />
+                                    <dxe:ListBoxColumn FieldName="IsInventory" Caption="Inventory" Width="90px" />
+                                    <dxe:ListBoxColumn FieldName="HSNSAC" Caption="HSN/SAC" Width="100px" />
+                                    <dxe:ListBoxColumn FieldName="ClassCode" Caption="Class" Width="100px" />
+                                    <dxe:ListBoxColumn FieldName="BrandName" Caption="Brand" Width="100px" />
+                                    <dxe:ListBoxColumn FieldName="sProducts_isInstall" Caption="Installation Reqd." Width="100px" />
+                                </Columns>
+                                <ClientSideEvents ValueChanged="ProductSelected" KeyDown="ProductlookUpKeyDown" GotFocus="function(s,e){cproductLookUp.ShowDropDown();}" />
 
-                                </dxe:ASPxComboBox>
+                            </dxe:ASPxComboBox>
 
-                                <%--<dxe:ASPxGridLookup ID="productLookUp" runat="server" ClientInstanceName="cproductLookUp" OnDataBinding="productLookUp_DataBinding"
+                            <%--<dxe:ASPxGridLookup ID="productLookUp" runat="server" ClientInstanceName="cproductLookUp" OnDataBinding="productLookUp_DataBinding"
                         KeyFieldName="Products_ID" Width="800" TextFormatString="{0}" MultiTextSeparator=", "
                          ClientSideEvents-TextChanged="ProductSelected" 
                         ClientSideEvents-KeyDown="ProductlookUpKeyDown">
@@ -3698,275 +3694,275 @@ function DateCheck() {
                             <Settings ShowFilterRow="True" ShowFilterRowMenu="true" ShowStatusBar="Visible" UseFixedTableLayout="true" />
                         </GridViewProperties>
                     </dxe:ASPxGridLookup>--%>
-                            </dxe:PanelContent>
-                        </PanelCollection>
-                    </dxe:ASPxCallbackPanel>
+                        </dxe:PanelContent>
+                    </PanelCollection>
+                </dxe:ASPxCallbackPanel>
 
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-            <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
-        </dxe:ASPxPopupControl>
-
-
-
-        <%--Batch Product Popup End--%>
-        <dxe:ASPxCallbackPanel runat="server" ID="acpAvailableStock" ClientInstanceName="cacpAvailableStock" OnCallback="acpAvailableStock_Callback">
-            <PanelCollection>
-                <dxe:PanelContent runat="server">
-                </dxe:PanelContent>
-            </PanelCollection>
-            <ClientSideEvents EndCallback="acpAvailableStockEndCall" />
-        </dxe:ASPxCallbackPanel>
-
-        <%--Div Detail for Vendor Section Start--%>
-
-        <dxe:ASPxCallbackPanel runat="server" ID="acpContactPersonPhone" ClientInstanceName="cacpContactPersonPhone" OnCallback="acpContactPersonPhone_Callback">
-            <PanelCollection>
-                <dxe:PanelContent runat="server">
-                </dxe:PanelContent>
-            </PanelCollection>
-            <ClientSideEvents EndCallback="acpContactPersonPhoneEndCall" />
-        </dxe:ASPxCallbackPanel>
-        <%--Div Detail for Vendor Section Start--%>
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+        <HeaderStyle BackColor="Blue" Font-Bold="True" ForeColor="White" />
+    </dxe:ASPxPopupControl>
 
 
 
-        <asp:HiddenField runat="server" ID="hdngridvselectedrowno" />
-        <asp:SqlDataSource ID="SqlSchematype" runat="server"
-            SelectCommand="Select * From ((Select '0' as ID,' Select' as SchemaName) Union (Select  convert(nvarchar(10),ID)+'~'+convert(nvarchar(10),b.branch_id) as ID,SchemaName+'('+b.branch_description +')'as SchemaName  From tbl_master_Idschema  join tbl_master_branch b on tbl_master_Idschema.Branch=b.branch_id  Where TYPE_ID='19' and IsActive=1
+    <%--Batch Product Popup End--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="acpAvailableStock" ClientInstanceName="cacpAvailableStock" OnCallback="acpAvailableStock_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="acpAvailableStockEndCall" />
+    </dxe:ASPxCallbackPanel>
+
+    <%--Div Detail for Vendor Section Start--%>
+
+    <dxe:ASPxCallbackPanel runat="server" ID="acpContactPersonPhone" ClientInstanceName="cacpContactPersonPhone" OnCallback="acpContactPersonPhone_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="acpContactPersonPhoneEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--Div Detail for Vendor Section Start--%>
+
+
+
+    <asp:HiddenField runat="server" ID="hdngridvselectedrowno" />
+    <asp:SqlDataSource ID="SqlSchematype" runat="server"
+        SelectCommand="Select * From ((Select '0' as ID,' Select' as SchemaName) Union (Select  convert(nvarchar(10),ID)+'~'+convert(nvarchar(10),b.branch_id) as ID,SchemaName+'('+b.branch_description +')'as SchemaName  From tbl_master_Idschema  join tbl_master_branch b on tbl_master_Idschema.Branch=b.branch_id  Where TYPE_ID='19' and IsActive=1
                     and financial_year_id IN(select FinYear_ID from Master_FinYear where FinYear_Code=@year) 
                     and Isnull(Branch,'') in (select s FROM dbo.GetSplit(',',@userbranchHierarchy)) and comapanyInt=@company)) as X Order By SchemaName ASC">
 
 
-            <SelectParameters>
+        <SelectParameters>
 
-                <asp:SessionParameter Name="userbranchHierarchy" SessionField="userbranchHierarchy" Type="string" />
-                <asp:SessionParameter Name="company" SessionField="LastCompany" Type="string" />
-                <asp:SessionParameter Name="year" SessionField="LastFinYear" Type="string" />
-                <%-- <asp:SessionParameter Name="year" SessionField="LastFinYear1" Type="string" />--%>
-                <%-- <asp:SessionParameter Name="company" SessionField="LastCompany1" Type="string" />--%>
-            </SelectParameters>
-        </asp:SqlDataSource>
-
-
-        <dxe:ASPxCallbackPanel runat="server" ID="acbpCrpUdf" ClientInstanceName="cacbpCrpUdf" OnCallback="acbpCrpUdf_Callback">
-            <PanelCollection>
-                <dxe:PanelContent runat="server">
-                </dxe:PanelContent>
-            </PanelCollection>
-            <ClientSideEvents EndCallback="acbpCrpUdfEndCall" />
-        </dxe:ASPxCallbackPanel>
+            <asp:SessionParameter Name="userbranchHierarchy" SessionField="userbranchHierarchy" Type="string" />
+            <asp:SessionParameter Name="company" SessionField="LastCompany" Type="string" />
+            <asp:SessionParameter Name="year" SessionField="LastFinYear" Type="string" />
+            <%-- <asp:SessionParameter Name="year" SessionField="LastFinYear1" Type="string" />--%>
+            <%-- <asp:SessionParameter Name="company" SessionField="LastCompany1" Type="string" />--%>
+        </SelectParameters>
+    </asp:SqlDataSource>
 
 
-
-        <dxe:ASPxPopupControl ID="inventorypopup" runat="server" ClientInstanceName="cinventorypopup"
-            Width="1080px" HeaderText="Select TDS" PopupHorizontalAlign="WindowCenter" ShowCloseButton="false"
-            PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
-            Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
-
-            <ContentCollection>
-                <dxe:PopupControlContentControl runat="server">
-                    <asp:HiddenField runat="server" ID="hdn_tdsedit" Value="0" />
+    <dxe:ASPxCallbackPanel runat="server" ID="acbpCrpUdf" ClientInstanceName="cacbpCrpUdf" OnCallback="acbpCrpUdf_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="acbpCrpUdfEndCall" />
+    </dxe:ASPxCallbackPanel>
 
 
 
+    <dxe:ASPxPopupControl ID="inventorypopup" runat="server" ClientInstanceName="cinventorypopup"
+        Width="1080px" HeaderText="Select TDS" PopupHorizontalAlign="WindowCenter" ShowCloseButton="false"
+        PopupVerticalAlign="WindowCenter" CloseAction="CloseButton"
+        Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True">
+
+        <ContentCollection>
+            <dxe:PopupControlContentControl runat="server">
+                <asp:HiddenField runat="server" ID="hdn_tdsedit" Value="0" />
 
 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label><span><strong>Select Unit</strong></span></label>
-                            <div>
-                                <asp:Label ID="lbltdsBranch" runat="server"></asp:Label>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label><span><strong>Edit TDS</strong></span></label>
-                            <div>
-                                <dxe:ASPxCheckBox ID="chk_TDSEditable" ClientInstanceName="cchk_TDSEditable" runat="server">
-                                    <ClientSideEvents CheckedChanged="TDSEditableCheckChanged" />
-                                </dxe:ASPxCheckBox>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <label><span><strong>Select Month for TDS</strong></span></label>
-                            <dxe:ASPxComboBox ID="ddl_month" ClientInstanceName="cddl_month" runat="server" SelectedIndex="-1"
-                                ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" TextFormatString="{0}"
-                                ClearButton-DisplayMode="Always">
-                                <Items>
-                                    <dxe:ListEditItem Text="April" Value="April" />
-                                    <dxe:ListEditItem Text="May" Value="May" />
-                                    <dxe:ListEditItem Text="June" Value="June" />
-                                    <dxe:ListEditItem Text="July" Value="July" />
-                                    <dxe:ListEditItem Text="August" Value="August" />
-                                    <dxe:ListEditItem Text="September" Value="September" />
-                                    <dxe:ListEditItem Text="October" Value="October" />
-                                    <dxe:ListEditItem Text="November" Value="November" />
-                                    <dxe:ListEditItem Text="December" Value="December" />
-                                    <dxe:ListEditItem Text="January" Value="January" />
-                                    <dxe:ListEditItem Text="February" Value="February" />
-                                    <dxe:ListEditItem Text="March" Value="March" />
-                                </Items>
-                            </dxe:ASPxComboBox>
-                        </div>
 
-                        <div class="col-md-3 ">
-                            <label><span><strong>Product Basic Amount</strong></span></label>
-                            <div style="padding-bottom: 5px">
-                                <dxe:ASPxTextBox ID="txt_proamt" MaxLength="80" ClientInstanceName="ctxt_proamt" ReadOnly="true" DisplayFormatString="0.00"
-                                    runat="server" Width="50%">
-                                </dxe:ASPxTextBox>
-                            </div>
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label><span><strong>Select Unit</strong></span></label>
+                        <div>
+                            <asp:Label ID="lbltdsBranch" runat="server"></asp:Label>
                         </div>
                     </div>
-                    <table style="width: 100%;">
+                    <div class="col-md-3">
+                        <label><span><strong>Edit TDS</strong></span></label>
+                        <div>
+                            <dxe:ASPxCheckBox ID="chk_TDSEditable" ClientInstanceName="cchk_TDSEditable" runat="server">
+                                <ClientSideEvents CheckedChanged="TDSEditableCheckChanged" />
+                            </dxe:ASPxCheckBox>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label><span><strong>Select Month for TDS</strong></span></label>
+                        <dxe:ASPxComboBox ID="ddl_month" ClientInstanceName="cddl_month" runat="server" SelectedIndex="-1"
+                            ValueType="System.String" Width="100%" EnableSynchronization="True" EnableIncrementalFiltering="True" TextFormatString="{0}"
+                            ClearButton-DisplayMode="Always">
+                            <Items>
+                                <dxe:ListEditItem Text="April" Value="April" />
+                                <dxe:ListEditItem Text="May" Value="May" />
+                                <dxe:ListEditItem Text="June" Value="June" />
+                                <dxe:ListEditItem Text="July" Value="July" />
+                                <dxe:ListEditItem Text="August" Value="August" />
+                                <dxe:ListEditItem Text="September" Value="September" />
+                                <dxe:ListEditItem Text="October" Value="October" />
+                                <dxe:ListEditItem Text="November" Value="November" />
+                                <dxe:ListEditItem Text="December" Value="December" />
+                                <dxe:ListEditItem Text="January" Value="January" />
+                                <dxe:ListEditItem Text="February" Value="February" />
+                                <dxe:ListEditItem Text="March" Value="March" />
+                            </Items>
+                        </dxe:ASPxComboBox>
+                    </div>
 
-                        <tr>
-                            <td colspan="4">
-                                <dxe:ASPxGridView runat="server" KeyFieldName="TDSID" ClientInstanceName="cgridinventory" ID="gridinventory"
-                                    Width="100%" SettingsBehavior-AllowSort="false" OnBatchUpdate="gridinventory_BatchUpdate" SettingsBehavior-AllowDragDrop="false" SettingsPager-Mode="ShowAllRecords"
-                                    OnCustomCallback="gridinventory_CustomCallback"
-                                    Settings-ShowFooter="false" AutoGenerateColumns="False" OnRowUpdating="gridinventory_RowUpdating" OnRowInserting="gridinventory_RowInserting">
-                                    <Settings VerticalScrollableHeight="150" VerticalScrollBarMode="Auto"></Settings>
-                                    <SettingsBehavior AllowDragDrop="False" AllowSort="False"></SettingsBehavior>
-                                    <SettingsPager Visible="false"></SettingsPager>
-                                    <Columns>
+                    <div class="col-md-3 ">
+                        <label><span><strong>Product Basic Amount</strong></span></label>
+                        <div style="padding-bottom: 5px">
+                            <dxe:ASPxTextBox ID="txt_proamt" MaxLength="80" ClientInstanceName="ctxt_proamt" ReadOnly="true" DisplayFormatString="0.00"
+                                runat="server" Width="50%">
+                            </dxe:ASPxTextBox>
+                        </div>
+                    </div>
+                </div>
+                <table style="width: 100%;">
 
-                                        <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="TDSRate" Caption="TDS Rate(%)" Width="8%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="TDS amount" FieldName="TDSAmount" VisibleIndex="3" Width="8%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <ClientSideEvents LostFocus="TDSAmtLostFocus" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
+                    <tr>
+                        <td colspan="4">
+                            <dxe:ASPxGridView runat="server" KeyFieldName="TDSID" ClientInstanceName="cgridinventory" ID="gridinventory"
+                                Width="100%" SettingsBehavior-AllowSort="false" OnBatchUpdate="gridinventory_BatchUpdate" SettingsBehavior-AllowDragDrop="false" SettingsPager-Mode="ShowAllRecords"
+                                OnCustomCallback="gridinventory_CustomCallback"
+                                Settings-ShowFooter="false" AutoGenerateColumns="False" OnRowUpdating="gridinventory_RowUpdating" OnRowInserting="gridinventory_RowInserting">
+                                <Settings VerticalScrollableHeight="150" VerticalScrollBarMode="Auto"></Settings>
+                                <SettingsBehavior AllowDragDrop="False" AllowSort="False"></SettingsBehavior>
+                                <SettingsPager Visible="false"></SettingsPager>
+                                <Columns>
 
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="SurchargeRate" Caption="Surcharge Rate(%)" Width="11%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Surcharge amount" FieldName="SurchargeAmount" VisibleIndex="5" Width="11%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <ClientSideEvents LostFocus="SurchargeAmountLostFocus" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="EducationCessRate" Caption="Education Cess Rate(%)" Width="14%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Education Cess Amount" FieldName="EducationCessAmt" VisibleIndex="7" Width="14%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <ClientSideEvents LostFocus="EducationCessAmtLostFocus" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-
-
-                                        <dxe:GridViewDataTextColumn VisibleIndex="8" FieldName="HgrEducationCessRate" Caption="Higher Education Cess Rate(%)" Width="17%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
-                                        <dxe:GridViewDataTextColumn Caption="Higher Education Cess Amount" FieldName="HgrEducationCessAmt" VisibleIndex="9" Width="17%">
-                                            <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
-                                                <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
-                                                <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                                <ClientSideEvents LostFocus="HgrEducationCessAmtLostFocus" />
-                                            </PropertiesTextEdit>
-                                            <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
-                                        </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="TDSRate" Caption="TDS Rate(%)" Width="8%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                        </PropertiesTextEdit>
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="TDS amount" FieldName="TDSAmount" VisibleIndex="3" Width="8%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <ClientSideEvents LostFocus="TDSAmtLostFocus" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
 
 
+                                    <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="SurchargeRate" Caption="Surcharge Rate(%)" Width="11%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Surcharge amount" FieldName="SurchargeAmount" VisibleIndex="5" Width="11%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <ClientSideEvents LostFocus="SurchargeAmountLostFocus" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
 
 
-                                    </Columns>
-                                    <Styles>
-                                        <StatusBar CssClass="statusBar"></StatusBar>
-                                    </Styles>
-                                    <ClientSideEvents EndCallback="OnInventoryEndCallback" />
-                                    <%--  <SettingsPager Mode="ShowAllRecords"></SettingsPager>--%>
-                                    <%-- <SettingsDataSecurity AllowEdit="true" />--%>
-                                    <%--<SettingsEditing Mode="Batch">
+                                    <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="EducationCessRate" Caption="Education Cess Rate(%)" Width="14%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Education Cess Amount" FieldName="EducationCessAmt" VisibleIndex="7" Width="14%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <ClientSideEvents LostFocus="EducationCessAmtLostFocus" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
+
+
+                                    <dxe:GridViewDataTextColumn VisibleIndex="8" FieldName="HgrEducationCessRate" Caption="Higher Education Cess Rate(%)" Width="17%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
+                                    <dxe:GridViewDataTextColumn Caption="Higher Education Cess Amount" FieldName="HgrEducationCessAmt" VisibleIndex="9" Width="17%">
+                                        <PropertiesTextEdit DisplayFormatString="0.00" Style-HorizontalAlign="Right">
+                                            <%--<ClientSideEvents LostFocus="txtPercentageLostFocus" GotFocus="CmbtaxClick" />--%>
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                            <ClientSideEvents LostFocus="HgrEducationCessAmtLostFocus" />
+                                        </PropertiesTextEdit>
+                                        <CellStyle Wrap="False" HorizontalAlign="Right"></CellStyle>
+                                    </dxe:GridViewDataTextColumn>
+
+
+
+
+                                </Columns>
+                                <Styles>
+                                    <StatusBar CssClass="statusBar"></StatusBar>
+                                </Styles>
+                                <ClientSideEvents EndCallback="OnInventoryEndCallback" />
+                                <%--  <SettingsPager Mode="ShowAllRecords"></SettingsPager>--%>
+                                <%-- <SettingsDataSecurity AllowEdit="true" />--%>
+                                <%--<SettingsEditing Mode="Batch">
                                             <BatchEditSettings EditMode="row" />
                                         </SettingsEditing>--%>
-                                    <SettingsDataSecurity AllowEdit="true" />
-                                    <SettingsEditing Mode="Batch" NewItemRowPosition="Bottom">
-                                        <BatchEditSettings ShowConfirmOnLosingChanges="false" EditMode="row" />
-                                    </SettingsEditing>
-                                </dxe:ASPxGridView>
+                                <SettingsDataSecurity AllowEdit="true" />
+                                <SettingsEditing Mode="Batch" NewItemRowPosition="Bottom">
+                                    <BatchEditSettings ShowConfirmOnLosingChanges="false" EditMode="row" />
+                                </SettingsEditing>
+                            </dxe:ASPxGridView>
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td colspan="4">
-                                <div class="pull-left">
+                    <tr>
+                        <td colspan="4">
+                            <div class="pull-left">
 
-                                    <dxe:ASPxButton ID="btn_noninventoryOk" ClientInstanceName="cbtn_noninventoryOk" runat="server" AutoPostBack="False" Text="OK" CssClass="btn btn-primary mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
-                                        <ClientSideEvents Click="function(s, e) {return NonInventoryBatchUpdate();}" />
-                                    </dxe:ASPxButton>
+                                <dxe:ASPxButton ID="btn_noninventoryOk" ClientInstanceName="cbtn_noninventoryOk" runat="server" AutoPostBack="False" Text="OK" CssClass="btn btn-primary mTop" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                    <ClientSideEvents Click="function(s, e) {return NonInventoryBatchUpdate();}" />
+                                </dxe:ASPxButton>
 
-                                </div>
-                                <table class="pull-right">
-                                    <tr>
-                                        <td style="padding-top: 10px; padding-right: 5px"><strong>Total TDS</strong></td>
-                                        <td>
-                                            <dxe:ASPxTextBox ID="txt_totalnoninventoryproductamt" MaxLength="80" ClientInstanceName="ctxt_totalnoninventoryproductamt" DisplayFormatString="0.00"
-                                                ReadOnly="true"
-                                                runat="server" Width="100%" CssClass="pull-left mTop">
-                                                <%-- <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..00&gt;" AllowMouseWheel="false" />--%>
-                                                <%--<MaskSettings Mask="<-999999999..999999999>.<0..00>" AllowMouseWheel="false" />--%>
-                                                <%--<MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" /> --%>
-                                            </dxe:ASPxTextBox>
+                            </div>
+                            <table class="pull-right">
+                                <tr>
+                                    <td style="padding-top: 10px; padding-right: 5px"><strong>Total TDS</strong></td>
+                                    <td>
+                                        <dxe:ASPxTextBox ID="txt_totalnoninventoryproductamt" MaxLength="80" ClientInstanceName="ctxt_totalnoninventoryproductamt" DisplayFormatString="0.00"
+                                            ReadOnly="true"
+                                            runat="server" Width="100%" CssClass="pull-left mTop">
+                                            <%-- <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..00&gt;" AllowMouseWheel="false" />--%>
+                                            <%--<MaskSettings Mask="<-999999999..999999999>.<0..00>" AllowMouseWheel="false" />--%>
+                                            <%--<MaskSettings Mask="<0..999999999>.<0..99>" AllowMouseWheel="false" /> --%>
+                                        </dxe:ASPxTextBox>
 
-                                        </td>
-                                    </tr>
-                                </table>
-
-
-                                <div class="clear"></div>
-                            </td>
-                        </tr>
+                                    </td>
+                                </tr>
+                            </table>
 
 
+                            <div class="clear"></div>
+                        </td>
+                    </tr>
 
 
-                    </table>
-                </dxe:PopupControlContentControl>
-            </ContentCollection>
-            <ContentStyle VerticalAlign="Top" CssClass="pad"></ContentStyle>
-            <HeaderStyle BackColor="LightGray" ForeColor="Black" />
-        </dxe:ASPxPopupControl>
-        <asp:HiddenField ID="hdntdschecking" runat="server" />
-        <%--Inventory Section By Sam End on 15052017 --%>
 
-        <dxe:ASPxCallbackPanel runat="server" ID="ApplicableAmtPopup" ClientInstanceName="CApplicableAmtPopup" OnCallback="ApplicableAmtPopup_Callback">
-            <PanelCollection>
-                <dxe:PanelContent runat="server">
-                </dxe:PanelContent>
-            </PanelCollection>
-            <%-- <clientsideevents endcallback="panelEndCallBack" />--%>
-        </dxe:ASPxCallbackPanel>
+
+                </table>
+            </dxe:PopupControlContentControl>
+        </ContentCollection>
+        <ContentStyle VerticalAlign="Top" CssClass="pad"></ContentStyle>
+        <HeaderStyle BackColor="LightGray" ForeColor="Black" />
+    </dxe:ASPxPopupControl>
+    <asp:HiddenField ID="hdntdschecking" runat="server" />
+    <%--Inventory Section By Sam End on 15052017 --%>
+
+    <dxe:ASPxCallbackPanel runat="server" ID="ApplicableAmtPopup" ClientInstanceName="CApplicableAmtPopup" OnCallback="ApplicableAmtPopup_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">
+            </dxe:PanelContent>
+        </PanelCollection>
+        <%-- <clientsideevents endcallback="panelEndCallBack" />--%>
+    </dxe:ASPxCallbackPanel>
     </div>
     </div>
     <%-- new Modified Hidden Tax Field--%>
@@ -4053,7 +4049,7 @@ function DateCheck() {
                                 <th>Product Name</th>
                                 <th>Product Description</th>
                                 <th>HSN/SAC</th>
-                                 <th>GST Rate</th>
+                                <th>GST Rate</th>
                                 <th>Class</th>
                                 <th>Brand</th>
                             </tr>
@@ -4062,7 +4058,7 @@ function DateCheck() {
                 </div>
                 <div class="modal-footer">
                     <% if (rightsProd.CanAdd)
-                       { %>
+                        { %>
                     <button type="button" class="btn btn-success btn-radius" onclick="fn_PopOpen();">
                         <span class="btn-icon"><i class="fa fa-plus"></i></span>
                         Add New
@@ -6071,7 +6067,7 @@ function DateCheck() {
                         <table class="eqTble">
                             <tr>
                                 <%--Mantis Issue 24429--%>
-                                 <dxe:GridViewDataTextColumn Caption="MultiUOMSR No" 
+                                <dxe:GridViewDataTextColumn Caption="MultiUOMSR No"
                                     VisibleIndex="0" HeaderStyle-HorizontalAlign="left" width="0">
                                 </dxe:GridViewDataTextColumn>
                                 <%--End of Mantis Issue 24429--%>
@@ -6082,9 +6078,9 @@ function DateCheck() {
                                                 <label>Base Quantity</label>
                                             </div>
                                             <div>
-                                                 <%--Rev Mantis Issue 24429--%>
+                                                <%--Rev Mantis Issue 24429--%>
                                                 <%--<input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" />--%>
-                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18"  class="allownumericwithdecimal" onchange="CalcBaseRate()" />
+                                                <input type="text" id="UOMQuantity" style="text-align: right;" maxlength="18" class="allownumericwithdecimal" onchange="CalcBaseRate()" />
                                                 <%--End of Rev Mantis Issue 24429--%>
                                             </div>
                                         </div>
@@ -6109,7 +6105,7 @@ function DateCheck() {
                                             <label>Base Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true" ></dxe:ASPxTextBox>
+                                            <dxe:ASPxTextBox ID="cmbBaseRate" runat="server" Width="80px" ClientInstanceName="ccmbBaseRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right" ReadOnly="true"></dxe:ASPxTextBox>
                                         </div>
                                     </div>
                                 </td>
@@ -6152,7 +6148,7 @@ function DateCheck() {
                                             <label>Alt Rate </label>
                                         </div>
                                         <div>
-                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right"  >
+                                            <dxe:ASPxTextBox ID="cmbAltRate" Width="80px" runat="server" ClientInstanceName="ccmbAltRate" DisplayFormatString="0.000" MaskSettings-Mask="&lt;0..99999999&gt;.&lt;00..999&gt;" FocusedStyle-HorizontalAlign="Right" HorizontalAlign="Right">
                                                 <ClientSideEvents TextChanged="function(s,e) { CalcBaseRate();}" />
                                             </dxe:ASPxTextBox>
                                         </div>
@@ -6161,11 +6157,10 @@ function DateCheck() {
                                 <td>
                                     <div style="margin-bottom: 5px;">
                                         <div>
-                                            
                                         </div>
                                         <div>
                                             <label class="checkbox-inline mlableWh">
-                                                <input type="checkbox" id="chkUpdateRow"  />
+                                                <input type="checkbox" id="chkUpdateRow" />
                                                 <span style="margin: 0px 0; display: block">
                                                     <dxe:ASPxLabel ID="ASPxLabel19" runat="server" Text="Update Row">
                                                     </dxe:ASPxLabel>
@@ -6174,7 +6169,7 @@ function DateCheck() {
                                         </div>
                                     </div>
 
-                                    
+
                                 </td>
                                 <%--End of Mantis Issue 24429--%>
                                 <td style="padding-top: 14px;">
@@ -6392,7 +6387,7 @@ function DateCheck() {
     </div>
 
 
-     <div id="tdsModal" class="modal fade" role="dialog">
+    <div id="tdsModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -6497,7 +6492,7 @@ function DateCheck() {
 
     <asp:SqlDataSource runat="server" ID="tcsDatasource" SelectCommand="select TDSTCS_Code,LTRIM(RTRIM(TDSTCS_Code))+' ('+TDSTCS_Description+')' TCS_SECTION from Master_TDSTCS inner join tbl_master_TDS_Section on Section_Code=TDSTCS_Code where TYPE='TCS'"></asp:SqlDataSource>
     <asp:SqlDataSource runat="server" ID="tdsDatasource" SelectCommand=" select TDSTCS_Code,LTRIM(RTRIM(TDSTCS_Code))+' ('+TDSTCS_Description+')' TDS_SECTION from Master_TDSTCS inner join tbl_master_TDS_Section on Section_Code=TDSTCS_Code where TYPE='TDS' and TDSTCS_ID not in (select DISTINCT TDSTCS_ID from tbl_master_productTdsMap where TDSTCS_ID<>0) and TDSTCS_Code='194Q'"></asp:SqlDataSource>
-    
+
     <asp:HiddenField ID="hdnBackdateddate" runat="server" />
     <asp:HiddenField ID="hdnTagDateForbackdated" runat="server" />
 
@@ -6508,11 +6503,11 @@ function DateCheck() {
     <asp:HiddenField ID="hdnDatafrom" runat="server" />
     <asp:HiddenField ID="hdnDatato" runat="server" />
     <asp:HiddenField ID="HdnBackDatedEntryPurchaseGRN" runat="server" />
-   <asp:HiddenField ID="hdnnumberingFromdate" runat="server" />
-     <asp:HiddenField ID="hdnnumberingTodate" runat="server" />
-    
+    <asp:HiddenField ID="hdnnumberingFromdate" runat="server" />
+    <asp:HiddenField ID="hdnnumberingTodate" runat="server" />
 
-      <div class="modal fade" id="AmtGridModel" role="dialog">
+
+    <div class="modal fade" id="AmtGridModel" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -6533,22 +6528,23 @@ function DateCheck() {
                             </tr>
                         </table>
                     </div>
-                    <div class="clearfix row" style="padding-top:5px">
+                    <div class="clearfix row" style="padding-top: 5px">
                         <div class="col-sm-4">
                             <label>Total Amount</label>
-                            <div> <input type="text" id="btnfootTotalAmt" title="Total Amount" disabled="disabled"/></div>
+                            <div>
+                                <input type="text" id="btnfootTotalAmt" title="Total Amount" disabled="disabled" /></div>
                         </div>
                         <div class="col-sm-4">
                             <label>Unpaid Amount</label>
-                            <div> <input type="text" id="btnfootTotalAmtUnpaid" title="Unpaid Amount" disabled="disabled"/></div>
+                            <div>
+                                <input type="text" id="btnfootTotalAmtUnpaid" title="Unpaid Amount" disabled="disabled" /></div>
                         </div>
                     </div>
-                    
-                    <%--<input type="text" id="btnfootTotalAmtUnpaid"  title="Unpaid Amount"/>--%>
 
+                    <%--<input type="text" id="btnfootTotalAmtUnpaid"  title="Unpaid Amount"/>--%>
                 </div>
                 <div class="modal-footer">
-                   
+
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -6556,7 +6552,11 @@ function DateCheck() {
     </div>
 
     <asp:HiddenField ID="hdnPInvAmtDetailssettings" runat="server" />
-     <asp:HiddenField ID="hdnvendortotalamt" runat="server" />
-     <asp:HiddenField ID="hdnvendortotalamtUnpaid" runat="server" />
+    <asp:HiddenField ID="hdnvendortotalamt" runat="server" />
+    <asp:HiddenField ID="hdnvendortotalamtUnpaid" runat="server" />
     <asp:HiddenField ID="hdnForBranchTaggingPurchase" runat="server" />
+
+    <%-- Rev 3.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 3.0 End--%>
 </asp:Content>

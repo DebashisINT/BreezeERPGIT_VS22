@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
-1.0                17-04-2023        2.0.37           Pallab              25839: Add Purchase GRN module design modification
+1.0                17-04-2023        V2.0.37           Pallab              25839: Add Purchase GRN module design modification
+2.0                02-01-2024        V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Challan" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseChallan" EnableEventValidation="false" %>
@@ -2415,4 +2416,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%--Rev Mantis Issue 24061--%>
     <asp:HiddenField runat="server" ID="hdnPurchaseOrderItemNegative" />
     <%--End of Rev Mantis Issue 24061--%>
+    <%-- Rev 2.0--%>
+    <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+    <%-- Rev 2.0 End--%>
 </asp:Content>

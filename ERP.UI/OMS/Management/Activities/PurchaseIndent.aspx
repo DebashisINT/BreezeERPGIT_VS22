@@ -4,6 +4,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 2.0                18-05-2023        2.0.38           Pallab              26166: The Product Name and Description is too small in the Grid of Purchase Indent Module when the Screen Resolution is 1366X768
 3.0                12-06-2023        2.0.38           Pallab              26325: Add Purchase Indent/Requisition grid columns visibility issue fix
 4.0                11-07-2023        2.0.39           Priti               0026549: A setting is required to enter the backdated entries in Purchase Indent
+                                                                          Mantis : 26871
+5.0                02-01-2024       V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Indent/Requisition" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseIndent.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseIndent" %>
@@ -2623,4 +2626,7 @@ function ProductsComboGotFocusChange(s, e) {
     <%--Rev 4.0 --%>
      <asp:HiddenField ID="HdnBackDatedEntryPurchaseIndent" runat="server" />
   <%--  Rev 4.0 End--%>
+ <%-- Rev 5.0--%>
+ <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
+ <%-- Rev 5.0 End--%>
 </asp:Content>
