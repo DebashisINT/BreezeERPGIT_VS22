@@ -5,6 +5,8 @@
                                               Refer: 0025575
 3.0   V2.0.38     Pallab      26/04/2023      Sales Invoice Register - Detail module zoom popup upper part visible issue fix
                                               Refer: 0025941
+4.0   V2.0.43     Sachita     19/01/2024      Two columns required in Sales Invoice Register - detail Report
+                                              Refer: 26815
 ===================================End of Revision History=====================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesRegister_Details" %>
@@ -1346,6 +1348,14 @@
                                 <dxe:GridViewDataTextColumn Caption="Created by" Width="160px" FieldName="CREATEDBY" VisibleIndex="39">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
+                                <%--Rev 4.0--%>
+                                <dxe:GridViewDataTextColumn Caption="GSTIN" FieldName="CUST_GSTIN" Width="120" VisibleIndex="40">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <dxe:GridViewDataTextColumn Caption="IRN" Width="500px" FieldName="IRN_NO" VisibleIndex="41">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 4.0--%>
                             </Columns>
                             <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" ColumnResizeMode="Control" />
                             <Settings ShowFooter="true" ShowGroupPanel="true" ShowGroupFooter="VisibleIfExpanded" />
