@@ -5,6 +5,8 @@
 //                                                 Mantis: 26843
 //Rev 3.0      Priti      V2.0.42   02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 //Rev 4.0      Priti      V2.0.43   16-01-2024     Mantis : 0027183 After saving purchase order by availing the "Copy" features document number saving as "Auto"
+//Rev 5.0      Priti      V2.0.43   22-01-2024     Mantis : 0027198 Stop editing while purchase order partially used in another modules.
+
 //====================================================End Revision History=====================================================================
 using System;
 using System.Configuration;
@@ -762,6 +764,16 @@ namespace ERP.OMS.Management.Activities
                         btnSaveExit.Visible = false;
                         lbl_quotestatusmsg.Visible = true;
                     }
+                    //REV 5.0
+                    int IsOrderUsed = CheckOrder(Convert.ToString(Request.QueryString["key"]));
+                    if (IsOrderUsed == -99)
+                    {
+                        lbl_quotestatusmsg.Text = "*** Used in other module.";
+                        btn_SaveRecords.Visible = false;
+                        btnSaveExit.Visible = false;
+                        lbl_quotestatusmsg.Visible = true;
+                    }
+                    //REV 5.0 END
                     ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "GridCallBack()", true);
                 }
 
@@ -781,6 +793,19 @@ namespace ERP.OMS.Management.Activities
                 //    }
                 //}
             }
+        }
+        public int CheckOrder(string Orderid)
+        {
+            int i;
+            int rtrnvalue = 0;
+            ProcedureExecute proc = new ProcedureExecute("prc_PurchaseOrderDetailsList");
+            proc.AddVarcharPara("@Action", 100, "CHECKORDER");
+            proc.AddVarcharPara("@PurchaseOrder_Id", 20, Orderid);
+            proc.AddVarcharPara("@ReturnValue", 50, "0", QueryParameterDirection.Output);
+            i = proc.RunActionQuery();
+            rtrnvalue = Convert.ToInt32(proc.GetParaValue("@ReturnValue"));
+            return rtrnvalue;
+
         }
         public DataTable GetPurchaseOrderWarehouseData()
         {
