@@ -1,4 +1,8 @@
-﻿var isFirstTime = true;
+﻿//=======================================================Revision History =====================================================
+//1.0   Priti     V2.0.43    22-01 - 2024      0027106: Transporter Bill Entry Listing page view issue.
+//=========================================================End Revision History===================================================
+
+var isFirstTime = true;
 // Purchase Invoice Section Start
 updatePBTRGridByDate = function () {
     if (cFormDate.GetDate() == null) {
@@ -253,7 +257,11 @@ function OnViewClick(keyValue) {
     window.location.href = url;
 }
 function OnclickViewAttachment(obj) {
-    var URL = '/OMS/Management/Activities/PurchaseInvoice_Document.aspx?idbldng=' + obj + '&type=PurchaseInvoice';
+    //Rev 1.0
+    //var URL = '/OMS/Management/Activities/PurchaseInvoice_Document.aspx?idbldng=' + obj + '&type=PurchaseInvoice';
+    var URL = '/OMS/Management/Activities/PurchaseInvoice_Document.aspx?idbldng=' + obj + '&type=TransporterBillEntry';
+    //Rev 1.0 End
+    
     window.location.href = URL;
 }
 
