@@ -1,4 +1,8 @@
-﻿using System;
+﻿//======================================================= Revision History =====================================================
+//1.0   Priti     V2.0.43    22-01-2024      0027106: Transporter Bill Entry Listing page view issue.
+//=========================================================End Revision History===================================================
+
+using System;
 using System.Data;
 using System.Web;
 using System.Web.UI;
@@ -49,10 +53,17 @@ namespace ERP.OMS.Management.Activities
                     lblheader.Text = "Document of Project Purchase Invoice";
                     lnkListing.HRef = "/OMS/management/Activities/ProjectPurchaseInvoiceList.aspx";
                 }
+                //Rev 1.0
+                else if (Convert.ToString(Request.QueryString["type"]) == "TransporterBillEntry")
+                {
+                    lblheader.Text = "Document of Transporter Bill Entry";
+                    lnkListing.HRef = "/OMS/management/Activities/PurchaseInvoiceListForTransporter.aspx";
+                }
+                //Rev 1.0 End
                 #endregion
             }
-         
-       
+
+
             if (!string.IsNullOrEmpty(Convert.ToString(Request.QueryString["type"])))
             {
                 Session["PBrequesttype"] = Convert.ToString(Request.QueryString["type"]);
@@ -150,6 +161,12 @@ namespace ERP.OMS.Management.Activities
                 {
                     dt1 = oDBEngine.GetDataTable("tbl_master_document INNER JOIN tbl_master_documentType ON tbl_master_document.doc_documentTypeId = tbl_master_documentType.dty_id", "tbl_master_document.doc_id AS Id, tbl_master_documentType.dty_documentType AS Type,tbl_master_document.doc_documentName AS FileName, tbl_master_document.doc_source AS Src,doc_buildingid,doc_Floor,doc_RoomNo,doc_CellNo,doc_FileNo,convert(varchar,doc_receivedate,106)as ReceiveDate,convert(varchar,doc_renewdate,106)as RenewDate,(case when doc_verifydatetime is not null then ((select user_loginid from tbl_master_user where user_id=doc_verifyuser)  + '['+ convert(varchar,doc_verifydatetime,106)+']') else 'Not Verified' end) as vrfy,doc_Note1,doc_Note2,(select user_loginid from tbl_master_user where user_id=tbl_master_document.Createuser) as createuser, tbl_master_document.doc_documentTypeId as doc,YEAR(tbl_master_document.CreateDate)_year ", "doc_contactId='" + Request.QueryString["idbldng"] + "'  and dty_applicableFor='ProjectPurchaseInvoice'");
                 }
+                //REV 1.0
+                else if (Convert.ToString(Request.QueryString["type"]) == "TransporterBillEntry")
+                {
+                    dt1 = oDBEngine.GetDataTable("tbl_master_document INNER JOIN tbl_master_documentType ON tbl_master_document.doc_documentTypeId = tbl_master_documentType.dty_id", "tbl_master_document.doc_id AS Id, tbl_master_documentType.dty_documentType AS Type,tbl_master_document.doc_documentName AS FileName, tbl_master_document.doc_source AS Src,doc_buildingid,doc_Floor,doc_RoomNo,doc_CellNo,doc_FileNo,convert(varchar,doc_receivedate,106)as ReceiveDate,convert(varchar,doc_renewdate,106)as RenewDate,(case when doc_verifydatetime is not null then ((select user_loginid from tbl_master_user where user_id=doc_verifyuser)  + '['+ convert(varchar,doc_verifydatetime,106)+']') else 'Not Verified' end) as vrfy,doc_Note1,doc_Note2,(select user_loginid from tbl_master_user where user_id=tbl_master_document.Createuser) as createuser, tbl_master_document.doc_documentTypeId as doc,YEAR(tbl_master_document.CreateDate)_year ", "doc_contactId='" + Request.QueryString["idbldng"] + "'  and dty_applicableFor='TransporterBillEntry'");
+                }
+                //REV 1.0 END
                 else
                 {
                     dt1 = oDBEngine.GetDataTable("tbl_master_document INNER JOIN tbl_master_documentType ON tbl_master_document.doc_documentTypeId = tbl_master_documentType.dty_id", "tbl_master_document.doc_id AS Id, tbl_master_documentType.dty_documentType AS Type,tbl_master_document.doc_documentName AS FileName, tbl_master_document.doc_source AS Src,doc_buildingid,doc_Floor,doc_RoomNo,doc_CellNo,doc_FileNo,convert(varchar,doc_receivedate,106)as ReceiveDate,convert(varchar,doc_renewdate,106)as RenewDate,(case when doc_verifydatetime is not null then ((select user_loginid from tbl_master_user where user_id=doc_verifyuser)  + '['+ convert(varchar,doc_verifydatetime,106)+']') else 'Not Verified' end) as vrfy,doc_Note1,doc_Note2,(select user_loginid from tbl_master_user where user_id=tbl_master_document.Createuser) as createuser, tbl_master_document.doc_documentTypeId as doc,YEAR(tbl_master_document.CreateDate)_year ", "doc_contactId='" + Request.QueryString["idbldng"] + "'  and dty_applicableFor='PurchaseInvoice'");
