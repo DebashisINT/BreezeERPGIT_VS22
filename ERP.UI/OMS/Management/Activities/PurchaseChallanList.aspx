@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                17-04-2023        V2.0.37           Pallab              25838: Purchase GRN module design modification
 2.0                25-07-2023        V2.0.39           Priti               26609:Attachment icon will be shown against the document number if there is any attachment - Sales Challan
+3.0                23-01-2024        V2.0.43           Priti               0026947: "Clear Filter" is required in landing page of  Entry screens.
                                           
 ====================================================== Revision History =============================================--%>
 
@@ -156,6 +157,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </asp:DropDownList>
             <% } %>
             <%--Rev end 1.0--%>
+             <%--REV 2.0--%>
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <ClientSideEvents Click="function(s, e) {
+             ASPxClientUtils.DeleteCookie('PurchaseGRNCookies');
+             location.reload(true);
+             }" />
+             </dxe:ASPxButton>
+            <%--REV 2.0 END--%>
             <%--Sandip Section for Approval Section in Design Start --%>
 
             <span id="spanStatus" runat="server">
@@ -357,7 +366,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <ClientSideEvents EndCallback="OnEndCallback" RowClick="gridRowclick" />
                 <SettingsBehavior ConfirmDelete="True" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
-                <SettingsCookies Enabled="true" StorePaging="true" Version="5.0" />
+                <SettingsCookies Enabled="true" StorePaging="true" Version="5.0" CookiesID="PurchaseGRNCookies" />
                 <Styles>
                     <Header SortingImageSpacing="5px" ImageSpacing="5px"></Header>
                     <FocusedRow HorizontalAlign="Left" VerticalAlign="Top" CssClass="gridselectrow"></FocusedRow>

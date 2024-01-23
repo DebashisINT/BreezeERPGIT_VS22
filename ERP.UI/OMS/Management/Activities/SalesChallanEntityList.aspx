@@ -5,6 +5,8 @@
    4.0   Sanchita V2.0.39     25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
                                              Mantis : 26609
    5.0   Priti    V2.0.41    28/11/2023     0027028: Customer code column is required in the listing module of Sales entry
+   6.0   Priti    V2.0.43    23-01-2024     0026947: "Clear Filter" is required in landing page of  Entry screens.
+
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1110,6 +1112,14 @@
                 <asp:ListItem Value="4">CSV</asp:ListItem>
             </asp:DropDownList>
             <% } %>
+             <%--REV 6.0--%>
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <ClientSideEvents Click="function(s, e) {
+             ASPxClientUtils.DeleteCookie('SalesChallanCookies');
+             location.reload(true);
+             }" />
+             </dxe:ASPxButton>
+            <%--REV 6.0 END--%>
             <%--Sandip Section for Approval Section in Design Start --%>
 
             <span id="spanStatus" runat="server">
@@ -1339,7 +1349,7 @@
             <%-- --Rev Sayantani--%>
             <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
             <%-- <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="false" />--%>
-            <SettingsCookies Enabled="true" StorePaging="true" Version="2.17" />
+            <SettingsCookies Enabled="true" StorePaging="true" Version="2.17" CookiesID="SalesChallanCookies"/>
             <%-- -- End of Rev Sayantani --%>
             <SettingsContextMenu Enabled="true"></SettingsContextMenu>
             <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />
