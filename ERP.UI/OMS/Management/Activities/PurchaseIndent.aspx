@@ -6,6 +6,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 4.0                11-07-2023        2.0.39           Priti               0026549: A setting is required to enter the backdated entries in Purchase Indent
                                                                           Mantis : 26871
 5.0                02-01-2024       V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+6.0                23-01-2024       V2.0.43           Priti               0026947: "Clear Filter" is required in landing page of  Entry screens.
 
 ====================================================== Revision History =============================================--%>
 
@@ -840,6 +841,14 @@ function ProductsComboGotFocusChange(s, e) {
                     <asp:ListItem Value="4">CSV</asp:ListItem>
                 </asp:DropDownList>
                 <% } %>
+                 <%--REV 6.0--%>
+                 <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+                 <ClientSideEvents Click="function(s, e) {
+                 ASPxClientUtils.DeleteCookie('PurchaseIndentCookies');
+                 location.reload(true);
+                 }" />
+                 </dxe:ASPxButton>
+                <%--REV 6.0 END--%>
                 <%--Sandip Section for Approval Section in Design Start --%>
 
                 <span id="spanStatus" runat="server">
@@ -1736,7 +1745,7 @@ function ProductsComboGotFocusChange(s, e) {
 
 
                     </Columns>
-                    <SettingsCookies Enabled="true" StorePaging="true" Version="1.7" />
+                    <SettingsCookies Enabled="true" StorePaging="true" Version="1.7" CookiesID="PurchaseIndentCookies" />
                     <SettingsContextMenu Enabled="true"></SettingsContextMenu>
                     <ClientSideEvents EndCallback="function(s, e) {
 	                                        ShowMsgLastCall();

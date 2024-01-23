@@ -4,7 +4,9 @@
  3.0   Pallab   V2.0.38    11-05-2023     26100: sales order "Order waiting" button value batch design change
  4.0   Sanchita V2.0.39    25-07-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
                                           Mantis : 26609  
- 5.0   Priti    V2.0.41    28/11/2023     0027028: Customer code column is required in the listing module of Sales entry
+ 5.0   Priti    V2.0.41    28-11-2023     0027028: Customer code column is required in the listing module of Sales entry
+ 6.0   Priti    V2.0.43    23-01-2024     0026947: "Clear Filter" is required in landing page of  Entry screens.
+
 ====================================================End Revision History=====================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesOrderEntityList.aspx.cs" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -1288,6 +1290,14 @@
                 <asp:ListItem Value="4">CSV</asp:ListItem>
             </asp:DropDownList>
             <% } %>
+             <%--REV 6.0--%>
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <ClientSideEvents Click="function(s, e) {
+             ASPxClientUtils.DeleteCookie('SalesOrderCookies');
+             location.reload(true);
+             }" />
+             </dxe:ASPxButton>
+            <%--REV 6.0 END--%>
             <a href="javascript:void(0);" onclick="OpenWaitingOrder()" class="btn btn-warning  typeNotificationBtn"><span><u>O</u>rder Waiting </span>
                 <span class="typeNotification">
                     <dxe:ASPxLabel runat="server" Text="" ID="lblQuoteweatingCount" ClientInstanceName="ClblQuoteweatingCount"></dxe:ASPxLabel>
@@ -1716,7 +1726,7 @@
                 </Columns>
                 <%-- --Rev Sayantani--%>
                 <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.6" />
+                <SettingsCookies Enabled="true" StorePaging="true" StoreColumnsVisiblePosition="true" Version="3.6" CookiesID="SalesOrderCookies" />
                 <%-- -- End of Rev Sayantani --%>
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
                 <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />

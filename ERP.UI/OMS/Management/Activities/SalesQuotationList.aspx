@@ -1,6 +1,8 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                05-04-2023        2.0.37           Pallab              25849: Proforma Invoice/Quotation module design modification
+2.0                23-01-2024        V2.0.43          Priti               0026947: "Clear Filter" is required in landing page of  Entry screens.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Proforma Invoice/ Quotation" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -646,6 +648,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <asp:ListItem Value="4">CSV</asp:ListItem>
             </asp:DropDownList>
             <% } %>
+             <%--REV 2.0--%>
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <ClientSideEvents Click="function(s, e) {
+             ASPxClientUtils.DeleteCookie('SalesQuotationCookies');
+             location.reload(true);
+             }" />
+             </dxe:ASPxButton>
+            <%--REV 2.0 END--%>
             <%-- <dxe:ASPxButton ID="btn_WaitQuote" ClientInstanceName="Cbtn_WaitQuote" runat="server" AutoPostBack="False" Text="Edit" CssClass="btn btn-primary" >
                                             <ClientSideEvents Click="function(s, e) {OpenWaitingQuote();}" />
             </dxe:ASPxButton>--%>
@@ -916,7 +926,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <%-- --Rev Sayantani--%>
                 <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
                 <SettingsBehavior ColumnResizeMode="Control" ConfirmDelete="True" />
-                <SettingsCookies Enabled="true" StorePaging="true" Version="16.0" />
+                <SettingsCookies Enabled="true" StorePaging="true" Version="16.0" CookiesID="SalesQuotationCookies" />
                 <%-- -- End of Rev Sayantani --%>
                 <SettingsContextMenu Enabled="true"></SettingsContextMenu>
                 <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />

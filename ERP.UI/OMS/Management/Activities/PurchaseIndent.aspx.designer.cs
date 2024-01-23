@@ -114,6 +114,15 @@ namespace ERP.OMS.Management.Activities
         protected global::System.Web.UI.WebControls.DropDownList drdExport;
 
         /// <summary>
+        /// btnClearFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DevExpress.Web.ASPxButton btnClearFilter;
+
+        /// <summary>
         /// spanStatus control.
         /// </summary>
         /// <remarks>

@@ -2,6 +2,8 @@
    1.0   Priti    V2.0.36     16-02-2023     Afer Listing view upgradation delete data show in list issue solved. 
    2.0   Priti    V2.0.38     03-04-2023     0025257: Views to be converted to Procedures in the Listing Page of Transaction / Sales / Inquiry
    3.0   Pallab   V2.0.38     05-04-2023     0025847: Sales Inquiry module design modification
+   4.0   Priti    V2.0.43     23-01-2024     0026947: "Clear Filter" is required in landing page of  Entry screens.
+
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiry.aspx.cs" Inherits="ERP.OMS.Management.Activities.SalesInquiry" %>
@@ -9,7 +11,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
 
-
+       
+          
         function timerTick() {
             //   cwatingInvoicegrid.Refresh();
 
@@ -22,8 +25,8 @@
                 success: function (msg) {
 
                     var status = msg.d;
-                    console.log(status);
-                    ClblQuoteweatingCount.SetText(status);
+                    //console.log(status);
+                    //ClblQuoteweatingCount.SetText(status);
                     var fetcheddata = parseFloat(document.getElementById('waitingQuotationCount').value);
                     if (status != fetcheddata) {
                         CwatingQuotegrid.Refresh();
@@ -402,6 +405,9 @@
             var url = 'SalesInquiryAdd.aspx?key=' + 'ADD';
             window.location.href = url;
         }
+        
+
+        
         var keyval;
         //function FocusedRowChanged(s, e) {
         //    keyval=s.GetRowKey(s.GetFocusedRowIndex());
@@ -1253,6 +1259,7 @@
         }
         /*Rev end 3.0*/
         </style>
+     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <%--<dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
@@ -1322,6 +1329,16 @@
                 <asp:ListItem Value="4">CSV</asp:ListItem>
             </asp:DropDownList>
             <% } %>
+
+            
+            <%--REV 4.0--%>
+            <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+            <ClientSideEvents Click="function(s, e) {
+            ASPxClientUtils.DeleteCookie('SalesInquiryCookies');
+            location.reload(true);
+            }" />
+            </dxe:ASPxButton>
+            <%--REV 4.0 END--%>
            <%-- <dxe:ASPxButton ID="btn_WaitQuote" ClientInstanceName="Cbtn_WaitQuote" runat="server" AutoPostBack="False" Text="Edit" CssClass="btn btn-primary" >
                                             <ClientSideEvents Click="function(s, e) {OpenWaitingQuote();}" />
             </dxe:ASPxButton>--%>
@@ -1584,7 +1601,7 @@
             </Columns>
            <%-- --Rev Sayantani--%>
            <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-            <SettingsCookies Enabled="true" StorePaging="true"  Version="15.8" />
+            <SettingsCookies Enabled="true" StorePaging="true" CookiesID="SalesInquiryCookies"  Version="15.8" />
            <%-- -- End of Rev Sayantani --%>
              <SettingsContextMenu Enabled="true"></SettingsContextMenu>
             <ClientSideEvents EndCallback="function (s, e) {grid_EndCallBack();}" RowClick="gridRowclick" />
