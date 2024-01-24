@@ -1,7 +1,7 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   16-05-2023      26140: Transit Purchase Invoice module design modification & check in small device
     2.0   Priti     V2.0.41   04-12-2023      0027044: Feature to enable to edit Party Invoice Number and Party Invoice date in Transit Purchase Invoice
-
+    3.0   Sanchita  V2.0.43   24-01-2024      0027206: Listing page for modules Transit Purchase invoice      
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Title="Transit Purchase Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -13,6 +13,14 @@
     <%--Filteration Section Start By Sam--%>
     <script src="JS/TransitPurchaseInvoice.js"></script>
     <script type="text/javascript" src="../../CentralData/JSScript/GenericJScript.js"></script>
+    <%--Rev 3.0--%>
+     <script>
+         function CallbackPanelEndCall(s, e) {
+             cgrid.Refresh();
+         }
+
+     </script>
+    <%--End of Rev 3.0--%>
     <script>
         function OnEWayBillClick(id, EWayBillNumber, EWayBillDate, EWayBillValue) {
             //cgrid.SetFocusedRowIndex(VisibleIndex);
@@ -1364,4 +1372,13 @@ popup.Hide();
       <HeaderStyle BackColor="LightGray" ForeColor="Black" />
   </dxe:ASPxPopupControl>
     <%--Rev 2.0 End--%>
+    <%--Rev 3.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 3.0--%>
 </asp:Content>
