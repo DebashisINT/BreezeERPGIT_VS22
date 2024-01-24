@@ -35,7 +35,11 @@ updateTPBGridByDate = function () {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
-        cgrid.Refresh();
+        // Rev Sanchita
+        //cgrid.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        // End of Rev Sanchita
 
         $("#drdExport").val(0);
     }
