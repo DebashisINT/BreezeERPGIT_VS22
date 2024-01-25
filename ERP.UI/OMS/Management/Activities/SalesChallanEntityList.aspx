@@ -495,6 +495,9 @@
         }
     </script>
     <style>
+        #btnClearFilter{
+            height:33px;
+        }
         .padTab > tbody > tr > td {
             padding-right: 15px;
             vertical-align: middle;
@@ -1113,7 +1116,7 @@
             </asp:DropDownList>
             <% } %>
              <%--REV 6.0--%>
-             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary " AutoPostBack="False">
              <ClientSideEvents Click="function(s, e) {
              ASPxClientUtils.DeleteCookie('SalesChallanCookies');
              location.reload(true);

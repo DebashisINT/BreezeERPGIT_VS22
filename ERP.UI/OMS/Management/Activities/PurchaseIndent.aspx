@@ -664,6 +664,11 @@ function ProductsComboGotFocusChange(s, e) {
     </script>
     <link href="CSS/purchaseindent.css?v=1.0.0.21" rel="stylesheet" />
     <style>
+         /*REV 6.0*/
+         #btnClearFilter{
+             height:33px;
+         }
+        /* REV 6.0 END*/
         #gridBatch_DXMainTable > tbody > tr > td:last-child {
             display: none !important;
         }

@@ -93,6 +93,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
        }
     </script>
     <style>
+         #btnClearFilter{
+             height:33px;
+         }
         strong label {
             font-weight: bold !important;
         }
@@ -649,7 +652,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </asp:DropDownList>
             <% } %>
              <%--REV 2.0--%>
-             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary " AutoPostBack="False">
              <ClientSideEvents Click="function(s, e) {
              ASPxClientUtils.DeleteCookie('SalesQuotationCookies');
              location.reload(true);

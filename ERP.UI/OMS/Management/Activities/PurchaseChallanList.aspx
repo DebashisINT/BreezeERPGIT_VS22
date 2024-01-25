@@ -12,6 +12,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%--Code Added By Sandip For Approval Detail Section Start--%>
     <style>
+         /*REV 3.0*/
+         #btnClearFilter{
+             height:33px;
+         }
+        /* REV 3.0 END*/
         .smllpad > tbody > tr > td {
             padding-right: 25px;
         }

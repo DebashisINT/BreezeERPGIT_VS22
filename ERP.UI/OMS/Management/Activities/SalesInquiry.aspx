@@ -663,6 +663,9 @@
         //Rev Rajdip
     </script>
     <style>
+        #btnClearFilter{
+            height:33px;
+        }
         strong label {
             font-weight: bold !important;
         }
@@ -672,8 +675,10 @@
             -moz-transform: translateY(3px);
             transform: translateY(3px);
         }
+
     </style>
     <style>
+
         .smllpad > tbody > tr > td {
             padding-right: 25px;
         }
@@ -1332,7 +1337,7 @@
 
             
             <%--REV 4.0--%>
-            <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+            <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary " AutoPostBack="False">
             <ClientSideEvents Click="function(s, e) {
             ASPxClientUtils.DeleteCookie('SalesInquiryCookies');
             location.reload(true);

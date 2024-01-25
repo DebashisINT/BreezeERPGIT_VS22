@@ -37,6 +37,9 @@
 
      <%--REV 1.0 ADD DATATABLE STYLE--%>
     <style>
+        #btnClearFilter{
+            height:33px;
+        }
         .modal-dialog {
     width: 1000px !important;
 }
@@ -1291,7 +1294,7 @@
             </asp:DropDownList>
             <% } %>
              <%--REV 6.0--%>
-             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary btn-radius" AutoPostBack="False">
+             <dxe:ASPxButton ID="btnClearFilter" runat="server" Text="Clear Filter"  UseSubmitBehavior="false" CssClass="btn btn-primary " AutoPostBack="False">
              <ClientSideEvents Click="function(s, e) {
              ASPxClientUtils.DeleteCookie('SalesOrderCookies');
              location.reload(true);

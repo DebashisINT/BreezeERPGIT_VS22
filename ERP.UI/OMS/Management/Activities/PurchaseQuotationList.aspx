@@ -13,6 +13,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="JS/PurchaseQuotationList.js?v=2.0"></script>
     <style>
+         /*REV 2.0*/
+         #btnClearFilter{
+             height:33px;
+         }
+        /* REV 2.0 END*/
         strong label {
             font-weight: bold !important;
         }
