@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                10-04-2023        V2.0.37           Pallab              25966: Customer Receipt/Payment module design modification & check in small device
 2.0                28/11/2023        V2.0.41          Priti               0027028: Customer code column is required in the listing module of Sales entry
+3.0                24/01/2024        V2.0.43          Priti               0027205: Voucher Amount in Customer Receipts and Payments listing page not showing. Even after selection from Column Chooser.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerReceiptPaymentList.aspx.cs" Inherits="ERP.OMS.Management.Activities.CustomerReceiptPaymentList" %>
@@ -352,19 +353,33 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     <Settings AllowAutoFilterTextInputTimer="False" />
                     <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
-                <dxe:GridViewDataTextColumn VisibleIndex="15" Caption="Voucher Amount" FieldName="Amount">
-                    <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
-                    <CellStyle CssClass="gridcellleft"></CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="False" />
-                    <Settings AutoFilterCondition="Contains" />
-                </dxe:GridViewDataTextColumn>
-
+                <%--REV 3.0--%>
+               <%--  <dxe:GridViewDataTextColumn VisibleIndex="15" Caption="Voucher Amount" FieldName="Amount">
+                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
+                     <CellStyle CssClass="gridcellleft"></CellStyle>
+                     <Settings AllowAutoFilterTextInputTimer="False" />
+                     <Settings AutoFilterCondition="Contains" />
+                 </dxe:GridViewDataTextColumn>
                 <dxe:GridViewDataTextColumn VisibleIndex="16" FieldName="Proj_Name" Caption="Project Name" Settings-AllowAutoFilter="True">
-                    <CellStyle CssClass="gridcellleft"></CellStyle>
-                    <Settings AllowAutoFilterTextInputTimer="True" />
-                    <Settings AutoFilterCondition="Contains" />
+                <CellStyle CssClass="gridcellleft"></CellStyle>
+                <Settings AllowAutoFilterTextInputTimer="True" />
+                <Settings AutoFilterCondition="Contains" />
+                </dxe:GridViewDataTextColumn>
+               --%>
+                <dxe:GridViewDataTextColumn VisibleIndex="15" FieldName="Proj_Name" Caption="Project Name" Settings-AllowAutoFilter="True">
+                <CellStyle CssClass="gridcellleft"></CellStyle>
+                <Settings AllowAutoFilterTextInputTimer="True" />
+                <Settings AutoFilterCondition="Contains" />
                 </dxe:GridViewDataTextColumn>
 
+                <dxe:GridViewDataTextColumn VisibleIndex="16" Caption="Voucher Amount" FieldName="Amount">
+                <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
+                <CellStyle CssClass="gridcellleft"></CellStyle>
+                <Settings AllowAutoFilterTextInputTimer="False" />
+                <Settings AutoFilterCondition="Contains" />
+                </dxe:GridViewDataTextColumn>
+               
+               <%-- REV 3.0 END--%>
                 <dxe:GridViewDataTextColumn VisibleIndex="17" Caption="Cash/Bank" FieldName="CashBankID">
                     <CellStyle CssClass="gridcellleft"></CellStyle>
                     <Settings AllowAutoFilterTextInputTimer="False" />
@@ -449,7 +464,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             </Columns>
             <%-- --Rev Sayantani--%>
             <SettingsBehavior ConfirmDelete="true" EnableCustomizationWindow="true" EnableRowHotTrack="true" />
-            <SettingsCookies Enabled="true" StorePaging="true" Version="4.0" StoreColumnsVisiblePosition="true" />
+           <%-- <SettingsCookies Enabled="true" StorePaging="true" Version="4.0" StoreColumnsVisiblePosition="true" />--%>
 
             <%-- -- End of Rev Sayantani --%>
             <SettingsContextMenu Enabled="true"></SettingsContextMenu>

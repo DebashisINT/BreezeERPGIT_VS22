@@ -9,6 +9,8 @@
                                                     Mantis : 26871
  * Rev 5.0      Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                     Mantis : 0027050
+ * Rev 6.0      Priti         V2.0.43   25-01-2024  Batchwise stock has been issued from Challan before receiving date which caused negative stock
+                                                    Mantis : 0027207
  *****************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -9755,10 +9757,12 @@ namespace ERP.OMS.Management.Activities
         }
         #region Wirehousewise Aviable Stock
         [WebMethod]
-        public static object getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID)
+        //REV 6.0
+        //public static object getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID)
+        public static object getWarehousewisestock(string sl, string strProductID, string branch, string WarehouseID,string ChallanDate)
+        //REV 6.0 END
         {
-            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
-           
+            BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();        
 
             string strBranch = Convert.ToString(branch);
             //acpAvailableStock.JSProperties["cpstock"] = "0.00";
@@ -9766,8 +9770,10 @@ namespace ERP.OMS.Management.Activities
 
             try
             {
-                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotationForWareHouseWiseStock(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ") as branchopenstock");
-
+                //REV 6.0 
+                //DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableQuotationForWareHouseWiseStock(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ") as branchopenstock");
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByDate(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + ",'"+ ChallanDate+"') as branchopenstock");
+                //REV 6.0 END
                 if (dt2.Rows.Count > 0)
                 {
                     cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
@@ -9788,7 +9794,10 @@ namespace ERP.OMS.Management.Activities
         
         #region Wirehousewise Batch Aviable Stock
         [WebMethod]
-        public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        //Rev 6.0
+        //public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID, string ChallanDate)
+        //Rev 6.0 end
         {
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();          
 
@@ -9797,8 +9806,10 @@ namespace ERP.OMS.Management.Activities
 
             try
             {
-                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
-
+                //Rev 6.0
+                //DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ",'" + ChallanDate + "') as branchopenstock");
+                //Rev 6.0 End
                 if (dt2.Rows.Count > 0)
                 {
                     cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));

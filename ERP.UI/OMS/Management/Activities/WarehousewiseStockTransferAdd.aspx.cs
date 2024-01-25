@@ -1,7 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
 //    1.0   Priti   V2.0.36    23- 01 - 2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
 //    2.0   Priti   V2.0.38    06-06-2023       0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-
+//    3.0   Priti   V2.0.43    25-01-2024       Batchwise stock has been issued from Challan before receiving date which caused negative stock Mantis: 0027207
 //========================================== End Revision History =======================================================================================================
 
 using System;
@@ -4063,17 +4063,20 @@ namespace ERP.OMS.Management.Activities
 
         #region Wirehousewise Batch Aviable Stock
         [WebMethod]
-        public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        //REV 3.0
+        //public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        public static object getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID, string WHT_Date)
+        //REV 3.0 END
         {
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
-
             string strBranch = Convert.ToString(branch);
             string cpstockVal = "0.00";
-
             try
             {
-                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
-
+                //REV 3.0
+                //DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ",'" + WHT_Date + "') as branchopenstock");
+                //REV 3.0 END
                 if (dt2.Rows.Count > 0)
                 {
                     cpstockVal = Convert.ToString(Math.Round(Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]), 2));
