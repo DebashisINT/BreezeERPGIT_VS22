@@ -1,7 +1,8 @@
 ﻿//==========================================================Revision History ============================================================================================
 //    1.0   Priti   V2.0.36   23-01-2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
 //    2.0   Priti   V2.0.37   13-03-2023    0025602: Stock with multiple batches are not allowing to enter in Warehouse wise Stock Transfer
-//    3.0   Priti    V2.0.38  07-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//    3.0   Priti   V2.0.38   07-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+//    4.0   Priti   V2.0.43   24-01 - 2024  Mantis: 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
 
 //========================================== End Revision History =======================================================================================================
 
@@ -1311,6 +1312,10 @@ function CmbBatch_ValueChange() {
     var strProductID = $("#hdfProductID").val();
     var sl = grid.GetEditor("SrlNo").GetValue();
     var branch = $("#ddlBranch").val();
+    //REV 4.0
+    var WHT_Date = cdtTDate.GetValueString();
+    //REV 4.0 End
+
     if (type == "WBS") {
         checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + BatchID);
     }
@@ -1319,7 +1324,10 @@ function CmbBatch_ValueChange() {
     }
 
     if (BatchID != null) {
-        GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID);
+    //REV 4.0
+    //    GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID);
+        GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID, WHT_Date);
+    //REV 4.0 END
     }
 }
 function CmbBatchEndCall(s, e) {
@@ -3521,13 +3529,16 @@ function GETAVAILABLESTOCK(sl, strProductID, branch, WarehouseID) {
     });
 }
 
-function GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID) {
+function GetWirehouseBatchWiseAviableStock(sl, strProductID, branch, WarehouseID, BatchID, WHT_Date) {
     grid.batchEditApi.StartEdit(globalRowIndex);
 
     $.ajax({
         type: "POST",
         url: "WarehousewiseStockTransferAdd.aspx/getWarehouseBatchwisestock",
-        data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID, BatchID: BatchID }),
+        //REV 4.0
+        //data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID, BatchID: BatchID }),
+        data: JSON.stringify({ sl: sl, strProductID: strProductID, branch: branch, WarehouseID: WarehouseID, BatchID: BatchID, WHT_Date:WHT_Date }),
+        //REV 4.0 END
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: false,

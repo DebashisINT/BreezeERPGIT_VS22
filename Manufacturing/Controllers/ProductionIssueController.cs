@@ -6,12 +6,15 @@
 //     5.0  Priti       V2.0.39    13-07-2023  0026425: Show valuation rate feature is required in Issue For Production module
 //     6.0  Priti       V2.0.41    11-12-2023  0027086: System is allowing to edit tagged documents in Manufacturing module
 //     7.0  Sanchita    V2.0.42    28-12-2023  27107: Batch wise stock is not showing upto four decimal places in Issue for Production 
+//     8.0  Priti       V2.0.43    24-01-2024  Mantis : 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
+
 //====================================================End Revision History=====================================================================*@
 
 using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
+using DevExpress.XtraPrinting.Native;
 using EntityLayer.CommonELS;
 using Manufacturing.Models;
 using Manufacturing.Models.ViewModel;
@@ -2198,7 +2201,10 @@ namespace Manufacturing.Controllers
         #endregion Wirehousewise Aviable Stock
         #region Wirehousewise Batch Aviable Stock
         [HttpPost]
-        public JsonResult getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        //REV 8.0
+        //public JsonResult getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID)
+        public JsonResult getWarehouseBatchwisestock(string sl, string strProductID, string branch, string WarehouseID, string BatchID ,string ProductionIssueDate)
+        //REV 8.0 END
         {
             BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
             string strBranch = Convert.ToString(branch);
@@ -2213,7 +2219,10 @@ namespace Manufacturing.Controllers
             // End of Rev 7.0
             try
             {
-                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+                //REV 8.0
+                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ",'" + ProductionIssueDate + "') as branchopenstock");
+                //DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(Session["LastCompany"]) + "','" + Convert.ToString(Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ") as branchopenstock");
+                //REV 8.0 END
                 if (dt2.Rows.Count > 0)
                 {
                     // Rev 7.0

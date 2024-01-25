@@ -10,7 +10,9 @@
         9.0  Priti   V2.0.39    16-08-2023  0026683: In the Warehouse details of Issue for Production, Available Qty tab required to check the stock.
         10.0  Priti   V2.0.41   30-11-2023  0027016: Issue for Production is showing a message that product is going to negative while the product has sufficient qty
         11.0  Priti   V2.0.41   01-12-2023  0027072: During the Issue for Production, Batch activated product is saving without providing batch info in warehouse details.
-    ====================================================End Revision History=====================================================================*@
+        12.0  Priti   V2.0.43   24-01-2024  Mantis : 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
+
+     ====================================================End Revision History=====================================================================*@
 
 
 @using System.Web.UI.WebControls
@@ -2279,8 +2281,9 @@
         var warehouse = $('#WHddlWarehouse').val();
         var Batch = $('#ddlBatch').val();
         var IssueDate = GetServerDateFormat(Issue_Date_dt.GetValue());
-
-
+        //REV 12.0
+        var ProductionIssueDate = GetServerDateFormat(Issue_Date_dt.GetValue());
+        //REV 12.0 END
         if (Batch != "0")
         {
             $.ajax({
@@ -2298,9 +2301,12 @@
             }
             });
 
-            //Rev 9.0
-            GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch);
-            //Rev 9.0 End
+            //REV 12.0
+            ////Rev 9.0
+            //GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch);
+            ////Rev 9.0 End
+            GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch, ProductionIssueDate);
+            //REV 12.0 END
     }
 
 
@@ -2320,13 +2326,16 @@
         });
     }
     //Rev 9.0
-    function GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch) {
+    function GetWirehouseBatchWiseAviableStock(sl, productid, branch, warehouse, Batch, ProductionIssueDate) {
         gridProductionBOMProductList.batchEditApi.StartEdit(globalrowindex);
 
         $.ajax({
             type: "POST",
             url: "@Url.Action("getWarehouseBatchwisestock", "ProductionIssue")",
-            data: JSON.stringify({ sl: sl, strProductID: productid, branch: branch, WarehouseID: warehouse, BatchID: Batch }),
+            //REV 12.0
+            //data: JSON.stringify({ sl: sl, strProductID: productid, branch: branch, WarehouseID: warehouse, BatchID: Batch }),
+            data: JSON.stringify({ sl: sl, strProductID: productid, branch: branch, WarehouseID: warehouse, BatchID: Batch, ProductionIssueDate: ProductionIssueDate }),
+            //REV 12.0 END
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,
