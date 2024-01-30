@@ -959,10 +959,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         function fn_Edit(keyValue) {
-
-            //cGrdWarehouse.PerformCallback('EditWarehouse~' + keyValue);
+            //REV 6.0
+            var ChallanDate = cPLSalesChallanDate.GetValueString();
+            //REV 6.0 End
             SelectedWarehouseID = keyValue;
-            cCallbackPanel.PerformCallback('EditWarehouse~' + keyValue);
+            //REV 6.0 
+            /*cCallbackPanel.PerformCallback('EditWarehouse~' + keyValue );*/
+            cCallbackPanel.PerformCallback('EditWarehouse~' + keyValue + '~' + ChallanDate);
+            //REV 6.0 End
         }
 
         function ProductButnClick(s, e) {
@@ -1927,7 +1931,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             //REV 6.0 End
             if (WarehouseID != null) {
                 if (type == "WBS" || type == "WB") {
-                    cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+                     //REV 6.0
+                    /* cCmbBatch.PerformCallback('BindBatch~' + WarehouseID );*/
+                    cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + ChallanDate);
+                     //REV 6.0 End
                 }
                 else if (type == "WS" && FifoExists == "0") {
                     checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + "0" + '~' + 'NoFIFO');
@@ -5624,6 +5631,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     $("#divuom").hide();
                 }
 
+                //REV 6.0
+                var ChallanDate = cPLSalesChallanDate.GetValueString();
+                //REV 6.0 End
+
                 //var StkQuantityValue = (grid.GetEditor('StockQuantity').GetValue() != null) ? grid.GetEditor('StockQuantity').GetValue() : "0";
                 var IsExits = true;
                 $("#spnCmbWarehouse").hide();
@@ -5786,7 +5797,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_Serial.style.display = 'none';
                         div_Quantity.style.display = 'block';
 
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                      //  cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -5866,7 +5877,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_Serial.style.display = 'block';
                         div_Quantity.style.display = 'none';
 
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                       // cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6041,7 +6052,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_AltQuantity.style.display = 'none';
                         _div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                       // cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6136,7 +6147,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_AltQuantity.style.display = 'none';
                         _div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                      //  cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6306,7 +6317,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_AltQuantity.style.display = 'none';
                         _div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                       // cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6401,7 +6412,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         div_AltQuantity.style.display = 'none';
                         _div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                      //  cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6576,7 +6587,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         //div_AltQuantity.style.display = 'none';
                         //_div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                        //cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -6671,7 +6682,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                         //div_AltQuantity.style.display = 'none';
                         //_div_Uom.style.display = 'none';
                         //End Rev Rajdip
-                        cCmbBatch.PerformCallback('BindBatch~' + "0");
+                       // cCmbBatch.PerformCallback('BindBatch~' + "0");
                         //cGrdWarehouse.PerformCallback('Display~' + SrlNo);
 
                         cGrdWarehouse.PerformCallback('Display~' + SrlNo);
@@ -7122,7 +7133,7 @@ function SaveWarehouse() {
         if (document.getElementById("myCheck").checked == true && SelectedWarehouseID == "0") {
             if (Ptype == "W" || Ptype == "WB" || Ptype == "B") {
                 cCmbWarehouse.PerformCallback('BindWarehouse');
-                cCmbBatch.PerformCallback('BindBatch~' + "");
+               // cCmbBatch.PerformCallback('BindBatch~' + "");
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
             }
@@ -7134,7 +7145,7 @@ function SaveWarehouse() {
         }
         else {
             cCmbWarehouse.PerformCallback('BindWarehouse');
-            cCmbBatch.PerformCallback('BindBatch~' + "");
+           // cCmbBatch.PerformCallback('BindBatch~' + "");
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
         }
@@ -8315,7 +8326,7 @@ function ProjectValueChange(s, e) {
                 SelectSerial = strSrlID;
 
                 cCmbWarehouse.PerformCallback('BindWarehouse');
-                cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+               // cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
                 //Rev Rajdip
                 //checkListBox.PerformCallback('EditSerial~' + strWarehouse + '~' + strBatchID + '~' + strSrlID);
                 checkListBox.PerformCallback('EditSerial~' + strWarehouse + '~' + strBatchID + '~' + strSrlID + '~' + strAltQty + '~' + strAltUOM);
@@ -10928,8 +10939,8 @@ function ProjectValueChange(s, e) {
                                         </dxe:GridViewDataTextColumn>
                                         <dxe:GridViewDataTextColumn VisibleIndex="10" Width="80px">
                                             <DataItemTemplate>
-                                                &nbsp; <a href="javascript:void(0);" onclick="fn_Edit('<%# Container.KeyValue %>')" title="Delete">
-                                                    <img src="../../../assests/images/Edit.png" /></a>
+                                               <%-- &nbsp; <a href="javascript:void(0);" onclick="fn_Edit('<%# Container.KeyValue %>')" title="Delete">
+                                                    <img src="../../../assests/images/Edit.png" /></a>--%>
                                                 &nbsp;
                                                         <a href="javascript:void(0);" id="ADelete" onclick="fn_Deletecity('<%# Container.KeyValue %>')" title="Delete">
                                                             <img src="/assests/images/crs.png" /></a>

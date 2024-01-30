@@ -5623,12 +5623,15 @@ namespace ERP.OMS.Management.Activities
             return dt;
         }
 
-
-        public DataTable GetBatchData(string WarehouseID)
+        //Rev 
+        //public DataTable GetBatchData(string WarehouseID)
+        public DataTable GetBatchData(string WarehouseID, string ChallanDate)
         {
+
             DataTable dt = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_SalesOrder_Details");
-            proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehouse");
+            //proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehouse");
+            proc.AddVarcharPara("@Action", 500, "GETBATCHBYPRODUCTIDWAREHOUSEPOSTINGDATE");
             proc.AddVarcharPara("@Order_Id", 500, Convert.ToString(Session["QuotationID"]));
             proc.AddVarcharPara("@ProductID", 500, Convert.ToString(hdfProductID.Value));
             proc.AddVarcharPara("@WarehouseID", 500, WarehouseID);
@@ -5636,6 +5639,9 @@ namespace ERP.OMS.Management.Activities
             //proc.AddVarcharPara("@branchId", 2000, Convert.ToString(Session["userbranchID"]));
             proc.AddVarcharPara("@branchId", 2000, Convert.ToString(ddl_Branch.SelectedValue));
             proc.AddVarcharPara("@companyId", 500, Convert.ToString(Session["LastCompany"]));
+            //Rev 6.0
+            proc.AddDateTimePara("@PostingDate", Convert.ToDateTime(ChallanDate));
+            //Rev 6.0 END
             dt = proc.GetTable();
             return dt;
         }
@@ -8034,7 +8040,12 @@ namespace ERP.OMS.Management.Activities
             if (WhichCall == "BindBatch")
             {
                 string WarehouseID = Convert.ToString(e.Parameter.Split('~')[1]);
-                DataTable dt = GetBatchData(WarehouseID);
+                //Rev 6.0
+                string ChallanDate = Convert.ToString(e.Parameter.Split('~')[2]);
+                //DataTable dt = GetBatchData(WarehouseID);
+                DataTable dt = GetBatchData(WarehouseID, ChallanDate);
+                //Rev 6.0 End
+                
 
                 CmbBatch.Items.Clear();
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -9299,7 +9310,9 @@ namespace ERP.OMS.Management.Activities
             {
                 string SrlNo = performpara.Split('~')[1];
                 string ProductType = Convert.ToString(hdfProductType.Value);
-
+                //Rev 6.0
+                string ChallanDate = Convert.ToString(e.Parameter.Split('~')[2]);
+                //Rev 6.0 End
                 if (Session["SC_WarehouseData"] != null)
                 {
                     DataTable Warehousedt = (DataTable)Session["SC_WarehouseData"];
@@ -9319,8 +9332,12 @@ namespace ERP.OMS.Management.Activities
                     }
 
                     //CmbWarehouse.DataSource = GetWarehouseData();
-                    CmbBatch.DataSource = GetBatchData(strWarehouse);
+                    //Rev 6.0
+                    //CmbBatch.DataSource = GetBatchData(strWarehouse);
+                    //CmbBatch.DataBind();
+                    CmbBatch.DataSource = GetBatchData(strWarehouse, ChallanDate);
                     CmbBatch.DataBind();
+                    //Rev 6.0 End
 
                     CallbackPanel.JSProperties["cpEdit"] = strWarehouse + "~" + strBatchID + "~" + strSrlID + "~" + strQuantity + "~" + StrAltQty + "~" + StrAltUOM;
                 }
