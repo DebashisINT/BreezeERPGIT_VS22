@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                15-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                30-01-2024        2.0.43           Sanchita            27208: Customer Industry Mapping - features required through Import facility.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerMasterList.aspx.cs" Inherits="ERP.OMS.Management.Master.CustomerMasterList" %>
@@ -527,6 +528,19 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             debugger;
             $('#btnViewLog').click();
         }
+        // Rev 2.0
+        function ImportUpdatePopOpenIndustry(e) {
+
+            $("#modalimportIndustryMap").modal('show');
+        }
+
+        function ShowBulkImportIndustryMapLogData(haslog) {
+            $('#btnViewBulkImportIndustryMapLog').click();
+        }
+        function ViewIndustryMapLogData() {
+            cGvIndustryMapLog.Refresh();
+        }
+        // End of Rev 2.0
     </script>
     <%--Rev work close 03.06.2022 Mantise issue:0024783: Customer & Product master import required for ERP--%>
 </asp:Content>
@@ -588,6 +602,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <button type="button" class="btn btn-warning btn-radius" data-toggle="modal" data-target="#modalSS" id="btnViewLog" onclick="ViewLogData();">View Log</button>
                         </div>
                         <%--Rev work close 03.06.2022 Mantise issue:0024783: Customer & Product master import required for ERP--%>
+                        <%--Rev 2.0--%>
+                        <div class="pull-left">
+                            <asp:LinkButton ID="lnlDownloaderexcelIndustry" runat="server" OnClick="lnlDownloaderexcelIndustry_Click" CssClass="btn btn-info btn-radius pull-right mBot0">Download Bulk Map Industry Format</asp:LinkButton>
+                        </div>
+                        <div class="pull-left">
+                            <button type="button" onclick="ImportUpdatePopOpenIndustry();" class="btn btn-cust btn-radius">Bulk Map Industry</button>
+                            <button type="button" class="btn btn-warning btn-radius" data-toggle="modal" data-target="#modalBulkImportIndustryMapLog" id="btnViewBulkImportIndustryMapLog" onclick="ViewIndustryMapLogData();">View Bulk Map Industry Log</button>
+                        </div>
+                        <%--End of Rev 2.0--%>
                     </div>
                 </td>
             </tr>
@@ -1425,6 +1448,103 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         </div>
     </div>
     <%--Rev work close 03.06.2022 Mantise issue:0024783: Customer & Product master import required for ERP--%>
+
+    <%--Rev 2.0--%>
+    <div class="modal fade" id="modalimportIndustryMap" role="dialog">
+        <div class="modal-dialog VerySmall">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select File to Bulk Import Map Industry</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-md-12">
+                        <div id="divproduct">
+
+                            <div>
+                                <asp:FileUpload ID="OFDIndustrySelect" accept=".xls,.xlsx" runat="server" Width="100%" />
+                                <div class="pTop10  mTop5">
+                                    <asp:Button ID="BtnBulkImportMapIndustry" runat="server" Text="Bulk Import Map Industry"  OnClick="BtnBulkImportMapIndustry_Click" CssClass="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalBulkImportIndustryMapLog" role="dialog" style="width:2000px">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Bulk Import Industry Map Log</h4>
+                </div>
+                <div class="modal-body">
+
+                    <dxe:ASPxGridView ID="GvIndustryMapLog" runat="server" AutoGenerateColumns="False" SettingsBehavior-AllowSort="true"
+                        ClientInstanceName="cGvIndustryMapLog" KeyFieldName="CustLogId" Width="100%" OnDataBinding="GvIndustryMapLog_DataBinding" 
+                        Settings-VerticalScrollBarMode="Auto" Settings-VerticalScrollableHeight="400">
+
+                        <SettingsBehavior ConfirmDelete="false" ColumnResizeMode="NextColumn" />
+                        <Styles>
+                            <Header SortingImageSpacing="5px" ImageSpacing="5px"></Header>
+                            <FocusedRow HorizontalAlign="Left" VerticalAlign="Top" CssClass="gridselectrow"></FocusedRow>
+                            <LoadingPanel ImageSpacing="10px"></LoadingPanel>
+                            <FocusedGroupRow CssClass="gridselectrow"></FocusedGroupRow>
+                            <Footer CssClass="gridfooter"></Footer>
+                        </Styles>
+                        <Columns>
+                            <dxe:GridViewDataTextColumn Visible="False" VisibleIndex="0" FieldName="CustLogId" Caption="LogID" SortOrder="Descending">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="CreatedDatetime" Caption="Date" Width="15%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                                <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+
+                            <dxe:GridViewDataTextColumn VisibleIndex="1" FieldName="CustomerUniqueID" Caption="Customer Unique ID" Width="30%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="CustomerName" Caption="Customer Name" Width="30%">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="IndustryName" Width="30%" Caption="Industry Name">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="4" FieldName="FileName" Width="30%" Caption="File Name">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                                <PropertiesTextEdit DisplayFormatString="dd/MM/yyyy"></PropertiesTextEdit>
+                            </dxe:GridViewDataTextColumn>
+                            <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="Description" Caption="Description" Width="50%" Settings-AllowAutoFilter="False">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+
+                            <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="Status" Caption="Status" Width="14%" Settings-AllowAutoFilter="False">
+                                <CellStyle Wrap="True" CssClass="gridcellleft"></CellStyle>
+                            </dxe:GridViewDataTextColumn>
+                        </Columns>
+                        <Settings ShowGroupPanel="True" ShowStatusBar="Visible" ShowFilterRow="true" ShowFilterRowMenu="true" />
+                        <SettingsSearchPanel Visible="false" />
+                        <SettingsPager NumericButtonCount="200" PageSize="200" ShowSeparators="True" Mode="ShowPager">
+                            <PageSizeItemSettings Visible="true" ShowAllItem="false" Items="200,400,600" />
+                            <FirstPageButton Visible="True">
+                            </FirstPageButton>
+                            <LastPageButton Visible="True">
+                            </LastPageButton>
+                        </SettingsPager>
+                    </dxe:ASPxGridView>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--End of Rev 2.0--%>
     <asp:HiddenField runat="server" ID="hdnDocumentSegmentSettings" />
    
 </asp:Content>
