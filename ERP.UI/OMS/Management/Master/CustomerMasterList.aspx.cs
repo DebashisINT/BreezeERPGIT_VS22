@@ -1,5 +1,6 @@
 ﻿/***********************************************************************************************************
  * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
+ * 2.0    30-01-2024       V2.0.43     Sanchita     27208: Customer Industry Mapping - features required through Import facility.
  **************************************************************************************************************/
 using System;
 using System.Data;
@@ -23,6 +24,8 @@ using DataAccessLayer;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
+using System.Xml;
+
 namespace ERP.OMS.Management.Master
 {
     public partial class CustomerMasterList : System.Web.UI.Page
@@ -1063,5 +1066,235 @@ namespace ERP.OMS.Management.Master
         }
 
         //Rev work close 03.06.2022 Mantise issue:0024783: Customer & Product master import required for ERP
+
+        // Rev 2.0
+        protected void lnlDownloaderexcelIndustry_Click(object sender, EventArgs e)
+        {
+
+            string strFileName = "BreezeERP_IndustryMap_Import.xlsx";
+            string strPath = (Convert.ToString(System.AppDomain.CurrentDomain.BaseDirectory) + Convert.ToString(ConfigurationManager.AppSettings["SaveFile"]) + strFileName);
+
+            Response.ContentType = "application/xlsx";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=BreezeERP_IndustryMap_Import.xlsx");
+            Response.TransmitFile(strPath);
+            Response.End();
+
+        }
+        protected void BtnBulkImportMapIndustry_Click(object sender, EventArgs e)
+        {
+            string fName = string.Empty;
+            Boolean HasLog = false;
+            if (OFDIndustrySelect.FileContent.Length != 0)
+            {
+                path = String.Empty;
+                path1 = String.Empty;
+                FileName = String.Empty;
+                s = String.Empty;
+                time = String.Empty;
+                cannotParse = String.Empty;
+               // string strmodule = "InsertTradeData";
+
+                BusinessLogicLayer.TransctionDescription td = new BusinessLogicLayer.TransctionDescription();
+
+                FilePath = Path.GetFullPath(OFDIndustrySelect.PostedFile.FileName);
+                FileName = Path.GetFileName(FilePath);
+                string fileExtension = Path.GetExtension(FileName);
+
+                if (fileExtension.ToUpper() != ".XLS" && fileExtension.ToUpper() != ".XLSX")
+                {
+                    Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Uploaded file format not supported by the system');</script>");
+                    return;
+                }
+
+                if (fileExtension.Equals(".xlsx"))
+                {
+                    fName = FileName.Replace(".xlsx", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xlsx");
+                }
+
+                else if (fileExtension.Equals(".xls"))
+                {
+                    fName = FileName.Replace(".xls", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".xls");
+                }
+
+                else if (fileExtension.Equals(".csv"))
+                {
+                    fName = FileName.Replace(".csv", DateTime.Now.ToString("ddMMyyyyhhmmss") + ".csv");
+                }
+
+                Session["FileName"] = fName;
+
+                String UploadPath = Server.MapPath((Convert.ToString(ConfigurationManager.AppSettings["SaveCSV"]) + Session["FileName"].ToString()));
+                OFDIndustrySelect.PostedFile.SaveAs(UploadPath);
+
+                ClearArray();
+
+                BusinessLogicLayer.DBEngine oDBEngine = new BusinessLogicLayer.DBEngine();
+                try
+                {
+                    HttpPostedFile file = OFDIndustrySelect.PostedFile;
+                    String extension = Path.GetExtension(FileName);
+                    HasLog = ImportIndustryMap_To_Grid(UploadPath, extension, file);
+                }
+                catch (Exception ex)
+                {
+                    HasLog = false;
+                }
+
+                Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Import Process Successfully Completed!'); ShowBulkImportIndustryMapLogData('" + HasLog + "');</script>");
+            }
+            else
+            {
+                Page.ClientScript.RegisterStartupScript(GetType(), "PageScript", "<script language='javascript'>jAlert('Selected File Cannot Be Blank');</script>");
+            }
+
+        }
+
+        public Boolean ImportIndustryMap_To_Grid(string FilePath, string Extension, HttpPostedFile file)
+        {
+            Contact objCustomer = new Contact();
+            Boolean Success = false;
+            Boolean HasLog = false;
+            int loopcounter = 1;
+
+            if (file.FileName.Trim() != "")
+            {
+
+                if (Extension.ToUpper() == ".XLS" || Extension.ToUpper() == ".XLSX")
+                {
+                    DataTable dt = new DataTable();
+
+                    using (SpreadsheetDocument spreadSheetDocument = SpreadsheetDocument.Open(FilePath, false))
+                    {
+
+                        Sheet sheet = spreadSheetDocument.WorkbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
+                        Worksheet worksheet = (spreadSheetDocument.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
+                        IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+                        foreach (Row row in rows)
+                        {
+                            if (row.RowIndex.Value == 1)
+                            {
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    if (cell.CellValue != null)
+                                    {
+                                        dt.Columns.Add(GetValue(spreadSheetDocument, cell));
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                DataRow tempRow = dt.NewRow();
+                                int columnIndex = 0;
+                                foreach (Cell cell in row.Descendants<Cell>())
+                                {
+                                    // Gets the column index of the cell with data
+                                    int cellColumnIndex = (int)GetColumnIndexFromName(GetColumnName(cell.CellReference));
+                                    cellColumnIndex--; //zero based index
+                                    if (columnIndex < cellColumnIndex)
+                                    {
+                                        do
+                                        {
+                                            tempRow[columnIndex] = ""; //Insert blank data here;
+                                            columnIndex++;
+                                        }
+                                        while (columnIndex < cellColumnIndex);
+                                    }
+                                    try
+                                    {
+                                        tempRow[columnIndex] = GetValue(spreadSheetDocument, cell);
+                                    }
+                                    catch
+                                    {
+                                        tempRow[columnIndex] = "";
+                                    }
+
+                                    columnIndex++;
+                                }
+                                dt.Rows.Add(tempRow);
+                            }
+                        }
+                    }
+
+                    if (dt != null && dt.Rows.Count > 0)
+                    {
+                        string CustomerUniqueID = string.Empty;
+                        string CustomerName = string.Empty;
+                        string IndustryName = string.Empty;
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            loopcounter++;
+                            try
+                            {
+                                CustomerUniqueID = Convert.ToString(row["Customer Unique ID*"]).Trim();
+                                CustomerName = Convert.ToString(row["Customer Name*"]).Trim();
+                                IndustryName = Convert.ToString(row["Industry Name*"]).Trim();
+
+                                if (CustomerUniqueID != "" && CustomerName != "" && IndustryName != "")
+                                {
+                                    DataSet ds = new DataSet();
+                                    ProcedureExecute proc = new ProcedureExecute("PRC_INDUSTRYMAPIMPORTFROMEXCEL");
+                                    proc.AddVarcharPara("@Action", 100, "InsertIndustryMapDataFromExcel");
+                                    proc.AddVarcharPara("@CustomerUniqueID", 100, CustomerUniqueID);
+                                    proc.AddVarcharPara("@CustomerName", 200, CustomerName);
+                                    proc.AddVarcharPara("@IndustryName", 100, IndustryName);
+                                    proc.AddVarcharPara("@FileName", 500, file.FileName.Trim());
+                                    proc.AddVarcharPara("@UserId", 100, Convert.ToString(HttpContext.Current.Session["userid"]));
+                                    ds = proc.GetDataSet();
+
+
+                                    if (ds != null && ds.Tables[0].Rows.Count > 0)
+                                    {
+                                        foreach (DataRow row2 in ds.Tables[0].Rows)
+                                        {
+                                            Success = Convert.ToBoolean(row2["Success"]);
+                                            HasLog = Convert.ToBoolean(row2["HasLog"]);
+                                        }
+                                    }
+
+                                    if (!HasLog)
+                                    {
+                                        string description = Convert.ToString(ds.Tables[0].Rows[0]["MSG"]);
+                                        //int loginsert = objCustomer.InsertCustomerImportLOg(CustomerCode, loopcounter, CustomerName, UserId, Session["FileName"].ToString(), description, "Failed");
+                                    }
+
+                                    else
+                                    {
+                                        string description = Convert.ToString(ds.Tables[0].Rows[0]["MSG"]);
+                                        //int loginsert = objCustomer.InsertCustomerImportLOg(CustomerCode, loopcounter, CustomerName, UserId, Session["FileName"].ToString(), description, "Success");
+                                    }
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Success = false;
+                                HasLog = false;
+                                // string description = Convert.ToString(dt2.Tables[0].Rows[0]["MSG"]);
+                                //int loginsert = objCustomer.InsertCustomerImportLOg(CustomerCode, loopcounter, "", "", Session["FileName"].ToString(), ex.Message.ToString(), "Failed");
+                            }
+
+                        }
+                    }
+
+                }
+                else
+                {
+
+                }
+            }
+            return HasLog;
+        }
+
+        protected void GvIndustryMapLog_DataBinding(object sender, EventArgs e)
+        {
+            DataSet dt2 = new DataSet();
+            ProcedureExecute proc = new ProcedureExecute("PRC_INDUSTRYMAPIMPORTFROMEXCEL");
+            proc.AddVarcharPara("@action", 150, "getCustomerIndustryMapLog");
+            dt2 = proc.GetDataSet();
+
+            GvIndustryMapLog.DataSource = dt2.Tables[0];
+        }
+        // End of Rev 2.0
     }
 }
