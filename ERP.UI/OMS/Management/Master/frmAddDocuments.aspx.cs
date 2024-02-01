@@ -1,3 +1,7 @@
+/******************************************************************************************************
+ * Rev 1.0      Sanchita    V2.0.43     01/02/2024      While viewing Vendor/Customer Attachment getting an error.
+ *                                                      Mantis: 27219, 27220
+ * ****************************************************************************************************/
 using System;
 using System.Configuration;
 using System.Data;
@@ -340,23 +344,31 @@ namespace ERP.OMS.Management.Master
                     string FName = Path.GetFileName(FileUpload1.PostedFile.FileName);
                     string sd = objConverter.GetAutoGenerateNo();
 
-                    string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName;
-                    string FLocation = Server.MapPath("../Documents/") + filename;
+                    // Rev 1.0
+                    //string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName;
 
-                    FolderName = path + "\\" + folderid + "\\" + year;
-
-                    string total = FolderName + "\\" + filename;
-
-                    FileUpload1.PostedFile.SaveAs(total);
-                    if (dtRenew.Value == null)
+                    if (FName.Trim() != "")
                     {
-                        objEngine.SetFieldValue("tbl_master_document", "doc_verifydatetime=null,doc_Note1='" + Convert.ToString(txt_note1.Text).Trim() + "',doc_Note2='" + Convert.ToString(txt_note2.Text).Trim() + "',doc_documentTypeId='" + DTYpe.SelectedItem.Value + "',doc_documentName='" + TxtName.Text + "',doc_source='" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "/" + filename + "',doc_buildingId='" + building1 + "',doc_Floor='" + TxtFloorNo.Text + "',doc_RoomNo='" + TxtRoomNo.Text + "',doc_CellNo='" + TxtCellNo.Text + "',doc_FileNo='" + TxtfileNo.Text + "',LastModifyDate='" + CreateDate + "',LastModifyUser='" + Convert.ToString(Session["userid"]) + "',doc_receivedate='" + Convert.ToDateTime(dtReceived.Value.ToString()).ToString("yyyy-MM-dd") + "'", " doc_id='" + DocID + "'");
-                    }
-                    else
-                    {
-                        objEngine.SetFieldValue("tbl_master_document", "doc_verifydatetime=null,doc_Note1='" + Convert.ToString(txt_note1.Text).Trim() + "',doc_Note2='" + Convert.ToString(txt_note2.Text).Trim() + "',doc_documentTypeId='" + DTYpe.SelectedItem.Value + "',doc_documentName='" + TxtName.Text + "',doc_source='" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "~" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "/" + filename + "',doc_buildingId='" + building1 + "',doc_Floor='" + TxtFloorNo.Text + "',doc_RoomNo='" + TxtRoomNo.Text + "',doc_CellNo='" + TxtCellNo.Text + "',doc_FileNo='" + TxtfileNo.Text + "',LastModifyDate='" + oDBEngine.GetDate() + "',LastModifyUser='" + Convert.ToString(Session["userid"]) + "',doc_receivedate='" + Convert.ToDateTime(dtReceived.Value.ToString()).ToString("yyyy-MM-dd") + "',doc_renewdate='" + Convert.ToDateTime(dtRenew.Value.ToString()).ToString("yyyy-MM-dd") + "'", " doc_id='" + DocID + "'");
-                    }
+                        string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName.Replace("&", "_");
+                        // End of Rev 1.0
+                        string FLocation = Server.MapPath("../Documents/") + filename;
 
+                        FolderName = path + "\\" + folderid + "\\" + year;
+
+                        string total = FolderName + "\\" + filename;
+
+                        FileUpload1.PostedFile.SaveAs(total);
+                        if (dtRenew.Value == null)
+                        {
+                            objEngine.SetFieldValue("tbl_master_document", "doc_verifydatetime=null,doc_Note1='" + Convert.ToString(txt_note1.Text).Trim() + "',doc_Note2='" + Convert.ToString(txt_note2.Text).Trim() + "',doc_documentTypeId='" + DTYpe.SelectedItem.Value + "',doc_documentName='" + TxtName.Text + "',doc_source='" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "/" + filename + "',doc_buildingId='" + building1 + "',doc_Floor='" + TxtFloorNo.Text + "',doc_RoomNo='" + TxtRoomNo.Text + "',doc_CellNo='" + TxtCellNo.Text + "',doc_FileNo='" + TxtfileNo.Text + "',LastModifyDate='" + CreateDate + "',LastModifyUser='" + Convert.ToString(Session["userid"]) + "',doc_receivedate='" + Convert.ToDateTime(dtReceived.Value.ToString()).ToString("yyyy-MM-dd") + "'", " doc_id='" + DocID + "'");
+                        }
+                        else
+                        {
+                            objEngine.SetFieldValue("tbl_master_document", "doc_verifydatetime=null,doc_Note1='" + Convert.ToString(txt_note1.Text).Trim() + "',doc_Note2='" + Convert.ToString(txt_note2.Text).Trim() + "',doc_documentTypeId='" + DTYpe.SelectedItem.Value + "',doc_documentName='" + TxtName.Text + "',doc_source='" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "~" + Convert.ToString(DTYpe.SelectedItem.Value) + "/" + year + "/" + filename + "',doc_buildingId='" + building1 + "',doc_Floor='" + TxtFloorNo.Text + "',doc_RoomNo='" + TxtRoomNo.Text + "',doc_CellNo='" + TxtCellNo.Text + "',doc_FileNo='" + TxtfileNo.Text + "',LastModifyDate='" + oDBEngine.GetDate() + "',LastModifyUser='" + Convert.ToString(Session["userid"]) + "',doc_receivedate='" + Convert.ToDateTime(dtReceived.Value.ToString()).ToString("yyyy-MM-dd") + "',doc_renewdate='" + Convert.ToDateTime(dtRenew.Value.ToString()).ToString("yyyy-MM-dd") + "'", " doc_id='" + DocID + "'");
+                        }
+                        // Rev 1.0
+                    }
+                    // End of Rev 1.0
                 }
                 else
                 {
@@ -480,7 +492,10 @@ namespace ERP.OMS.Management.Master
                     else
                         sd = objConverter.GetAutoGenerateNoForFileUpload();
 
-                    string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName;
+                    // Rev 1.0
+                    //string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName;
+                    string filename = Convert.ToString(HttpContext.Current.Session["userid"]) + sd + FName.Replace("&","_");
+                    // End of Rev 1.0
                     string FLocation = Server.MapPath("../Documents/") + filename;
 
                     FolderName = path + "\\" + folderid + "\\" + year;
