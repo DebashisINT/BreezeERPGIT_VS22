@@ -8,6 +8,7 @@
    7.0   Sanchita  V2.0.40    04-10-2023     0026868 : Few Fields required in the Quotation Entry Module for the Purpose of Quotation Print from ERP
                                                        New button "Other Condiion" to show instead of "Terms & Condition" Button 
                                                        if the settings "Show Other Condition" is set as "Yes"
+   8.0	 Priti     V2.0.43    01-02-2024	 0027207:Batchwise stock has been issued from Challan before receiving date which caused negative stock
    ========================================= End Revision History =======================================================================================================--%>
 
 
@@ -1221,8 +1222,14 @@
             var WarehouseID = cCmbWarehouse.GetValue();
             var type = document.getElementById('hdfProductType').value;
             var BranchID = $("#ddl_Branch").val();
+            //Rev 8.0
+            var PostingDate = tstartdate.GetValueString();      
+             //Rev 8.0 End
             if (type == "WBS" || type == "WB") {
-                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+                //Rev 8.0
+                /*cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);*/
+                cCmbBatch.PerformCallback('BindBatchDateWise~' + WarehouseID + '~' + PostingDate);
+                 //Rev 8.0 End
             }
             else if (type == "WS") {
                 checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + "0");
