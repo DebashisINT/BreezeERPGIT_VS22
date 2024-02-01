@@ -2,7 +2,7 @@
 // 1.0  Priti   V2.0.36    13-01-2023    0025577:In the Stock selection window, alternate quantity is not calculating automatically if the main qty has been changed.
 // 2.0  Priti   V2.0.37    30-03-2023    0025764: The Bill from/Dispatch From Button to be made available in the Edit Mode of Sales - Invoice Cum Challan
 // 3.0  Priti   V2.0.38    13-04-2023    0025711: While making Invoice from "Ready To Invoice" invoices from the module Invoice Cum Challan with SO two Invoices are created
-
+// 4.0  Priti   V2.0.43    31-01-2024    0027207: Batchwise stock has been issued from Challan before receiving date which caused negative stock
 //========================================== End Revision History =======================================================================================================--%>
 function closeWarehouse(s, e) {
     e.cancel = false;
@@ -4706,6 +4706,9 @@ function CmbBatch_ValueChange() {
     var BatchID = cCmbBatch.GetValue();
     var type = document.getElementById('hdfProductType').value;
     var BranchID = $("#ddl_Branch").val();
+    /*Rev 4.0*/
+    var InvoiceDate = tstartdate.GetValueString();
+   /* Rev 4.0 End*/
     if (type == "WBS") {
         checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + BatchID);
     }
@@ -4716,7 +4719,7 @@ function CmbBatch_ValueChange() {
     $.ajax({
         type: "POST",
         url: "InvoiceDeliveryChallan.aspx/GetstockSalesInvoiceCumChallanBatchWise",
-        data: JSON.stringify({ WarehouseID: WarehouseID, productid: $("#warehousestrProductID").val(), BranchID: BranchID, BatchID: BatchID }),
+        data: JSON.stringify({ WarehouseID: WarehouseID, productid: $("#warehousestrProductID").val(), BranchID: BranchID, BatchID: BatchID, InvoiceDate: InvoiceDate }),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {

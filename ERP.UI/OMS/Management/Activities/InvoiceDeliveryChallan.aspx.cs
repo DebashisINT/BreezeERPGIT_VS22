@@ -6,7 +6,7 @@
 //                                                     New button "Other Condiion" to show instead of "Terms & Condition" Button 
 //                                                     if the settings "Show Other Condition" is set as "Yes"
 //5.0   Priti       V2.0.41    07-12-2023	 0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
-
+//6.0  	Priti       V2.0.43    01-02-2024	 0027207:Batchwise stock has been issued from Challan before receiving date which caused negative stock
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -1986,13 +1986,28 @@ namespace ERP.OMS.Management.Activities
         {
             DataTable dt = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_SalesCRM_Details");
-            proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehouse");
+            proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehouse");           
+            proc.AddVarcharPara("@QuotationID", 500, Convert.ToString(Session["SI_InvoiceID"]));
+            proc.AddVarcharPara("@ProductID", 500, Convert.ToString(hdfProductID.Value));
+            proc.AddVarcharPara("@WarehouseID", 500, WarehouseID);
+            proc.AddVarcharPara("@FinYear", 500, Convert.ToString(Session["LastFinYear"]));
+            proc.AddVarcharPara("@branchId", 2000, Convert.ToString(ddl_Branch.SelectedValue));
+            proc.AddVarcharPara("@companyId", 500, Convert.ToString(Session["LastCompany"]));           
+            dt = proc.GetTable();
+            return dt;
+        }
+        public DataTable GetBatchDataPostingDateWise(string WarehouseID, string PostingDate)
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_SalesCRM_Details");           
+            proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehousePostingDate");
             proc.AddVarcharPara("@QuotationID", 500, Convert.ToString(Session["SI_InvoiceID"]));
             proc.AddVarcharPara("@ProductID", 500, Convert.ToString(hdfProductID.Value));
             proc.AddVarcharPara("@WarehouseID", 500, WarehouseID);
             proc.AddVarcharPara("@FinYear", 500, Convert.ToString(Session["LastFinYear"]));
             proc.AddVarcharPara("@branchId", 2000, Convert.ToString(ddl_Branch.SelectedValue));
             proc.AddVarcharPara("@companyId", 500, Convert.ToString(Session["LastCompany"]));
+            proc.AddDateTimePara("@PostingDate", Convert.ToDateTime(PostingDate));
             dt = proc.GetTable();
             return dt;
         }
@@ -6748,17 +6763,30 @@ namespace ERP.OMS.Management.Activities
         protected void CmbBatch_Callback(object sender, CallbackEventArgsBase e)
         {
             string WhichCall = e.Parameter.Split('~')[0];
+           
             if (WhichCall == "BindBatch")
             {
                 string WarehouseID = Convert.ToString(e.Parameter.Split('~')[1]);
-                DataTable dt = GetBatchData(WarehouseID);
-
+                DataTable dt = GetBatchData(WarehouseID);                
                 CmbBatch.Items.Clear();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     CmbBatch.Items.Add(Convert.ToString(dt.Rows[i]["BatchName"]), Convert.ToString(dt.Rows[i]["BatchID"]));
                 }
             }
+            //Rev 6.0 
+            else if (WhichCall == "BindBatchDateWise")
+            {                
+                string PostingDate = e.Parameter.Split('~')[2];                
+                string WarehouseID = Convert.ToString(e.Parameter.Split('~')[1]);                
+                DataTable dt = GetBatchDataPostingDateWise(WarehouseID, PostingDate);
+                CmbBatch.Items.Clear();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    CmbBatch.Items.Add(Convert.ToString(dt.Rows[i]["BatchName"]), Convert.ToString(dt.Rows[i]["BatchID"]));
+                }
+            }
+            //Rev 6.0 End
         }
         public DataTable GetSerialataNew(string WarehouseID, string BatchID)
         {
@@ -12544,17 +12572,20 @@ namespace ERP.OMS.Management.Activities
         }
 
         [WebMethod]
-        public static object GetstockSalesInvoiceCumChallanBatchWise(string WarehouseID, string productid, string BranchID, string BatchID)
+        public static object GetstockSalesInvoiceCumChallanBatchWise(string WarehouseID, string productid, string BranchID, string BatchID,string InvoiceDate)
         {
             string availablestock = "0";
 
             DataTable dtMainAccount = new DataTable();
             ProcedureExecute proc = new ProcedureExecute("prc_PosSalesInvoice");
-            proc.AddVarcharPara("@Action", 100, "GetstockSalesInvoiceCumChallan");
+            proc.AddVarcharPara("@Action", 100, "GetstockSalesInvoiceCumChallanBatchWise");
             proc.AddVarcharPara("@productid", 500, productid);
             proc.AddVarcharPara("@WarehouseID", 100, WarehouseID);
             proc.AddIntegerPara("@branch", Convert.ToInt32(BranchID));
             proc.AddIntegerPara("@BATCHID", Convert.ToInt32(BatchID));
+            //Rev 6.0
+            proc.AddDateTimePara("@PostingDate", Convert.ToDateTime(InvoiceDate));
+            //Rev 6.0 END
             dtMainAccount = proc.GetTableModified();
 
             if (dtMainAccount != null && dtMainAccount.Rows.Count > 0)
