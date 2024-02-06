@@ -4,7 +4,7 @@
 // 3.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
 // 4.0   v2.0.41	Priti	10-11-2023	0026981:Need to Restrict IRN Cancellation for Sales Return(Credit Note) if the Credit Note is Adjusted
 // 5.0   v2.0.41	Priti	16-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
-
+// 6.0   v2.0.43	Priti	05-02-2024	0027231: An error is showing while generating IRN
 //====================================================End Revision History=====================================================================
 #endregion
 
@@ -4039,10 +4039,10 @@ namespace ERP.OMS.Management
                         else
                         {
 
-
-                            EinvoiceErrorV3 err = new EinvoiceErrorV3();
+                            //Rev 6.0
+                            IRNERRORV3 err = new IRNERRORV3();
                             var jsonString = response.Content.ReadAsStringAsync().Result;
-                            err = JsonConvert.DeserializeObject<EinvoiceErrorV3>(jsonString);
+                            err = JsonConvert.DeserializeObject<IRNERRORV3>(jsonString);
 
                             DBEngine objDB = new DBEngine();
                             objDB.GetDataTable("DELETE FROM EInvoice_ErrorLog WHERE DOC_ID='" + id.ToString() + "' and DOC_TYPE='SI' AND ERROR_TYPE='IRN_GEN'");
@@ -4052,24 +4052,24 @@ namespace ERP.OMS.Management
                                 {
                                     if (Convert.ToString(item.ErrorCode) == "2150")
                                     {
-                                        if (err.error.args.additionalDetails.AckNo != null)
+                                        if (err.additionalInfo.details.AckNo != null)
                                         {
-                                            objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + err.error.args.additionalDetails.AckNo + "',AckDt='" + err.error.args.additionalDetails.AckDt + "',Irn='" + err.error.args.additionalDetails.Irn + "',SignedInvoice='" + err.error.args.additionalDetails.SignedInvoice + "',SignedQRCode='" + err.error.args.additionalDetails.SignedQRCode + "',Status='" + err.error.args.additionalDetails.Status + "',EWayBillNumber = '" + err.error.args.additionalDetails.EwbNo + "',EWayBillDate='" + err.error.args.additionalDetails.EwbDt + "',EwayBill_ValidTill='" + err.error.args.additionalDetails.EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+                                            //objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + err.error.args.additionalDetails.AckNo + "',AckDt='" + err.error.args.additionalDetails.AckDt + "',Irn='" + err.error.args.additionalDetails.Irn + "',SignedInvoice='" + err.error.args.additionalDetails.SignedInvoice + "',SignedQRCode='" + err.error.args.additionalDetails.SignedQRCode + "',Status='" + err.error.args.additionalDetails.Status + "',EWayBillNumber = '" + err.error.args.additionalDetails.EwbNo + "',EWayBillDate='" + err.error.args.additionalDetails.EwbDt + "',EwayBill_ValidTill='" + err.error.args.additionalDetails.EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+                                            objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + err.additionalInfo.details.AckNo + "',AckDt='" + err.additionalInfo.details.AckDt + "',Irn='" + err.additionalInfo.details.Irn + "',SignedInvoice='" + err.additionalInfo.details.SignedInvoice + "',SignedQRCode='" + err.additionalInfo.details.SignedQRCode + "',Status='" + err.additionalInfo.details.Status + "',EWayBillNumber = '" + err.additionalInfo.details.EwbNo + "',EWayBillDate='" + err.additionalInfo.details.EwbDt + "',EwayBill_ValidTill='" + err.additionalInfo.details.EwbValidTill + "' where invoice_id='" + id.ToString() + "'");
+
                                         }
                                         else
                                         {
-                                            foreach (infolog item1 in err.error.args.info)
-                                            {
-                                                //REV 3.0
-                                                if (item1.InfoDesc != null)
+                                            foreach (infologV3 item1 in err.info)
+                                            {                                                
+                                                if (item1.Desc != null)
                                                 {
-                                                    objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.InfoDesc.AckNo + "',AckDt='" + item1.InfoDesc.AckDt + "',Irn='" + item1.InfoDesc.Irn + "' where invoice_id='" + id.ToString() + "'");
+                                                    objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.Desc.AckNo + "',AckDt='" + item1.Desc.AckDt + "',Irn='" + item1.Desc.Irn + "' where invoice_id='" + id.ToString() + "'");
                                                 }
                                                 else
                                                 {
                                                     objDB.GetDataTable("update TBL_TRANS_SALESINVOICE SET AckNo='" + item1.Desc.AckNo + "',AckDt='" + item1.Desc.AckDt + "',Irn='" + item1.Desc.Irn + "' where invoice_id='" + id.ToString() + "'");
-                                                }
-                                                //REV 3.0 END
+                                                }                                                
                                             }
                                         }
                                         success = success + "," + objInvoice.DocDtls.No;
@@ -4082,6 +4082,7 @@ namespace ERP.OMS.Management
                                         IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
                                     }
                                 }
+
                                 //Cancel IRN (v1.0)
                                 //foreach (errorlog item in err.error.args.irp_error.details)
                                 //{
@@ -4132,6 +4133,7 @@ namespace ERP.OMS.Management
                                 IRNerror = IRNerror + "," + objInvoice.DocDtls.No;
                             }
 
+                            //Rev 6.0 End
 
 
                             //grid.JSProperties["cpSucessIRN"] = "No";
