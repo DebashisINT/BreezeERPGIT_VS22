@@ -1,6 +1,7 @@
 ﻿//====================================================Revision History=====================================================
 //1.0   Priti  V2.0.39     12-09-2023     Attachment icon will be shown against the document number if there is any attachment - Sales Challan
 //2.0   Priti  V2.0.41     28/11/2023      0027028: Customer code column is required in the listing module of Sales entry
+//3.0   Priti  V2.0.43     08/02/2024      0027237: Sales Order date column is not available while exporting the grid records of Sales Invoice
 
 //====================================================End Revision History=====================================================================
 
@@ -233,7 +234,9 @@ namespace ERP.OMS.Management.Activities
         }
         public void bindexport(int Filter)
         {
-            GrdQuotation.Columns[6].Visible = false;
+            //Rev 3.0
+            //GrdQuotation.Columns[6].Visible = false;
+            //Rev 3.0 End
             string filename = "Sales Invoice";
             exporter.FileName = filename;
             exporter.FileName = "GrdSalesinvoice";
