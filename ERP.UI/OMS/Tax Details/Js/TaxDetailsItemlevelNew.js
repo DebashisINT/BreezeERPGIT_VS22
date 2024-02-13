@@ -1,4 +1,8 @@
-﻿var ItemLevelTaxDetails = [];
+﻿/****************************************************************************************************************************
+ * Rev 1.0      Priti      V2.0.43       13-02-2024      GST round off value showing different between Sales Entry and Sales Invoice Print Layout.Refer: 0027122
+ *******************************************************************************************************************************/
+
+var ItemLevelTaxDetails = [];
 var HSNCodewiseTaxSchem = [];
 var BranchWiseStateTax = [];
 var StateCodeWiseStateIDTax = [];
@@ -294,8 +298,11 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             // TaxChargesAmount = TaxChargesAmount + (GrosstotalAmount - (GrosstotalAmount / backProcessRate));
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                               // TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                               //Rev 1.0
+                               /// TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * taxes[taxCount].Rate / 100), 2);
+                                 //Rev 1.0 End
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -306,8 +313,11 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                               //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                ///TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                //Rev 1.0 
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * taxes[taxCount].Rate / 100), 2);
+                                //Rev 1.0 End
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -319,7 +329,10 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
                                 //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                //Rev 1.0
+                                //TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * taxes[taxCount].Rate / 100), 2);
+                                //Rev 1.0 End
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -335,8 +348,8 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                ///TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -346,8 +359,8 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                ///TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -358,8 +371,8 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                ///TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
                                 //End of Mantis Issue 24884
                             }
                         }
@@ -376,9 +389,12 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
-                                //End of Mantis Issue 24884
+                                ///TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                //Rev 1.0 
+                                //TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                //End of Mantis Issue 24884                                
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * taxes[taxCount].Rate / 100), 2);
+                                //Rev 1.0 End
                             }
                         }
                         else if (taxes[taxCount].Taxes_ApplicableOn == "N") {
@@ -388,9 +404,12 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
-                                //End of Mantis Issue 24884
+                               /// TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (NettotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                               //Rev 1.0
+                               ///TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                                //End of Mantis Issue 24884                               
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((NettotalAmount * taxes[taxCount].Rate / 100), 2);
+                                //Rev 1.0 End
                             }
                         }
                         else
@@ -400,9 +419,12 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
                             arrayTaxchargesRate.push(taxes[taxCount].Rate);
                             if (inclsOrExclsv == "E") {
                                 //Mantis Issue 24884
-                                //TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
-                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
+                               /// TaxChargesAmount = DecimalRoundoff(parseFloat(TaxChargesAmount + (GrosstotalAmount * (taxes[taxCount].Rate / 100))).toFixed(2), 2);
+                                //Rev 1.0
+                               ///TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * (taxes[taxCount].Rate / 100)), 2);
                                 //End of Mantis Issue 24884
+                                TaxChargesAmount = TaxChargesAmount + RoundUp((GrosstotalAmount * taxes[taxCount].Rate / 100), 2);
+                               //Rev 1.0 End
                             }
                         }
                     }
