@@ -1268,5 +1268,11 @@
         <elementListCompartment Id="eab1c328-dc45-4fee-985c-b5cca672c5a0" absoluteBounds="0.765, 22.46, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="202f5cf7-fa62-4fab-a33d-304c015206c2" isExpanded="false" absoluteBounds="8.25, 21.5, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/PurchaseReturnManualList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7ba308c2-18a6-4afa-9568-31ca0fb6f836" absoluteBounds="8.265, 21.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
