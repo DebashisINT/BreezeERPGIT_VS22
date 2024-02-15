@@ -1,4 +1,7 @@
-﻿using System;
+﻿/***********************************************************************************************************************
+ * 1.0   Sanchita  V2.0.43   15-02-2024      27247: Views to be converted to Procedures in the Listing Page - Purchase Return Manual      
+ * *********************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,6 +22,9 @@ using System.IO;
 using ERP.Models;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
+
 namespace ERP.OMS.Management.Activities
 {
     public partial class PurchaseReturnManualList : ERP.OMS.ViewState_class.VSPage// System.Web.UI.Page
@@ -383,6 +389,58 @@ namespace ERP.OMS.Management.Activities
             }
         }
 
+        // Rev 1.0
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetPurchaseReturnManualdata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetPurchaseReturnManualdata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_PurchaseReturnManual_List", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", "ALL");
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        // End of Rev 1.0
+
         protected void EntityServerModeDataSource_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
         {
             // e.KeyExpression = "SrlNo";
@@ -399,63 +457,84 @@ namespace ERP.OMS.Management.Activities
             string FinYear = Convert.ToString(Session["LastFinYear"]);
             List<int> branchidlist;
 
+            // Rev 1.0
+            int userid = Convert.ToInt32(Session["UserID"]);
+            // End of Rev 1.0
+
             if (IsFilter == "Y")
             {
-                if (strBranchID == "0")
-                {
-                    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
-                    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
+                // Rev 1.0
+                //if (strBranchID == "0")
+                //{
+                //    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
+                //    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
-                    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
 
-                    //var q = from d in dc.v_SalesReturnLists
-                    //        where DateTime.ParseExact(d.Return_Date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) >=
-                    //        DateTime.ParseExact(strFromDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
-                    //        && DateTime.ParseExact(d.Rn_Date.Value.ToString("yyyy-MM-dd"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
-                    //        <= DateTime.ParseExact(strToDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
-                    //        && branchidlist.Contains(Convert.ToInt32(d.BranchID))
-                    //        && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
-                    //       && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
-                    //        orderby d.Rn_Date descending
-                    //        select d;   
-                    //e.QueryableSource = q;
+                //    //var q = from d in dc.v_SalesReturnLists
+                //    //        where DateTime.ParseExact(d.Return_Date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture) >=
+                //    //        DateTime.ParseExact(strFromDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
+                //    //        && DateTime.ParseExact(d.Rn_Date.Value.ToString("yyyy-MM-dd"), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
+                //    //        <= DateTime.ParseExact(strToDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)
+                //    //        && branchidlist.Contains(Convert.ToInt32(d.BranchID))
+                //    //        && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
+                //    //       && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
+                //    //        orderby d.Rn_Date descending
+                //    //        select d;   
+                //    //e.QueryableSource = q;
 
-                    var q = from d in dc.v_PurchaseReturnManualLists
-                            where d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate)
+                //    var q = from d in dc.v_PurchaseReturnManualLists
+                //            where d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate)
 
-                            && branchidlist.Contains(Convert.ToInt32(d.BranchID))
-                            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
-                           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
+                //            && branchidlist.Contains(Convert.ToInt32(d.BranchID))
+                //            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
+                //           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
 
-                            orderby d.Rn_Date descending
-                            select d;
+                //            orderby d.Rn_Date descending
+                //            select d;
 
-                    e.QueryableSource = q;
-                }
-                else
-                {
-                    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+                //    e.QueryableSource = q;
+                //}
+                //else
+                //{
+                //    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
-                    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_PurchaseReturnManualLists
-                            where
-                            d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate) &&
-                            branchidlist.Contains(Convert.ToInt32(d.BranchID))
-                            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
-                           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
-                            orderby d.Rn_Date descending
-                            select d;
-                    e.QueryableSource = q;
-                }
-            }
-            else
-            {
+                //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //    var q = from d in dc.v_PurchaseReturnManualLists
+                //            where
+                //            d.Rn_Date >= Convert.ToDateTime(strFromDate) && d.Rn_Date <= Convert.ToDateTime(strToDate) &&
+                //            branchidlist.Contains(Convert.ToInt32(d.BranchID))
+                //            && Convert.ToString(d.Return_FinYear) == Convert.ToString(FinYear)
+                //           && Convert.ToString(d.Return_CompanyID) == Convert.ToString(strCompanyID)
+                //            orderby d.Rn_Date descending
+                //            select d;
+                //    e.QueryableSource = q;
+                //}
+
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                var q = from d in dc.v_PurchaseReturnManualLists
-                        where d.BranchID == '0'
+                var q = from d in dc.PurchaseReturnManualLists
+                        where Convert.ToInt32(d.USERID) == userid
                         orderby d.Rn_Date descending
                         select d;
                 e.QueryableSource = q;
+                // End of Rev 1.0
+            }
+            else
+            {
+                // Rev 1.0
+                //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //var q = from d in dc.v_PurchaseReturnManualLists
+                //        where d.BranchID == '0'
+                //        orderby d.Rn_Date descending
+                //        select d;
+                //e.QueryableSource = q;
+                ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                var q = from d in dc.PurchaseReturnManualLists
+                        where Convert.ToString(d.SEQ) == "0"
+                        orderby d.SEQ
+                        select d;
+                e.QueryableSource = q;
+                // End of Rev 1.0
             }
         }
     }
