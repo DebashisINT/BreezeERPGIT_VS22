@@ -1274,5 +1274,11 @@
         <elementListCompartment Id="7ba308c2-18a6-4afa-9568-31ca0fb6f836" absoluteBounds="8.265, 21.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="5b0e1bfd-f300-4552-839c-b271a58a14ab" isExpanded="false" absoluteBounds="3.375, 22, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/RateDifferenceEntryList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9dcfbc3f-2d78-4cd5-b4e5-12444951824d" absoluteBounds="3.39, 22.46, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

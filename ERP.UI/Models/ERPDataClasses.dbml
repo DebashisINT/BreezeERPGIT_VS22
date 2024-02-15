@@ -5517,4 +5517,26 @@
       <Column Name="Deletelock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.RateDifferenceEntryList" Member="RateDifferenceEntryLists">
+    <Type Name="RateDifferenceEntryList">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SlNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SrlNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Return_Id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SalesReturnNo" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Return_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Rn_Date" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CustomerName" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Amount" Type="System.Decimal" DbType="Decimal(20,5)" CanBeNull="true" />
+      <Column Name="Quote_Expiry" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PurchaseInvoice" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Branch" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="BranchID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Return_FinYear" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Return_CompanyID" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
