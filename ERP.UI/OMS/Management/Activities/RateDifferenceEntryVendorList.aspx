@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   09-05-2023      26067: Rate Difference Entry - Vendor module design modification & check in small device
+    2.0   Sanchita  V2.0.43   15-02-2024      27249: Views to be converted to Procedures in the Listing Page - Rate Difference Entry Vendor 
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true"   MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="RateDifferenceEntryVendorList.aspx.cs" Inherits="ERP.OMS.Management.Activities.RateDifferenceEntryVendorList" %>
@@ -23,6 +24,11 @@
     </style>
        <%--Subhra--%>
     <script>
+        // Rev 2.0
+        function CallbackPanelEndCall(s, e) {
+            cGrdPurchaseReturn.Refresh();
+        }
+        // End of Rev 2.0
         var ReturnId = 0;
         function onPrintJv(id) {
             // debugger;
@@ -200,7 +206,10 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-               cGrdPurchaseReturn.Refresh();
+                // Rev 2.0
+               //cGrdPurchaseReturn.Refresh();
+                cCallbackPanel.PerformCallback("");
+               // End of Rev 2.0
                 //cGrdPurchaseReturn.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
@@ -469,4 +478,14 @@
         <asp:HiddenField ID="hfToDate" runat="server" />
         <asp:HiddenField ID="hfBranchID" runat="server" />
     </div>
+
+    <%-- Rev 2.0 --%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%-- End of Rev 2.0 --%>
 </asp:Content>
