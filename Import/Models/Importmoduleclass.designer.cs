@@ -22,7 +22,7 @@ namespace Import.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PK14032019")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="PK02122020")]
 	public partial class ImportmoduleclassDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -31,12 +31,6 @@ namespace Import.Models
     #region Extensibility Method Definitions
     partial void OnCreated();
     #endregion
-		
-		public ImportmoduleclassDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PK14032019ConnectionString"].ConnectionString, mappingSource)
-		{
-			OnCreated();
-		}
 		
 		public ImportmoduleclassDataContext(string connection) : 
 				base(connection, mappingSource)
@@ -115,6 +109,14 @@ namespace Import.Models
 			get
 			{
 				return this.GetTable<v_LCEntryList_Import>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PurchaseOrderImportList> PurchaseOrderImportLists
+		{
+			get
+			{
+				return this.GetTable<PurchaseOrderImportList>();
 			}
 		}
 	}
@@ -3147,6 +3149,555 @@ namespace Import.Models
 				if ((this._LastUpdateOn != value))
 				{
 					this._LastUpdateOn = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PurchaseOrderImportList")]
+	public partial class PurchaseOrderImportList
+	{
+		
+		private System.Nullable<int> _USERID;
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<int> _SlNo;
+		
+		private System.Nullable<long> _PurchaseOrder_Id;
+		
+		private string _PurchaseOrder_Number;
+		
+		private System.Nullable<System.DateTime> _PurchaseOrderDt;
+		
+		private System.Nullable<System.DateTime> _PurchaseOrder_Date;
+		
+		private string _PurchaseOrder_FinYear;
+		
+		private string _PurchaseOrder_CompanyID;
+		
+		private System.Nullable<int> _PurchaseOrder_BranchId;
+		
+		private string _OrderAdd_addressType;
+		
+		private string _Customer;
+		
+		private System.Nullable<decimal> _ValueInBaseCurrency;
+		
+		private System.Nullable<decimal> _ValueInCurrency;
+		
+		private string _Currency_AlphaCode;
+		
+		private string _PurchaseOrder_IndentIds;
+		
+		private string _Indent_Numbers;
+		
+		private string _Indent_RequisitionDate;
+		
+		private System.Nullable<int> _PurchaseOrder_Status;
+		
+		private string _ShiftPartyName;
+		
+		private string _Invoice_Number;
+		
+		private System.Nullable<System.DateTime> _Invoice_Date;
+		
+		private System.Nullable<int> _CreatedBy;
+		
+		private string _EnteredBy;
+		
+		private string _UpdatedBy;
+		
+		private string _LastUpdatedOn;
+		
+		private System.Nullable<bool> _IsCancel;
+		
+		private System.Nullable<bool> _IsClosed;
+		
+		private string _Doc_status;
+		
+		private string _PlaceOfSupply;
+		
+		public PurchaseOrderImportList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="Int")]
+		public System.Nullable<int> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SlNo", DbType="Int")]
+		public System.Nullable<int> SlNo
+		{
+			get
+			{
+				return this._SlNo;
+			}
+			set
+			{
+				if ((this._SlNo != value))
+				{
+					this._SlNo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Id", DbType="BigInt")]
+		public System.Nullable<long> PurchaseOrder_Id
+		{
+			get
+			{
+				return this._PurchaseOrder_Id;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Id != value))
+				{
+					this._PurchaseOrder_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Number", DbType="NVarChar(100)")]
+		public string PurchaseOrder_Number
+		{
+			get
+			{
+				return this._PurchaseOrder_Number;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Number != value))
+				{
+					this._PurchaseOrder_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrderDt", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PurchaseOrderDt
+		{
+			get
+			{
+				return this._PurchaseOrderDt;
+			}
+			set
+			{
+				if ((this._PurchaseOrderDt != value))
+				{
+					this._PurchaseOrderDt = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> PurchaseOrder_Date
+		{
+			get
+			{
+				return this._PurchaseOrder_Date;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Date != value))
+				{
+					this._PurchaseOrder_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_FinYear", DbType="NVarChar(20)")]
+		public string PurchaseOrder_FinYear
+		{
+			get
+			{
+				return this._PurchaseOrder_FinYear;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_FinYear != value))
+				{
+					this._PurchaseOrder_FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_CompanyID", DbType="NVarChar(100)")]
+		public string PurchaseOrder_CompanyID
+		{
+			get
+			{
+				return this._PurchaseOrder_CompanyID;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_CompanyID != value))
+				{
+					this._PurchaseOrder_CompanyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_BranchId", DbType="Int")]
+		public System.Nullable<int> PurchaseOrder_BranchId
+		{
+			get
+			{
+				return this._PurchaseOrder_BranchId;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_BranchId != value))
+				{
+					this._PurchaseOrder_BranchId = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderAdd_addressType", DbType="VarChar(50)")]
+		public string OrderAdd_addressType
+		{
+			get
+			{
+				return this._OrderAdd_addressType;
+			}
+			set
+			{
+				if ((this._OrderAdd_addressType != value))
+				{
+					this._OrderAdd_addressType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Customer", DbType="VarChar(250)")]
+		public string Customer
+		{
+			get
+			{
+				return this._Customer;
+			}
+			set
+			{
+				if ((this._Customer != value))
+				{
+					this._Customer = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValueInBaseCurrency", DbType="Decimal(20,5)")]
+		public System.Nullable<decimal> ValueInBaseCurrency
+		{
+			get
+			{
+				return this._ValueInBaseCurrency;
+			}
+			set
+			{
+				if ((this._ValueInBaseCurrency != value))
+				{
+					this._ValueInBaseCurrency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ValueInCurrency", DbType="Decimal(20,5)")]
+		public System.Nullable<decimal> ValueInCurrency
+		{
+			get
+			{
+				return this._ValueInCurrency;
+			}
+			set
+			{
+				if ((this._ValueInCurrency != value))
+				{
+					this._ValueInCurrency = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Currency_AlphaCode", DbType="VarChar(50)")]
+		public string Currency_AlphaCode
+		{
+			get
+			{
+				return this._Currency_AlphaCode;
+			}
+			set
+			{
+				if ((this._Currency_AlphaCode != value))
+				{
+					this._Currency_AlphaCode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_IndentIds", DbType="NVarChar(500)")]
+		public string PurchaseOrder_IndentIds
+		{
+			get
+			{
+				return this._PurchaseOrder_IndentIds;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_IndentIds != value))
+				{
+					this._PurchaseOrder_IndentIds = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_Numbers", DbType="NVarChar(MAX)")]
+		public string Indent_Numbers
+		{
+			get
+			{
+				return this._Indent_Numbers;
+			}
+			set
+			{
+				if ((this._Indent_Numbers != value))
+				{
+					this._Indent_Numbers = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Indent_RequisitionDate", DbType="NVarChar(MAX)")]
+		public string Indent_RequisitionDate
+		{
+			get
+			{
+				return this._Indent_RequisitionDate;
+			}
+			set
+			{
+				if ((this._Indent_RequisitionDate != value))
+				{
+					this._Indent_RequisitionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PurchaseOrder_Status", DbType="Int")]
+		public System.Nullable<int> PurchaseOrder_Status
+		{
+			get
+			{
+				return this._PurchaseOrder_Status;
+			}
+			set
+			{
+				if ((this._PurchaseOrder_Status != value))
+				{
+					this._PurchaseOrder_Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ShiftPartyName", DbType="VarChar(250)")]
+		public string ShiftPartyName
+		{
+			get
+			{
+				return this._ShiftPartyName;
+			}
+			set
+			{
+				if ((this._ShiftPartyName != value))
+				{
+					this._ShiftPartyName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_Number", DbType="NVarChar(100)")]
+		public string Invoice_Number
+		{
+			get
+			{
+				return this._Invoice_Number;
+			}
+			set
+			{
+				if ((this._Invoice_Number != value))
+				{
+					this._Invoice_Number = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Invoice_Date", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Invoice_Date
+		{
+			get
+			{
+				return this._Invoice_Date;
+			}
+			set
+			{
+				if ((this._Invoice_Date != value))
+				{
+					this._Invoice_Date = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="Int")]
+		public System.Nullable<int> CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EnteredBy", DbType="VarChar(50)")]
+		public string EnteredBy
+		{
+			get
+			{
+				return this._EnteredBy;
+			}
+			set
+			{
+				if ((this._EnteredBy != value))
+				{
+					this._EnteredBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdatedBy", DbType="VarChar(50)")]
+		public string UpdatedBy
+		{
+			get
+			{
+				return this._UpdatedBy;
+			}
+			set
+			{
+				if ((this._UpdatedBy != value))
+				{
+					this._UpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdatedOn", DbType="VarChar(50)")]
+		public string LastUpdatedOn
+		{
+			get
+			{
+				return this._LastUpdatedOn;
+			}
+			set
+			{
+				if ((this._LastUpdatedOn != value))
+				{
+					this._LastUpdatedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsCancel", DbType="Bit")]
+		public System.Nullable<bool> IsCancel
+		{
+			get
+			{
+				return this._IsCancel;
+			}
+			set
+			{
+				if ((this._IsCancel != value))
+				{
+					this._IsCancel = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsClosed", DbType="Bit")]
+		public System.Nullable<bool> IsClosed
+		{
+			get
+			{
+				return this._IsClosed;
+			}
+			set
+			{
+				if ((this._IsClosed != value))
+				{
+					this._IsClosed = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Doc_status", DbType="VarChar(100)")]
+		public string Doc_status
+		{
+			get
+			{
+				return this._Doc_status;
+			}
+			set
+			{
+				if ((this._Doc_status != value))
+				{
+					this._Doc_status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlaceOfSupply", DbType="NVarChar(200)")]
+		public string PlaceOfSupply
+		{
+			get
+			{
+				return this._PlaceOfSupply;
+			}
+			set
+			{
+				if ((this._PlaceOfSupply != value))
+				{
+					this._PlaceOfSupply = value;
 				}
 			}
 		}

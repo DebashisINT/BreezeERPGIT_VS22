@@ -38,10 +38,16 @@
         <elementListCompartment Id="dc4a4b29-0d4c-4b0d-954d-9000aac65029" absoluteBounds="5.14, 2.835, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="a042d73e-8e6c-4534-916d-a6cfb9396a50" absoluteBounds="8.125, 2.5, 2, 3.8862125651041666">
+    <classShape Id="a042d73e-8e6c-4534-916d-a6cfb9396a50" isExpanded="false" absoluteBounds="8.125, 2.5, 2, 0.45">
       <DataClassMoniker Name="/ImportmoduleclassDataContext/v_LCEntryList_Import" />
       <nestedChildShapes>
         <elementListCompartment Id="6519d189-9e75-46d5-90ba-f0534cd63ed3" absoluteBounds="8.14, 2.96, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b19709f3-e1c0-4e54-806a-2f8bcdabd51c" isExpanded="false" absoluteBounds="0.875, 2.5, 2, 0.45">
+      <DataClassMoniker Name="/ImportmoduleclassDataContext/PurchaseOrderImportList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3b975073-aec0-4fef-b697-767b0c980a34" absoluteBounds="0.89, 2.96, 1.9700000000000002, 6.0184326171875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
