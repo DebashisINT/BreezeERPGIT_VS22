@@ -1,4 +1,7 @@
-﻿<%@ Page Title="Import Purchase Order" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Purchaseorderlist-Import.aspx.cs"
+﻿<%--=======================================================Revision History=====================================================    
+    1.0   Sanchita  V2.0.43   16-02-2024      27250 : Views to be converted to Procedures in the Listing Page - Import Purchase Order     
+=========================================================End Revision History===================================================--%>
+<%@ Page Title="Import Purchase Order" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Purchaseorderlist-Import.aspx.cs"
     Inherits="Import.Import.Purchaseorderlist_Import" EnableEventValidation="false" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
@@ -13,6 +16,13 @@
         //}
 
         //This function is called to show the Status of All Sales Order Created By Login User Start
+
+        // Rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            CgvPurchaseOrder.Refresh();
+        }
+        // End of Rev 1.0
+
         function OpenPopUPUserWiseQuotaion() {
             cgridUserWiseQuotation.PerformCallback();
             cPopupUserWiseQuotation.Show();
@@ -204,7 +214,10 @@
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
 
-                CgvPurchaseOrder.Refresh();
+                // Rev 1.0
+                //CgvPurchaseOrder.Refresh();
+                cCallbackPanel.PerformCallback("");
+                // End of Rev 1.0
 
                 $("#drdExport").val(0);
             }
@@ -624,7 +637,15 @@
         <asp:HiddenField ID="hfBranchID" runat="server" />
         <asp:HiddenField ID="hfIsBarcode" runat="server" />
     </div>
-
+    <%--Rev 1.0--%>
+    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 1.0--%>
 </asp:Content>
 
 

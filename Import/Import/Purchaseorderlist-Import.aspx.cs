@@ -1,4 +1,7 @@
-﻿using DataAccessLayer;
+﻿/*********************************************************************************************************************************
+ * 1.0   Sanchita   V2.0.43     16-02-2024      27250 : Views to be converted to Procedures in the Listing Page - Import Purchase Order 
+ * *******************************************************************************************************************************/
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,7 +17,8 @@ using BusinessLogicLayer;
 using ImportModuleBusinessLayer.Purchaseorder;
 using Import.Models;
 using System.IO;
-
+using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Import.Import
 {
@@ -531,7 +535,57 @@ namespace Import.Import
 
         #endregion Sandip Section For Approval Dtl Section End
 
+        // Rev 1.0
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
 
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetPurchaseOrderImportdata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetPurchaseOrderImportdata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_PurchaseOrderImport_List", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", "ALL");
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        // End of Rev 1.0
 
         protected void EntityServerModeDataSource_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
         {
@@ -547,48 +601,55 @@ namespace Import.Import
             int userid = Convert.ToInt32(Session["UserID"]);
             List<int> branchidlist;
 
-               
-                    if (strBranchID == "0")
-                    {
-                        string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
-                        branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
+            // Rev 1.0
+            //if (strBranchID == "0")
+            //{
+            //    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
+            //    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
-                        ImportmoduleclassDataContext dc = new ImportmoduleclassDataContext(connectionString);
-                        var q = from d in dc.v_PurchaseOrderList_Imports
-                                //where d.PurchaseOrder_Date >= Convert.ToDateTime(strFromDate) && d.PurchaseOrder_Date <= Convert.ToDateTime(strToDate)
-                                where 
-                                
-                                 //branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
+            //    ImportmoduleclassDataContext dc = new ImportmoduleclassDataContext(connectionString);
+            //    var q = from d in dc.v_PurchaseOrderList_Imports
+            //            //where d.PurchaseOrder_Date >= Convert.ToDateTime(strFromDate) && d.PurchaseOrder_Date <= Convert.ToDateTime(strToDate)
+            //            where 
 
-                                  d.PurchaseOrderDt >= Convert.ToDateTime(strFromDate) && d.PurchaseOrderDt <= Convert.ToDateTime(strToDate)
+            //             //branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
 
-                                && d.OrderAdd_addressType == "Shipping"
-                                //&& d.CreatedBy == userid
-                                orderby d.PurchaseOrder_Id descending
-                                select d;
+            //              d.PurchaseOrderDt >= Convert.ToDateTime(strFromDate) && d.PurchaseOrderDt <= Convert.ToDateTime(strToDate)
 
-                        e.QueryableSource = q;
-                        // var cnt = q.Count();
-                    }
-                    else
-                    {
-                        branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+            //            && d.OrderAdd_addressType == "Shipping"
+            //            //&& d.CreatedBy == userid
+            //            orderby d.PurchaseOrder_Id descending
+            //            select d;
 
-                        ImportmoduleclassDataContext dc = new ImportmoduleclassDataContext(connectionString);
-                        var q = from d in dc.v_PurchaseOrderList_Imports
-                                where
-                                
-                                //branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
-                                 d.PurchaseOrderDt >= Convert.ToDateTime(strFromDate) && d.PurchaseOrderDt <= Convert.ToDateTime(strToDate)
-                                && d.OrderAdd_addressType == "Shipping"
-                                //&& d.CreatedBy == userid
-                                && branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
-                                orderby d.PurchaseOrder_Id descending
-                                select d;
-                        e.QueryableSource = q;
-                    }
-            
-          
+            //    e.QueryableSource = q;
+            //    // var cnt = q.Count();
+            //}
+            //else
+            //{
+            //    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+
+            //    ImportmoduleclassDataContext dc = new ImportmoduleclassDataContext(connectionString);
+            //    var q = from d in dc.v_PurchaseOrderList_Imports
+            //            where
+
+            //            //branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
+            //             d.PurchaseOrderDt >= Convert.ToDateTime(strFromDate) && d.PurchaseOrderDt <= Convert.ToDateTime(strToDate)
+            //            && d.OrderAdd_addressType == "Shipping"
+            //            //&& d.CreatedBy == userid
+            //            && branchidlist.Contains(Convert.ToInt32(d.PurchaseOrder_BranchId))
+            //            orderby d.PurchaseOrder_Id descending
+            //            select d;
+            //    e.QueryableSource = q;
+            //}
+            ImportmoduleclassDataContext dc = new ImportmoduleclassDataContext(connectionString);
+            var q = from d in dc.PurchaseOrderImportLists
+                    where Convert.ToInt32(d.USERID) == userid
+                    orderby d.PurchaseOrder_Id descending
+                    select d;
+            e.QueryableSource = q;
+            // End of Rev 1.0
+
+
         }
 
         private void PopulateBranchByHierchy(string userbranchhierchy)
