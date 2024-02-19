@@ -1,4 +1,7 @@
-﻿using System;
+﻿/************************************************************************************************************************
+ * 1.0   Sanchita  V2.0.43    19-02-2024        27253: Views to be converted to Procedures in the Listing Page - Transporter Bill Entry      
+ * ************************************************************************************************************************/
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,6 +21,8 @@ using System.ComponentModel;
 using System.IO;
 using ERP.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -33,6 +38,59 @@ namespace ERP.OMS.Management.Activities
         ERPDocPendingApprovalBL objERPDocPendingApproval = new ERPDocPendingApprovalBL();
         int KeyValue = 0;
 
+        // Rev 1.0
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetTransporterPurchaseInvoicedata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetTransporterPurchaseInvoicedata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_TransporterPurchaseInvoice_List", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                //cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
+                cmd.Parameters.AddWithValue("@ACTION", "ALL");
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        // End of Rev 1.0
+
         protected void EntityServerModeDataSource_Selecting(object sender, DevExpress.Data.Linq.LinqServerModeDataSourceSelectEventArgs e)
         {
             e.KeyExpression = "Invoice_Id";
@@ -47,45 +105,67 @@ namespace ERP.OMS.Management.Activities
             string strFromDate = Convert.ToString(hfFromDate.Value);
             string strToDate = Convert.ToString(hfToDate.Value);
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            // Rev 1.0
+            int userid = Convert.ToInt32(Session["UserID"]);
+            // End of Rev 1.0
 
             List<int> branchidlist;
 
             if (IsFilter == "Y")
             {
-                if (strBranchID == "0")
-                {
-                    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
-                    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
+                // Rev 1.0
+                //if (strBranchID == "0")
+                //{
+                //    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
+                //    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
 
-                    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_PBLists
-                            where d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate)
-                            && branchidlist.Contains(Convert.ToInt32(d.branchid)) && d.invoicefor == "TR"
-                            select d;
+                //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //    var q = from d in dc.v_PBLists
+                //            where d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate)
+                //            && branchidlist.Contains(Convert.ToInt32(d.branchid)) && d.invoicefor == "TR"
+                //            select d;
 
-                    e.QueryableSource = q;
-                    var cnt = q.Count();
-                }
-                else
-                {
-                    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+                //    e.QueryableSource = q;
+                //    var cnt = q.Count();
+                //}
+                //else
+                //{
+                //    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
 
-                    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                    var q = from d in dc.v_PBLists
-                            where
-                            d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate) &&
-                            branchidlist.Contains(Convert.ToInt32(d.branchid)) && d.invoicefor == "TR"
-                            select d;
-                    e.QueryableSource = q;
-                }
+                //    ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //    var q = from d in dc.v_PBLists
+                //            where
+                //            d.InvoiceDate >= Convert.ToDateTime(strFromDate) && d.InvoiceDate <= Convert.ToDateTime(strToDate) &&
+                //            branchidlist.Contains(Convert.ToInt32(d.branchid)) && d.invoicefor == "TR"
+                //            select d;
+                //    e.QueryableSource = q;
+                //}
+
+                ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                var q = from d in dc.TransporterPurchaseInvoiceLists
+                        where d.USERID == userid
+                        orderby d.SEQ descending
+                        select d;
+                e.QueryableSource = q;
+                // End of Rev 1.0
             }
             else
             {
+                // Rev 1.0
+                //ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
+                //var q = from d in dc.v_PBLists
+                //        where d.branchid == 0
+                //        select d;
+                //e.QueryableSource = q;
+
                 ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
-                var q = from d in dc.v_PBLists
+                var q = from d in dc.TransporterPurchaseInvoiceLists
                         where d.branchid == 0
+                         && d.USERID == userid
+                        orderby d.SEQ descending
                         select d;
                 e.QueryableSource = q;
+                // End of Rev 1.0
             }
         }
         #region Page Load Section Start

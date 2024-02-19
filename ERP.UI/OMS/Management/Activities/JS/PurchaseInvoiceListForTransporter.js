@@ -1,5 +1,6 @@
 ﻿//=======================================================Revision History =====================================================
 //1.0   Priti     V2.0.43    22-01 - 2024      0027106: Transporter Bill Entry Listing page view issue.
+//2.0   Sanchita  V2.0.43    19-02-2024        27253: Views to be converted to Procedures in the Listing Page - Transporter Bill Entry      
 //=========================================================End Revision History===================================================
 
 var isFirstTime = true;
@@ -27,7 +28,11 @@ updatePBTRGridByDate = function () {
         $("#hfBranchID").val(ccmbBranchfilter.GetValue());
         $("#hfIsFilter").val("Y");
 
-        cgrid.Refresh();
+        // Rev 2.0
+        //cgrid.Refresh();
+        $("#hFilterType").val("All");
+        cCallbackPanel.PerformCallback("");
+        // End of Rev 2.0
 
         $("#drdExport").val(0);
     }

@@ -1280,5 +1280,11 @@
         <elementListCompartment Id="9dcfbc3f-2d78-4cd5-b4e5-12444951824d" absoluteBounds="3.39, 22.46, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="4d05276b-2bee-4aa2-9501-72f001f3c2fe" isExpanded="false" absoluteBounds="5.625, 22, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/TransporterPurchaseInvoiceList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f39c3f73-4629-49ec-af16-ede82cf09f73" absoluteBounds="5.64, 22.46, 1.9700000000000002, 8.3260498046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
