@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 22.75" name="ERPDataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 32.625, 22.875" name="ERPDataClasses">
   <DataContextMoniker Name="/ERPDataClassesDataContext" />
   <nestedChildShapes>
     <classShape Id="42b8dce0-9bc6-4a34-82ff-c3e9bb571e8e" isExpanded="false" absoluteBounds="2.875, 7.875, 2, 0.45">
@@ -1284,6 +1284,12 @@
       <DataClassMoniker Name="/ERPDataClassesDataContext/TransporterPurchaseInvoiceList" />
       <nestedChildShapes>
         <elementListCompartment Id="f39c3f73-4629-49ec-af16-ede82cf09f73" absoluteBounds="5.64, 22.46, 1.9700000000000002, 8.3260498046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="991c4a1c-b3d6-4231-b40a-b14561c20b65" isExpanded="false" absoluteBounds="8.125, 22.125, 2, 0.45">
+      <DataClassMoniker Name="/ERPDataClassesDataContext/VendorPaymentAdjustmentList" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bcb79d2d-2912-4748-8046-741c371df889" absoluteBounds="8.14, 22.585, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>
