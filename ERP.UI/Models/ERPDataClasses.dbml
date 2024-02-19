@@ -5585,4 +5585,22 @@
       <Column Name="IsAttachmentDoc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.VendorPaymentAdjustmentList" Member="VendorPaymentAdjustmentLists">
+    <Type Name="VendorPaymentAdjustmentList">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SlNo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Adj_id" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Adjustment_No" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Adjustment_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CustName" Type="System.String" DbType="NVarChar(201)" CanBeNull="true" />
+      <Column Name="Adjusted_Doc_no" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Adjusted_Amount" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Branch" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
