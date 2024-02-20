@@ -421,7 +421,7 @@
         </div>
     </div>
     </div>
-    <%--Rev 3.0--%>
+    <%--Rev 2.0--%>
      <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">           
@@ -429,5 +429,5 @@
         </PanelCollection>
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
-    <%--End of Rev 3.0--%>
+    <%--End of Rev 2.0--%>
 </asp:Content>
