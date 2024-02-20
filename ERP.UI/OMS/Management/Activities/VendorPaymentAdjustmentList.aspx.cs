@@ -1,5 +1,5 @@
 ﻿//*************************************************************************************************************
-// * 1.0   Sanchita  V2.0.43      19-02-2024    27256: Views to be converted to Procedures in the Listing Page - Advance With Invoice      
+// 1.0   Sanchita  V2.0.43      19-02-2024    27256: Views to be converted to Procedures in the Listing Page - Advance With Invoice      
 // **************************************************************************************************************
 using BusinessLogicLayer;
 using EntityLayer.CommonELS;
