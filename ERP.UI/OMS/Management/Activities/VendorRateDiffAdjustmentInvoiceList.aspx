@@ -1,10 +1,19 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorRateDiffAdjustmentInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorRateDiffAdjustmentInvoiceList" %>
+﻿<%--================================================== Revision History =============================================
+1.0   Sanchita  V2.0.43      20-02-2024         27264 : Views to be converted to Procedures in the Listing Page - Rate difference with Purchase Invoice     
+====================================================== Revision History =============================================--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorRateDiffAdjustmentInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorRateDiffAdjustmentInvoiceList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 
 
     <script>
+        // Rev 1.0
+        function CallbackPanelEndCall(s, e) {
+            cgridAdvanceAdj.Refresh();
+        }
+        // End of Rev 1.0
+
         var isFirstTime = true;
         document.onkeydown = function (e) {
             if (event.keyCode == 65 && event.altKey == true) {
@@ -87,7 +96,10 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cgridAdvanceAdj.Refresh(); 
+                // Rev 1.0
+                //cgridAdvanceAdj.Refresh(); 
+                cCallbackPanel.PerformCallback("");
+                // End of Rev 1.0
             }
 
 
@@ -125,7 +137,7 @@
                 });
             }, 200);
         }
-        </script>
+    </script>
         <link href="CSS/comon.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -326,5 +338,15 @@
                             <asp:HiddenField ID="hiddenedit" runat="server" />
                         </div>
     </div>
+
+    <%--Rev 1.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 1.0--%>
 
 </asp:Content>

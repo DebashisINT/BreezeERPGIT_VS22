@@ -1,5 +1,6 @@
 ﻿<%--================================================== Revision History =============================================
 1.0   Pallab    V2.0.38      22-05-2023          0026190: Adjustment of Documents - Journal with Purchase Return module design modification & check in small device
+2.0   Sanchita  V2.0.43      20-02-2024          27265: Views to be converted to Procedures in the Listing Page - Journal With Purchase Return     
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="JournalCreditorsAdjustPReturnList.aspx.cs" Inherits="ERP.OMS.Management.Activities.JournalCreditorsAdjustPReturnList" %>
@@ -10,6 +11,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script>
+        // Rev 2.0
+        function CallbackPanelEndCall(s, e) {
+            cgridAdvanceAdj.Refresh();
+        }
+        // End of Rev 2.0
+
         var isFirstTime = true;
         document.onkeydown = function (e) {
             if (event.keyCode == 65 && event.altKey == true) {
@@ -92,7 +99,10 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cgridAdvanceAdj.Refresh();
+                // Rev 2.0
+                //cgridAdvanceAdj.Refresh();
+                cCallbackPanel.PerformCallback("");
+                // End of Rev 2.0
             }
 
 
@@ -400,7 +410,15 @@
     </div>
     </div>
 
-
+    <%--Rev 2.0--%>
+     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+        <PanelCollection>
+            <dxe:PanelContent runat="server">           
+            </dxe:PanelContent>
+        </PanelCollection>
+        <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+    </dxe:ASPxCallbackPanel>
+    <%--End of Rev 2.0--%>
 
 
 </asp:Content>
