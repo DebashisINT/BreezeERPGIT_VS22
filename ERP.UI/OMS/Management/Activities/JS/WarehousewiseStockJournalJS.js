@@ -1,5 +1,7 @@
 ﻿//==================================================== Revision History =========================================================================
-//1.0  Priti   V2.0.38    21-06-2023  0026405: Warehouse wise stock journal shows an "Internal Server error" while saving the document
+//1.0  Priti   V2.0.38    21-06-2023    0026405: Warehouse wise stock journal shows an "Internal Server error" while saving the document
+//2.0  Priti   V2.0.43    22-02-2024    Mantis: 0027218 Batchwise stock has been issued from any stock out module before receiving date which caused negative stock
+
 //====================================================End Revision History=====================================================================
 
 var globalRowIndex;
@@ -2606,8 +2608,12 @@ function CmbWarehouse_ValueChange() {
     var WarehouseID = cCmbWarehouse.GetValue();
     var type = document.getElementById('hdfProductType').value;
 
-    if (type == "WBS" || type == "WB") {
-        cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+    if (type == "WBS" || type == "WB") {        
+        //Rev 2.0
+        var PostingDate = cdtTDate.GetValueString();
+        /* cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);*/
+        cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+        //Rev 2.0 End
     }
     else if (type == "WS") {
         checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + "0");

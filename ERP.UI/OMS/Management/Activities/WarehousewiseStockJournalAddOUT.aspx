@@ -17,7 +17,7 @@
     <script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
     <%-- <script src="JS/SearchPopup.js?v=0.03"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
-    <script src="JS/WarehousewiseStockJournalOUTJS.js?v=7.8"></script>
+    <script src="JS/WarehousewiseStockJournalOUTJS.js?v=8.1"></script>
 
     <style type="text/css">
         /*#grid_DXMainTable > tbody > tr > td:last-child, #productLookUp_DDD_gv_DXMainTable > tbody > tr > td:nth-child(2) {

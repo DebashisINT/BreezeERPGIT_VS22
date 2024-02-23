@@ -5629,7 +5629,7 @@ namespace ERP.OMS.Management.Activities
         {
 
             DataTable dt = new DataTable();
-            ProcedureExecute proc = new ProcedureExecute("prc_SalesOrder_Details");
+            ProcedureExecute proc = new ProcedureExecute("prc_SalesCRM_Details");
             //proc.AddVarcharPara("@Action", 500, "GetBatchByProductIDWarehouse");
             proc.AddVarcharPara("@Action", 500, "GETBATCHBYPRODUCTIDWAREHOUSEPOSTINGDATE");
             proc.AddVarcharPara("@Order_Id", 500, Convert.ToString(Session["QuotationID"]));
