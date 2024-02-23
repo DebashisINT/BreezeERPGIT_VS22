@@ -5,8 +5,8 @@
 												Refer:  23986
  2.0	v2.0.38	    PRITI		07-04-2023      0025689:Alt Qty column & data is not showing while making Warehouse wise Stock out
  3.0	v2.0.39	    PRITI		06-07-2023      0026523: Unable to Save Warehouse wise Stock Journal
-
- ***********************************************************************************************************************************/
+ 4.0    V2.0.43     Priti       22-02-2024      Mantis: 0027218 Batchwise stock has been issued from any stock out module before receiving date which caused negative stock
+***********************************************************************************************************************************/
 
 using System;
 using System.Collections.Generic;
@@ -2129,7 +2129,11 @@ namespace ERP.OMS.Management.Activities
             if (WhichCall == "BindBatch")
             {
                 string WarehouseID = Convert.ToString(e.Parameter.Split('~')[1]);
-                DataTable dt = GetBatchData(WarehouseID);
+                //Rev 4.0
+                string PostingDate = Convert.ToString(e.Parameter.Split('~')[2]);
+                //DataTable dt = GetBatchData(WarehouseID);
+                DataTable dt = GetBatchData(WarehouseID, PostingDate);
+                //Rev 4.0 End
 
                 CmbBatch.Items.Clear();
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -2153,6 +2157,22 @@ namespace ERP.OMS.Management.Activities
             return dt;
         }
 
+        //Rev 4.0
+        public DataTable GetBatchData(string WarehouseID, string PostingDate)
+        {
+            DataTable dt = new DataTable();
+            ProcedureExecute proc = new ProcedureExecute("prc_SalesCRM_Details");
+            proc.AddVarcharPara("@Action", 500, "GETBATCHBYPRODUCTIDWAREHOUSEPOSTINGDATE");
+            proc.AddVarcharPara("@ProductID", 500, Convert.ToString(hdfProductID.Value));
+            proc.AddVarcharPara("@WarehouseID", 500, WarehouseID);
+            proc.AddVarcharPara("@FinYear", 500, Convert.ToString(Session["LastFinYear"]));
+            proc.AddVarcharPara("@branchId", 2000, Convert.ToString(ddlBranch.SelectedValue));
+            proc.AddVarcharPara("@companyId", 500, Convert.ToString(Session["LastCompany"]));
+            proc.AddDateTimePara("@PostingDate", Convert.ToDateTime(PostingDate));
+            dt = proc.GetTable();
+            return dt;
+        }
+        //Rev 4.0 End
         protected void CmbSerial_Callback(object sender, CallbackEventArgsBase e)
         {
             string WhichCall = e.Parameter.Split('~')[0];

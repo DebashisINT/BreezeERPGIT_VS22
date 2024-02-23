@@ -2,8 +2,8 @@
 //    1.0   Priti   V2.0.36   23-01-2023    0025602: Available Stock & UOM Conversion tab is required in Warehouse wise Stock transfer module
 //    2.0   Priti   V2.0.37   13-03-2023    0025602: Stock with multiple batches are not allowing to enter in Warehouse wise Stock Transfer
 //    3.0   Priti   V2.0.38   07-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
-//    4.0   Priti   V2.0.43   24-01 - 2024  Mantis: 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
-
+//    4.0   Priti   V2.0.43   24-01-2024    Mantis: 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
+//    5.0   Priti   V2.0.43   22-02-2024    Mantis: 0027218 Batchwise stock has been issued from any stock out module before receiving date which caused negative stock
 //========================================== End Revision History =======================================================================================================
 
 
@@ -1287,9 +1287,13 @@ function fn_Deletecity(keyValue) {
 function CmbWarehouse_ValueChange() {
     var WarehouseID = cCmbWarehouse.GetValue();
     var type = document.getElementById('hdfProductType').value;
-
+    
     if (type == "WBS" || type == "WB") {
-        cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+        //Rev 5.0
+        /*cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);*/
+        var PostingDate = cdtTDate.GetValueString();
+        cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+        //Rev 5.0 End
     }
     else if (type == "WS") {
         checkListBox.PerformCallback('BindSerial~' + WarehouseID + '~' + "0");
@@ -1298,7 +1302,7 @@ function CmbWarehouse_ValueChange() {
 function CmbWarehouseEndCallback(s, e) {
     if (SelectWarehouse != "0") {
         cCmbWarehouse.SetValue(SelectWarehouse);
-        SelectWarehouse = "0";
+        SelectWarehouse = "0";        
     }
     else {
         //cCmbWarehouse.SetEnabled(true);
