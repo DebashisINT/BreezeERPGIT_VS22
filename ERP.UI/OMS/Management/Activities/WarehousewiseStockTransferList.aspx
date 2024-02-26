@@ -1,6 +1,7 @@
 ﻿<%--=======================================================Revision History=====================================================    
-    1.0   Pallab    V2.0.38   12-05-2023      26112: Warehouse Wise Stock Transfer module design modification & check in small device
+    1.0   Pallab    V2.0.38   12-05-2023    26112: Warehouse Wise Stock Transfer module design modification & check in small device
     2.0   Priti     V2.0.38   05-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
+    3.0	  PRITI     V2.0.43	  26-02-2024	0026688: Views to be converted to Procedures in the Listing Page of Transaction / Inventory / Warehouse Wise Stock Transfer
 
 =========================================================End Revision History===================================================--%>
 
@@ -75,11 +76,20 @@
                 $("#hfToDate").val(ctoDate.GetDate().format('yyyy-MM-dd'));
                 $("#hfBranchID").val(ccmbBranchfilter.GetValue());
                 $("#hfIsFilter").val("Y");
-                cgridAdvanceAdj.Refresh();
+                 //REV 3.0
+                //cgridAdvanceAdj.Refresh();
+                $("#hFilterType").val("All");
+                cCallbackPanel.PerformCallback("");
+                 //REV 3.0 End
             }
 
 
         }
+        //REV 3.0
+        function CallbackPanelEndCall(s, e) {
+            cgridAdvanceAdj.Refresh();
+        }
+        //REV 3.0 END
         function GridEndCallBack() {
             if (cgridAdvanceAdj.cpReturnMesg) {
 
@@ -92,7 +102,10 @@
                     });
                 }
                 else {
-                    jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () { cgridAdvanceAdj.Refresh(); });
+                    jAlert(cgridAdvanceAdj.cpReturnMesg, "Alert", function () {
+                        cgridAdvanceAdj.Refresh();
+                        
+                    });
                     cgridAdvanceAdj.cpReturnMesg = null;
                 }
 
@@ -752,5 +765,14 @@
 
     <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
-
+     <%-- REV 3.0--%>
+   <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
+      <PanelCollection>
+          <dxe:PanelContent runat="server">           
+          </dxe:PanelContent>
+      </PanelCollection>
+      <ClientSideEvents EndCallback="CallbackPanelEndCall" />
+  </dxe:ASPxCallbackPanel>
+  <asp:HiddenField ID="hFilterType" runat="server" />
+ <%--  REV 3.0 END--%>
 </asp:Content>

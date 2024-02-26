@@ -1,5 +1,7 @@
 ﻿//==================================================== Revision History =================================================================================================
-// 1.0  Priti V2.0.38    05-06-2023  0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Production
+// 1.0   Priti V2.0.38    05-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Production
+// 2.0   PRITI V2.0.43	  26-02-2024	0026688: Views to be converted to Procedures in the Listing Page of Transaction / Inventory / Warehouse Wise Stock Transfer
+
 //====================================================End Revision History===============================================================================================
 using BusinessLogicLayer;
 using DevExpress.Web;
@@ -16,6 +18,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 //Rev work start 12.07.2022 mantise no :0025011: Update E-way Bill
 using System.Web.Services;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using static ERP.OMS.Management.Master.Mobileaccessconfiguration;
 //Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill
 namespace ERP.OMS.Management.Activities
 {
@@ -163,47 +168,62 @@ namespace ERP.OMS.Management.Activities
 
             //string connectionString = ConfigurationManager.ConnectionStrings["crmConnectionString"].ConnectionString;
             string connectionString = Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]);
-
-
             string IsFilter = Convert.ToString(hfIsFilter.Value);
-            string strFromDate = Convert.ToString(hfFromDate.Value);
-            string strToDate = Convert.ToString(hfToDate.Value);
             string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            //Rev 2.0
+            //string strFromDate = Convert.ToString(hfFromDate.Value);
+            //string strToDate = Convert.ToString(hfToDate.Value);
+            //List<int> branchidlist;
+            int User_id = Convert.ToInt32(Session["userid"]);
+            //Rev 2.0 End
 
-            List<int> branchidlist;
             ERPDataClassesDataContext dc = new ERPDataClassesDataContext(connectionString);
             if (IsFilter == "Y")
             {
-                if (strBranchID == "0")
-                {
-                    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
-                    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
-                    var q = from d in dc.v_WarehouseWiseStocktransferLists
-                            where d.Stock_Date >= Convert.ToDateTime(strFromDate) &&
-                                  d.Stock_Date <= Convert.ToDateTime(strToDate)
-                            orderby d.StockTransfer_ID descending
-                            select d;
-                    e.QueryableSource = q;
-                }
-                else
-                {
-                    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
-                    var q = from d in dc.v_WarehouseWiseStocktransferLists
-                            where d.Stock_Date >= Convert.ToDateTime(strFromDate) &&
-                                  d.Stock_Date <= Convert.ToDateTime(strToDate) &&
-                                  branchidlist.Contains(Convert.ToInt32(d.Branch_ID))
-                            orderby d.StockTransfer_ID descending
-                            select d;
-                    e.QueryableSource = q;
-                }
+                //Rev 2.0 
+                //if (strBranchID == "0")
+                //{
+                //    string BranchList = Convert.ToString(Session["userbranchHierarchy"]);
+                //    branchidlist = new List<int>(Array.ConvertAll(BranchList.Split(','), int.Parse));
+                //    var q = from d in dc.v_WarehouseWiseStocktransferLists
+                //            where d.Stock_Date >= Convert.ToDateTime(strFromDate) &&
+                //                  d.Stock_Date <= Convert.ToDateTime(strToDate)
+                //            orderby d.StockTransfer_ID descending
+                //            select d;
+                //    e.QueryableSource = q;
+
+                //}
+                //else
+                //{
+                //    branchidlist = new List<int>(Array.ConvertAll(strBranchID.Split(','), int.Parse));
+                //    var q = from d in dc.v_WarehouseWiseStocktransferLists
+                //            where d.Stock_Date >= Convert.ToDateTime(strFromDate) &&
+                //                  d.Stock_Date <= Convert.ToDateTime(strToDate) &&
+                //                  branchidlist.Contains(Convert.ToInt32(d.Branch_ID))
+                //            orderby d.StockTransfer_ID descending
+                //            select d;
+                //    e.QueryableSource = q;
+                //}
+                var q = from d in dc.WarehouseWiseStocktransferLists
+                        where d.USERID == User_id
+                        orderby d.SEQ descending
+                        select d;
+                e.QueryableSource = q;
+                //Rev 2.0 End
             }
             else
             {
-                var q = from d in dc.v_WarehouseWiseStocktransferLists
-                        where d.Branch_ID == '0'
-                        orderby d.StockTransfer_ID descending
+                //Rev 2.0 
+                //var q = from d in dc.v_WarehouseWiseStocktransferLists
+                //        where d.Branch_ID == '0'
+                //        orderby d.StockTransfer_ID descending
+                //        select d;
+                //e.QueryableSource = q;
+                var q = from d in dc.WarehouseWiseStocktransferLists
+                        where d.SEQ == 0
                         select d;
                 e.QueryableSource = q;
+                //Rev 2.0 End
             }
         }
 
@@ -338,6 +358,58 @@ namespace ERP.OMS.Management.Activities
             return Convert.ToString(EWayBill);
         }
         //Rev work close 12.07.2022 mantise no :0025011: Update E-way Bill
+
+        //REV 2.0
+        protected void CallbackPanel_Callback(object sender, DevExpress.Web.CallbackEventArgsBase e)
+        {
+            string returnPara = Convert.ToString(e.Parameter);
+            DateTime dtFrom;
+            DateTime dtTo;
+            dtFrom = Convert.ToDateTime(FormDate.Date);
+            dtTo = Convert.ToDateTime(toDate.Date);
+            string FROMDATE = dtFrom.ToString("yyyy-MM-dd");
+            string TODATE = dtTo.ToString("yyyy-MM-dd");
+
+            string strBranchID = (Convert.ToString(hfBranchID.Value) == "") ? "0" : Convert.ToString(hfBranchID.Value);
+            Task PopulateStockTrialDataTask = new Task(() => GetWarehousewiseStockTransferdata(FROMDATE, TODATE, strBranchID));
+            PopulateStockTrialDataTask.RunSynchronously();
+        }
+        public void GetWarehousewiseStockTransferdata(string FROMDATE, string TODATE, string BRANCH_ID)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
+                SqlCommand cmd = new SqlCommand("prc_WarehouseWiseStocktransfer_List", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@COMPANYID", Convert.ToString(Session["LastCompany"]));
+                cmd.Parameters.AddWithValue("@FINYEAR", Convert.ToString(Session["LastFinYear"]));
+                cmd.Parameters.AddWithValue("@FROMDATE", FROMDATE);
+                cmd.Parameters.AddWithValue("@TODATE", TODATE);
+                if (BRANCH_ID == "0")
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", Convert.ToString(Session["userbranchHierarchy"]));
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@BRANCHID", BRANCH_ID);
+                }
+                cmd.Parameters.AddWithValue("@USERID", Convert.ToInt32(Session["userid"]));
+                cmd.Parameters.AddWithValue("@ACTION", hFilterType.Value);
+                cmd.CommandTimeout = 0;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+
+                cmd.Dispose();
+                con.Dispose();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        //REV 2.0 END
 
     }
 }
