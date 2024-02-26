@@ -5695,4 +5695,34 @@
       <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.WarehouseWiseStocktransferList" Member="WarehouseWiseStocktransferLists">
+    <Type Name="WarehouseWiseStocktransferList">
+      <Column Name="SEQ" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="USERID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="StockTransfer_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="StockTransfer_No" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Stock_Date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="branch_description" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Branch_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="SourceWarehouseName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="DestWarehouseName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Technician_Name" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Remarks" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="branch_descriptionTo" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="BranchTo_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Editlock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Deletelock" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="EntityName" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="EntityCode" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Employee_Name" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="WHStockTrans_EmployeeId" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EWayBillNumber" Type="System.String" DbType="NVarChar(250)" CanBeNull="true" />
+      <Column Name="EWayBillDate" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Issue_No" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>
