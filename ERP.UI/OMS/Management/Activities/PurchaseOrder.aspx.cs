@@ -6,6 +6,7 @@
 //Rev 3.0      Priti      V2.0.42   02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 //Rev 4.0      Priti      V2.0.43   16-01-2024     Mantis : 0027183 After saving purchase order by availing the "Copy" features document number saving as "Auto"
 //Rev 5.0      Priti      V2.0.43   22-01-2024     Mantis : 0027198 Stop editing while purchase order partially used in another modules.
+//Rev 6.0      Priti      V2.0.43   01-03-2024     Mantis : 0027287 While adding new product in edit mode getting an error in Purchase Order "Value was either too large or too small for an Int16.".
 
 //====================================================End Revision History=====================================================================
 using System;
@@ -1316,8 +1317,12 @@ namespace ERP.OMS.Management.Activities
 
                         thisRow = (DataRow)MultiUOMSaveData.Rows[MultiUOMSaveData.Rows.Count - 1];
                         //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId);
-                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow, (Convert.ToInt16(thisRow["MultiUOMSR"]) + 1));
+                        //REV 6.0
+                        //MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow, (Convert.ToInt16(thisRow["MultiUOMSR"]) + 1));
                         // End of Mantis Issue 24428
+
+                        MultiUOMSaveData.Rows.Add(SrlNo, Quantity, UOM, AltUOM, AltQuantity, UomId, AltUomId, ProductId, DetailsId, BaseRate, AltRate, UpdateRow, (Convert.ToInt32(thisRow["MultiUOMSR"]) + 1));
+                        //REV 6.0 End
                     }
                     else
                     {

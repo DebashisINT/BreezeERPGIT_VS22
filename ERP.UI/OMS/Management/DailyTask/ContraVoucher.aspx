@@ -1,6 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================    
-    1.0 Priti    V2.0.36  02-02-2023     0025264: listing view upgradation required of Contra Voucher of Accounts & Finance
-    2.0 Pallab   V2.0.37  05-04-2023     25858: Contra Voucher module design modification
+    1.0 Pallab   V2.0.37  05-04-2023     25858: Contra Voucher module design modification
+    2.0 Priti    V2.0.43  27-02-2024     0025264: listing view upgradation required of Contra Voucher of Accounts & Finance
+
 =========================================================End Revision History========================================================================--%>
 
 
@@ -96,21 +97,21 @@
                 $("#hfIsFilter").val("Y");
 
                 
-                //rev 1.0
+                //rev 2.0
                 // gvContraVoucherInstance.Refresh();
                 $("#hFilterType").val("All");
                 cCallbackPanel.PerformCallback("");
-                 //end rev 1.0
+                 //end rev 2.0
 
 
                 //gvContraVoucherInstance.PerformCallback('FilterGridByDate~' + cFormDate.GetDate().format('yyyy-MM-dd') + '~' + ctoDate.GetDate().format('yyyy-MM-dd') + '~' + ccmbBranchfilter.GetValue())
             }
         }
-        //rev 1.0
+        //rev 2.0
         function CallbackPanelEndCall(s, e) {
             gvContraVoucherInstance.Refresh();
         }
-        //end rev 1.0
+        //end rev 2.0
         $(function () {
 
             var IsEdit = false;
@@ -1001,9 +1002,10 @@ function ShowMsgLastCall() {
     if (gvContraVoucherInstance.cpCBDelete != null) {
         jAlert(gvContraVoucherInstance.cpCBDelete);
         gvContraVoucherInstance.cpCBDelete = null;
-        updateGridByDate();
-
-        //gvContraVoucherInstance.PerformCallback();
+        //REV 2.0
+        //updateGridByDate();
+        gvContraVoucherInstance.Refresh();
+       //REV 2.0 END
     }
 
 }
@@ -1935,7 +1937,7 @@ function gridRowclick(s, e) {
     </style>
 
     <style>
-        /*Rev 2.0*/
+        /*Rev 1.0*/
 
         select
         {
@@ -2356,11 +2358,11 @@ function gridRowclick(s, e) {
             padding-right: 12px;
             padding-left: 12px;
         }
-        /*Rev end 2.0*/
+        /*Rev end 1.0*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%--Rev 2.0: "outer-div-main" class add --%>
+    <%--Rev 1.0: "outer-div-main" class add --%>
     <div class="outer-div-main clearfix">
         <div class="panel-heading">
         <div class="panel-title clearfix">
@@ -2442,30 +2444,30 @@ function gridRowclick(s, e) {
                     <td>
                         <label>From Date</label></td>
                     <td>&nbsp;</td>
-                    <%--Rev 2.0: "for-cust-icon" class add --%>
+                    <%--Rev 1.0: "for-cust-icon" class add --%>
                     <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="FormDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="cFormDate" Width="100%">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
-                        <%--Rev 2.0--%>
+                        <%--Rev 1.0--%>
                         <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                        <%--Rev end 2.0--%>
+                        <%--Rev end 1.0--%>
                     </td>
                     <td>&nbsp;</td>
                     <td>
                         <label>To Date</label>
                     </td>
                     <td>&nbsp;</td>
-                    <%--Rev 2.0: "for-cust-icon" class add --%>
+                    <%--Rev 1.0: "for-cust-icon" class add --%>
                     <td class="for-cust-icon">
                         <dxe:ASPxDateEdit ID="toDate" runat="server" EditFormat="Custom" EditFormatString="dd-MM-yyyy" ClientInstanceName="ctoDate" Width="100%">
                             <ButtonStyle Width="13px">
                             </ButtonStyle>
                         </dxe:ASPxDateEdit>
-                        <%--Rev 2.0--%>
+                        <%--Rev 1.0--%>
                         <img src="/assests/images/calendar-icon.png" class="calendar-icon"/>
-                        <%--Rev end 2.0--%>
+                        <%--Rev end 1.0--%>
                     </td>
                     <td>&nbsp;</td>
                     <td>Unit</td>
@@ -2518,15 +2520,15 @@ function gridRowclick(s, e) {
                             <ClientSideEvents DateChanged="function(s,e){TDateChange();}" GotFocus="function(s,e){tDate.ShowDropDown();}" LostFocus="function(s, e) { SetLostFocusonDemand(e)}" ></ClientSideEvents>
                             <ValidationSettings RequiredField-IsRequired="true"></ValidationSettings>
                         </dxe:ASPxDateEdit>
-                        <%--Rev 2.0--%>
+                        <%--Rev 1.0--%>
                         <img src="/assests/images/calendar-icon.png" class="calendar-icon right-20"/>
-                        <%--Rev end 2.0--%>
+                        <%--Rev end 1.0--%>
                     </div>
                 </div>
                 <div class="col-md-3">
 
                     <label style="margin-top: 0">From Unit <span style="color: red">*</span></label>
-                    <%--Rev 2.0 : "simple-select" class add--%>
+                    <%--Rev 1.0 : "simple-select" class add--%>
                     <div class="simple-select">
                         <%-- <asp:DropDownList ID="ddlBranch" runat="server" DataSourceID="dsBranch" onchange="BranchFrom_SelectedIndexChanged()"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%">
@@ -2540,7 +2542,7 @@ function gridRowclick(s, e) {
                 <div class="col-md-3">
 
                     <label style="margin-top: 0">To Unit <span style="color: red">*</span></label>
-                    <%--Rev 2.0 : "simple-select" class add--%>
+                    <%--Rev 1.0 : "simple-select" class add--%>
                     <div class="simple-select">
                         <%-- <asp:DropDownList ID="ddlBranchTo" runat="server" DataSourceID="dsBranch"
                             DataTextField="BANKBRANCH_NAME" DataValueField="BANKBRANCH_ID" Width="100%" onchange="batchgridFocus()">
@@ -2797,9 +2799,9 @@ function gridRowclick(s, e) {
                                 <ButtonStyle Width="13px">
                                 </ButtonStyle>
                             </dxe:ASPxDateEdit>
-                            <%--Rev 1.0--%>
+                            <%--Rev 2.0--%>
                             <img src="/assests/images/calendar-icon.png" class="calendar-icon right-20"/>
-                            <%--Rev end 1.0--%>
+                            <%--Rev end 2.0--%>
                         </div>
                     </div>
                     <div style="clear: both"></div>
@@ -3209,7 +3211,7 @@ function gridRowclick(s, e) {
     <asp:HiddenField ID="hdnLockFromDatedelete" runat="server" />
     <asp:HiddenField ID="hdnLockToDatedelete" runat="server" />
 
-      <%--  REV 1.0--%>
+      <%--  REV 2.0--%>
     <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanel" ClientInstanceName="cCallbackPanel" OnCallback="CallbackPanel_Callback">
         <PanelCollection>
             <dxe:PanelContent runat="server">
@@ -3218,6 +3220,6 @@ function gridRowclick(s, e) {
         <ClientSideEvents EndCallback="CallbackPanelEndCall" />
     </dxe:ASPxCallbackPanel>
     <asp:HiddenField ID="hFilterType" runat="server" />
-    <%--END REV 1.0--%>
+    <%--END REV 2.0--%>
 
 </asp:Content>

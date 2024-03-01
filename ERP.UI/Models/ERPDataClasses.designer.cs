@@ -1824,6 +1824,14 @@ namespace ERP.Models
 				return this.GetTable<WarehouseWiseStocktransferList>();
 			}
 		}
+		
+		public System.Data.Linq.Table<ContraVoucherList> ContraVoucherLists
+		{
+			get
+			{
+				return this.GetTable<ContraVoucherList>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_FinanceReconciliationList")]
@@ -91278,6 +91286,393 @@ namespace ERP.Models
 				if ((this._Issue_No != value))
 				{
 					this._Issue_No = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ContraVoucherList")]
+	public partial class ContraVoucherList
+	{
+		
+		private System.Nullable<int> _SEQ;
+		
+		private System.Nullable<long> _USERID;
+		
+		private System.Nullable<long> _CashBank_ID;
+		
+		private System.Nullable<System.DateTime> _CashBank_TransactionDate;
+		
+		private System.Nullable<System.DateTime> _CashBank_TransactionDateText;
+		
+		private string _CashBank_VoucherNumber;
+		
+		private string _CashBank_Narration;
+		
+		private System.Nullable<int> _CashBank_BranchID;
+		
+		private System.Nullable<int> _CashBank_BranchIDTO;
+		
+		private System.Nullable<decimal> _CashBankDetail_PaymentAmount;
+		
+		private System.Nullable<System.DateTime> _TransactionDat;
+		
+		private string _CashBank_FinYear;
+		
+		private string _CashBank_CompanyID;
+		
+		private string _CashBank_CreateUser;
+		
+		private string _CashBank_ModifyUser;
+		
+		private System.Nullable<System.DateTime> _CashBank_ModifyDateTime;
+		
+		private System.Nullable<System.DateTime> _CashBankDetail_BankValueDate;
+		
+		private string _CashBank_IBRef;
+		
+		private string _Proj_Name;
+		
+		private string _Editlock;
+		
+		private string _Deletelock;
+		
+		public ContraVoucherList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SEQ", DbType="Int")]
+		public System.Nullable<int> SEQ
+		{
+			get
+			{
+				return this._SEQ;
+			}
+			set
+			{
+				if ((this._SEQ != value))
+				{
+					this._SEQ = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_USERID", DbType="BigInt")]
+		public System.Nullable<long> USERID
+		{
+			get
+			{
+				return this._USERID;
+			}
+			set
+			{
+				if ((this._USERID != value))
+				{
+					this._USERID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_ID", DbType="BigInt")]
+		public System.Nullable<long> CashBank_ID
+		{
+			get
+			{
+				return this._CashBank_ID;
+			}
+			set
+			{
+				if ((this._CashBank_ID != value))
+				{
+					this._CashBank_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_TransactionDate", DbType="Date")]
+		public System.Nullable<System.DateTime> CashBank_TransactionDate
+		{
+			get
+			{
+				return this._CashBank_TransactionDate;
+			}
+			set
+			{
+				if ((this._CashBank_TransactionDate != value))
+				{
+					this._CashBank_TransactionDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_TransactionDateText", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CashBank_TransactionDateText
+		{
+			get
+			{
+				return this._CashBank_TransactionDateText;
+			}
+			set
+			{
+				if ((this._CashBank_TransactionDateText != value))
+				{
+					this._CashBank_TransactionDateText = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_VoucherNumber", DbType="NVarChar(50)")]
+		public string CashBank_VoucherNumber
+		{
+			get
+			{
+				return this._CashBank_VoucherNumber;
+			}
+			set
+			{
+				if ((this._CashBank_VoucherNumber != value))
+				{
+					this._CashBank_VoucherNumber = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_Narration", DbType="NVarChar(500)")]
+		public string CashBank_Narration
+		{
+			get
+			{
+				return this._CashBank_Narration;
+			}
+			set
+			{
+				if ((this._CashBank_Narration != value))
+				{
+					this._CashBank_Narration = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_BranchID", DbType="Int")]
+		public System.Nullable<int> CashBank_BranchID
+		{
+			get
+			{
+				return this._CashBank_BranchID;
+			}
+			set
+			{
+				if ((this._CashBank_BranchID != value))
+				{
+					this._CashBank_BranchID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_BranchIDTO", DbType="Int")]
+		public System.Nullable<int> CashBank_BranchIDTO
+		{
+			get
+			{
+				return this._CashBank_BranchIDTO;
+			}
+			set
+			{
+				if ((this._CashBank_BranchIDTO != value))
+				{
+					this._CashBank_BranchIDTO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBankDetail_PaymentAmount", DbType="Decimal(18,2)")]
+		public System.Nullable<decimal> CashBankDetail_PaymentAmount
+		{
+			get
+			{
+				return this._CashBankDetail_PaymentAmount;
+			}
+			set
+			{
+				if ((this._CashBankDetail_PaymentAmount != value))
+				{
+					this._CashBankDetail_PaymentAmount = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TransactionDat", DbType="DateTime")]
+		public System.Nullable<System.DateTime> TransactionDat
+		{
+			get
+			{
+				return this._TransactionDat;
+			}
+			set
+			{
+				if ((this._TransactionDat != value))
+				{
+					this._TransactionDat = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_FinYear", DbType="Char(10)")]
+		public string CashBank_FinYear
+		{
+			get
+			{
+				return this._CashBank_FinYear;
+			}
+			set
+			{
+				if ((this._CashBank_FinYear != value))
+				{
+					this._CashBank_FinYear = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_CompanyID", DbType="Char(10)")]
+		public string CashBank_CompanyID
+		{
+			get
+			{
+				return this._CashBank_CompanyID;
+			}
+			set
+			{
+				if ((this._CashBank_CompanyID != value))
+				{
+					this._CashBank_CompanyID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_CreateUser", DbType="NVarChar(50)")]
+		public string CashBank_CreateUser
+		{
+			get
+			{
+				return this._CashBank_CreateUser;
+			}
+			set
+			{
+				if ((this._CashBank_CreateUser != value))
+				{
+					this._CashBank_CreateUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_ModifyUser", DbType="NVarChar(50)")]
+		public string CashBank_ModifyUser
+		{
+			get
+			{
+				return this._CashBank_ModifyUser;
+			}
+			set
+			{
+				if ((this._CashBank_ModifyUser != value))
+				{
+					this._CashBank_ModifyUser = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_ModifyDateTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CashBank_ModifyDateTime
+		{
+			get
+			{
+				return this._CashBank_ModifyDateTime;
+			}
+			set
+			{
+				if ((this._CashBank_ModifyDateTime != value))
+				{
+					this._CashBank_ModifyDateTime = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBankDetail_BankValueDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CashBankDetail_BankValueDate
+		{
+			get
+			{
+				return this._CashBankDetail_BankValueDate;
+			}
+			set
+			{
+				if ((this._CashBankDetail_BankValueDate != value))
+				{
+					this._CashBankDetail_BankValueDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CashBank_IBRef", DbType="NVarChar(100)")]
+		public string CashBank_IBRef
+		{
+			get
+			{
+				return this._CashBank_IBRef;
+			}
+			set
+			{
+				if ((this._CashBank_IBRef != value))
+				{
+					this._CashBank_IBRef = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Proj_Name", DbType="NVarChar(200)")]
+		public string Proj_Name
+		{
+			get
+			{
+				return this._Proj_Name;
+			}
+			set
+			{
+				if ((this._Proj_Name != value))
+				{
+					this._Proj_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Editlock", DbType="NVarChar(50)")]
+		public string Editlock
+		{
+			get
+			{
+				return this._Editlock;
+			}
+			set
+			{
+				if ((this._Editlock != value))
+				{
+					this._Editlock = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Deletelock", DbType="NVarChar(50)")]
+		public string Deletelock
+		{
+			get
+			{
+				return this._Deletelock;
+			}
+			set
+			{
+				if ((this._Deletelock != value))
+				{
+					this._Deletelock = value;
 				}
 			}
 		}
