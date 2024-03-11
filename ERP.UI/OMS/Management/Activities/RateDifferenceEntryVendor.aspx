@@ -1,5 +1,6 @@
 ﻿<%--=======================================================Revision History=====================================================    
     1.0   Pallab    V2.0.38   09-05-2023      26068: Add Rate Difference Entry Vendor module design modification & check in small device
+    2.0   Priti     V2.0.43   11-03-2024      0027304: While clicking on the charges Taxable value and GST amount getting changed.
 =========================================================End Revision History===================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RateDifferenceEntryVendor.aspx.cs" EnableEventValidation="false" MasterPageFile="~/OMS/MasterPage/ERP.Master" Inherits="ERP.OMS.Management.Activities.RateDifferenceEntryVendor" %>
@@ -1416,12 +1417,15 @@
                         var StockQuantity = strMultiplier * QuantityValue;
 
                         var Amount = parseFloat(Math.round(QuantityValue * strFactor * (strSalePrice / strRate) * 100) / 100).toFixed(2);
-                        clblTaxProdGrossAmt.SetText(DecimalRoundoff(strSalePrice, 2) * DecimalRoundoff(QuantityValue, 2));
+                        //REV 2.0
+                        //clblTaxProdGrossAmt.SetText(DecimalRoundoff(strSalePrice, 2) * DecimalRoundoff(QuantityValue, 2));
+                        clblTaxProdGrossAmt.SetText(DecimalRoundoff(Amount, 2));
+                        //REV 2.0 END
                         //chinmopy edited Net Amount start
                         var GridDis = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
                         var DiscountForNet = DecimalRoundoff(DecimalRoundoff(clblTaxProdGrossAmt.GetValue(), 2) * DecimalRoundoff((GridDis)/100,2), 2);
                         var DiscountValue = DecimalRoundoff(DecimalRoundoff(clblTaxProdGrossAmt.GetValue(), 2) - DecimalRoundoff(DiscountForNet, 2), 2);
-                        debugger;
+                        //debugger;
                         //clblProdNetAmt.SetText(parseFloat((Math.round(Amount * 100)) / 100).toFixed(2));
                         clblProdNetAmt.SetValue(DiscountValue);
                         //End
