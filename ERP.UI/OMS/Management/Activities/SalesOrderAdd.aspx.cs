@@ -4522,8 +4522,8 @@ namespace ERP.OMS.Management.Activities
                                             string SerialID = Convert.ToString(dr["SrlNo"]);
                                             string TaxID = Convert.ToString(dr["TaxCode"]);
                                             //REV 8.0
-                                            //decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
-                                            decimal _TaxAmount = Convert.ToDecimal(String.Format("{0:0.00}",(dr["TaxAmount"])));
+                                            decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                            //decimal _TaxAmount = Convert.ToDecimal(String.Format("{0:0.00}",(dr["TaxAmount"])));
                                             //REV 8.0 END
                                             string ProductName = Convert.ToString(dr["ProductName"]);
                                             DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
@@ -7216,9 +7216,9 @@ namespace ERP.OMS.Management.Activities
                         }
 
                         //REV 8.0
-                        //obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
+                        obj.Amount = Convert.ToDouble(obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100));
 
-                        obj.Amount = Convert.ToDouble(String.Format("{0:0.00}", (obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100))));
+                       // obj.Amount = Convert.ToDouble(String.Format("{0:0.00}", (obj.calCulatedOn * (Convert.ToDecimal(obj.TaxField) / 100))));
                         //REV 8.0 END
 
 
