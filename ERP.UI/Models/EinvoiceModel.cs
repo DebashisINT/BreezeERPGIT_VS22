@@ -1,7 +1,7 @@
 ﻿#region//====================================================Revision History=========================================================================
 // 1.0   v2.0.40	Priti	10-10-2023	0026890:Error generating IRN
 // 2.0   v2.0.41	Priti	20-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
-
+// 3.0   v2.0.43	Priti	18-03-2024	0027317: An error is showing while generating IRN
 #endregion//====================================================End Revision History=====================================================================
 
 using Newtonsoft.Json;
@@ -410,7 +410,30 @@ namespace ERP.Models
         public infologV3Desc Desc { get; set; }
 
     }
+
     //Rev 2.0 End
+
+    //Rev 3.0
+    public class EWAYBILLV3
+    {
+        public string status { get; set; }
+        public IRNDetails data { get; set; }
+
+        public string error { get; set; }
+        public List<EWAYBILLinfologV3> info { get; set; }
+
+        public string additionalInfo { get; set; }
+        public string alert { get; set; }
+
+    }
+
+    public class EWAYBILLinfologV3
+    {
+        public string InfCd { get; set; }
+        public string Desc { get; set; }
+
+    }
+    //Rev 3.0
     public class IRN
     {        
         public string data { get; set; }

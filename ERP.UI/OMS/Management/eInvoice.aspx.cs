@@ -5,6 +5,7 @@
 // 4.0   v2.0.41	Priti	10-11-2023	0026981:Need to Restrict IRN Cancellation for Sales Return(Credit Note) if the Credit Note is Adjusted
 // 5.0   v2.0.41	Priti	16-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
 // 6.0   v2.0.43	Priti	05-02-2024	0027231: An error is showing while generating IRN
+// 7.0   v2.0.43	Priti	18-03-2024	0027317: An error is showing while generating IRN
 //====================================================End Revision History=====================================================================
 #endregion
 
@@ -2974,9 +2975,15 @@ namespace ERP.OMS.Management
                 {
 
                     //Rev 5.0
-                    IRNV3 objIRN = new IRNV3();
+                    //Rev  7.0
+                    //IRNV3 objIRN = new IRNV3();
+                    EWAYBILLV3 objIRN = new EWAYBILLV3();
+                    //Rev  7.0 End
                     //IRN objIRN = new IRN();
                     //Rev 5.0 End
+
+
+
                     using (var client = new HttpClient())
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls |
@@ -3008,7 +3015,7 @@ namespace ERP.OMS.Management
                             var jsonString = response.Content.ReadAsStringAsync().Result;
                             //Rev 5.0
                             //Rev Generate EWB (v3.0)
-                            objIRN = JsonConvert.DeserializeObject<IRNV3>(jsonString);
+                            objIRN = JsonConvert.DeserializeObject<EWAYBILLV3>(jsonString);
 
                             if (Convert.ToString(objIRN.status) == "1")
                             {
