@@ -35,7 +35,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%-- <script src="JS/SearchPopup.js?v=2.0"></script>--%>
     <link href="CSS/SalesInvoice.css" rel="stylesheet" />
-    <script src="JS/SalesInvoice.js?v=3.3"></script>
+    <script src="JS/SalesInvoice.js?v=3.4"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=3.7" type="text/javascript"></script>
     <style>
         .wrapHolder#pageheaderContent {
