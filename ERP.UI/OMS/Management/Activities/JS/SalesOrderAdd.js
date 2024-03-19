@@ -9,6 +9,7 @@
 // 6.0  Sanchita    V2.0.40     19-10-2023   Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
 //                                           Mantis: 26924
 // 7.0  Priti       V2.0.42     29-12-2023  GST round off value showing different between Sales Entry and Sales Invoice Print Layout.Mantis: 0027122
+// 8.0  Priti       V2.0.43     18-03-2024  Discount is not applying properly in the Sales Order module.Mantis: 0027315
     
 //====================================================End Revision History=====================================================================
 
@@ -1896,9 +1897,16 @@ function SalePriceTextChange(s, e) {
     //caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
     //    SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val());
 
-            
+    //REV 8.0
+    var AmountValue = (grid.GetEditor('Amount').GetValue() != null) ? grid.GetEditor('Amount').GetValue() : "0";
+    
+    //caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
+    //   SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+
     caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
-       SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+        SpliteDetails[19], AmountValue, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+
+    //REV 8.0 End
 
     var AmountValue = DecimalRoundoff(Amount, 2)
     if (parseFloat(AmountValue) != parseFloat(Pre_TotalAmt)) {        
@@ -2055,7 +2063,9 @@ function ctaxUpdatePanelEndCall2(s, e) {0
 
 
 function DiscountTextChange(s, e) {
-    //
+    //REV 8.0
+    grid.batchEditApi.StartEdit(globalRowIndex);
+    //REV 8.0 END
     var IsDiscountVal = '';
     //var Amount = (grid.GetEditor('Amount').GetValue() != null) ? grid.GetEditor('Amount').GetValue() : "0";
     var Discount = (grid.GetEditor('Discount').GetValue() != null) ? grid.GetEditor('Discount').GetValue() : "0";
@@ -2142,11 +2152,18 @@ function DiscountTextChange(s, e) {
             $.grep(TaxOfProduct, function (e) { if (e.SrlNo == _SrlNo) e.IsTaxEntry = "N"; });
         }
         //End
-
+        //REV 8.0
+        var AmountValue = (grid.GetEditor('Amount').GetValue() != null) ? grid.GetEditor('Amount').GetValue() : "0";
         //caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
         //    SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val());
+
+       // caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
+      //SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+
         caluculateAndSetGST(grid.GetEditor("Amount"), grid.GetEditor("TaxAmount"), grid.GetEditor("TotalAmount"),
-      SpliteDetails[19], Amount, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+            SpliteDetails[19], AmountValue, amountAfterDiscount, TaxType, CompareStateCode, $('#ddl_Branch').val(), $("#hdnEntityType").val(), cPLSalesOrderDate.GetDate(), QuantityValue);
+
+        //REV 8.0 END
 
         if (parseFloat(Amount) != parseFloat(Pre_TotalAmt)) {
             // ctaxUpdatePanel.PerformCallback('DelProdbySl~' + grid.GetEditor("SrlNo").GetValue()+ '~' + strProductID);
