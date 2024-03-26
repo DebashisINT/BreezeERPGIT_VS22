@@ -5506,7 +5506,7 @@ function QuotationNumberChanged() {
                 var OrderData = gridquotationLookup.gridView.GetSelectedKeysOnPage();
 
                 if (validateOrderwithAmountAre() == false) {
-                    J
+                    
                     var startDate = new Date();
                     startDate = cPLQuoteDate.GetDate().format('yyyy/MM/dd');
                     var key = GetObjectID('hdnCustomerId').value;

@@ -5,6 +5,7 @@
 // 4.0   V2.0.39    Sanchita    22-09-2023      GST is showing Zero in the TAX Window whereas GST in the Grid calculated. Mantis: 26843
 //                                              Session["MultiUOMData"] has been renamed to Session["MultiUOMDataGRN"]
 // 5.0   V2.0.42    Priti       02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
+// 6.0   V2.0.43    Priti       26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
 
 
 * *******************************************************************************************************************************/
@@ -6921,6 +6922,50 @@ namespace ERP.OMS.Management.Activities
             return null;
 
         }
+
+        //REV 6.0
+       
+        [WebMethod]
+        public static string FetchBatchWiseMfgDateExpiryDate(string BatchNo, string WarehouseID, string ProductID)
+        {
+            DataTable dt = new DataTable();            
+            BusinessLogicLayer.GenericMethod oGeneric = new BusinessLogicLayer.GenericMethod();
+            string Batch_MfgDate="", Batch_ExpiryDate="";
+            if (BatchNo != "" && Convert.ToString(BatchNo).Trim() != "")
+            {
+                ProcedureExecute proc;
+                try
+                {
+                    using (proc = new ProcedureExecute("proc_Fetch_PruchaseChallanDetails"))
+                    {
+                        proc.AddVarcharPara("@action", 50, "FetchBatchWiseMfgDateExpiryDate");
+                        proc.AddVarcharPara("@BatchNo", 200, BatchNo);
+                        proc.AddBigIntegerPara("@WarehouseID", Convert.ToInt32(WarehouseID));
+                        proc.AddBigIntegerPara("@ProductID", Convert.ToInt32(ProductID));
+                        dt = proc.GetTable();
+                        if (dt.Rows.Count > 0)
+                        {
+                            Batch_MfgDate = Convert.ToString(dt.Rows[0]["Batch_MfgDate"]);
+                            Batch_ExpiryDate = Convert.ToString(dt.Rows[0]["Batch_ExpiryDate"]);
+                            return Batch_MfgDate+"~"+ Batch_ExpiryDate;
+                        }
+
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Batch_MfgDate + "~" + Batch_ExpiryDate;
+                }
+
+                finally
+                {
+                    proc = null;
+                }
+            }
+            return Batch_MfgDate + "~" + Batch_ExpiryDate;
+        }
+        //REV 6.0 End
 
     }
 

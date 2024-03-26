@@ -1,9 +1,7 @@
 ﻿//==========================================================Revision History ============================================================================================
 // 1.0   Priti   V2.0.38   11-04-2023     0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
-
 // 2.0   Priti   V2.0.39   22-09-2023     0026844:Stock In Happening in different Warehouse even if the Branch selection in different
-
-
+// 3.0   Priti   V2.0.43   26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
 //========================================== End Revision History =======================================================================================================
 
 var Pre_Quantity = "0";
@@ -383,6 +381,48 @@ function BatchNoUniqueCheck() {
     });
 }
 //REV 1.0 END
+
+//Rev 3.0
+function FetchBatchWiseMfgDateExpiryDate() {
+    var BatchNo = document.getElementById("txtBatch").value;
+    var WarehouseID = $("#ddlWarehouse").val();
+    var ProductID = $("#hdfProductID").val();
+    $.ajax({
+        type: "POST",
+        url: "PurchaseChallan.aspx/FetchBatchWiseMfgDateExpiryDate",
+        data: JSON.stringify({ BatchNo: BatchNo, WarehouseID: WarehouseID, ProductID: ProductID }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (msg) {
+            var data = msg.d;
+
+            var Batch_MfgDate = (data.toString().split('~')[0] != null) ? data.toString().split('~')[0] : "";
+            var Batch_ExpiryDate = (data.toString().split('~')[1] != null) ? data.toString().split('~')[1] : "";
+            if (Batch_MfgDate != "") {
+                ctxtMfgDate.SetDate(new Date(Batch_MfgDate));
+            }
+            else {
+                ctxtMfgDate.SetDate(null);
+            }
+            if (Batch_ExpiryDate != "") {
+                ctxtExprieyDate.SetDate(new Date(Batch_ExpiryDate));
+            }
+            else {
+                ctxtExprieyDate.SetDate(null);
+            }
+
+        }
+    });
+}
+
+function ValidfromCheck(s, e) {
+    ctxtExprieyDate.SetMinDate(ctxtMfgDate.GetDate());
+    if (ctxtExprieyDate.GetDate() < ctxtMfgDate.GetDate()) {
+        ctxtExprieyDate.Clear();
+    }
+}
+//Rev 3.0 End
 function txtBillNo_TextChanged() {
     var VoucherNo = document.getElementById("txtVoucherNo").value;
 
