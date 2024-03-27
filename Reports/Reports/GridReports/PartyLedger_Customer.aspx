@@ -3,6 +3,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                20-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                02-05-2023        2.0.38           Pallab              26000: Party Ledger - Customer module zoom popup upper part visible issue fix for small device
 3.0                15-09-2023        2.0.38           Debashis            0026804 : Opening Breakup required in Party Ledger
+4.0                26-03-2024        2.0.42           Debashis            0027273: Customer code column is required in various reports.
 ====================================================== Revision History =======================================================================================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master" CodeBehind="PartyLedger_Customer.aspx.cs" Inherits="Reports.Reports.GridReports.PartyLedger_Customer" %>
@@ -1121,10 +1122,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             <Columns>
                                 <dxe:GridViewDataTextColumn FieldName="BRANCH_DESC" Caption="Unit" Width="150px" VisibleIndex="1" />
                                 <dxe:GridViewDataTextColumn FieldName="TRAN_DATE" Caption="Date" Width="90px" VisibleIndex="2" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy" />
-                                <dxe:GridViewDataTextColumn FieldName="PARTY" Caption="Customer" Width="170px" VisibleIndex="3" />
-                                <dxe:GridViewDataTextColumn FieldName="PROJ_NAME" Caption="Project Name" Width="180px" VisibleIndex="4" />
+                                <%--Rev 4.0 Mantis: 0027273--%>
+                                <dxe:GridViewDataTextColumn Caption="Code" FieldName="PARTYUCC" Width="170px" VisibleIndex="3">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 4.0 Mantis: 0027273--%>
+                                <dxe:GridViewDataTextColumn FieldName="PARTY" Caption="Customer" Width="170px" VisibleIndex="4" />
+                                <dxe:GridViewDataTextColumn FieldName="PROJ_NAME" Caption="Project Name" Width="180px" VisibleIndex="5" />
 
-                                <dxe:GridViewDataTextColumn VisibleIndex="5" FieldName="DOCUMENT_NO" Caption="Document No" Width="130px">
+                                <dxe:GridViewDataTextColumn VisibleIndex="6" FieldName="DOCUMENT_NO" Caption="Document No" Width="130px">
                                     <CellStyle HorizontalAlign="Left">
                                     </CellStyle>
                                     <HeaderStyle HorizontalAlign="Center" />
@@ -1139,26 +1145,26 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </dxe:GridViewDataTextColumn>
                                
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTICULARS" Caption="Particular" VisibleIndex="6" Width="150px" />
-                                <dxe:GridViewDataTextColumn FieldName="PAYEE_INFO" Caption="Payee/Party" VisibleIndex="7" Width="140px" />
-                                <dxe:GridViewDataTextColumn FieldName="HEADER_NARRATION" Caption="Header Narration" VisibleIndex="8" Width="200px" />
+                                <dxe:GridViewDataTextColumn FieldName="PARTICULARS" Caption="Particular" VisibleIndex="7" Width="150px" />
+                                <dxe:GridViewDataTextColumn FieldName="PAYEE_INFO" Caption="Payee/Party" VisibleIndex="8" Width="140px" />
+                                <dxe:GridViewDataTextColumn FieldName="HEADER_NARRATION" Caption="Header Narration" VisibleIndex="9" Width="200px" />
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_DEBIT" Caption="Opening Dr." Width="90px" VisibleIndex="9" PropertiesTextEdit-DisplayFormatString="0.00">
+                                <dxe:GridViewDataTextColumn FieldName="OP_DEBIT" Caption="Opening Dr." Width="90px" VisibleIndex="10" PropertiesTextEdit-DisplayFormatString="0.00">
                                      <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="OP_CREDIT" Caption="Opening Cr." Width="90px" VisibleIndex="10" PropertiesTextEdit-DisplayFormatString="0.00" >
+                                <dxe:GridViewDataTextColumn FieldName="OP_CREDIT" Caption="Opening Cr." Width="90px" VisibleIndex="11" PropertiesTextEdit-DisplayFormatString="0.00" >
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="PR_DEBIT" Caption="Period Dr." Width="90px" VisibleIndex="11" PropertiesTextEdit-DisplayFormatString="0.00" >
+                                <dxe:GridViewDataTextColumn FieldName="PR_DEBIT" Caption="Period Dr." Width="90px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="0.00" >
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn FieldName="PR_CREDIT" Caption="Period Cr." Width="90px" VisibleIndex="12" PropertiesTextEdit-DisplayFormatString="0.00" >
+                                <dxe:GridViewDataTextColumn FieldName="PR_CREDIT" Caption="Period Cr." Width="90px" VisibleIndex="13" PropertiesTextEdit-DisplayFormatString="0.00" >
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
-                                <dxe:GridViewDataTextColumn FieldName="CL_DEBIT" Caption="Closing Dr." Width="90px" VisibleIndex="13" PropertiesTextEdit-DisplayFormatString="0.00" >
+                                <dxe:GridViewDataTextColumn FieldName="CL_DEBIT" Caption="Closing Dr." Width="90px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="0.00" >
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
-                                <dxe:GridViewDataTextColumn FieldName="CL_CREDIT" Caption="Closing Cr." Width="90px" VisibleIndex="14" PropertiesTextEdit-DisplayFormatString="0.00" >
+                                <dxe:GridViewDataTextColumn FieldName="CL_CREDIT" Caption="Closing Cr." Width="90px" VisibleIndex="15" PropertiesTextEdit-DisplayFormatString="0.00" >
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>                              
                             </Columns>

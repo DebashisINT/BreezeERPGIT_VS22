@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.42    Debashis    26/03/2024  Customer code column is required in various reports.Refer: 0027273
+#endregion=======================End Revision History====================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -67,7 +70,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGrid.Columns[4].Visible = true;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGrid.Columns[4].Visible = true;
+                    ShowGrid.Columns[5].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -75,7 +81,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGrid.Columns[4].Visible = false;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGrid.Columns[4].Visible = false;
+                    ShowGrid.Columns[5].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
@@ -706,11 +715,17 @@ namespace Reports.Reports.GridReports
 
             if (Session["GROUPSELECTCL"] == null || Session["GROUPSELECTCL"] =="")
             {
-                ShowGrid.Columns[5].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGrid.Columns[5].Visible = false;
+                ShowGrid.Columns[6].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
             else if (Session["GROUPSELECTCL"] != null || Session["GROUPSELECTCL"] != "")
             {
-                ShowGrid.Columns[5].Visible = true;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGrid.Columns[5].Visible = true;
+                ShowGrid.Columns[6].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
         }
 

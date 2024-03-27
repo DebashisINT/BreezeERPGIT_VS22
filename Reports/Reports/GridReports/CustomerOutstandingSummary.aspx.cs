@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.42    Debashis    26/03/2024  Customer code column is required in various reports.Refer: 0027273
+#endregion=======================End Revision History====================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -65,7 +68,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGridCustOut.Columns[3].Visible = true;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridCustOut.Columns[3].Visible = true;
+                    ShowGridCustOut.Columns[4].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -73,7 +79,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGridCustOut.Columns[3].Visible = false;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridCustOut.Columns[3].Visible = false;
+                    ShowGridCustOut.Columns[4].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
@@ -250,7 +259,10 @@ namespace Reports.Reports.GridReports
             {
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 con.Open();
-                string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,PROJ_NAME,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,RETENTIONBLKAMT,AFTRETENTIONAMT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT FROM PARTYOUTSTANDINGSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Gross Outstanding:' AND PARTYTYPE='C' order by BRANCH_ID,PARTYID,SLNO,DOC_TYPE_ORDERBY";
+                //Rev 1.0 Mantis: 0027273
+                //string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,PROJ_NAME,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,RETENTIONBLKAMT,AFTRETENTIONAMT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT FROM PARTYOUTSTANDINGSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Gross Outstanding:' AND PARTYTYPE='C' order by BRANCH_ID,PARTYID,SLNO,DOC_TYPE_ORDERBY";
+                string selectQuery = "SELECT PARTYCODE,PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,PROJ_NAME,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,RETENTIONBLKAMT,AFTRETENTIONAMT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT FROM PARTYOUTSTANDINGSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Gross Outstanding:' AND PARTYTYPE='C' order by BRANCH_ID,PARTYID,SLNO,DOC_TYPE_ORDERBY";
+                //End of Rev 1.0 Mantis: 0027273
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
 
                 // Create and fill a DataSet.
@@ -266,6 +278,9 @@ namespace Reports.Reports.GridReports
 
                 dtExport = ds.Tables[0].Copy();
                 dtExport.Clear();
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Add(new DataColumn("Code", typeof(string)));
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Add(new DataColumn("Customer Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Unit", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Doc. Type", typeof(string)));
@@ -279,6 +294,9 @@ namespace Reports.Reports.GridReports
                 {
                     DataRow row2 = dtExport.NewRow();
 
+                    //Rev 1.0 Mantis: 0027273
+                    row2["Code"] = dr1["PARTYCODE"];
+                    //End of Rev 1.0 Mantis: 0027273
                     row2["Customer Name"] = dr1["PARTYNAME"];
                     row2["Unit"] = dr1["BRANCH_DESCRIPTION"];
                     row2["Doc. Type"] = dr1["DOC_TYPE"];
@@ -299,6 +317,9 @@ namespace Reports.Reports.GridReports
                     dtExport.Columns.Remove("After Retention");
                 }
 
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Remove("PARTYCODE");
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Remove("PARTYNAME");
                 dtExport.Columns.Remove("BRANCH_DESCRIPTION");
                 dtExport.Columns.Remove("DOC_TYPE");
@@ -699,13 +720,21 @@ namespace Reports.Reports.GridReports
 
             if (chkRetention.Checked == false)
             {
-                ShowGridCustOut.Columns[5].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridCustOut.Columns[5].Visible = false;
+                //ShowGridCustOut.Columns[6].Visible = false;
                 ShowGridCustOut.Columns[6].Visible = false;
+                ShowGridCustOut.Columns[7].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
             else
             {
-                ShowGridCustOut.Columns[5].Visible = true;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridCustOut.Columns[5].Visible = true;
+                //ShowGridCustOut.Columns[6].Visible = true;
                 ShowGridCustOut.Columns[6].Visible = true;
+                ShowGridCustOut.Columns[7].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
             ShowGridCustOut.ExpandAll();
         }

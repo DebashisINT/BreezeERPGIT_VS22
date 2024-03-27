@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ==========================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                28-02-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                26-03-2024        2.0.42           Debashis            0027273: Customer code column is required in various reports.
+====================================================== Revision History ==========================================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerAgeingSummary.aspx.cs" Inherits="Reports.Reports.GridReports.CustomerAgeingSummary" %>
 
@@ -1066,8 +1067,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                <%--  <dxe:GridViewDataTextColumn Caption="Sl."  FieldName="SEQ" GroupIndex="0"
                                     VisibleIndex="0" >
                                 </dxe:GridViewDataTextColumn>--%>
+                                <%--Rev 2.0 Mantis: 0027273--%>
+                                <dxe:GridViewDataTextColumn Caption="Code" FieldName="PARTYCODE" GroupIndex="0" VisibleIndex="0">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0027273--%>
 
-                                <dxe:GridViewDataTextColumn Caption="Customer Name"  FieldName="PARTYNAME" GroupIndex="0"
+                                <dxe:GridViewDataTextColumn Caption="Customer Name"  FieldName="PARTYNAME" GroupIndex="1"
                                     VisibleIndex="0"  >
                                 </dxe:GridViewDataTextColumn>
                                 <dxe:GridViewDataTextColumn Caption="Unit" FieldName="BRANCH_DESCRIPTION" Width="80%" VisibleIndex="1" FixedStyle="Left" HeaderStyle-CssClass="colDisable">

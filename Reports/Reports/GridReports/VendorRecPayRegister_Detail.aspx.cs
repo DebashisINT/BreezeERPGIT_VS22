@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.42    Debashis    26/03/2024  Vendor code column is required in various reports.Refer: 0027273
+#endregion=======================End Revision History====================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -45,7 +48,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lbl_Project.Visible = true;
-                    ShowGrid.Columns[6].Visible = true;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGrid.Columns[6].Visible = true;
+                    ShowGrid.Columns[7].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -53,7 +59,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lbl_Project.Visible = false;
-                    ShowGrid.Columns[6].Visible = false;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGrid.Columns[6].Visible = false;
+                    ShowGrid.Columns[7].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
