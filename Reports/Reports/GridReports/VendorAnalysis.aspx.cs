@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.42    Debashis    26/03/2024  Vendor code column is required in various reports.Refer: 0027273
+#endregion=======================End Revision History====================================================================================================
+using DevExpress.Web;
 using EntityLayer.CommonELS;
 using System;
 using System.Collections.Generic;
@@ -55,7 +58,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGridVendAnalysis.Columns[4].Visible = true;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridVendAnalysis.Columns[4].Visible = true;
+                    ShowGridVendAnalysis.Columns[5].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -63,7 +69,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGridVendAnalysis.Columns[4].Visible = false;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridVendAnalysis.Columns[4].Visible = false;
+                    ShowGridVendAnalysis.Columns[5].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
@@ -122,30 +131,32 @@ namespace Reports.Reports.GridReports
                 {
                     BRANCH_ID = hdnSelectedBranches.Value;
                 }
-                string strduedatechk = (chkduedate.Checked) ? "1" : "0";
-                string strprintdatechk = (chkprintdays.Checked) ? "1" : "0";
+                //Rev 1.0 Mantis: 0027273
+                //string strduedatechk = (chkduedate.Checked) ? "1" : "0";
+                //string strprintdatechk = (chkprintdays.Checked) ? "1" : "0";
 
-                if (Convert.ToString(strduedatechk) == "0")
-                {
-                    //ShowGridVendAnalysis.Columns[8].Visible = false;
-                    ShowGridVendAnalysis.Columns[9].Visible = false;
-                }
-                else
-                {
-                    //ShowGridVendAnalysis.Columns[8].Visible = true;
-                    ShowGridVendAnalysis.Columns[9].Visible = true;
-                }
+                //if (Convert.ToString(strduedatechk) == "0")
+                //{
+                //    //ShowGridVendAnalysis.Columns[8].Visible = false;
+                //    ShowGridVendAnalysis.Columns[9].Visible = false;
+                //}
+                //else
+                //{
+                //    //ShowGridVendAnalysis.Columns[8].Visible = true;
+                //    ShowGridVendAnalysis.Columns[9].Visible = true;
+                //}
 
-                if (Convert.ToString(strprintdatechk) == "0")
-                {
-                    //ShowGridVendAnalysis.Columns[15].Visible = false;
-                    ShowGridVendAnalysis.Columns[16].Visible = false;
-                }
-                else
-                {
-                    //ShowGridVendAnalysis.Columns[15].Visible = true;
-                    ShowGridVendAnalysis.Columns[16].Visible = true;
-                }
+                //if (Convert.ToString(strprintdatechk) == "0")
+                //{
+                //    //ShowGridVendAnalysis.Columns[15].Visible = false;
+                //    ShowGridVendAnalysis.Columns[16].Visible = false;
+                //}
+                //else
+                //{
+                //    //ShowGridVendAnalysis.Columns[15].Visible = true;
+                //    ShowGridVendAnalysis.Columns[16].Visible = true;
+                //}
+                //End of Rev 1.0 Mantis: 0027273
             }
         }
 
@@ -233,7 +244,10 @@ namespace Reports.Reports.GridReports
             {
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 con.Open();
-                string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,ADJ_DOC_TYPE,ADJ_DOC_NO,ADJ_DOC_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(ADJ_AMOUNT,'(',CASE WHEN SUBSTRING(ADJ_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS ADJ_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT,DAYS FROM PARTYWISEANALYSISDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999 AND DOC_TYPE<>'Gross Total :' AND PARTYTYPE='V' order by SEQ";
+                //Rev 1.0 Mantis: 0027273
+                //string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,ADJ_DOC_TYPE,ADJ_DOC_NO,ADJ_DOC_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(ADJ_AMOUNT,'(',CASE WHEN SUBSTRING(ADJ_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS ADJ_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT,DAYS FROM PARTYWISEANALYSISDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999 AND DOC_TYPE<>'Gross Total :' AND PARTYTYPE='V' order by SEQ";
+                string selectQuery = "SELECT PARTYCODE,PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,ADJ_DOC_TYPE,ADJ_DOC_NO,ADJ_DOC_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(ADJ_AMOUNT,'(',CASE WHEN SUBSTRING(ADJ_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS ADJ_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(BAL_AMOUNT,'(',CASE WHEN SUBSTRING(BAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS BAL_AMOUNT,DAYS FROM PARTYWISEANALYSISDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999 AND DOC_TYPE<>'Gross Total :' AND PARTYTYPE='V' order by SEQ";
+                //End of Rev 1.0 Mantis: 0027273
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
 
                 // Create and fill a DataSet.
@@ -251,6 +265,9 @@ namespace Reports.Reports.GridReports
 
                 dtExport = ds.Tables[0].Copy();
                 dtExport.Clear();
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Add(new DataColumn("Code", typeof(string)));
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Add(new DataColumn("Vendor Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Unit", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Doc. Type", typeof(string)));
@@ -273,6 +290,9 @@ namespace Reports.Reports.GridReports
                 {
                     DataRow row2 = dtExport.NewRow();
 
+                    //Rev 1.0 Mantis: 0027273
+                    row2["Code"] = dr1["PARTYCODE"];
+                    //End of Rev 1.0 Mantis: 0027273
                     row2["Vendor Name"] = dr1["PARTYNAME"];
                     row2["Unit"] = dr1["BRANCH_DESCRIPTION"];
                     row2["Doc. Type"] = dr1["DOC_TYPE"];
@@ -301,6 +321,9 @@ namespace Reports.Reports.GridReports
                 if (Convert.ToString(strprintdatechk) == "0")
                     dtExport.Columns.Remove("Days");
 
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Remove("PARTYCODE");
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Remove("PARTYNAME");
                 dtExport.Columns.Remove("BRANCH_DESCRIPTION");
                 dtExport.Columns.Remove("DOC_TYPE");
@@ -382,13 +405,13 @@ namespace Reports.Reports.GridReports
                 case 1:
                     //Rev Debashis
                     //exporter.WriteXlsxToResponse(new XlsxExportOptionsEx() { ExportType = ExportType.WYSIWYG });
-                    objExcel.ExportToExcelforExcel(dtExport, "Vendor Analysis-Detail", "Total of ", "", dtReportHeader, dtReportFooter);
+                    objExcel.ExportToExcelforExcel(dtExport, "Vendor Analysis-Detail", "Total of ", "ZZZZZZZZZZZZZZZZZZZZ", dtReportHeader, dtReportFooter);
                     //End of Rev Debashis
                     break;
                 case 2:
                     //Rev Debashis
                     //exporter.WritePdfToResponse();
-                    objExcel.ExportToPDF(dtExport, "Vendor Analysis-Detail", "Total of ", "", dtReportHeader, dtReportFooter);
+                    objExcel.ExportToPDF(dtExport, "Vendor Analysis-Detail", "Total of ", "ZZZZZZZZZZZZZZZZZZZZ", dtReportHeader, dtReportFooter);
                     //End of Rev Debashis
                     break;
                 case 3:
@@ -688,23 +711,35 @@ namespace Reports.Reports.GridReports
             if (Convert.ToString(strduedatechk) == "0")
             {
                 //ShowGridVendAnalysis.Columns[8].Visible = false;
-                ShowGridVendAnalysis.Columns[9].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAnalysis.Columns[9].Visible = false;
+                ShowGridVendAnalysis.Columns[10].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
             else
             {
                 //ShowGridVendAnalysis.Columns[8].Visible = true;
-                ShowGridVendAnalysis.Columns[9].Visible = true;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAnalysis.Columns[9].Visible = true;
+                ShowGridVendAnalysis.Columns[10].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
 
             if (Convert.ToString(strprintdatechk) == "0")
             {
                 //ShowGridVendAnalysis.Columns[15].Visible = false;
-                ShowGridVendAnalysis.Columns[16].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAnalysis.Columns[16].Visible = false;
+                ShowGridVendAnalysis.Columns[17].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
             else
             {
                 //ShowGridVendAnalysis.Columns[15].Visible = true;
-                ShowGridVendAnalysis.Columns[16].Visible = true;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAnalysis.Columns[16].Visible = true;
+                ShowGridVendAnalysis.Columns[17].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
 
             ShowGridVendAnalysis.ExpandAll();

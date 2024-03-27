@@ -1,4 +1,7 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.42    Debashis    26/03/2024  Vendor code column is required in various reports.Refer: 0027273
+#endregion=======================End Revision History====================================================================================================
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -75,7 +78,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGridVendAgeing.Columns[4].Visible = true;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridVendAgeing.Columns[4].Visible = true;
+                    ShowGridVendAgeing.Columns[5].Visible = true;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -83,7 +89,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGridVendAgeing.Columns[4].Visible = false;
+                    //Rev 1.0 Mantis: 0027273
+                    //ShowGridVendAgeing.Columns[4].Visible = false;
+                    ShowGridVendAgeing.Columns[5].Visible = false;
+                    //End of Rev 1.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
@@ -237,7 +246,10 @@ namespace Reports.Reports.GridReports
             {
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 con.Open();
-                string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS30,'(',CASE WHEN SUBSTRING(DAYS30,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS30,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS60,'(',CASE WHEN SUBSTRING(DAYS60,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS60,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS90,'(',CASE WHEN SUBSTRING(DAYS90,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS90,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS120,'(',CASE WHEN SUBSTRING(DAYS120,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS120,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS150,'(',CASE WHEN SUBSTRING(DAYS150,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS150,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180,'(',CASE WHEN SUBSTRING(DAYS180,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180A,'(',CASE WHEN SUBSTRING(DAYS180A,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180A,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(CUMBAL_AMOUNT,'(',CASE WHEN SUBSTRING(CUMBAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS CUMBAL_AMOUNT,DAYS FROM PARTYWISEAGEINGSUMDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Net Total:' AND REPORT_TYPE='Detail' AND PARTYTYPE='V' order by PARTYID,SLNO,CONVERT(DATETIME,DOC_DATE,103),DOC_NO";
+                //Rev 1.0 Mantis: 0027273
+                //string selectQuery = "SELECT PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS30,'(',CASE WHEN SUBSTRING(DAYS30,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS30,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS60,'(',CASE WHEN SUBSTRING(DAYS60,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS60,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS90,'(',CASE WHEN SUBSTRING(DAYS90,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS90,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS120,'(',CASE WHEN SUBSTRING(DAYS120,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS120,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS150,'(',CASE WHEN SUBSTRING(DAYS150,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS150,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180,'(',CASE WHEN SUBSTRING(DAYS180,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180A,'(',CASE WHEN SUBSTRING(DAYS180A,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180A,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(CUMBAL_AMOUNT,'(',CASE WHEN SUBSTRING(CUMBAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS CUMBAL_AMOUNT,DAYS FROM PARTYWISEAGEINGSUMDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Net Total:' AND REPORT_TYPE='Detail' AND PARTYTYPE='V' order by PARTYID,SLNO,CONVERT(DATETIME,DOC_DATE,103),DOC_NO";
+                string selectQuery = "SELECT PARTYCODE,PARTYNAME,BRANCH_DESCRIPTION,DOC_TYPE,ISOPENING,PROJ_NAME,DOC_NO,DOC_DATE,PARTYINVOICENO,PARTYINVOICEDATE,DUE_DATE,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DOC_AMOUNT,'(',CASE WHEN SUBSTRING(DOC_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS DOC_AMOUNT,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS30,'(',CASE WHEN SUBSTRING(DAYS30,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS30,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS60,'(',CASE WHEN SUBSTRING(DAYS60,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS60,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS90,'(',CASE WHEN SUBSTRING(DAYS90,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS90,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS120,'(',CASE WHEN SUBSTRING(DAYS120,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS120,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS150,'(',CASE WHEN SUBSTRING(DAYS150,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS150,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180,'(',CASE WHEN SUBSTRING(DAYS180,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(DAYS180A,'(',CASE WHEN SUBSTRING(DAYS180A,1,1)='(' THEN '-' ELSE '' END),')','')) AS DAYS180A,CONVERT(DECIMAL(18,2),REPLACE(REPLACE(CUMBAL_AMOUNT,'(',CASE WHEN SUBSTRING(CUMBAL_AMOUNT,1,1)='(' THEN '-' ELSE '' END),')','')) AS CUMBAL_AMOUNT,DAYS FROM PARTYWISEAGEINGSUMDET_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND SLNO<>999999999 AND DOC_TYPE<>'Net Total:' AND REPORT_TYPE='Detail' AND PARTYTYPE='V' order by PARTYID,SLNO,CONVERT(DATETIME,DOC_DATE,103),DOC_NO";
+                //End of Rev 1.0 Mantis: 0027273
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
 
                 // Create and fill a DataSet.
@@ -253,6 +265,9 @@ namespace Reports.Reports.GridReports
 
                 dtExport = ds.Tables[0].Copy();
                 dtExport.Clear();
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Add(new DataColumn("Code", typeof(string)));
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Add(new DataColumn("Vendor Name", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Unit", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Doc. Type", typeof(string)));
@@ -278,6 +293,9 @@ namespace Reports.Reports.GridReports
                 {
                     DataRow row2 = dtExport.NewRow();
 
+                    //Rev 1.0 Mantis: 0027273
+                    row2["Code"] = dr1["PARTYCODE"];
+                    //End of Rev 1.0 Mantis: 0027273
                     row2["Vendor Name"] = dr1["PARTYNAME"];
                     row2["Unit"] = dr1["BRANCH_DESCRIPTION"];
                     row2["Doc. Type"] = dr1["DOC_TYPE"];
@@ -305,6 +323,9 @@ namespace Reports.Reports.GridReports
                 if (ProjectSelectInEntryModule.ToUpper().Trim() == "NO")
                     dtExport.Columns.Remove("Project Name");
 
+                //Rev 1.0 Mantis: 0027273
+                dtExport.Columns.Remove("PARTYCODE");
+                //End of Rev 1.0 Mantis: 0027273
                 dtExport.Columns.Remove("PARTYNAME");
                 dtExport.Columns.Remove("BRANCH_DESCRIPTION");
                 dtExport.Columns.Remove("DOC_TYPE");
@@ -396,13 +417,13 @@ namespace Reports.Reports.GridReports
                 case 1:
                     //Rev Debashis
                     //exporter.WritePdfToResponse();
-                    objExcel.ExportToExcelforExcel(dtExport, "Vendor Ageing-Detail", "Party Total:", "", dtReportHeader, dtReportFooter);
+                    objExcel.ExportToExcelforExcel(dtExport, "Vendor Ageing-Detail", "Party Total:", "ZZZZZZZZZZZZZZZZZZZZ", dtReportHeader, dtReportFooter);
                     //End of Rev Debashis
                     break;
                 case 2:
                     //Rev Debashis
                     //exporter.WriteXlsxToResponse(new XlsxExportOptionsEx() { ExportType = ExportType.WYSIWYG });
-                    objExcel.ExportToPDF(dtExport, "Vendor Ageing-Detail", "Party Total:", "", dtReportHeader, dtReportFooter);
+                    objExcel.ExportToPDF(dtExport, "Vendor Ageing-Detail", "Party Total:", "ZZZZZZZZZZZZZZZZZZZZ", dtReportHeader, dtReportFooter);
                     //End of Rev Debashis
                     break;
                 //Rev Debashis
@@ -750,83 +771,155 @@ namespace Reports.Reports.GridReports
 
             if (ddldays.SelectedValue == "All")
             {
-                ShowGridVendAgeing.Columns[11].Visible = true;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = true;
+                //ShowGridVendAgeing.Columns[12].Visible = true;
+                //ShowGridVendAgeing.Columns[13].Visible = true;
+                //ShowGridVendAgeing.Columns[14].Visible = true;
+                //ShowGridVendAgeing.Columns[15].Visible = true;
+                //ShowGridVendAgeing.Columns[16].Visible = true;
+                //ShowGridVendAgeing.Columns[17].Visible = true;
                 ShowGridVendAgeing.Columns[12].Visible = true;
                 ShowGridVendAgeing.Columns[13].Visible = true;
                 ShowGridVendAgeing.Columns[14].Visible = true;
                 ShowGridVendAgeing.Columns[15].Visible = true;
                 ShowGridVendAgeing.Columns[16].Visible = true;
                 ShowGridVendAgeing.Columns[17].Visible = true;
+                ShowGridVendAgeing.Columns[18].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
             else if (ddldays.SelectedValue == "D30")
             {
-                ShowGridVendAgeing.Columns[11].Visible = true;
-                ShowGridVendAgeing.Columns[12].Visible = false;
-                ShowGridVendAgeing.Columns[13].Visible = false;
-                ShowGridVendAgeing.Columns[14].Visible = false;
-                ShowGridVendAgeing.Columns[15].Visible = false;
-                ShowGridVendAgeing.Columns[16].Visible = false;
-                ShowGridVendAgeing.Columns[17].Visible = false;
-            }
-            else if (ddldays.SelectedValue == "D60")
-            {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = true;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = true;
                 ShowGridVendAgeing.Columns[13].Visible = false;
                 ShowGridVendAgeing.Columns[14].Visible = false;
                 ShowGridVendAgeing.Columns[15].Visible = false;
                 ShowGridVendAgeing.Columns[16].Visible = false;
                 ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
-            else if (ddldays.SelectedValue == "D90")
+            else if (ddldays.SelectedValue == "D60")
             {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = true;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = false;
                 ShowGridVendAgeing.Columns[13].Visible = true;
                 ShowGridVendAgeing.Columns[14].Visible = false;
                 ShowGridVendAgeing.Columns[15].Visible = false;
                 ShowGridVendAgeing.Columns[16].Visible = false;
                 ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
-            else if (ddldays.SelectedValue == "D120")
+            else if (ddldays.SelectedValue == "D90")
             {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = true;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = false;
                 ShowGridVendAgeing.Columns[13].Visible = false;
                 ShowGridVendAgeing.Columns[14].Visible = true;
                 ShowGridVendAgeing.Columns[15].Visible = false;
                 ShowGridVendAgeing.Columns[16].Visible = false;
                 ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
-            else if (ddldays.SelectedValue == "D150")
+            else if (ddldays.SelectedValue == "D120")
             {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = true;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = false;
                 ShowGridVendAgeing.Columns[13].Visible = false;
                 ShowGridVendAgeing.Columns[14].Visible = false;
                 ShowGridVendAgeing.Columns[15].Visible = true;
                 ShowGridVendAgeing.Columns[16].Visible = false;
                 ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
-            else if (ddldays.SelectedValue == "D180")
+            else if (ddldays.SelectedValue == "D150")
             {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = true;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = false;
                 ShowGridVendAgeing.Columns[13].Visible = false;
                 ShowGridVendAgeing.Columns[14].Visible = false;
                 ShowGridVendAgeing.Columns[15].Visible = false;
                 ShowGridVendAgeing.Columns[16].Visible = true;
                 ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
             }
-            else if (ddldays.SelectedValue == "D180A")
+            else if (ddldays.SelectedValue == "D180")
             {
-                ShowGridVendAgeing.Columns[11].Visible = false;
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = true;
+                //ShowGridVendAgeing.Columns[17].Visible = false;
                 ShowGridVendAgeing.Columns[12].Visible = false;
                 ShowGridVendAgeing.Columns[13].Visible = false;
                 ShowGridVendAgeing.Columns[14].Visible = false;
                 ShowGridVendAgeing.Columns[15].Visible = false;
                 ShowGridVendAgeing.Columns[16].Visible = false;
                 ShowGridVendAgeing.Columns[17].Visible = true;
+                ShowGridVendAgeing.Columns[18].Visible = false;
+                //End of Rev 1.0 Mantis: 0027273
+            }
+            else if (ddldays.SelectedValue == "D180A")
+            {
+                //Rev 1.0 Mantis: 0027273
+                //ShowGridVendAgeing.Columns[11].Visible = false;
+                //ShowGridVendAgeing.Columns[12].Visible = false;
+                //ShowGridVendAgeing.Columns[13].Visible = false;
+                //ShowGridVendAgeing.Columns[14].Visible = false;
+                //ShowGridVendAgeing.Columns[15].Visible = false;
+                //ShowGridVendAgeing.Columns[16].Visible = false;
+                //ShowGridVendAgeing.Columns[17].Visible = true;
+                ShowGridVendAgeing.Columns[12].Visible = false;
+                ShowGridVendAgeing.Columns[13].Visible = false;
+                ShowGridVendAgeing.Columns[14].Visible = false;
+                ShowGridVendAgeing.Columns[15].Visible = false;
+                ShowGridVendAgeing.Columns[16].Visible = false;
+                ShowGridVendAgeing.Columns[17].Visible = false;
+                ShowGridVendAgeing.Columns[18].Visible = true;
+                //End of Rev 1.0 Mantis: 0027273
             }
 
             ShowGridVendAgeing.ExpandAll();

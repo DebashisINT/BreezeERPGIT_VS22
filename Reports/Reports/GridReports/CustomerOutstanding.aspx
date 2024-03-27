@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ===================================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                24-02-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                26-03-2024        2.0.42           Debashis            0027273: Customer code column is required in various reports.
+====================================================== Revision History ===================================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerOutstanding.aspx.cs" 
     Inherits="Reports.Reports.GridReports.CustomerOutstanding" %>
@@ -869,32 +870,37 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                 <Columns>
                     <dxe:GridViewDataTextColumn FieldName="BRANCH_DESCRIPTION" Caption="Branch/Unit" Width="8%" VisibleIndex="0">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="CUSTOMER" Caption="Customer" Width="12%" VisibleIndex="1">
+                    <%--Rev 2.0 Mantis: 0027273--%>
+                    <dxe:GridViewDataTextColumn Caption="Code" FieldName="PARTYUCC" Width="12%" VisibleIndex="1">
+                        <Settings AutoFilterCondition="Contains" />
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="SALESMAN" Caption="Salesman" Width="12%" VisibleIndex="2">
+                    <%--End of Rev 2.0 Mantis: 0027273--%>
+                    <dxe:GridViewDataTextColumn FieldName="CUSTOMER" Caption="Customer" Width="12%" VisibleIndex="2">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="INVOICE_NUMBER" Caption="Bill No." Width="12%" VisibleIndex="3">
+                    <dxe:GridViewDataTextColumn FieldName="SALESMAN" Caption="Salesman" Width="12%" VisibleIndex="3">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="INVOICE_DATE" Caption="Bill Date" Width="8%" VisibleIndex="4">
+                    <dxe:GridViewDataTextColumn FieldName="INVOICE_NUMBER" Caption="Bill No." Width="12%" VisibleIndex="4">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="INVOICE_TOTALAMOUNT" Caption="Bill Amount" Width="8%" VisibleIndex="5">
+                    <dxe:GridViewDataTextColumn FieldName="INVOICE_DATE" Caption="Bill Date" Width="8%" VisibleIndex="5">
+                    </dxe:GridViewDataTextColumn>
+                    <dxe:GridViewDataTextColumn FieldName="INVOICE_TOTALAMOUNT" Caption="Bill Amount" Width="8%" VisibleIndex="6">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="ADJ_DOC_N0" Caption="Adjusted Doc No" Width="12%" VisibleIndex="6">
+                    <dxe:GridViewDataTextColumn FieldName="ADJ_DOC_N0" Caption="Adjusted Doc No" Width="12%" VisibleIndex="7">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="ADJ_DOC_DATE" Caption="Adjusted Doc Date" Width="10%" VisibleIndex="7">
+                    <dxe:GridViewDataTextColumn FieldName="ADJ_DOC_DATE" Caption="Adjusted Doc Date" Width="10%" VisibleIndex="8">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="DOC_TYPE" Caption="Adjusted Doc Type" Width="12%" VisibleIndex="8">
+                    <dxe:GridViewDataTextColumn FieldName="DOC_TYPE" Caption="Adjusted Doc Type" Width="12%" VisibleIndex="9">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="ADJ_AMOUNT" Caption="Adjusted Amount" Width="10%" VisibleIndex="9">
+                    <dxe:GridViewDataTextColumn FieldName="ADJ_AMOUNT" Caption="Adjusted Amount" Width="10%" VisibleIndex="10">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="BALANCE" Caption="Outstanding Amount" Width="12%" VisibleIndex="10">
+                    <dxe:GridViewDataTextColumn FieldName="BALANCE" Caption="Outstanding Amount" Width="12%" VisibleIndex="11">
                         <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="DUE_DATE" Caption="Due Date" Width="8%" VisibleIndex="11">
+                    <dxe:GridViewDataTextColumn FieldName="DUE_DATE" Caption="Due Date" Width="8%" VisibleIndex="12">
                     </dxe:GridViewDataTextColumn>
-                    <dxe:GridViewDataTextColumn FieldName="OVERDUE" Caption="Overdue" Width="8%" VisibleIndex="12">
+                    <dxe:GridViewDataTextColumn FieldName="OVERDUE" Caption="Overdue" Width="8%" VisibleIndex="13">
                         <PropertiesTextEdit DisplayFormatString="0"></PropertiesTextEdit>
                     </dxe:GridViewDataTextColumn>
                 </Columns>

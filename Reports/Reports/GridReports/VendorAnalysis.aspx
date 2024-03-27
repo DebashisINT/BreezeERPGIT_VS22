@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ==============================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                01-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                26-03-2024        2.0.42           Debashis            0027273: Vendor code column is required in various reports.
+====================================================== Revision History ==============================================================================--%>
 
 <%@ Page Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorAnalysis.aspx.cs" Inherits="Reports.Reports.GridReports.VendorAnalysis" %>
 
@@ -1023,7 +1024,13 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                DataSourceID="GenerateEntityServerModeDataSource" ClientSideEvents-BeginCallback="CallbackVendAnalysis_BeginCallback" Settings-VerticalScrollableHeight="300"
                                OnHtmlFooterCellPrepared="ShowGridVendAnalysis_HtmlFooterCellPrepared" OnHtmlDataCellPrepared="ShowGridVendAnalysis_HtmlDataCellPrepared">
                             <Columns>
-                                <dxe:GridViewDataTextColumn Caption="Vendor Name"  FieldName="PARTYNAME" GroupIndex="0" VisibleIndex="0" >
+                                <%--Rev 2.0 Mantis: 0027273--%>
+                                <dxe:GridViewDataTextColumn Caption="Code" FieldName="PARTYCODE" GroupIndex="0" VisibleIndex="0">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0027273--%>
+
+                                <dxe:GridViewDataTextColumn Caption="Vendor Name"  FieldName="PARTYNAME" GroupIndex="1" VisibleIndex="0" >
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 

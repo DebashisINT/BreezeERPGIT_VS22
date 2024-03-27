@@ -1,7 +1,8 @@
-﻿<%--================================================== Revision History =============================================
+﻿<%--================================================== Revision History ====================================================================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                01-03-2023        2.0.36           Pallab              25575 : Report pages design modification
-====================================================== Revision History =============================================--%>
+2.0                26-03-2024        2.0.42           Debashis            0027273: Customer code column is required in various reports.
+====================================================== Revision History ====================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="CustomerAnalysis.aspx.cs" Inherits="Reports.Reports.GridReports.CustomerAnalysis" %>
 
@@ -1077,14 +1078,20 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                DataSourceID="GenerateEntityServerModeDataSource" ClientSideEvents-BeginCallback="CallbackCustAnalysis_BeginCallback" Settings-VerticalScrollableHeight="300"
                                OnHtmlFooterCellPrepared="ShowGridCustAnalysis_HtmlFooterCellPrepared" OnHtmlDataCellPrepared="ShowGridCustAnalysis_HtmlDataCellPrepared">
                             <Columns>
-                                <dxe:GridViewDataTextColumn Caption="Customer Name"  FieldName="PARTYNAME" GroupIndex="0" VisibleIndex="0">
+                                <%--Rev 2.0 Mantis: 0027273--%>
+                                <dxe:GridViewDataTextColumn Caption="Code" FieldName="PARTYCODE" GroupIndex="0" VisibleIndex="0">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 2.0 Mantis: 0027273--%>
+
+                                <dxe:GridViewDataTextColumn Caption="Customer Name" FieldName="PARTYNAME" GroupIndex="1" VisibleIndex="0">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
                                 <dxe:GridViewDataTextColumn Caption="Unit" FieldName="BRANCH_DESCRIPTION" Width="210px" VisibleIndex="1" HeaderStyle-CssClass="colDisable">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
-                                </dxe:GridViewDataTextColumn>
+                                </dxe:GridViewDataTextColumn>                                
                             
                                  <dxe:GridViewDataTextColumn VisibleIndex="2" FieldName="DOC_TYPE" Width="190px" Caption="Doc. Type" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Left"></CellStyle>

@@ -1,5 +1,6 @@
 ﻿#region ==========================Revision History====================================================================================================
 //1.0   v2 .0.38    Debashis    15/09/2023      Opening Breakup required in Party Ledger.Refer: 0026804
+//2.0   v2 .0.42    Debashis    26/03/2024      Customer code column is required in various reports.Refer: 0027273
 #endregion =======================End Revision History================================================================================================
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -56,7 +57,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = true;
                     lblProj.Visible = true;
-                    ShowGrid.Columns[3].Visible = true;
+                    //Rev 2.0 Mantis: 0027273
+                    //ShowGrid.Columns[3].Visible = true;
+                    ShowGrid.Columns[4].Visible = true;
+                    //End of Rev 2.0 Mantis: 0027273
                     hdnProjectSelection.Value = "1";
 
                 }
@@ -64,7 +68,10 @@ namespace Reports.Reports.GridReports
                 {
                     lookup_project.Visible = false;
                     lblProj.Visible = false;
-                    ShowGrid.Columns[3].Visible = false;
+                    //Rev 2.0 Mantis: 0027273
+                    //ShowGrid.Columns[3].Visible = false;
+                    ShowGrid.Columns[4].Visible = false;
+                    //End of Rev 2.0 Mantis: 0027273
                     hdnProjectSelection.Value = "0";
                 }
             }
