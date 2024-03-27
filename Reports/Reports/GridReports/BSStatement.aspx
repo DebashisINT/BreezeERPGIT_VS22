@@ -6,6 +6,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                            The Running Balance of the 3rd Level zooming of any ledger from PL - Horizontal & 
                                                                            BS - Horizontal to be set as per Ledger Type
                                                                            Refer: 0026252 & 0026318
+3.0                27-03-2024       V2.0.46            Sanchita            Contra Transactions showing as Opening Entry in BS. Refer: 0027336  
 ====================================================== Revision History ==========================================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BSStatement.aspx.cs" Inherits="Reports.Reports.GridReports.BSStatement" %>
@@ -657,6 +658,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             else if (type == 'IPB') {
                 url = '/Import/PurchaseInvoice-Import.aspx?key=' + Uniqueid + '&IsTagged=1&req=V&type=' + type;
             }
+            // Rev 3.0
+            else if (type == 'TCB') {
+                url = '/OMS/Management/dailytask/ContraVoucher.aspx?key=' + Uniqueid + '&IsTagged=1&req=' + docno;
+            }
+            // End of Rev 3.0
             popupdocument.SetContentUrl(url);
             popupdocument.Show();
         }
