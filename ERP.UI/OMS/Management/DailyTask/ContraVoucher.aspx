@@ -2609,11 +2609,10 @@ function gridRowclick(s, e) {
                 <%--Rev 3.0 [Settings-HorizontalScrollBarMode="Visible" added]  --%>
                 <dxe:ASPxGridView runat="server" ClientInstanceName="grid" ID="grid" KeyFieldName="WithDrawFrom"
                     Width="100%" EnableRowsCache="False" OnCellEditorInitialize="grid_CellEditorInitialize" OnCustomCallback="grid_CustomCallback"
-                    OnCustomJSProperties="grid_CustomJSProperties" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" 
-                    OnInitNewRow="grid_InitNewRow" Settings-HorizontalScrollBarMode="Visible">
+                    OnCustomJSProperties="grid_CustomJSProperties" SettingsBehavior-AllowSort="false" OnInitNewRow="grid_InitNewRow">
                     <SettingsPager Visible="false"></SettingsPager>
                     <Columns>
-                        <dxe:GridViewDataComboBoxColumn Caption="Withdrawal From" FieldName="WithDrawFrom" VisibleIndex="0" Width="280px">
+                        <dxe:GridViewDataComboBoxColumn Caption="Withdrawal From" FieldName="WithDrawFrom" VisibleIndex="0" Width="200px">
                             <PropertiesComboBox ValueField="AccountCode" ClientInstanceName="WithDrawFrom" TextField="IntegrateMainAccount" ClearButton-DisplayMode="Always">
                                 <%-- <ValidationSettings RequiredField-IsRequired="true" Display="None"></ValidationSettings>--%>
                                 <ClientSideEvents SelectedIndexChanged="Withdrawal_SelectedIndexChanged" GotFocus="calWithdrawalBal"  />
@@ -2631,7 +2630,7 @@ function gridRowclick(s, e) {
                         </dxe:GridViewDataButtonEditColumn>
 
 
-                        <dxe:GridViewDataComboBoxColumn FieldName="DepositInto" Caption="Deposit Into" VisibleIndex="2" Width="280px">
+                        <dxe:GridViewDataComboBoxColumn FieldName="DepositInto" Caption="Deposit Into" VisibleIndex="2" Width="200px">
                             <PropertiesComboBox ValueField="AccountCode" ClientInstanceName="DepositInto" TextField="IntegrateMainAccount" ClearButton-DisplayMode="Always">
                                 <%-- <ValidationSettings RequiredField-IsRequired="true" Display="None"></ValidationSettings>--%>
                                 <ClientSideEvents SelectedIndexChanged="Deposit_SelectedIndexChanged" LostFocus="DepositInto_LostFocus"  />
