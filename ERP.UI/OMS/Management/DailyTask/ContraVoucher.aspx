@@ -1,7 +1,7 @@
 ﻿<%--=======================================================Revision History=========================================================================    
     1.0 Pallab   V2.0.37  05-04-2023     25858: Contra Voucher module design modification
     2.0 Priti    V2.0.43  27-02-2024     0025264: listing view upgradation required of Contra Voucher of Accounts & Finance
-
+    3.0 Sanchita V2.0.46  27-03-2024     Contra Transactions showing as Opening Entry in BS. Refer: 0027336  
 =========================================================End Revision History========================================================================--%>
 
 
@@ -2606,10 +2606,11 @@ function gridRowclick(s, e) {
                     <br />
                 </div>
 
-
+                <%--Rev 3.0 [Settings-HorizontalScrollBarMode="Visible" added]  --%>
                 <dxe:ASPxGridView runat="server" ClientInstanceName="grid" ID="grid" KeyFieldName="WithDrawFrom"
                     Width="100%" EnableRowsCache="False" OnCellEditorInitialize="grid_CellEditorInitialize" OnCustomCallback="grid_CustomCallback"
-                    OnCustomJSProperties="grid_CustomJSProperties" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" OnInitNewRow="grid_InitNewRow">
+                    OnCustomJSProperties="grid_CustomJSProperties" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false" 
+                    OnInitNewRow="grid_InitNewRow" Settings-HorizontalScrollBarMode="Visible">
                     <SettingsPager Visible="false"></SettingsPager>
                     <Columns>
                         <dxe:GridViewDataComboBoxColumn Caption="Withdrawal From" FieldName="WithDrawFrom" VisibleIndex="0" Width="280px">
