@@ -2,6 +2,8 @@
 // 1.0   Priti   V2.0.38   11-04-2023     0025797:Cannot enter duplicate batch in Same warehouse, for the same product with same batch number
 // 2.0   Priti   V2.0.39   22-09-2023     0026844:Stock In Happening in different Warehouse even if the Branch selection in different
 // 3.0   Priti   V2.0.43   26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
+// 4.0   Priti   V2.0.43   03-04-2024     0027340: GST % able to change in GRN entry. Validation Required like PO and PI
+
 //========================================== End Revision History =======================================================================================================
 
 var Pre_Quantity = "0";
@@ -1770,6 +1772,17 @@ function OnEndCallback(s, e) {
         grid.batchEditApi.StartEdit(0, 2);
         jAlert('Purchase Order is mandatory while save the data.');
     }
+    //Rev 4.0
+    else if (grid.cpSaveSuccessOrFail == "checkAcurateTaxAmount") {
+        LoadingPanel.Hide();
+        grid.batchEditApi.StartEdit(0, 2);
+        grid.cpSaveSuccessOrFail = null;
+        jAlert('Check GST Calculated for Item ' + grid.cpProductName + ' at line ' + grid.cpSerialNo);
+        grid.cpSaveSuccessOrFail = '';
+        grid.cpSerialNo = '';
+        grid.cpProductName = '';
+    }
+    //Rev 4.0 End
     else {
         var PurchaseOrder_Number = grid.cpPurchaseOrderNo;
         var Order_Msg = "Purchase Challan No. " + PurchaseOrder_Number + " saved.";

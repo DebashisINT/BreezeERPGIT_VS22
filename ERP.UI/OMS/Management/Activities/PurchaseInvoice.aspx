@@ -884,7 +884,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             return false;
         }
         function OnEndCallback(s, e) {
-            debugger;
+           // debugger;
             var pageStatus = document.getElementById('hdnPageStatus').value;
             var value = document.getElementById('hdnRefreshType').value;
             var pageStatus = document.getElementById('hdnPageStatus').value;
@@ -894,7 +894,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     grid.cpComponent = null;
                     $('#<%=hdfIsComp.ClientID %>').val('');
                     OnAddNewClick();
-                    debugger;
+                   // debugger;
                 }
             }
             if (grid.cpSaveSuccessOrFail == "outrange") {
