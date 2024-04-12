@@ -1,5 +1,6 @@
 ﻿//====================================================Revision History =========================================================================
 //1.0   v2.0.38	Priti	22-06-2023	0025222: Auto calculation of Adjusted amount during Adjustment of Document Entries-Advance with Invoice
+//2.0   v2.0.43	Priti	12-04-2024	0027361: Customer Adjustment of Documents - Advance With Invoice showing mismatch.
 //====================================================End Revision History=====================================================================
 
 
@@ -571,7 +572,10 @@ function ValidateEntry() {
         jAlert("Adjusted Amount must be greater than zero.", "Alert", function () { cAdjAmt.Focus(); });
         return false;
     }
-    if (parseFloat(cAdjAmt.GetValue()) != GetTotalAdjustedAmount()) {
+    //REV 2.0
+    //if (parseFloat(cAdjAmt.GetValue()) != GetTotalAdjustedAmount()) {
+    if (parseFloat(cAdjAmt.GetValue()) != DecimalRoundoff(GetTotalAmount(), 2)) {  
+    //REV 2.0 END
         jAlert("Mismatch detected in Adjusted Amount and Adjustment Amount.", "Alert", function () { cAdjAmt.Focus(); });
         return false;
     }
@@ -690,7 +694,7 @@ function GetTotalAdjustedAmount() {
         if (grid.GetRow(i)) {
             if (grid.GetRow(i).style.display != "none") {
                 grid.batchEditApi.StartEdit(i, 2);
-                TotaAdj = TotaAdj + parseFloat(grid.GetEditor("AdjAmt").GetValue());
+                TotaAdj = TotaAdj + parseFloat(grid.GetEditor("AdjAmt").GetValue()).toFixed(2);
             }
         }
     }
@@ -698,7 +702,7 @@ function GetTotalAdjustedAmount() {
     for (i = -1; i > -1000; i--) {
         if (grid.GetRow(i)) {
             grid.batchEditApi.StartEdit(i, 2);
-            TotaAdj = TotaAdj + parseFloat(grid.GetEditor("AdjAmt").GetValue())
+            TotaAdj = TotaAdj + parseFloat(grid.GetEditor("AdjAmt").GetValue()).toFixed(2);
             
         }
     }
