@@ -1181,7 +1181,12 @@ function gridCustomButtonClick(s, e) {
                 div_Batch.style.display = 'block';
                 div_Serial.style.display = 'none';
                 div_Quantity.style.display = 'block';
-                cCmbBatch.PerformCallback('BindBatch~' + "0");
+               
+                //Rev 2.0
+                var PostingDate = cdtTDate.GetValueString();
+                //cCmbBatch.PerformCallback('BindBatch~' + "0");
+                cCmbBatch.PerformCallback('BindBatch~' + "0" + '~' + PostingDate);
+                //Rev 2.0 End
                 cGrdWarehouse.PerformCallback('Display~' + SrlNo);
                 $("#ADelete").css("display", "block");
                 SelectedWarehouseID = "0";              
@@ -1236,8 +1241,12 @@ function gridCustomButtonClick(s, e) {
                 div_Warehouse.style.display = 'none';
                 div_Batch.style.display = 'block';
                 div_Serial.style.display = 'block';
-                div_Quantity.style.display = 'none';
-                cCmbBatch.PerformCallback('BindBatch~' + "0");
+                div_Quantity.style.display = 'none';                
+                //Rev 2.0
+                var PostingDate = cdtTDate.GetValueString();
+                //cCmbBatch.PerformCallback('BindBatch~' + "0");
+                cCmbBatch.PerformCallback('BindBatch~' + "0" + '~' + PostingDate);
+                //Rev 2.0 End
                 cGrdWarehouse.PerformCallback('Display~' + SrlNo);
                 $("#ADelete").css("display", "none");
                 SelectedWarehouseID = "0";
@@ -2534,7 +2543,12 @@ function CallbackPanelEndCall(s, e) {
         SelectSerial = strSrlID;
 
         cCmbWarehouse.PerformCallback('BindWarehouse~' + strWarehouse);
-        cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+        
+        //Rev 2.0
+        var PostingDate = cdtTDate.GetValueString();
+        //cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+        cCmbBatch.PerformCallback('BindBatch~' + strWarehouse + '~' + PostingDate);
+        //Rev 2.0 End
         checkListBox.PerformCallback('EditSerial~' + strWarehouse + '~' + strBatchID + '~' + strSrlID);
 
         cCmbWarehouse.SetValue(strWarehouse);
@@ -2572,7 +2586,12 @@ function CallbackPanelEnddestCall(s, e) {
         }
 
         cCmbWarehouse.PerformCallback('BindWarehouse~' + strWarehouse);
-        cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+
+        //Rev 2.0
+        var PostingDate = cdtTDate.GetValueString();
+        /* cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);*/
+        cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+        //Rev 2.0 End
         checkListBox.PerformCallback('EditSerial~' + strWarehouse + '~' + strBatchID + '~' + strSrlID);
 
         cCmbWarehouse.SetValue(strWarehouse);
@@ -2989,7 +3008,12 @@ function SaveWarehouse() {
         if (document.getElementById("myCheck").checked == true && SelectedWarehouseID == "0") {
             if (Ptype == "W" || Ptype == "WB" || Ptype == "B") {
                 cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-                cCmbBatch.PerformCallback('BindBatch~' + "");
+               
+                //Rev 2.0
+                var PostingDate = cdtTDate.GetValueString();
+                //cCmbBatch.PerformCallback('BindBatch~' + "");
+                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+                //Rev 2.0 End
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
             }
@@ -3001,7 +3025,12 @@ function SaveWarehouse() {
         }
         else {
             cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-            cCmbBatch.PerformCallback('BindBatch~' + "");
+            
+            //Rev 2.0
+            var PostingDate = cdtTDate.GetValueString();
+            //cCmbBatch.PerformCallback('BindBatch~' + "");
+            cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+            //Rev 2.0 End
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
         }
