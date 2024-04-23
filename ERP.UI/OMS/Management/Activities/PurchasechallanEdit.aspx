@@ -30,7 +30,7 @@
   <%--  <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/ProductStockIN.js?v00000.006"></script>
 
-    <script src="JS/PurchaseChallan.js?v=8.11"></script>
+    <script src="JS/PurchaseChallan.js?v=10.0"></script>
     <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
     <style>
         #grid_DXMainTable>tbody>tr>td:nth-child(26) {
