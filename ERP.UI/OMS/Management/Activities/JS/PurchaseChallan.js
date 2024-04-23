@@ -3,6 +3,7 @@
 // 2.0   Priti   V2.0.39   22-09-2023     0026844:Stock In Happening in different Warehouse even if the Branch selection in different
 // 3.0   Priti   V2.0.43   26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
 // 4.0   Priti   V2.0.43   03-04-2024     0027340: GST % able to change in GRN entry. Validation Required like PO and PI
+// 5.0   Priti   V2.0.43   23-04-2024     0027379: Alternate Qty is not calculating properly in the Purchase GRN.
 
 //========================================== End Revision History =======================================================================================================
 
@@ -2165,13 +2166,14 @@ function OnCustomButtonClick(s, e) {
                     }
 
                     CreateStock();
+                    //Rev 5.0
                     var mode = $('#hdnADDEditMode').val();
                     if (mode == 'ADD') {
                         ctxtQty.SetValue(QuantityValue);
                     }
                     var packing = $("#hddnAltQty").val();
                     ctxtAltQty.SetValue(packing);                 
-                    
+                    //Rev 5.0 End
                     ccmbAltUOM.SetValue(SpliteDetails[29]);
                     cPopupWarehouse.Show();
                 }
@@ -2557,7 +2559,9 @@ function SetDataToGrid(Quantity, packing, PackingUom, PackingSelectUom, producti
     if($("#hdnShowUOMConversionInEntry").val()=="1")
     {
         ctxtAltQty.SetValue(packing);
+        //Rev 5.0
         $("#hddnAltQty").val(packing);
+        //Rev 5.0 End
         ccmbAltUOM.SetValue(PackingUom);
     }
     QuantityTextChange(globalRowIndex,7);

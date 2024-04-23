@@ -4,7 +4,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 2.0                02-01-2024        V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 3.0                26-03-2024        V2.0.43           Priti               0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
                                                                            Add function FetchBatchWiseMfgDateExpiryDate,ValidfromCheck
-
+4.0                23-04-2024        V2.0.43           Priti               0027379: Alternate Qty is not calculating properly in the Purchase GRN.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Purchase Challan" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseChallan.aspx.cs" Inherits="ERP.OMS.Management.Activities.PurchaseChallan" EnableEventValidation="false" %>
@@ -2412,6 +2412,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%-- Rev 2.0--%>
     <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
     <%-- Rev 2.0 End--%>
+    <%--Rev 4.0 --%>
      <asp:HiddenField ID="hddnAltQty" runat="server" />
+    <%--Rev 4.0  End--%>
 
 </asp:Content>
