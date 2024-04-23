@@ -1,6 +1,7 @@
 <%--=======================================================Revision History=========================================================    
     1.0   Pallab    V2.0.38   20-04-2023      25868: Add Vendor Payment/Receipt module design modification
     2.0   Sanchita  V2.0.41   01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
+    3.0   Priti     V2.0.43   23-04-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/BankAfter selection of "Currency "  if curser keep in Rate filed and scroll down by the mouse then value getting 9999.
 =========================================================End Revision History=======================================================--%>
 
 <%@ Page Title="VendorPaymentReceipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceipt" %>
@@ -615,7 +616,10 @@ function Currency_Rate() {
                                             <label>Rate  </label>
                                             <div>
                                                 <dxe:ASPxTextBox runat="server" ID="txtRate" HorizontalAlign="Right" ClientInstanceName="ctxtRate" Width="100%" CssClass="pull-left">
-                                                    <MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol" />
+                                                    <%-- Rev 3.0 --%>
+                                                    <%--<MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol"  />--%>
+                                                    <MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol" AllowMouseWheel="false" />
+                                                    <%-- Rev 3.0 End--%>
                                                 </dxe:ASPxTextBox>
                                             </div>
                                         </div>
@@ -688,7 +692,7 @@ function Currency_Rate() {
                                             <div class="col-md-2 lblmTop8">
                                                 <label>TDS Amount</label>
                                                 <dxe:ASPxTextBox ID="txtTdsAmount" runat="server" ClientInstanceName="ctxtTdsAmount" ClientEnabled="false" DisplayFormatString="0.00" Width="100%" CssClass="pull-left">
-                                                    <MaskSettings Mask="&lt;-999999999..999999999g&gt;.&lt;00..99&gt;" />
+                                                    <MaskSettings Mask="&lt;-999999999..999999999g&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
                                                 </dxe:ASPxTextBox>
 
                                             </div>
@@ -698,7 +702,10 @@ function Currency_Rate() {
                                             <div>
                                                 <dxe:ASPxTextBox ID="txtVoucherAmount" runat="server" ClientInstanceName="ctxtVoucherAmount" Width="100%" CssClass="pull-left">
                                                     <ClientSideEvents LostFocus="function(s, e) { GetInvoiceMsg(e)}" TextChanged="SetTDSAmount" />
-                                                    <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" />
+                                                     <%-- Rev 3.0 --%>
+                                                     <%-- <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;"  />--%>
+                                                     <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
+                                                     <%-- Rev 3.0 End--%>
                                                     <ValidationSettings RequiredField-IsRequired="false" Display="None"></ValidationSettings>
                                                 </dxe:ASPxTextBox>
                                                 <span id="MandatoryVoucherAmount" class="iconVoucherAmount pullleftClass fa fa-exclamation-circle iconRed " style="color: red; position: absolute; display: none" title="Mandatory"></span>
@@ -868,7 +875,7 @@ function Currency_Rate() {
 
                                     <dxe:GridViewDataTextColumn VisibleIndex="3" Caption="Receipt" FieldName="Receipt" Width="130">
                                         <PropertiesTextEdit Style-HorizontalAlign="Right" MaskSettings-AllowMouseWheel="false">
-                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" />
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;"  />
                                             <ClientSideEvents KeyDown="OnKeyDown" LostFocus="ReceiptTextChange"
                                                 GotFocus="function(s,e){
                                                         DebitGotFocus(s,e); 
@@ -880,7 +887,7 @@ function Currency_Rate() {
                                     </dxe:GridViewDataTextColumn>
                                     <dxe:GridViewDataTextColumn VisibleIndex="4" Caption="Payment" FieldName="Payment" Width="130">
                                         <PropertiesTextEdit Style-HorizontalAlign="Right">
-                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" />
+                                            <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false"/>
                                             <ClientSideEvents KeyDown="OnKeyDown" LostFocus="PaymentTextChange"
                                                 GotFocus="function(s,e){
                                                         CreditGotFocus(s,e);
