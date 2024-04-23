@@ -31,9 +31,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     </script>
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%--  <script src="JS/SearchPopup.js"></script>--%>
-    <script src="JS/ProductStockIN.js?v=1.0"></script>
+    <script src="JS/ProductStockIN.js?v=2.0"></script>
 
-    <script src="JS/PurchaseChallan.js?v=9.8"></script>
+    <script src="JS/PurchaseChallan.js?v=10.0"></script>
 
     <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
 
@@ -2412,4 +2412,6 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%-- Rev 2.0--%>
     <asp:HiddenField runat="server" ID="hdnIsDuplicateItemAllowedOrNot" />
     <%-- Rev 2.0 End--%>
+     <asp:HiddenField ID="hddnAltQty" runat="server" />
+
 </asp:Content>

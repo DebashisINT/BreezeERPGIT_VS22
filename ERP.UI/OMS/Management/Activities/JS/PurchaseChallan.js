@@ -2165,7 +2165,13 @@ function OnCustomButtonClick(s, e) {
                     }
 
                     CreateStock();
-                    ctxtQty.SetValue(QuantityValue);
+                    var mode = $('#hdnADDEditMode').val();
+                    if (mode == 'ADD') {
+                        ctxtQty.SetValue(QuantityValue);
+                    }
+                    var packing = $("#hddnAltQty").val();
+                    ctxtAltQty.SetValue(packing);                 
+                    
                     ccmbAltUOM.SetValue(SpliteDetails[29]);
                     cPopupWarehouse.Show();
                 }
@@ -2551,6 +2557,7 @@ function SetDataToGrid(Quantity, packing, PackingUom, PackingSelectUom, producti
     if($("#hdnShowUOMConversionInEntry").val()=="1")
     {
         ctxtAltQty.SetValue(packing);
+        $("#hddnAltQty").val(packing);
         ccmbAltUOM.SetValue(PackingUom);
     }
     QuantityTextChange(globalRowIndex,7);
