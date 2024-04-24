@@ -18,6 +18,8 @@
                                                     Mantis: 0027122
  * Rev 9.0      Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                     Mantis : 0027050
+ * Rev 10.0     Priti         V2.0.43   24-04-2024  IRN generation failed for sales invoice where it is showing tax issue. Mantis : 0027163
+                                                   
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3646,15 +3648,17 @@ namespace ERP.OMS.Management.Activities
                 }
                 SalesOrderdt.AcceptChanges();
 
-               // DeleteTaxDetails(SrlNo);
-              //  DeleteWarehouse(SrlNo);
+                //Rev 10.0
+                DeleteTaxDetails(SrlNo);
+                DeleteWarehouse(SrlNo);
+                //Rev 10.0 End
+
 
                 if (OrderID.Contains("~") != true)
                 {
                     SalesOrderdt.Rows.Add("0", OrderID, "0", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "D", "0", "", "0");
                 }
             }
-                      
 
             if (IsDeleteFrom == "D")
             {
@@ -3662,8 +3666,15 @@ namespace ERP.OMS.Management.Activities
                 foreach (DataRow dr in SalesOrderdt.Rows)
                 {
                     string Status = Convert.ToString(dr["Status"]);
-                    dr["SrlNo"] = j.ToString();
+                    
+                    //Rev 10.0
+                    string oldSrlNo = Convert.ToString(dr["SrlNo"]);
+                    string newSrlNo = j.ToString();
+                    UpdateWarehouse(oldSrlNo, newSrlNo);
+                    UpdateTaxDetails(oldSrlNo, newSrlNo);
+                    //Rev 10.0 End
 
+                    dr["SrlNo"] = j.ToString();
                     if (Status != "D")
                     {
                         if (Status == "I" && IsDeleteFrom == "D")
