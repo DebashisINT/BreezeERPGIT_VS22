@@ -5679,9 +5679,7 @@ function OnCustomButtonClick(s, e) {
             grid.batchEditApi.StartEdit(-1, 2);
             grid.batchEditApi.StartEdit(0, 2);
 
-
-
-
+            
             $('#hdnPageStatus').val('delete');
         }
     }
