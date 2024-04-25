@@ -13,7 +13,8 @@
 * Rev 8.0      Sanchita      V2.0.40     19-10-2023 Mantis : 26924 Coordinator data not showing in the following screen while linking Quotation/Inquiry Entries
 * Rev 9.0      Priti	     V2.0.41     20-11-2023	0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
 * Rev 10.0     Priti         V2.0.42     02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
-                                                    Mantis : 0027050                                                       
+                                                    Mantis : 0027050    
+* Rev 11.0     Priti         V2.0.43     24-04-2024  IRN generation failed for sales invoice where it is showing tax issue. Mantis : 0027163
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3596,14 +3597,15 @@ namespace ERP.OMS.Management.Activities
 
 
                                         }
-                                        else
-                                        {
-                                            validate = "checkAcurateTaxAmount";
-                                            grid.JSProperties["cpSerialNo"] = SerialID;
-                                            grid.JSProperties["cpProductName"] = ProductName;
-                                            break;
-                                        }
-
+                                        //Rev 11.0
+                                        //else
+                                        //{
+                                        //    validate = "checkAcurateTaxAmount";
+                                        //    grid.JSProperties["cpSerialNo"] = SerialID;
+                                        //    grid.JSProperties["cpProductName"] = ProductName;
+                                        //    break;
+                                        //}
+                                        //Rev 11.0 End
                                     }
 
                                 }
