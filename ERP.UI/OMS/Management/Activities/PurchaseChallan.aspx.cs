@@ -2573,8 +2573,9 @@ namespace ERP.OMS.Management.Activities
                                 decimal ProductQuantity = Convert.ToDecimal(dr["Quantity"]);
                                 string Status = Convert.ToString(dr["Status"]);
 
+                                string Doc_DetailsId = Convert.ToString(dr["DetailsId"]); 
 
-                                DataTable dtq = oDBEngine.GetDataTable("select (ISNULL(TotalQty,0)+isnull(BalanceQty,0)) TotQty from tbl_trans_BalanceMapForPurchaseChallan where  POID='" + Convert.ToInt32(dr["DocID"]) + "' and ProductId='" + ProductID + "'");
+                                DataTable dtq = oDBEngine.GetDataTable("select (ISNULL(TotalQty,0)+isnull(BalanceQty,0)) TotQty from tbl_trans_BalanceMapForPurchaseChallan where  POID='" + Convert.ToInt32(dr["DocID"]) + "' and ProductId='" + ProductID + "'   and PODetailsID='" + Convert.ToInt32(dr["DetailsId"]) + "' ");
 
                                 if (ProductID != "" && dtq.Rows.Count > 0)
                                 {
@@ -2613,9 +2614,9 @@ namespace ERP.OMS.Management.Activities
                                 string ProductID = Convert.ToString(dr["ProductID"]);
                                 decimal ProductQuantity = Convert.ToDecimal(dr["Quantity"]);
                                 string Status = Convert.ToString(dr["Status"]);
+                                string Doc_DetailsId = Convert.ToString(dr["DetailsId"]);
 
-
-                                DataTable dtq = oDBEngine.GetDataTable("select isnull(BalanceQty,0) TotQty from tbl_trans_BalanceMapForPurchaseChallan where  POID='" + Convert.ToInt32(dr["DocID"]) + "' and  ProductId='" + ProductID + "'");
+                                DataTable dtq = oDBEngine.GetDataTable("select isnull(BalanceQty,0) TotQty from tbl_trans_BalanceMapForPurchaseChallan where  POID='" + Convert.ToInt32(dr["DocID"]) + "' and  ProductId='" + ProductID + "' and PODetailsID='" + Convert.ToInt32(dr["DetailsId"]) + "'");
 
                                 if (ProductID != "" && dtq.Rows.Count > 0)
                                 {
