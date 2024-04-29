@@ -2,6 +2,7 @@
 //    1.0   Priti       V2.0.36     17-01-2023   0025582:Error while creating Purchase Order by Tagging Indent.
 //    2.0	Priti       V2.0.39	    10-07-2023   0026534:Net amount calculation is wrong in Purchase Order while using Inclusive tax & tagging an Indent.
 //    3.0   Sanchita    V2.0.41     09-11-2023   26989: While making Purchase Order if user try to Select Indent/Quotation this msg has been showing "Customer Required"
+//    4.0   Sanchita    V2.0.42     29-14-2024   0027101: PO has been saving without Billing and Shipping address.
 //========================================== End Revision History =======================================================================================================--%>
 
 function fn_PopOpen()
@@ -3836,6 +3837,17 @@ function Save_ButtonClick() {
         frontRow++;
     }
 
+    // Rev 4.0
+    if (($("#hdBillingPin").val() == "0") && ($("#hdShippingPin").val() == "0")) {
+        LoadingPanel.Hide();
+        flag = false;
+
+        jAlert('Please enter pin number.');
+        page.SetActiveTabIndex(1);
+        return false;
+    }
+    // End of Rev 4.0
+
     if (flag != false) {
         SetArrForUOM(); //Surojit For UOM EDIT
 
@@ -3976,6 +3988,17 @@ function SaveExit_ButtonClick() {
         jAlert("Please Select Project.");
         return false;
     }
+
+    // Rev 4.0
+    if (($("#hdBillingPin").val() == "0") && ($("#hdShippingPin").val() == "0")) {
+        LoadingPanel.Hide();
+        flag = false;
+
+        jAlert('Please enter pin number.');
+        page.SetActiveTabIndex(1);
+        return false;
+    }
+    // End of Rev 4.0
 
     var revdate=ctxtRevisionDate.GetText();	
     if($("#hdnApproveStatus").val()==1 && $("#hdnEditPageStatus").val() == "Quoteupdate" && $("#hdnApprovalsetting").val()=="1")	
