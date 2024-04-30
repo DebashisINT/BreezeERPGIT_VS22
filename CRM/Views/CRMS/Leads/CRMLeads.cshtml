@@ -989,8 +989,7 @@
                                 success: function (msg) {
                                     //jAlert(msg, 'Alert');
 
-                                    if(msg=="duplicateDefault")
-                                    {
+                                    if (msg == "duplicateDefault") {
                                         jAlert('Please select one default Key Person.', 'Alert');
                                         LoadingPanel.Hide();
                                     }
@@ -1028,12 +1027,19 @@
                                     }
                                 },
                                 error: function (msg) {
-                                   // jAlert(msg, 'Alert');
+                                    // jAlert(msg, 'Alert');
 
                                 }
                             });
                         }
-                        
+                        else {
+                            
+                            jAlert("Data save");
+                            gridcrmLead.Refresh();
+                            gridcrmLead.Refresh();
+                            $("#addLead").modal('hide');
+                            LoadingPanel.Hide();
+                        }
                     },
                     error: function (response) {
                         jAlert("Please try again later");
