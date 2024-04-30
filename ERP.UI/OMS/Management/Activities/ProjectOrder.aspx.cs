@@ -1,5 +1,6 @@
 ﻿/*************************************************************************************************************************************************
  *  Rev 1.0     Sanchita    V2.0.40     28-09-2023      Data Freeze Required for Project Sale Invoice & Project Purchase Invoice. Mantis:26854
+ *  Rev 2.0     Sanchita    V2.0.42     30-04-2024      0027118: Duplicate Product can't be deleted from the Project Modules.
  *************************************************************************************************************************************************/
 using BusinessLogicLayer;
 using BusinessLogicLayer.EmailDetails;
@@ -2702,20 +2703,28 @@ namespace ERP.OMS.Management.Activities
             {
                 string OrderID = Convert.ToString(args.Keys["OrderID"]);
 
-                for (int i = AdditionalDetails.Rows.Count - 1; i >= 0; i--)
+                // Rev 2.0
+                if (AdditionalDetails != null)
                 {
-                    DataRow dr = SalesOrderdt.Rows[i];
-                    string delQuotationID = Convert.ToString(dr["OrderID"]);
-                    DataRow daddr = AdditionalDetails.Rows[i];
+                    // End of Rev 2.0
+                    for (int i = AdditionalDetails.Rows.Count - 1; i >= 0; i--)
+                    {
+                        DataRow dr = SalesOrderdt.Rows[i];
+                        string delQuotationID = Convert.ToString(dr["OrderID"]);
+                        DataRow daddr = AdditionalDetails.Rows[i];
 
-                    //chinmoy add for addrprojectDesc
-                    string delSrlNo = Convert.ToString(daddr["SrlNo"]);
+                        //chinmoy add for addrprojectDesc
+                        string delSrlNo = Convert.ToString(daddr["SrlNo"]);
 
-                    if (delQuotationID == OrderID)
-                        daddr.Delete();
-                    // dr.Delete();
+                        if (delQuotationID == OrderID)
+                            daddr.Delete();
+                        // dr.Delete();
+                    }
+                    AdditionalDetails.AcceptChanges();
+                // Rev 2.0
                 }
-                AdditionalDetails.AcceptChanges();
+                // End of Rev 2.0
+                
                 //if (OrderID.Contains("~") != true)
                 //{
                 //    AdditionalDetails.Rows.Add("0","");
