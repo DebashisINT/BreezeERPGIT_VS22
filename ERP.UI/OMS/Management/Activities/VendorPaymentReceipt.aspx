@@ -1,8 +1,8 @@
-<%--=======================================================Revision History=========================================================    
+<%--=======================================================Revision History=====================================================================================================    
     1.0   Pallab    V2.0.38   20-04-2023      25868: Add Vendor Payment/Receipt module design modification
     2.0   Sanchita  V2.0.41   01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
-    3.0   Priti     V2.0.43   23-04-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/BankAfter selection of "Currency "  if curser keep in Rate filed and scroll down by the mouse then value getting 9999.
-=========================================================End Revision History=======================================================--%>
+    3.0   Priti     V2.0.43   23-04-2023      0027390: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/BankAfter selection of "Currency "  if curser keep in Rate filed and scroll down by the mouse then value getting 9999.
+=========================================================End Revision History===================================================================================================--%>
 
 <%@ Page Title="VendorPaymentReceipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceipt" %>
 
