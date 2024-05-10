@@ -3,6 +3,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                04-04-2023        2.0.37           Pallab              25882: Cash/Bank Voucher Add module design modification
 2.0                11-05-2023        2.0.38           Sanchita            In the TDS Challan module(Cash/Bank) the FY 23-24 is missing. Refer: 26091     
 3.0                01-11-2023        V2.0.41          Sanchita            26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
+4.0                10-05-2024        V2.0.43          Priti               0027390: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/BankAfter selection of "Currency "  if curser keep in Rate filed and scroll down by the mouse then value getting 9999.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Cash/Bank Voucher" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" EnableEventValidation="false" AutoEventWireup="true" Inherits="ERP.OMS.Management.DailyTask.management_DailyTask_CashBankEntry" CodeBehind="CashBankEntry.aspx.cs" %>
@@ -1308,8 +1310,12 @@ $('#<%=hdnBranchId.ClientID %>').val(defaultbranch);
                                                                 <div class="col-md-1">
                                                                     <label>Rate  </label>
                                                                     <div>
+
                                                                         <dxe:ASPxTextBox runat="server" ID="txtRate" HorizontalAlign="Right" ClientInstanceName="ctxtRate" Width="100%" CssClass="pull-left">
-                                                                            <MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol" />
+                                                                            <%-- Rev 4.0 --%>
+                                                                            <%--<MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol" />--%>
+                                                                            <MaskSettings Mask="<0..9999>.<0..99999>" IncludeLiterals="DecimalSymbol" AllowMouseWheel="false"/>
+                                                                            <%-- Rev 4.0 End--%>
                                                                         </dxe:ASPxTextBox>
                                                                     </div>
                                                                 </div>
