@@ -1,5 +1,6 @@
 ﻿//========================================================== Revision History ============================================================================================
-// Rev   1.0   Priti V2.0.37     27-02-2023     0025702:An error occurred while trying to make Transporter bill entry.
+// Rev   1.0   Priti  V2.0.37     27-02-2023     0025702:An error occurred while trying to make Transporter bill entry.
+// Rev   2.0   Priti  V2.0.43     14-05-2024     0027392:Transporter Bill Entry not saving if Auto Document Number does not have prefix.
 //========================================== End Revision History =======================================================================================================
 
 using System;
@@ -3623,22 +3624,18 @@ namespace ERP.OMS.Management.Activities
                 #endregion Warehouse End
 
                 string validate = "";
-
-
-
-
-
                 string approveStatus = "";
                 if (Request.QueryString["status"] != null)
                 {
                     approveStatus = Convert.ToString(Request.QueryString["status"]);
                 }
-
-
                 if (ActionType == "Add")
                 {
                     string[] SchemeList = strSchemeType.Split(new string[] { "~" }, StringSplitOptions.None);
-                    validate = checkNMakeJVCode(strPurchaseNumber, Convert.ToInt32(SchemeList[0]));
+                    //Rev 2.0
+                    //validate = checkNMakeJVCode(strPurchaseNumber, Convert.ToInt32(SchemeList[0]));
+                    UniquePurchaseInvoice = txtVoucherNo.Text.Trim();
+                    //Rev 2.0 End
                 }
                 else
                 {
@@ -4003,7 +4000,9 @@ namespace ERP.OMS.Management.Activities
                     }
                     DataTable dtAddlDesc = (DataTable)Session["InlineRemarks"];
 
-                    if (ModifyQuatation(MainPurchaseInvoiceID, strSchemeType, UniquePurchaseInvoice, strQuoteDate, IndentRequisitionDate,
+                    if (ModifyQuatation(MainPurchaseInvoiceID, strSchemeType
+                        , ref UniquePurchaseInvoice                     
+                        , strQuoteDate, IndentRequisitionDate,
                         strVendor, strContactName, Reference, strBranch, strCurrency, strRate, strTaxType, strTaxCode, tempPurchaseInvoice,
                         TaxDetailTable, tempWarehousedt, tempTaxDetailsdt, tempBillAddress, approveStatus, ActionType, InvoiceCreatedFromDoc,
                         InvoiceCreatedFromDoc_Ids, ref strIsComplete, ref strInvoiceID, CashBank, ReverseMechanism,
@@ -4185,7 +4184,8 @@ namespace ERP.OMS.Management.Activities
 
         }
 
-        public bool ModifyQuatation(string PurchaseInvoiceID, string strSchemeType, string strQuoteNo, string strQuoteDate, string strQuoteExpiry, string strCustomer, string strContactName,
+        public bool ModifyQuatation(string PurchaseInvoiceID, string strSchemeType, ref string strQuoteNo
+                                    , string strQuoteDate, string strQuoteExpiry, string strCustomer, string strContactName,
                                     string Reference, string strBranch, string strCurrency, string strRate, string strTaxType, string strTaxCode, DataTable PurchaseInvoicedt,
                                     DataTable TaxDetailTable, DataTable Warehousedt, DataTable PurchaseInvoiceTaxdt, DataTable BillAddressdt,
                                    string approveStatus, string ActionType, string InvoiceCreatedFromDoc, string InvoiceCreatedFromDoc_Ids, ref int strIsComplete,
@@ -4376,22 +4376,31 @@ namespace ERP.OMS.Management.Activities
                 // Mantis Issue 24196
                 cmd.Parameters.AddWithValue("@TCSTDS_id", ddl_TdsScheme.Text);
                 // End of Mantis Issue 24196
+                //Rev 2.0
+                cmd.Parameters.AddWithValue("@SchemaID", strSchemeType.Split(new string[] { "~" }, StringSplitOptions.None)[0]);
+                //Rev 2.0 End
 
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnPurchaseInvoiceID", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnLedgerAmt", SqlDbType.VarChar, 50);
-
-
+                //Rev 2.0
+                cmd.Parameters.Add("@ReturnText", SqlDbType.VarChar, 50);
+                //Rev 2.0 End
                 cmd.Parameters["@ReturnValue"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@ReturnPurchaseInvoiceID"].Direction = ParameterDirection.Output;
                 cmd.Parameters["@ReturnLedgerAmt"].Direction = ParameterDirection.Output;
-
+                //Rev 2.0
+                cmd.Parameters["@ReturnText"].Direction = ParameterDirection.Output;
+                //Rev 2.0 End
                 cmd.CommandTimeout = 0;
                 SqlDataAdapter Adap = new SqlDataAdapter();
                 Adap.SelectCommand = cmd;
                 Adap.Fill(dsInst);
                 string ReturnLedgerAmt = "";
                 strIsComplete = Convert.ToInt32(cmd.Parameters["@ReturnValue"].Value.ToString());
+                //Rev 2.0
+                UniquePurchaseInvoice = Convert.ToString(cmd.Parameters["@ReturnText"].Value.ToString());
+                //Rev 2.0 End
                 if (strIsComplete == -20)
                 {
                     grid.JSProperties["cpRVMechMainAc"] = strIsComplete;
