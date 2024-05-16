@@ -33,7 +33,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <%--  <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/ProductStockIN.js?v=2.0"></script>
 
-    <script src="JS/PurchaseChallan.js?v=10.0"></script>
+    <script src="JS/PurchaseChallan.js?v=10.1"></script>
 
     <link href="CSS/PurchaseChallan.css" rel="stylesheet" />
 

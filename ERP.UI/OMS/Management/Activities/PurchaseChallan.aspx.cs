@@ -7,6 +7,7 @@
 // 5.0   V2.0.42    Priti       02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 // 6.0   V2.0.43    Priti       26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
 // 7.0   V2.0.43    Priti       03-04-2024     0027340: GST % able to change in GRN entry. Validation Required like PO and PI
+// 8.0   V2.0.43    Priti       16-05-2024     0027457: Unable to save GRN entry getting an error - Import Amount Are showing 4 
 
 * *******************************************************************************************************************************/
 
@@ -2897,106 +2898,114 @@ namespace ERP.OMS.Management.Activities
 
                 //Rev 7.0
                 CommonBL ComBL = new CommonBL();
-                string GSTRateTaxMasterMandatory = ComBL.GetSystemSettingsResult("GSTRateTaxMasterMandatory");
-                if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
+                //Rev 8.0
+                if (Convert.ToString(ddl_AmountAre.Value).Trim() != "4")
                 {
-                    if (GSTRateTaxMasterMandatory == "Yes")
+                //Rev 8.0 End
+                    string GSTRateTaxMasterMandatory = ComBL.GetSystemSettingsResult("GSTRateTaxMasterMandatory");
+                    if (!String.IsNullOrEmpty(GSTRateTaxMasterMandatory))
                     {
-                        
-                        string strTaxType = Convert.ToString(ddl_AmountAre.Value);
-
-                        string shippingStateCode = "";
-                        ProcedureExecute procstateTable = new ProcedureExecute("Prc_taxForpurchase");
-                        procstateTable.AddVarcharPara("@action", 500, "GetGSTINByBranch");
-                        procstateTable.AddIntegerPara("@BranchId", Convert.ToInt32(strBranch));
-                        procstateTable.AddVarcharPara("@companyintId", 50, Convert.ToString(HttpContext.Current.Session["LastCompany"]));
-                        procstateTable.AddVarcharPara("@vendInternalId", 20, Convert.ToString(hdnCustomerId.Value));
-                        DataSet taxForpurchase = procstateTable.GetDataSet();
-
-                        if (taxForpurchase != null)
+                        if (GSTRateTaxMasterMandatory == "Yes")
                         {
 
-                            shippingStateCode = Convert.ToString(taxForpurchase.Tables[1].Rows[0][0]).Trim();
-                            if (shippingStateCode.Trim() != "")
+                            string strTaxType = Convert.ToString(ddl_AmountAre.Value);
+
+                            string shippingStateCode = "";
+                            ProcedureExecute procstateTable = new ProcedureExecute("Prc_taxForpurchase");
+                            procstateTable.AddVarcharPara("@action", 500, "GetGSTINByBranch");
+                            procstateTable.AddIntegerPara("@BranchId", Convert.ToInt32(strBranch));
+                            procstateTable.AddVarcharPara("@companyintId", 50, Convert.ToString(HttpContext.Current.Session["LastCompany"]));
+                            procstateTable.AddVarcharPara("@vendInternalId", 20, Convert.ToString(hdnCustomerId.Value));
+                            DataSet taxForpurchase = procstateTable.GetDataSet();
+
+                            if (taxForpurchase != null)
                             {
-                                shippingStateCode = shippingStateCode.Substring(0, 2);
+
+                                shippingStateCode = Convert.ToString(taxForpurchase.Tables[1].Rows[0][0]).Trim();
+                                if (shippingStateCode.Trim() != "")
+                                {
+                                    shippingStateCode = shippingStateCode.Substring(0, 2);
+                                }
                             }
-                        }
 
-                        if (_tempTransactiondt.Columns.Contains("PurchasePriceValue"))
-                        {
-                            _tempTransactiondt.Columns.Remove("PurchasePriceValue");
-                            _tempTransactiondt.AcceptChanges();
-                        }
-                        if (_tempTransactiondt.Columns.Contains("PurchaseAmountValue"))
-                        {
-                            _tempTransactiondt.Columns.Remove("PurchaseAmountValue");
-                            _tempTransactiondt.AcceptChanges();
-                        }
-                        // Rev Mantis Issue 24061
-                        if (_tempTransactiondt.Columns.Contains("Balance_Amount"))
-                        {
-                            _tempTransactiondt.Columns.Remove("Balance_Amount");
-                            _tempTransactiondt.AcceptChanges();
-                        }
-
-                        DataTable dtTaxDetails = new DataTable();
-                        ProcedureExecute procT = new ProcedureExecute("proc_Fetch_PruchaseChallanDetails");
-                        procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
-                        procT.AddPara("@ProductDetails", _tempTransactiondt);
-                        procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
-                        procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(shippingStateCode));
-                        procT.AddIntegerPara("@branchId",Convert.ToInt32(strBranch));
-                        procT.AddVarcharPara("@CompanyId", 500, Convert.ToString(Session["LastCompany"]));
-                        procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(hdnCustomerId.Value));
-                        procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
-                        dtTaxDetails = procT.GetTable();
-
-                        if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
-                        {
-
-                            foreach (DataRow dr in dtTaxDetails.Rows)
+                            if (_tempTransactiondt.Columns.Contains("PurchasePriceValue"))
                             {
-                                string SerialID = Convert.ToString(dr["SrlNo"]);
-                                string TaxID = Convert.ToString(dr["TaxCode"]);
-                                decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
-                                string ProductName = Convert.ToString(dr["ProductName"]);
-                                DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
+                                _tempTransactiondt.Columns.Remove("PurchasePriceValue");
+                                _tempTransactiondt.AcceptChanges();
+                            }
+                            if (_tempTransactiondt.Columns.Contains("PurchaseAmountValue"))
+                            {
+                                _tempTransactiondt.Columns.Remove("PurchaseAmountValue");
+                                _tempTransactiondt.AcceptChanges();
+                            }
+                            // Rev Mantis Issue 24061
+                            if (_tempTransactiondt.Columns.Contains("Balance_Amount"))
+                            {
+                                _tempTransactiondt.Columns.Remove("Balance_Amount");
+                                _tempTransactiondt.AcceptChanges();
+                            }
 
-                                if (rows != null && rows.Length > 0)
-                                {                                   
-                                    decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
 
-                                    decimal Tolerance = 0;
-                                    if (EntryTaxAmount != _TaxAmount)
+                            DataTable dtTaxDetails = new DataTable();
+                            ProcedureExecute procT = new ProcedureExecute("proc_Fetch_PruchaseChallanDetails");
+                            procT.AddVarcharPara("@Action", 500, "GetTaxDetailsByProductID");
+                            procT.AddPara("@ProductDetails", _tempTransactiondt);
+                            procT.AddVarcharPara("@TaxOption", 10, Convert.ToString(strTaxType));
+                            procT.AddVarcharPara("@SupplyState", 15, Convert.ToString(shippingStateCode));
+                            procT.AddIntegerPara("@branchId", Convert.ToInt32(strBranch));
+                            procT.AddVarcharPara("@CompanyId", 500, Convert.ToString(Session["LastCompany"]));
+                            procT.AddVarcharPara("@ENTITY_ID", 100, Convert.ToString(hdnCustomerId.Value));
+                            procT.AddVarcharPara("@TaxDATE", 100, Convert.ToString(dt_PLQuote.Date.ToString("yyyy-MM-dd")));
+                            dtTaxDetails = procT.GetTable();
+
+                            if (dtTaxDetails != null && dtTaxDetails.Rows.Count > 0)
+                            {
+
+                                foreach (DataRow dr in dtTaxDetails.Rows)
+                                {
+                                    string SerialID = Convert.ToString(dr["SrlNo"]);
+                                    string TaxID = Convert.ToString(dr["TaxCode"]);
+                                    decimal _TaxAmount = Math.Round(Convert.ToDecimal(dr["TaxAmount"]), 2);
+                                    string ProductName = Convert.ToString(dr["ProductName"]);
+                                    DataRow[] rows = TaxDetailTable.Select("SlNo = '" + SerialID + "' and TaxCode='" + TaxID + "'");
+
+                                    if (rows != null && rows.Length > 0)
                                     {
-                                        if (EntryTaxAmount > _TaxAmount)
+                                        decimal EntryTaxAmount = Math.Round(Convert.ToDecimal(rows[0]["Amount"]), 2);
+
+                                        decimal Tolerance = 0;
+                                        if (EntryTaxAmount != _TaxAmount)
                                         {
-                                            Tolerance = (EntryTaxAmount - _TaxAmount);
-                                        }
-                                        else if (EntryTaxAmount < _TaxAmount)
-                                        {
-                                            Tolerance = (_TaxAmount - EntryTaxAmount);
+                                            if (EntryTaxAmount > _TaxAmount)
+                                            {
+                                                Tolerance = (EntryTaxAmount - _TaxAmount);
+                                            }
+                                            else if (EntryTaxAmount < _TaxAmount)
+                                            {
+                                                Tolerance = (_TaxAmount - EntryTaxAmount);
+                                            }
+
+                                            if (Convert.ToDecimal(0.05) <= Convert.ToDecimal(Tolerance))
+                                            {
+                                                validate = "checkAcurateTaxAmount";
+                                                grid.JSProperties["cpSerialNo"] = SerialID;
+                                                grid.JSProperties["cpProductName"] = ProductName;
+                                                break;
+                                            }
+
                                         }
 
-                                        if (Convert.ToDecimal(0.05) <= Convert.ToDecimal(Tolerance))
-                                        {
-                                            validate = "checkAcurateTaxAmount";
-                                            grid.JSProperties["cpSerialNo"] = SerialID;
-                                            grid.JSProperties["cpProductName"] = ProductName;
-                                            break;
-                                        }
 
                                     }
-
 
                                 }
 
                             }
-
                         }
                     }
+                //Rev 8.0
                 }
+                //Rev 8.0 End
                 //Rev 7.0 End
 
 
