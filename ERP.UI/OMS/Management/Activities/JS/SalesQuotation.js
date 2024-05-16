@@ -6,6 +6,8 @@
                                                         Mantis : 26871 
  * Rev 5.0      Sanchita      V2.0.40       19-10-2023  Coordinator data not showing in the following screen while linking Quotation / Inquiry Entries
                                                         Mantis: 26924
+ * Rev 6.0      Sanchita      V2.0.43       16-05-2024  While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
+                                                        Mantis: 27459
  **********************************************************************************************************/
 (function (global) {
     if (typeof (global) === "undefined") {
@@ -3321,11 +3323,22 @@ function CalcBaseRate() {
     var altRate = ccmbAltRate.GetValue();
     var baseQty = $("#UOMQuantity").val();
 
-
+    // Rev 6.0
+    //if (baseQty > 0) {
+    //    var BaseRate = (altQty * altRate) / baseQty;
+    //    ccmbBaseRate.SetValue(BaseRate);
+    //}
     if (baseQty > 0) {
-        var BaseRate = (altQty * altRate) / baseQty;
-        ccmbBaseRate.SetValue(BaseRate);
+        if (baseQty == altQty) {
+            var BaseRate = altRate;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
+        else {
+            var BaseRate = (altQty * altRate) / baseQty;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
     }
+    // End of Rev 6.0
 }
 // End of Mantis Issue 24428 
 

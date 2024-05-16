@@ -9,6 +9,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           if the settings "Show Other Condition" is set as "Yes"
 5.0                06-10-2023       V2.0.40            Sanchita           New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                                           Mantis : 26871
+6.0                16-05-2024       V2.0.43            Sanchita           While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
+                                                                          Mantis: 27459
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesInquiryAdd.aspx.cs" EnableEventValidation="false" Inherits="ERP.OMS.Management.Activities.SalesInquiryAdd" %>
@@ -500,11 +502,22 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             var altRate = ccmbAltRate.GetValue();
             var baseQty = $("#UOMQuantity").val();
 
-
+            // Rev 6.0
+            //if (baseQty > 0) {
+            //    var BaseRate = (altQty * altRate) / baseQty;
+            //    ccmbBaseRate.SetValue(BaseRate);
+            //}
             if (baseQty > 0) {
-                var BaseRate = (altQty * altRate) / baseQty;
-                ccmbBaseRate.SetValue(BaseRate);
+                if (baseQty == altQty) {
+                    var BaseRate = altRate;
+                    ccmbBaseRate.SetValue(BaseRate);
+                }
+                else {
+                    var BaseRate = (altQty * altRate) / baseQty;
+                    ccmbBaseRate.SetValue(BaseRate);
+                }
             }
+            // End of Rev 6.0
         }
         function setTwoNumberDecimal(event) {
             this.value = parseFloat(this.value).toFixed(2);

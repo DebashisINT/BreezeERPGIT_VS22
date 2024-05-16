@@ -16,7 +16,8 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                           Mantis : 26871
 7.0                02-01-2024       V2.0.42            Priti              Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
 8.0                24-01-2024       V2.0.43            Priti              Mantis : 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
-
+9.0                16-05-2024       V2.0.43            Sanchita           While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
+                                                                          Mantis: 27459
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SalesChallanAdd.aspx.cs"
@@ -6881,11 +6882,22 @@ function CalcBaseRate() {
     var altRate = ccmbAltRate.GetValue();
     var baseQty = $("#UOMQuantity").val();
 
-
+    // Rev 9.0
+    //if (baseQty > 0) {
+    //    var BaseRate = (altQty * altRate) / baseQty;
+    //    ccmbBaseRate.SetValue(BaseRate);
+    //}
     if (baseQty > 0) {
-        var BaseRate = (altQty * altRate) / baseQty;
-        ccmbBaseRate.SetValue(BaseRate);
+        if (baseQty == altQty) {
+            var BaseRate = altRate;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
+        else {
+            var BaseRate = (altQty * altRate) / baseQty;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
     }
+    // End of Rev 9.0
 }
 // End of Mantis Issue 24428 
 

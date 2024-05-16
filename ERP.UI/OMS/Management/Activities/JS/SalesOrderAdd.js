@@ -10,7 +10,8 @@
 //                                           Mantis: 26924
 // 7.0  Priti       V2.0.42     29-12-2023  GST round off value showing different between Sales Entry and Sales Invoice Print Layout.Mantis: 0027122
 // 8.0  Priti       V2.0.43     18-03-2024  Discount is not applying properly in the Sales Order module.Mantis: 0027315
-    
+// 9.0  Sanchita    V2.0.43     16-05-2024  While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
+//                                          Mantis: 27459    
 //====================================================End Revision History=====================================================================
 
 $(function () {
@@ -440,11 +441,22 @@ function CalcBaseRate()
     var altRate = ccmbAltRate.GetValue();
     var baseQty = $("#UOMQuantity").val();
 
-
-    if(baseQty>0){
-        var BaseRate = (altQty * altRate)/baseQty ;
-        ccmbBaseRate.SetValue(BaseRate);
+    // Rev 9.0
+    //if(baseQty>0){
+    //    var BaseRate = (altQty * altRate)/baseQty ;
+    //    ccmbBaseRate.SetValue(BaseRate);
+    //}
+    if (baseQty > 0) {
+        if (baseQty == altQty) {
+            var BaseRate = altRate;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
+        else {
+            var BaseRate = (altQty * altRate) / baseQty;
+            ccmbBaseRate.SetValue(BaseRate);
+        }
     }
+    // End of Rev 9.0
 }
 // End of Mantis Issue 24397
 
