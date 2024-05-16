@@ -4,6 +4,7 @@
 // 3.0   Priti   V2.0.43   26-03-2024     0027334: Mfg Date & Exp date should load automatically if the batch details exists for the product while making Purchase GRN.
 // 4.0   Priti   V2.0.43   03-04-2024     0027340: GST % able to change in GRN entry. Validation Required like PO and PI
 // 5.0   Priti   V2.0.43   23-04-2024     0027379: Alternate Qty is not calculating properly in the Purchase GRN.
+// 6.0   Priti   V2.0.43   16-05-2024     0027457: Unable to save GRN entry getting an error.
 
 //========================================== End Revision History =======================================================================================================
 
@@ -1893,6 +1894,11 @@ function OnEndCallback(s, e) {
         cTotalAmt.SetValue(SUM_TotalAmount);
         cTotalQty.SetValue(SUM_ProductQuantity);
 
+        //Rev 6.0
+        if (Tax_Option == "4") {
+            cddl_AmountAre.AddItem("Import", "4");
+        }
+        //Rev 6.0 End
         if(Tax_Option!="") cddl_AmountAre.SetValue(Tax_Option);
         if(Currency!="") document.getElementById('ddl_Currency').value = Currency;
         ctxtRate.SetValue(Rate);
