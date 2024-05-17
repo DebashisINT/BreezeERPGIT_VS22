@@ -508,7 +508,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             //    ccmbBaseRate.SetValue(BaseRate);
             //}
             if (baseQty > 0) {
-                if (baseQty == altQty) {
+                if (parseFloat(baseQty).toFixed(4) == parseFloat(altQty).toFixed(4)) {
                     var BaseRate = altRate;
                     ccmbBaseRate.SetValue(BaseRate);
                 }
