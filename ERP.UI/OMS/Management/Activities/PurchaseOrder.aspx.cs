@@ -7,7 +7,7 @@
 //Rev 4.0      Priti      V2.0.43   16-01-2024     Mantis : 0027183 After saving purchase order by availing the "Copy" features document number saving as "Auto"
 //Rev 5.0      Priti      V2.0.43   22-01-2024     Mantis : 0027198 Stop editing while purchase order partially used in another modules.
 //Rev 6.0      Priti      V2.0.43   01-03-2024     Mantis : 0027287 While adding new product in edit mode getting an error in Purchase Order "Value was either too large or too small for an Int16.".
-
+//Rev 7.0      Priti      V2.0.43   17-05-2024     	0027408: After Removing any Item from the Purchase Order while Modify any document getting a msg -"Check GST Calculated for Item.."
 //====================================================End Revision History=====================================================================
 using System;
 using System.Configuration;
@@ -3777,32 +3777,40 @@ namespace ERP.OMS.Management.Activities
             foreach (var args in e.DeleteValues)
             {
                 string OrderDetails_Id = Convert.ToString(args.Keys["OrderDetails_Id"]);
-
-                if (AdditionalDetails.Rows.Count > 0 && AdditionalDetails != null)
-                {
-                    for (int i = AdditionalDetails.Rows.Count - 1; i >= 0; i--)
+                //REV 7.0 
+                string SrlNo = "";
+                //REV 7.0 End
+                if (Session["InlineRemarks"]!=null)
+                {                
+                    if (AdditionalDetails.Rows.Count > 0 && AdditionalDetails != null)
                     {
-                        DataRow dr = PurchaseOrderdt.Rows[i];
-                        string delOrderDetailsId = Convert.ToString(dr["OrderDetails_Id"]);
-                        DataRow daddr = AdditionalDetails.Rows[i];
-                        if (delOrderDetailsId == OrderDetails_Id)
-                            daddr.Delete();
+                        for (int i = AdditionalDetails.Rows.Count - 1; i >= 0; i--)
+                        {
+                            DataRow dr = PurchaseOrderdt.Rows[i];
+                            string delOrderDetailsId = Convert.ToString(dr["OrderDetails_Id"]);
+                            DataRow daddr = AdditionalDetails.Rows[i];
+                            if (delOrderDetailsId == OrderDetails_Id)
+                                daddr.Delete();
+                        }
                     }
+                    AdditionalDetails.AcceptChanges();
                 }
-
-                AdditionalDetails.AcceptChanges();
-
-
+               
                 for (int i = PurchaseOrderdt.Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow dr = PurchaseOrderdt.Rows[i];
                     string delOrderDetailsId = Convert.ToString(dr["OrderDetails_Id"]);
+
+                    SrlNo = Convert.ToString(dr["SrlNo"]);
 
                     if (delOrderDetailsId == OrderDetails_Id)
                         dr.Delete();
                 }
                 PurchaseOrderdt.AcceptChanges();
 
+                //REV 7.0 
+                DeleteTaxDetails(SrlNo);
+                //REV 7.0 End
                 if (OrderDetails_Id.Contains("~") != true)
                 {
                     PurchaseOrderdt.Rows.Add("0", OrderDetails_Id, "0", "", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "D", "0", "", "", "", "0", "", "0");
@@ -3814,8 +3822,18 @@ namespace ERP.OMS.Management.Activities
             int j = 1;
             foreach (DataRow dr in PurchaseOrderdt.Rows)
             {
+                //REV 7.0
+                string oldSrlNo = Convert.ToString(dr["SrlNo"]);
+                string newSrlNo = j.ToString();
+                //REV 7.0 End
+
                 string Status = Convert.ToString(dr["Status"]);
                 dr["SrlNo"] = j.ToString();
+
+                //REV 7.0 
+                UpdateTaxDetails(oldSrlNo, newSrlNo);
+                //REV 7.0 End
+
 
                 if (Status != "D")
                 {
