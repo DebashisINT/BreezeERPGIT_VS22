@@ -1,6 +1,8 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                15-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                17-05-2024        2.0.43           Priti               0027415: Customer and Vendor Official Email id needs to shown in Listing Page of Vendor and Customer Master.
+
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Vendors/Service Providers" Language="C#" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/ERP.Master"
@@ -674,7 +676,17 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </EditFormCaptionStyle>
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>
-                            <dxe:GridViewDataTextColumn Caption="Status" FieldName="Status" VisibleIndex="3" Width="60">
+                            <%--REV 2.0--%>
+                            <dxe:GridViewDataTextColumn VisibleIndex="3" FieldName="eml_email" Caption="Official Email Id" Width="120px">
+                                <CellStyle CssClass="gridcellleft">
+                                </CellStyle>
+                                <Settings AllowAutoFilterTextInputTimer="False" AutoFilterCondition="Contains" />
+                                <EditFormCaptionStyle HorizontalAlign="Right">
+                                </EditFormCaptionStyle>
+                                <EditFormSettings Visible="False"></EditFormSettings>
+                            </dxe:GridViewDataTextColumn>
+                            <%--REV 2.0 END--%>
+                            <dxe:GridViewDataTextColumn Caption="Status" FieldName="Status" VisibleIndex="4" Width="60">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -682,7 +694,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </EditFormCaptionStyle>
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>
-                            <dxe:GridViewDataTextColumn Caption="GSTIN" FieldName="gstin" VisibleIndex="4" Width="160">
+                            <dxe:GridViewDataTextColumn Caption="GSTIN" FieldName="gstin" VisibleIndex="5" Width="160">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -691,7 +703,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>
                             <%-- Rev Rajdip --%>
-                            <dxe:GridViewDataTextColumn Caption="PAN" FieldName="Pan_NO" VisibleIndex="4" Width="160">
+                            <dxe:GridViewDataTextColumn Caption="PAN" FieldName="Pan_NO" VisibleIndex="6" Width="160">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -699,7 +711,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </EditFormCaptionStyle>
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>
-                               <dxe:GridViewDataTextColumn Caption="Tax Entity Type" FieldName="TaxEntityType" VisibleIndex="4" Width="180px">
+                               <dxe:GridViewDataTextColumn Caption="Tax Entity Type" FieldName="TaxEntityType" VisibleIndex="7" Width="180px">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -708,7 +720,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>
                             <%-- End Rev Rajdip --%>
-                            <dxe:GridViewDataTextColumn Caption="Account Group" FieldName="AccountGroup_Name" VisibleIndex="5" Width="180">
+                            <dxe:GridViewDataTextColumn Caption="Account Group" FieldName="AccountGroup_Name" VisibleIndex="8" Width="180">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -718,7 +730,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             </dxe:GridViewDataTextColumn>
 
 
-                            <dxe:GridViewDataTextColumn Caption="Name To Print In Cheque" FieldName="cnt_PrintNameToCheque" VisibleIndex="6" Width="190">
+                            <dxe:GridViewDataTextColumn Caption="Name To Print In Cheque" FieldName="cnt_PrintNameToCheque" VisibleIndex="9" Width="190">
                                 <CellStyle CssClass="gridcellleft">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -729,7 +741,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
                             <dxe:GridViewDataTextColumn Caption="Created By" FieldName="CreatedBy" Width="200"
-                                VisibleIndex="7">
+                                VisibleIndex="10">
                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
@@ -737,21 +749,21 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                             </dxe:GridViewDataTextColumn>
 
                               <dxe:GridViewDataDateColumn Caption="Created On" SortOrder="Descending" FieldName="CreateDate" PropertiesDateEdit-DisplayFormatString="dd-MM-yyyy" Width="200"
-                                VisibleIndex="8">
+                                VisibleIndex="11">
                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                 <Settings AutoFilterCondition="Contains" />
                             </dxe:GridViewDataDateColumn>
                              <dxe:GridViewDataTextColumn Caption="Last Modified By" FieldName="LastUpdatedBy" Width="200"
-                                VisibleIndex="9">
+                                VisibleIndex="12">
                                 <CellStyle CssClass="gridcellleft" Wrap="true">
                                 </CellStyle>
                                 <Settings AllowAutoFilterTextInputTimer="False" />
                                 <Settings AutoFilterCondition="Contains" />
                             </dxe:GridViewDataTextColumn>
 
-                            <dxe:GridViewDataTextColumn VisibleIndex="10" FieldName="LastUpdateOn" Settings-AllowAutoFilter="False"
+                            <dxe:GridViewDataTextColumn VisibleIndex="13" FieldName="LastUpdateOn" Settings-AllowAutoFilter="False"
                                 Caption="Last Modified On" Width="200">
                                 <Settings AllowAutoFilterTextInputTimer="False" />
                             </dxe:GridViewDataTextColumn>
@@ -775,7 +787,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 </CellStyle>
                                 <EditFormSettings Visible="False" />
                             </dxe:GridViewDataTextColumn>--%>
-                            <dxe:GridViewDataTextColumn VisibleIndex="10" Width="0">
+                            <dxe:GridViewDataTextColumn VisibleIndex="14" Width="0">
                                 <DataItemTemplate>
                                     <div class='floatedBtnArea'>
                                     <% if (rights.CanEdit)

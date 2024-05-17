@@ -857,7 +857,7 @@ namespace ERP.OMS.Management.Master
         }
         public void bindexport(int Filter)
         {
-            EmployeeGrid.Columns[3].Visible = false;
+            EmployeeGrid.Columns[4].Visible = false;
             string filename = "Vendors/Service Providers";
             exporter.FileName = filename;
 

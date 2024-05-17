@@ -221,7 +221,7 @@ namespace ERP.OMS.Management.Master
         //End
         public void bindexport(int Filter)
         {
-            EmployeeGrid.Columns[7].Visible = false;
+            EmployeeGrid.Columns[8].Visible = false;
             string filename = "Customer";
             exporter.FileName = filename;
 

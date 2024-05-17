@@ -1770,27 +1770,6 @@
       <Column Name="Assign_To" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.v_VendorMasterList" Member="v_VendorMasterLists">
-    <Type Name="v_VendorMasterList">
-      <Column Name="cnt_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="BranchName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="TaxEntityType" Type="System.String" DbType="VarChar(14) NOT NULL" CanBeNull="false" />
-      <Column Name="Pan_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
-      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Unique_ID" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
-      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="cnt_PrintNameToCheque" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="gstin" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="AccountGroup_Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedOn" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
-      <Column Name="LastUpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
-      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.v_PurchaseOrderList" Member="v_PurchaseOrderLists">
     <Type Name="v_PurchaseOrderList">
       <Column Name="PurchaseOrder_Id" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
@@ -5748,6 +5727,28 @@
       <Column Name="Proj_Name" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="Editlock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Deletelock" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.v_VendorMasterList" Member="v_VendorMasterLists">
+    <Type Name="v_VendorMasterList">
+      <Column Name="cnt_Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Id" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="BranchName" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="TaxEntityType" Type="System.String" DbType="VarChar(14) NOT NULL" CanBeNull="false" />
+      <Column Name="Pan_NO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(252) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Unique_ID" Type="System.String" DbType="VarChar(80)" CanBeNull="true" />
+      <Column Name="Status" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cnt_PrintNameToCheque" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="gstin" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="AccountGroup_Name" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedOn" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdatedBy" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastUpdateOn" Type="System.String" DbType="VarChar(19) NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="eml_email" Type="System.String" DbType="VarChar(4000)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
