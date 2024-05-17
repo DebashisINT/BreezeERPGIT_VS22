@@ -721,14 +721,6 @@ namespace ERP.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<v_VendorMasterList> v_VendorMasterLists
-		{
-			get
-			{
-				return this.GetTable<v_VendorMasterList>();
-			}
-		}
-		
 		public System.Data.Linq.Table<v_PurchaseOrderList> v_PurchaseOrderLists
 		{
 			get
@@ -1830,6 +1822,14 @@ namespace ERP.Models
 			get
 			{
 				return this.GetTable<ContraVoucherList>();
+			}
+		}
+		
+		public System.Data.Linq.Table<v_VendorMasterList> v_VendorMasterLists
+		{
+			get
+			{
+				return this.GetTable<v_VendorMasterList>();
 			}
 		}
 	}
@@ -28790,321 +28790,6 @@ namespace ERP.Models
 				if ((this._Assign_To != value))
 				{
 					this._Assign_To = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_VendorMasterList")]
-	public partial class v_VendorMasterList
-	{
-		
-		private int _cnt_Id;
-		
-		private string _Id;
-		
-		private string _BranchName;
-		
-		private string _TaxEntityType;
-		
-		private string _Pan_NO;
-		
-		private string _Name;
-		
-		private string _phone;
-		
-		private string _Unique_ID;
-		
-		private string _Status;
-		
-		private string _cnt_PrintNameToCheque;
-		
-		private string _gstin;
-		
-		private string _AccountGroup_Name;
-		
-		private string _CreatedBy;
-		
-		private string _CreatedOn;
-		
-		private string _LastUpdatedBy;
-		
-		private string _LastUpdateOn;
-		
-		private System.Nullable<System.DateTime> _CreateDate;
-		
-		public v_VendorMasterList()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cnt_Id", DbType="Int NOT NULL")]
-		public int cnt_Id
-		{
-			get
-			{
-				return this._cnt_Id;
-			}
-			set
-			{
-				if ((this._cnt_Id != value))
-				{
-					this._cnt_Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string BranchName
-		{
-			get
-			{
-				return this._BranchName;
-			}
-			set
-			{
-				if ((this._BranchName != value))
-				{
-					this._BranchName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TaxEntityType", DbType="VarChar(14) NOT NULL", CanBeNull=false)]
-		public string TaxEntityType
-		{
-			get
-			{
-				return this._TaxEntityType;
-			}
-			set
-			{
-				if ((this._TaxEntityType != value))
-				{
-					this._TaxEntityType = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pan_NO", DbType="NVarChar(50)")]
-		public string Pan_NO
-		{
-			get
-			{
-				return this._Pan_NO;
-			}
-			set
-			{
-				if ((this._Pan_NO != value))
-				{
-					this._Pan_NO = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this._Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string phone
-		{
-			get
-			{
-				return this._phone;
-			}
-			set
-			{
-				if ((this._phone != value))
-				{
-					this._phone = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unique_ID", DbType="VarChar(80)")]
-		public string Unique_ID
-		{
-			get
-			{
-				return this._Unique_ID;
-			}
-			set
-			{
-				if ((this._Unique_ID != value))
-				{
-					this._Unique_ID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50)")]
-		public string Status
-		{
-			get
-			{
-				return this._Status;
-			}
-			set
-			{
-				if ((this._Status != value))
-				{
-					this._Status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cnt_PrintNameToCheque", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
-		public string cnt_PrintNameToCheque
-		{
-			get
-			{
-				return this._cnt_PrintNameToCheque;
-			}
-			set
-			{
-				if ((this._cnt_PrintNameToCheque != value))
-				{
-					this._cnt_PrintNameToCheque = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gstin", DbType="VarChar(15)")]
-		public string gstin
-		{
-			get
-			{
-				return this._gstin;
-			}
-			set
-			{
-				if ((this._gstin != value))
-				{
-					this._gstin = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountGroup_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
-		public string AccountGroup_Name
-		{
-			get
-			{
-				return this._AccountGroup_Name;
-			}
-			set
-			{
-				if ((this._AccountGroup_Name != value))
-				{
-					this._AccountGroup_Name = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this._CreatedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="VarChar(19) NOT NULL", CanBeNull=false)]
-		public string CreatedOn
-		{
-			get
-			{
-				return this._CreatedOn;
-			}
-			set
-			{
-				if ((this._CreatedOn != value))
-				{
-					this._CreatedOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdatedBy", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string LastUpdatedBy
-		{
-			get
-			{
-				return this._LastUpdatedBy;
-			}
-			set
-			{
-				if ((this._LastUpdatedBy != value))
-				{
-					this._LastUpdatedBy = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdateOn", DbType="VarChar(19) NOT NULL", CanBeNull=false)]
-		public string LastUpdateOn
-		{
-			get
-			{
-				return this._LastUpdateOn;
-			}
-			set
-			{
-				if ((this._LastUpdateOn != value))
-				{
-					this._LastUpdateOn = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreateDate
-		{
-			get
-			{
-				return this._CreateDate;
-			}
-			set
-			{
-				if ((this._CreateDate != value))
-				{
-					this._CreateDate = value;
 				}
 			}
 		}
@@ -91673,6 +91358,339 @@ namespace ERP.Models
 				if ((this._Deletelock != value))
 				{
 					this._Deletelock = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.v_VendorMasterList")]
+	public partial class v_VendorMasterList
+	{
+		
+		private int _cnt_Id;
+		
+		private string _Id;
+		
+		private string _BranchName;
+		
+		private string _TaxEntityType;
+		
+		private string _Pan_NO;
+		
+		private string _Name;
+		
+		private string _phone;
+		
+		private string _Unique_ID;
+		
+		private string _Status;
+		
+		private string _cnt_PrintNameToCheque;
+		
+		private string _gstin;
+		
+		private string _AccountGroup_Name;
+		
+		private string _CreatedBy;
+		
+		private string _CreatedOn;
+		
+		private string _LastUpdatedBy;
+		
+		private string _LastUpdateOn;
+		
+		private System.Nullable<System.DateTime> _CreateDate;
+		
+		private string _eml_email;
+		
+		public v_VendorMasterList()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cnt_Id", DbType="Int NOT NULL")]
+		public int cnt_Id
+		{
+			get
+			{
+				return this._cnt_Id;
+			}
+			set
+			{
+				if ((this._cnt_Id != value))
+				{
+					this._cnt_Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
+		public string Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BranchName", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string BranchName
+		{
+			get
+			{
+				return this._BranchName;
+			}
+			set
+			{
+				if ((this._BranchName != value))
+				{
+					this._BranchName = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TaxEntityType", DbType="VarChar(14) NOT NULL", CanBeNull=false)]
+		public string TaxEntityType
+		{
+			get
+			{
+				return this._TaxEntityType;
+			}
+			set
+			{
+				if ((this._TaxEntityType != value))
+				{
+					this._TaxEntityType = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pan_NO", DbType="NVarChar(50)")]
+		public string Pan_NO
+		{
+			get
+			{
+				return this._Pan_NO;
+			}
+			set
+			{
+				if ((this._Pan_NO != value))
+				{
+					this._Pan_NO = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(252) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this._Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string phone
+		{
+			get
+			{
+				return this._phone;
+			}
+			set
+			{
+				if ((this._phone != value))
+				{
+					this._phone = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Unique_ID", DbType="VarChar(80)")]
+		public string Unique_ID
+		{
+			get
+			{
+				return this._Unique_ID;
+			}
+			set
+			{
+				if ((this._Unique_ID != value))
+				{
+					this._Unique_ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50)")]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this._Status = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cnt_PrintNameToCheque", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string cnt_PrintNameToCheque
+		{
+			get
+			{
+				return this._cnt_PrintNameToCheque;
+			}
+			set
+			{
+				if ((this._cnt_PrintNameToCheque != value))
+				{
+					this._cnt_PrintNameToCheque = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gstin", DbType="VarChar(15)")]
+		public string gstin
+		{
+			get
+			{
+				return this._gstin;
+			}
+			set
+			{
+				if ((this._gstin != value))
+				{
+					this._gstin = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountGroup_Name", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string AccountGroup_Name
+		{
+			get
+			{
+				return this._AccountGroup_Name;
+			}
+			set
+			{
+				if ((this._AccountGroup_Name != value))
+				{
+					this._AccountGroup_Name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this._CreatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn", DbType="VarChar(19) NOT NULL", CanBeNull=false)]
+		public string CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this._CreatedOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdatedBy", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string LastUpdatedBy
+		{
+			get
+			{
+				return this._LastUpdatedBy;
+			}
+			set
+			{
+				if ((this._LastUpdatedBy != value))
+				{
+					this._LastUpdatedBy = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastUpdateOn", DbType="VarChar(19) NOT NULL", CanBeNull=false)]
+		public string LastUpdateOn
+		{
+			get
+			{
+				return this._LastUpdateOn;
+			}
+			set
+			{
+				if ((this._LastUpdateOn != value))
+				{
+					this._LastUpdateOn = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreateDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreateDate
+		{
+			get
+			{
+				return this._CreateDate;
+			}
+			set
+			{
+				if ((this._CreateDate != value))
+				{
+					this._CreateDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_eml_email", DbType="VarChar(4000)")]
+		public string eml_email
+		{
+			get
+			{
+				return this._eml_email;
+			}
+			set
+			{
+				if ((this._eml_email != value))
+				{
+					this._eml_email = value;
 				}
 			}
 		}
