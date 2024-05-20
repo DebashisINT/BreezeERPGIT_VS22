@@ -1,10 +1,15 @@
-﻿@Html.DevExpress().GridView(settings =>
+﻿@*/*****************************************************Revision History******************************************************************************
+    * Rev 1.0      V2.0.43     20-05-2024   Priti      0027443: Global Search and Page Size Increase Decrease are not working in ERP Settings
+    * *********************************************************End Revision History********************************************************************/*@
+
+@Html.DevExpress().GridView(settings =>
 {
     settings.Name = "gridERPSetting";
     settings.KeyFieldName = "Key";
     settings.CallbackRouteValues = new { Controller = "ERPSettings", Action = "PartialGridBind" };
-    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ERPSettings", Action = "SaveERPSettings" };
-
+    //Rev 1.0
+    //settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "ERPSettings", Action = "SaveERPSettings" };
+    //Rev 1.0 End
     settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
     //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
     settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
@@ -20,10 +25,15 @@
     settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
 
 
-    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50","100" };
-    settings.ClientSideEvents.EndCallback = "ErpSetting_Reload";
+    settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50", "100" };
+    //Rev 1.0
+    //settings.ClientSideEvents.EndCallback = "ErpSetting_Reload";
+    //Rev 1.0 End
     settings.SettingsPager.PageSizeItemSettings.Visible = true;
-    settings.SettingsPager.PageSize = 100;
+    //Rev 1.0
+    //settings.SettingsPager.PageSize = 100;
+    settings.SettingsPager.PageSize = 10;
+    //Rev 1.0 End
     settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
     settings.Settings.ShowFilterRowMenu = true;
 
@@ -38,8 +48,8 @@
         //x.Visible = false;
 
     });
-    
-    
+
+
     settings.Columns.Add(x =>
     {
         x.FieldName = "Value";
@@ -51,7 +61,7 @@
         x.Width = System.Web.UI.WebControls.Unit.Percentage(20);
     });
 
-  
+
     settings.Columns.Add(x =>
     {
         x.FieldName = "Description";
@@ -66,7 +76,7 @@
     settings.ClientSideEvents.BatchEditStartEditing = "function(s, e){ if(e.focusedColumn.fieldName == 'Key' || e.focusedColumn.fieldName == 'Description') e.cancel = (e.visibleIndex >= 0); }";
 
     //settings.ClientSideEvents.EndCallBack = "OnEndCallback";
-   
+
 }).Bind(Model).GetHtml()
 
 

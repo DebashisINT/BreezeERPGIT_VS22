@@ -1,6 +1,7 @@
-﻿@*/***********************************************************************************************************************************
- * Rev 1.0      V2.0.43     18-01-2024   Sanchita   ERP setting page should integrated in the settings module of ERP - Mantis: 27176
- * *****************************************************************************************************************************/*@
+﻿@*/*****************************************************Revision History******************************************************************************
+    * Rev 1.0      V2.0.43     18-01-2024   Sanchita   ERP setting page should integrated in the settings module of ERP - Mantis: 27176
+    * Rev 2.0      V2.0.43     20-05-2024   Priti      0027443: Global Search and Page Size Increase Decrease are not working in ERP Settings
+    * *********************************************************End Revision History********************************************************************/*@
 
 @model NewCompany.Models.ErpSettingList
 @{
@@ -29,12 +30,13 @@
     //    window.location.reload();
     //});
 
+    //Rev 2.0
     function ErpSetting_Reload() {
         //window.location.reload();
         gridERPSetting.Refresh();
         location.reload();
     }
-
+    //Rev 2.0 End
 </script>
 
 <div class="dvcmpny">
