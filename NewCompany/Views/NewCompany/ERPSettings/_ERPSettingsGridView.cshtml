@@ -19,21 +19,24 @@
     settings.Settings.ShowFilterRow = true;
     settings.Settings.ShowGroupPanel = true;
     settings.SettingsContextMenu.EnableColumnMenu = DefaultBoolean.True;
+    //Rev 1.0
+    // settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
+    //Rev 1.0 End
 
-    settings.SettingsEditing.Mode = DevExpress.Web.GridViewEditingMode.Batch;
-    settings.Settings.ShowFooter = true;
-    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
 
 
     settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "30", "40", "50", "100" };
-    //Rev 1.0
-    //settings.ClientSideEvents.EndCallback = "ErpSetting_Reload";
-    //Rev 1.0 End
     settings.SettingsPager.PageSizeItemSettings.Visible = true;
     //Rev 1.0
     //settings.SettingsPager.PageSize = 100;
-    settings.SettingsPager.PageSize = 10;
+    settings.SettingsPager.PageSize = 20;
     //Rev 1.0 End
+    settings.Settings.ShowFooter = true;
+    settings.SettingsContextMenu.EnableFooterMenu = DefaultBoolean.True;
+    settings.ClientSideEvents.EndCallback = "ErpSetting_Reload";
+
+
+
     settings.SettingsPager.Position = System.Web.UI.WebControls.PagerPosition.Bottom;
     settings.Settings.ShowFilterRowMenu = true;
 
@@ -73,9 +76,29 @@
         //x.Visible = false;
 
     });
-    settings.ClientSideEvents.BatchEditStartEditing = "function(s, e){ if(e.focusedColumn.fieldName == 'Key' || e.focusedColumn.fieldName == 'Description') e.cancel = (e.visibleIndex >= 0); }";
-
-    //settings.ClientSideEvents.EndCallBack = "OnEndCallback";
+    //Rev 1.0
+    //settings.ClientSideEvents.BatchEditStartEditing = "function(s, e){ if(e.focusedColumn.fieldName == 'Key' || e.focusedColumn.fieldName == 'Description') e.cancel = (e.visibleIndex >= 0); }";
+    
+    settings.Columns.Add(x =>
+    {
+        x.Caption = "";
+        x.VisibleIndex = 4;
+        x.Width = System.Web.UI.WebControls.Unit.Pixel(100);
+        x.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.HeaderStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+        x.EditFormSettings.Visible = DevExpress.Utils.DefaultBoolean.False;
+        x.SetDataItemTemplateContent(c =>
+        {
+            string EnqRights = "";
+            if (ViewBag.CanEdit)
+            {
+                EnqRights = EnqRights + "<a style='cursor:pointer' onclick=\"OpenERPSETTINGSData('" + Convert.ToString(DataBinder.Eval(c.DataItem, "Key")) + "','" + Convert.ToString(DataBinder.Eval(c.DataItem, "Value")) + "','" + Convert.ToString(DataBinder.Eval(c.DataItem, "Description")) + "')\"><span class='ico editColor'><i class='fa fa-pencil' ></i></span></a>";
+            }
+            EnqRights = EnqRights + "";
+            ViewContext.Writer.Write(EnqRights);
+        });
+    });
+    //Rev 1.0 End
 
 }).Bind(Model).GetHtml()
 

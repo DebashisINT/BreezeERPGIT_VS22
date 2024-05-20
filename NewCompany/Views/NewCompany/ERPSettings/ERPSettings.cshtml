@@ -8,6 +8,11 @@
     ViewBag.Title = "ERP Settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.0/js/dataTables.fixedColumns.min.js"></script>
+<link href="~/assests/css/SearchPopup.css" rel="stylesheet" />
+<link href="~/assests/css/custom/PMSStyles.css" rel="stylesheet" />
 <style>
     .dvcmpny {
         width: 100%;
@@ -20,23 +25,59 @@
 
 
 <script>
+    /*Rev 2.0*/
+    function OpenERPSETTINGSData(_key,_value,_description) {
+        if (_key != "") {
+            $('#EditModal').modal('show');
+            $('#txtVar_Name').val(_key);
+            $('#txtVal_Desc').val(_description);
+            $('#txtVal_Value').val(_value);
+            $('#ERPSettingsKey').val(_key)
+        }
+    }
+    function EDIT() {
+         var _value = $('#txtVal_Value').val();
+         var _Key = $('#ERPSettingsKey').val();
+         if (_value != "" && _Key != "") {
+         $.ajax({
+             type: "POST",
+             url: "@Url.Action("EDITERPSETTINGSBYKEY", "ERPSettings")",
+             data: { _Key: _Key, _value: _value },
+             success: function (response) {
+                 if (response != null) {
+                     if (response.Success) {
+                         $('#EditModal').modal('hide');
+                         jAlert("Edit successfully.");
+                         gridERPSetting.Refresh();
+
+                     }
+                     else {
+                         $('#EditModal').modal('hide');
+                         jAlert("Please try again later!");
+                         return false;
+                     }
+                 }
+             }
+         });
+     }
+         else {
+
+         jAlert("Please enter value!");
+         return false;
+     }
+ }
+    /*Rev 2.0 End*/
 
     function Savegrid() {
         gridERPSetting.UpdateEdit();
     }
-
-    //$('#dvcmpny').click(function() {
-    //    // location.reload();
-    //    window.location.reload();
-    //});
-
-    //Rev 2.0
     function ErpSetting_Reload() {
         //window.location.reload();
-        gridERPSetting.Refresh();
-        location.reload();
+       // gridERPSetting.Refresh();
+        //gridERPSetting.Refresh();
+       // location.reload();
     }
-    //Rev 2.0 End
+
 </script>
 
 <div class="dvcmpny">
@@ -44,18 +85,77 @@
         <h3 class="hdr">ERP Settings</h3>
     </div>
     <div>
-        @Html.Partial("~/Views/NewCompany/ERPSettings/_ERPSettingsGridView.cshtml", Model.ErpSettProp)
+        <div id="refreshgrid" class="relative">
+            @Html.Partial("~/Views/NewCompany/ERPSettings/_ERPSettingsGridView.cshtml", Model.ErpSettProp)
 
-        <div>
-            @*Rev 1.0*@
-            @*<button class="btn btn-primary pull-right"  type="button" title="Save" onclick="Savegrid();">Save</button>*@
-            @if (ViewBag.CanEdit == true)
-            {
-                <button class="btn btn-primary pull-right" type="button" title="Save" onclick="Savegrid();">Save</button>
-            }
-            @*End of Rev 1.0*@
+            <div>
+                @*Rev 1.0*@
+                @*<button class="btn btn-primary pull-right"  type="button" title="Save" onclick="Savegrid();">Save</button>*@
+                @*Rev 2.0*@
+                @*@if (ViewBag.CanEdit == true)
+                        {
+                    <button class="btn btn-primary pull-right" type="button" title="Save" onclick="Savegrid();">Save</button>
+                    }*@
+                @*End of Rev 1.0*@
+                @*Rev 2.0*@
 
+            </div>
         </div>
     </div>
 
+
+
+    @*/*Rev 2.0*/*@
+    <div class="modal fade pmsModal w30" id="EditModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="Top clearfix">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1 relativ">
+                                <label>Key</label>
+                                <div>
+                                    <input type="text" placeholder="0.00" class="form-control" id="txtVar_Name" disabled />
+                                </div>
+                            </div>
+
+                            <div class="col-md-10 col-md-offset-1 relativ">
+                                <label>Variable Description</label>
+                                <div>
+                                    <input type="text" placeholder="0.00" class="form-control" id="txtVal_Desc" disabled />
+                                </div>
+                            </div>
+
+                            <div class="col-md-10 col-md-offset-1 relativ">
+                                <label>Value</label>
+                                <div>
+                                    <input type="text" placeholder="0.00" class="form-control" id="txtVal_Value" />
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+
+                            <tr>
+                                <td colspan="3" style="padding-left: 121px;"></td>
+
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" id="btnDegOK" class="btn btn-success btn-radius" onclick="EDIT()">Update</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="ERPSettingsKey" value="" />
+    @*/*Rev 2.0 End */*@
 </div>
