@@ -2,7 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                17-04-2023        V2.0.37           Pallab              25834: Add Purchase Order module design modification
 2.0                02-01-2024        V2.0.42           Priti               Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
-
+3.0                20-05-2024        V2.0.47           Sanchita            Width of "Quantity" column needs to increase for Purchase Order Entry Screen.. Mantis: 27417   
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="PurchaseOrder" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseOrder.aspx.cs"
@@ -3262,32 +3262,37 @@ function acpContactPersonPhoneEndCall(s, e) {
                                         <div class="makeFullscreen ">
                                             <span class="fullScreenTitle">Add Purchase Order</span>
                                             <span class="makeFullscreen-icon half hovered " data-instance="grid" title="Maximize Grid"><i class="fa fa-expand"></i></span>
+                                           <%--Rev 3.0  [Settings-HorizontalScrollBarMode="Auto" added] --%>
                                             <dxe:ASPxGridView runat="server" OnBatchUpdate="grid_BatchUpdate" KeyFieldName="OrderDetails_Id" ClientInstanceName="grid" ID="grid"
                                                 Width="100%" SettingsBehavior-AllowSort="false" SettingsBehavior-AllowDragDrop="false"
                                                 OnCellEditorInitialize="grid_CellEditorInitialize"
                                                 Settings-ShowFooter="false" OnCustomCallback="grid_CustomCallback" OnDataBinding="grid_DataBinding"
                                                 OnRowInserting="Grid_RowInserting" OnRowUpdating="Grid_RowUpdating" OnRowDeleting="Grid_RowDeleting"
                                                 OnHtmlRowPrepared="grid_HtmlRowPrepared"
-                                                Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="150" RowHeight="2" SettingsPager-Mode="ShowAllRecords">
+                                                Settings-VerticalScrollBarMode="auto" Settings-VerticalScrollableHeight="150" RowHeight="2" 
+                                                SettingsPager-Mode="ShowAllRecords" Settings-HorizontalScrollBarMode="Auto">
                                                 <SettingsPager Visible="false"></SettingsPager>
                                                 <Columns>
-                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="3%" VisibleIndex="0"
+                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="30px" VisibleIndex="0"
                                                         Caption="">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomDelete" Image-Url="/assests/images/crs.png">
                                                             </dxe:GridViewCommandColumnCustomButton>
                                                         </CustomButtons>
                                                     </dxe:GridViewCommandColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl" ReadOnly="true" VisibleIndex="1" Width="2%">
+                                                    <dxe:GridViewDataTextColumn FieldName="SrlNo" Caption="Sl" ReadOnly="true" VisibleIndex="1" Width="30px">
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
                                                     <%--Batch Product Popup Start--%>
-                                                    <dxe:GridViewDataTextColumn Caption="Document" FieldName="Indent_Num" ReadOnly="True" Width="6%" VisibleIndex="2">
+                                                   <%-- Rev 3.0 [Width="6%" changed to Width="130px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn Caption="Document" FieldName="Indent_Num" ReadOnly="True" Width="130px" VisibleIndex="2">
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
-                                                    <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="3" Width="14%" ReadOnly="True">
+
+                                                    <%-- Rev 3.0 [Width="14%" changed to Width="250px" ]  --%>
+                                                    <dxe:GridViewDataButtonEditColumn FieldName="ProductName" Caption="Product" VisibleIndex="3" Width="200px" ReadOnly="True">
                                                         <PropertiesButtonEdit>
                                                             <ClientSideEvents ButtonClick="ProductButnClick" KeyDown="ProductKeyDown" GotFocus="ProductsGotFocusFromID" LostFocus="ProductsGotFocus" />
                                                             <Buttons>
@@ -3297,15 +3302,16 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                         </PropertiesButtonEdit>
                                                     </dxe:GridViewDataButtonEditColumn>
 
+                                                    <%-- Rev 3.0 [Width="18%" changed to Width="250px" ]  --%>
                                                     <%--Batch Product Popup End--%>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColDiscription" Caption="Description" VisibleIndex="4" Width="18%" ReadOnly="True">
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColDiscription" Caption="Description" VisibleIndex="4" Width="200px" ReadOnly="True">
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                         <CellStyle Wrap="True"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewCommandColumn Caption="Addl Desc." Width="70" VisibleIndex="5">
+                                                    <dxe:GridViewCommandColumn Caption="Addl Desc." Width="70px" VisibleIndex="5">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton ID="addDescRemarks" Image-ToolTip="Remarks" Image-Url="/assests/images/MultiUomIcon.png" Text=" ">
                                                                 <Image ToolTip="Addl Desc." Url="/assests/images/more.png">
@@ -3314,29 +3320,33 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                         </CustomButtons>
                                                     </dxe:GridViewCommandColumn>
 
-
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColQuantity" Caption="Quantity" VisibleIndex="6" Width="6%" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
+                                                   <%-- Rev 3.0 [Width="18%" changed to Width="90px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColQuantity" Caption="Quantity" VisibleIndex="6" Width="80px" HeaderStyle-HorizontalAlign="Right" ReadOnly="true">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.0000">
                                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" AllowMouseWheel="false" />
                                                             <ClientSideEvents LostFocus="QuantityTextChange" GotFocus="QuantityProductsGotFocus" />
                                                         </PropertiesTextEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColUOM" Caption="UOM" VisibleIndex="7" Width="7%" ReadOnly="True">
+
+                                                    <%-- Rev 3.0 [Width="7%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColUOM" Caption="UOM" VisibleIndex="7" Width="80px" ReadOnly="True">
                                                         <PropertiesTextEdit>
                                                             <ClientSideEvents GotFocus="uomGotFocus" />
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
 
-
-                                                    <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="4%">
+                                                    <%-- Rev 3.0 [Width="4%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewCommandColumn VisibleIndex="8" Caption="Multi UOM" Width="80px">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomMultiUOM" Image-Url="/assests/images/MultiUomIcon.png" Image-ToolTip="Multi UOM">
                                                             </dxe:GridViewCommandColumnCustomButton>
                                                         </CustomButtons>
                                                     </dxe:GridViewCommandColumn>
+
+                                                    <%-- Rev 3.0 [Width="7%" changed to Width="80px" ]  --%>
                                                      <%--Mantis Issue 24429--%>
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="PO_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="7%" ReadOnly="true">
+                                                    <dxe:GridViewDataTextColumn Caption="Multi Qty" CellStyle-HorizontalAlign="Right" FieldName="PO_AltQuantity" PropertiesTextEdit-MaxLength="14" VisibleIndex="9" Width="80px" ReadOnly="true">
                                                         <PropertiesTextEdit DisplayFormatString="0.0000" Style-HorizontalAlign="Right">
                                                             <ClientSideEvents LostFocus="QuantityTextChange" />
                                                             <MaskSettings AllowMouseWheel="False" Mask="&lt;0..999999999&gt;.&lt;00..9999&gt;" />
@@ -3347,7 +3357,8 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                         </CellStyle>
                                                     </dxe:GridViewDataTextColumn>
                                                      
-                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="PO_AltUOM" ReadOnly="true" VisibleIndex="10" Width="7%" >
+                                                    <%-- Rev 3.0 [Width="7%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn Caption="Multi Unit" FieldName="PO_AltUOM" ReadOnly="true" VisibleIndex="10" Width="80px" >
                                                         <PropertiesTextEdit>
                                                         </PropertiesTextEdit>
                                                     </dxe:GridViewDataTextColumn>
@@ -3355,28 +3366,34 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                     <%--VisibleIndex changed for below columns--%>
                                                     <%--End of Mantis Issue 24429--%>
 
-
-                                                    <dxe:GridViewCommandColumn Width="7%" VisibleIndex="11" Caption="Stk Details">
+                                                    <%-- Rev 3.0 [Width="7%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewCommandColumn Width="80px" VisibleIndex="11" Caption="Stk Details">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomWarehouse" Image-Url="/assests/images/warehouse.png">
                                                             </dxe:GridViewCommandColumnCustomButton>
                                                         </CustomButtons>
                                                     </dxe:GridViewCommandColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColStockPurchasePrice" Caption="Price" VisibleIndex="12" Width="9%" HeaderStyle-HorizontalAlign="Right">
+
+                                                    <%-- Rev 3.0 [Width="9%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColStockPurchasePrice" Caption="Price" VisibleIndex="12" Width="80px" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Right" DisplayFormatString="0.000">
                                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..999&gt;" AllowMouseWheel="false" />
                                                             <ClientSideEvents LostFocus="PurchasePriceTextChange" GotFocus="PurchasePriceTextFocus" />
                                                         </PropertiesTextEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColDiscount" Caption="Disc(%)" VisibleIndex="13" Width="6%" HeaderStyle-HorizontalAlign="Right">
+
+                                                    <%-- Rev 3.0 [Width="6%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColDiscount" Caption="Disc(%)" VisibleIndex="13" Width="80px" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Right">
                                                             <MaskSettings Mask="&lt;0..999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
                                                             <ClientSideEvents LostFocus="DiscountValueChange" GotFocus="DiscountTextFocus" />
                                                         </PropertiesTextEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColAmount" Caption="Amount" VisibleIndex="14" Width="6%" HeaderStyle-HorizontalAlign="Right">
+
+                                                    <%-- Rev 3.0 [Width="6%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColAmount" Caption="Amount" VisibleIndex="14" Width="80px" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Right">
                                                             <ClientSideEvents LostFocus="gvColAmountlostfocus" />
                                                             <%-- REV RAJDIP FOR RUNNING TOTAL --%>
@@ -3386,7 +3403,9 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                         </PropertiesTextEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataTextColumn>
-                                                    <dxe:GridViewDataButtonEditColumn FieldName="gvColTaxAmount" Caption="Charges" VisibleIndex="15" Width="6%" ReadOnly="True"
+
+                                                    <%-- Rev 3.0 [Width="6%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataButtonEditColumn FieldName="gvColTaxAmount" Caption="Charges" VisibleIndex="15" Width="80px" ReadOnly="True"
                                                         HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesButtonEdit Style-HorizontalAlign="Right">
                                                             <ClientSideEvents ButtonClick="taxAmtButnClick" GotFocus="taxAmtButnClick1" KeyDown="TaxAmountKeyDown" />
@@ -3398,7 +3417,9 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                         </PropertiesButtonEdit>
                                                         <CellStyle HorizontalAlign="Right"></CellStyle>
                                                     </dxe:GridViewDataButtonEditColumn>
-                                                    <dxe:GridViewDataTextColumn FieldName="gvColTotalAmountINR" Caption="Net Amount" VisibleIndex="16" Width="8%" HeaderStyle-HorizontalAlign="Right">
+
+                                                    <%-- Rev 3.0 [Width="8%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewDataTextColumn FieldName="gvColTotalAmountINR" Caption="Net Amount" VisibleIndex="16" Width="80px" HeaderStyle-HorizontalAlign="Right">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Right">
                                                             <%-- Rev Rajdip --%>
                                                             <ClientSideEvents GotFocus="TotalAmountgotfocus" />
@@ -3409,7 +3430,7 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="PurchaseOrder_InlineRemarks" Width="150" VisibleIndex="17" PropertiesTextEdit-MaxLength="5000">
+                                                    <dxe:GridViewDataTextColumn Caption="Remarks" FieldName="PurchaseOrder_InlineRemarks" Width="150px" VisibleIndex="17" PropertiesTextEdit-MaxLength="5000">
                                                         <PropertiesTextEdit Style-HorizontalAlign="Left">
                                                             <Style HorizontalAlign="Left">
                                                             </Style>
@@ -3417,7 +3438,8 @@ function acpContactPersonPhoneEndCall(s, e) {
                                                     </dxe:GridViewDataTextColumn>
 
 
-                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="7%" VisibleIndex="18" Caption="Add New">
+                                                    <%-- Rev 3.0 [Width="7%" changed to Width="80px" ]  --%>
+                                                    <dxe:GridViewCommandColumn ShowDeleteButton="false" ShowNewButtonInHeader="false" Width="80px" VisibleIndex="18" Caption="Add New">
                                                         <CustomButtons>
                                                             <dxe:GridViewCommandColumnCustomButton Text=" " ID="CustomAddNewRow" Image-Url="/assests/images/add.png">
                                                             </dxe:GridViewCommandColumnCustomButton>
