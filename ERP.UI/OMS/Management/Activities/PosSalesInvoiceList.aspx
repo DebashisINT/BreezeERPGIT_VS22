@@ -2,6 +2,7 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                12-01-2023        2.0.35           Pallab              button overlapping issue fix
 2.0                10-04-2023        2.0.37           Pallab              25969: Sales Invoice (POS) module design modification & check in small device
+3.0                21-05-2024        V2.0.43               Priti               The following  Operation Button needs to add in the ERP settings. Mantis : 0027444
 ====================================================== Revision History ===========================================================--%>
 
 <%@ Page Title="Sales Invoice (POS)" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PosSalesInvoiceList.aspx.cs" Inherits="ERP.OMS.Management.Activities.PosSalesInvoiceList" %>
@@ -654,7 +655,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
         }
 
         $(function () {
-            BindERPSettings();
+            //Rev 3.0
+            //BindERPSettings();
+            //Rev 3.0 End
         });
 
         function BindERPSettings() {
@@ -3744,15 +3747,18 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
             <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success btn-xs hide" id="btnIST"><span>Interstate <u>S</u>tock Transfer</span> </a>
             <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success btn-xs hide" id="btnCRP"><span>Add <u>R</u>eceipt/Payment</span> </a>--%>
 
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Cash')" class="btn btn-success " id="btnCash"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>C</u>ash Invoice</span> </a>
+           <%-- Rev 3.0  add runat="server" for cs page work--%>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Cash')" class="btn btn-success " id="btnCash" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>C</u>ash Invoice</span> </a>
 
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Crd')" class="btn btn-success " id="btnCredit"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Cre<u>d</u>it Invoice</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Fin')" class="btn btn-success " id="btnFin"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>F</u>inance Invoice</span> </a>
-            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success " id="btnIST"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Interstate <u>S</u>tock Transfer</span> </a>
-            <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success  " id="btnCRP"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>R</u>eceipt/Payment</span> </a>
-            <a href="javascript:void(0);" onclick="onInfluencerReturn()" class="btn btn-success  " id="btnInfluencerReturn"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Influencer Adjustment</span> </a>
-            <a href="javascript:void(0);" onclick="onApprovalList();" class="btn btn-success  "><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Show Pending POS Status</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Crd')" class="btn btn-success " id="btnCredit" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Cre<u>d</u>it Invoice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('Fin')" class="btn btn-success " id="btnFin" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>F</u>inance Invoice</span> </a>
+            <a href="javascript:void(0);" onclick="OnAddInvoiceButtonClick('IST')" class="btn btn-success " id="btnIST" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Interstate <u>S</u>tock Transfer</span> </a>
+            <a href="javascript:void(0);" onclick="ShowReceiptPayment()" class="btn btn-success" id="btnCRP" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add <u>R</u>eceipt/Payment</span> </a>
+            
+            <a href="javascript:void(0);" onclick="onInfluencerReturn()" class="btn btn-success" id="btnInfluencerReturn" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Add Influencer Adjustment</span> </a>
+            <a href="javascript:void(0);" onclick="onApprovalList();" class="btn btn-success" id="btnShowPendingPOSStatus" runat="server"><span class="btn-icon"><i class="fa fa-plus"></i></span><span>Show Pending POS Status</span> </a>
 
+            <%-- Rev 3.0 Endk--%>
             <%} %>
 
             <% if (rights.CanAssignbranch)

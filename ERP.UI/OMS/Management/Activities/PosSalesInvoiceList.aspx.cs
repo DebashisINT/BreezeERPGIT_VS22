@@ -1,4 +1,8 @@
-﻿using System;
+﻿//========================================================== Revision History ============================================================================================
+//Rev 1.0     Priti  V2.0.43     21-05-2024  The following  Operation Button needs to add in the ERP settings. Mantis : 0027444
+//========================================== End Revision History =======================================================================================================
+
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -94,6 +98,79 @@ namespace ERP.OMS.Management.Activities
 
                 MasterSettings objmasterposprint = new MasterSettings();
                 hdnPosDocPrintDesignBasedOnTaxCategory.Value = objmasterposprint.GetSettings("PosDocPrintDesignBasedOnTaxCategory");
+
+                //REV 1.0
+                string _ShowInfluencerAdjustment = objmasterposprint.GetSettings("ShowInfluencerAdjustment");
+                if(_ShowInfluencerAdjustment=="0")
+                {
+                    btnInfluencerReturn.Visible = false;
+                }
+                else
+                {
+                    btnInfluencerReturn.Visible = true;
+                }
+
+                string _ShowPendingPOSStatus = objmasterposprint.GetSettings("ShowPendingPOSStatus");
+                if (_ShowPendingPOSStatus == "0")
+                {
+                    btnShowPendingPOSStatus.Visible = false;
+                }
+                else
+                {
+                    btnShowPendingPOSStatus.Visible = true;
+                }
+
+                string _ShowCreditInvoice = objmasterposprint.GetSettings("ShowCreditInvoice");
+                if (_ShowCreditInvoice == "0")
+                {
+                    btnCredit.Visible = false;
+                }
+                else
+                {
+                    btnCredit.Visible = true;
+                }
+
+                string _ShowCashInvoice = objmasterposprint.GetSettings("ShowCashInvoice");
+                if (_ShowCashInvoice == "0")
+                {
+                    btnCash.Visible = false;
+                }
+                else
+                {
+                    btnCash.Visible = true;
+                }
+
+                string _ShowFinInvoice = objmasterposprint.GetSettings("ShowFinInvoice");
+                if (_ShowFinInvoice == "0")
+                {
+                    btnFin.Visible = false;
+                }
+                else
+                {
+                    btnFin.Visible = true;
+                }
+
+                string _ShowIST = objmasterposprint.GetSettings("ShowIST");
+                if (_ShowIST == "0")
+                {
+                    btnIST.Visible = false;
+                }
+                else
+                {
+                    btnIST.Visible = true;
+                }
+
+                string _ShowCRP = objmasterposprint.GetSettings("ShowCRP");
+                if (_ShowCRP == "0")
+                {
+                    btnCRP.Visible = false;
+                }
+                else
+                {
+                    btnCRP.Visible = true;
+                }
+
+                //REV 1.0 End
 
                 if (Session["LastCompany"] != null && Session["LastCompany"] != null)
                 {
