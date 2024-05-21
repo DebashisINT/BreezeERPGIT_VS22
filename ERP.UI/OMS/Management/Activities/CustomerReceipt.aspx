@@ -17,7 +17,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="JS/CustomerReceipt.js?v2.0"></script>
+    <script src="JS/CustomerReceipt.js?v2.1"></script>
     <link href="CSS/CustomerReceiptPayment.css?v2.0" rel="stylesheet" />
     <script src="UserControls/Js/ucPaymentDetails.js"></script>
     <script src="JS/SearchPopup.js"></script>

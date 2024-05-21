@@ -282,7 +282,10 @@ function AllControlInitilize() {
             cdtTDate.SetEnabled(false);
             cbtnSaveNew.SetVisible(false);
             //ctxtCustName.SetEnabled(false);
-            document.getElementById("TxtHeaded").innerHTML = "Modify Customer Receipt";
+            if ($('#hdAddEdit').val() == "Edit") {
+                document.getElementById("TxtHeaded").innerHTML = "Modify Customer Receipt";
+            }
+           
             arrMultiPopup = [];
             var ProdObjEdit = new Object();
             var ProdArrEdit = new Object();
