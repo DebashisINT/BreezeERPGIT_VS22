@@ -15,6 +15,7 @@
 * Rev 10.0     Priti         V2.0.42     02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                     Mantis : 0027050    
 * Rev 11.0     Priti         V2.0.43     24-04-2024  IRN generation failed for sales invoice where it is showing tax issue. Mantis : 0027163
+* Rev 12.0     Sanchita      V2.0.43     22-05-2024  Send mail option should be enabled if the setting "Is Mail Send Option Require In Sales Invoice?" is true in Sales Invoice. Mantis: 27462       
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -734,6 +735,19 @@ namespace ERP.OMS.Management.Activities
                             chkSendMail.Visible = false;
                             chkSendMail.Checked = false;
                         }
+
+                        // Rev 12.0
+                        dt2 = objemployeebal.GetSystemsettingmail("IsSendmailEnableForSalesInvoiceOnly");
+                        if (Convert.ToString(dt2.Rows[0]["Variable_Value"]) == "Yes")
+                        {
+                            chkSendMail.Visible = true;
+                            hdnSendMailEnabled.Value = "YES";
+                        }
+                        else
+                        {
+                            hdnSendMailEnabled.Value = "NO";
+                        }
+                        // End of Rev 12.0
 
                         #region To Show By Default Cursor after SAVE AND NEW
                         if (Session["SI_SaveMode"] != null)  // it has been removed from coding side of Quotation list 
