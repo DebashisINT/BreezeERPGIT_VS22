@@ -11,7 +11,8 @@
  * Rev 7.0      Priti         V2.0.43     19-03-2024     Discount is not applying properly in the Sales Invoice module.
                                                          Mantis : 0027320
  * Rev 8.0      Sanchita      V2.0.43     16-05-2024     While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
-                                                         Mantis: 27459                                                         
+                                                         Mantis: 27459     
+ * Rev 9.0      Sanchita      V2.0.43     22-05-2024     Send mail option should be enabled if the setting "Is Mail Send Option Require In Sales Invoice?" is true in Sales Invoice. Mantis: 27462                                                        
   ******************************************************************************************************************************/
 
 $(document).ready(function () {
@@ -2117,33 +2118,45 @@ $(document).ready(function () {
         //End of Rev Sayantani
         //clookup_Project.gridView.Refresh();
         //End
+        // Rev 9.0
+        if ($('#hdnSendMailEnabled').val() == "YES") {
+            $("#chkSendMail").prop("checked", false);
+            $("#chkSendMail").prop("disabled", false);
+        }
+        else {
+            // End of Rev 9.0
 
-
-        $.ajax({
-            type: "POST",
-            url: "SalesInvoice.aspx/GetEinvoiceBranch",
-            data: JSON.stringify({ BranchId: branchID }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (msg) {
-                $("#hdnIsBranchEInvoice").val(msg.d);
-                if (msg.d == "True") {
-                    if (($("#drdTransCategory").val() == "B2B") || ($("#drdTransCategory").val() == "SEZWP") || ($("#drdTransCategory").val() == "SEZWOP") || ($("#drdTransCategory").val() == "EXPWP") || ($("#drdTransCategory").val() == "EXPWOP") || ($("#drdTransCategory").val() == "DEXP")) {
-                        $("#chkSendMail").prop("checked", false);
-                        $("#chkSendMail").prop("disabled", true);
+            $.ajax({
+                type: "POST",
+                url: "SalesInvoice.aspx/GetEinvoiceBranch",
+                data: JSON.stringify({ BranchId: branchID }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    $("#hdnIsBranchEInvoice").val(msg.d);
+                    if (msg.d == "True") {
+                        if (($("#drdTransCategory").val() == "B2B") || ($("#drdTransCategory").val() == "SEZWP") || ($("#drdTransCategory").val() == "SEZWOP") || ($("#drdTransCategory").val() == "EXPWP") || ($("#drdTransCategory").val() == "EXPWOP") || ($("#drdTransCategory").val() == "DEXP")) {
+                            $("#chkSendMail").prop("checked", false);
+                            $("#chkSendMail").prop("disabled", true);
+                        }
+                        else {
+                            $("#chkSendMail").prop("disabled", false);
+                        }
                     }
                     else {
                         $("#chkSendMail").prop("disabled", false);
                     }
+                },
+                error: function (msg) {
                 }
-                else {
-                    $("#chkSendMail").prop("disabled", false);
-                }
-            },
-            error: function (msg) {
-            }
-        });
+            });
+
+
+        // Rev 9.0
+        }
+        // End of Rev 9.0
+
         LoadBillDespatch(document.getElementById('ddl_Branch').value);
     });
 
@@ -6607,31 +6620,41 @@ function SetCustomer(Id, Name) {
             }
         });
 
-        $.ajax({
-            type: "POST",
-            url: "SalesInvoice.aspx/GetEinvoiceBranch",
-            data: JSON.stringify({ BranchId: $('#ddl_Branch').val() }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (msg) {
-                $("#hdnIsBranchEInvoice").val(msg.d);
-                if (msg.d == "True") {
-                    if (($("#drdTransCategory").val() == "B2B") || ($("#drdTransCategory").val() == "SEZWP") || ($("#drdTransCategory").val() == "SEZWOP") || ($("#drdTransCategory").val() == "EXPWP") || ($("#drdTransCategory").val() == "EXPWOP") || ($("#drdTransCategory").val() == "DEXP")) {
-                        $("#chkSendMail").prop("checked", false);
-                        $("#chkSendMail").prop("disabled", true);
+        // Rev 9.0
+        if ($('#hdnSendMailEnabled').val() == "YES") {
+            $("#chkSendMail").prop("checked", false);
+            $("#chkSendMail").prop("disabled", false);
+        }
+        else {
+            // End of Rev 9.0
+            $.ajax({
+                type: "POST",
+                url: "SalesInvoice.aspx/GetEinvoiceBranch",
+                data: JSON.stringify({ BranchId: $('#ddl_Branch').val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                success: function (msg) {
+                    $("#hdnIsBranchEInvoice").val(msg.d);
+                    if (msg.d == "True") {
+                        if (($("#drdTransCategory").val() == "B2B") || ($("#drdTransCategory").val() == "SEZWP") || ($("#drdTransCategory").val() == "SEZWOP") || ($("#drdTransCategory").val() == "EXPWP") || ($("#drdTransCategory").val() == "EXPWOP") || ($("#drdTransCategory").val() == "DEXP")) {
+                            $("#chkSendMail").prop("checked", false);
+                            $("#chkSendMail").prop("disabled", true);
+                        }
+                        else {
+                            $("#chkSendMail").prop("disabled", false);
+                        }
                     }
                     else {
                         $("#chkSendMail").prop("disabled", false);
                     }
+                },
+                error: function (msg) {
                 }
-                else {
-                    $("#chkSendMail").prop("disabled", false);
-                }
-            },
-            error: function (msg) {
-            }
-        });
+            });
+            // Rev 9.0
+        }
+        // End of Rev 9.0
 
         if ($('#hdnDocumentSegmentSettings').val() == "1") {
 
