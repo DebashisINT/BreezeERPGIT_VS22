@@ -737,8 +737,8 @@ namespace ERP.OMS.Management.Activities
                         }
 
                         // Rev 12.0
-                        dt2 = objemployeebal.GetSystemsettingmail("IsSendmailEnableForSalesInvoiceOnly");
-                        if (Convert.ToString(dt2.Rows[0]["Variable_Value"]) == "Yes")
+                        string strIsSendmailEnableForSalesInvoiceOnly = ComBL.GetSystemSettingsResult("IsSendmailEnableForSalesInvoiceOnly");
+                        if (strIsSendmailEnableForSalesInvoiceOnly == "Yes")
                         {
                             chkSendMail.Visible = true;
                             hdnSendMailEnabled.Value = "YES";
@@ -11572,7 +11572,14 @@ namespace ERP.OMS.Management.Activities
             Employee_BL objemployeebal = new Employee_BL();
             DataTable dt2 = new DataTable();
             dt2 = objemployeebal.GetSystemsettingmail("Show Email in SI");
-            if (Convert.ToString(dt2.Rows[0]["Variable_Value"]) == "Yes")
+            // Rev 12.0
+            CommonBL ComBL1 = new CommonBL();
+            string strIsSendmailEnableForSalesInvoiceOnly = ComBL1.GetSystemSettingsResult("IsSendmailEnableForSalesInvoiceOnly");
+            // End of Rev 12.0
+
+            // Rev 12.0
+            //if (Convert.ToString(dt2.Rows[0]["Variable_Value"]) == "Yes")
+            if (Convert.ToString(dt2.Rows[0]["Variable_Value"]) == "Yes" || strIsSendmailEnableForSalesInvoiceOnly == "Yes")
             {
                 ExceptionLogging mailobj = new ExceptionLogging();
                 EmailSenderHelperEL emailSenderSettings = new EmailSenderHelperEL();
