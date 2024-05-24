@@ -11,6 +11,8 @@
                                                     Mantis : 0027050
  * Rev 6.0      Priti         V2.0.43   25-01-2024  Batchwise stock has been issued from Challan before receiving date which caused negative stock
                                                     Mantis : 0027207
+ * Rev 7.0      Priti         V2.0.43   24-05-2024  LR Date not saving in Sales Callan.
+                                                    Mantis : 0027480
  *****************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3468,8 +3470,10 @@ namespace ERP.OMS.Management.Activities
                                     if (!string.IsNullOrEmpty(hfControlData.Value))
                                     {
                                         CommonBL objCommonBL = new CommonBL();
-                                        //objCommonBL.InsertTransporterControlDetails(id, "SC", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
-                                        objCommonBL.InsertSalesChallanDetails(id, "SC", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
+                                        //Rev 7.0
+                                        objCommonBL.InsertTransporterControlDetails(id, "SC", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
+                                        //objCommonBL.InsertSalesChallanDetails(id, "SC", hfControlData.Value, Convert.ToString(HttpContext.Current.Session["userid"]));
+                                        //Rev 7.0 End
                                     }
 
                                     //Udf Add mode
