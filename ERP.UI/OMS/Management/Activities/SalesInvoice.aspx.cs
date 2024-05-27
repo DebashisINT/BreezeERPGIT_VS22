@@ -2868,32 +2868,33 @@ namespace ERP.OMS.Management.Activities
 
 
                 //REV 13.0
-            
-                sumObject = Quotationdt.AsEnumerable()
-                    .Sum(x => Convert.ToDecimal(x["Amount"]));               
-
-                TotalsumObject = Quotationdt.AsEnumerable()
-                .Sum(x => Convert.ToDecimal(x["TotalAmount"]));
-
-                DataTable dt_TCS = new DataTable();
-                ProcedureExecute proc = new ProcedureExecute("prc_TCSDetails");
-                proc.AddVarcharPara("@CustomerID", 500, strCustomer);
-                proc.AddVarcharPara("@invoice_id", 500, hdnPageEditId.Value);
-                proc.AddVarcharPara("@Action", 500, "ShowTDSDetails");
-                proc.AddVarcharPara("@date", 500, Convert.ToString(dt_PLQuote.Date.ToString("dd-MM-yyyy")));
-                proc.AddVarcharPara("@totalAmount", 500, Convert.ToString(TotalsumObject));
-                proc.AddVarcharPara("@taxableAmount", 500, Convert.ToString(sumObject));
-                proc.AddVarcharPara("@branch_id", 500, strBranch);
-                dt_TCS = proc.GetTable();
-
-                if (dt_TCS != null && dt_TCS.Rows.Count > 0 && ddlInventory.SelectedValue == "Y")
+                if (hdnbranchwiseTCS.Value == "1")
                 {
-                    if (Convert.ToDecimal(dt_TCS.Rows[0]["Amount"]) > 0 && Convert.ToDecimal(txtTCSAmount.Text) == 0 )
+                    sumObject = Quotationdt.AsEnumerable()
+                    .Sum(x => Convert.ToDecimal(x["Amount"]));
+
+                    TotalsumObject = Quotationdt.AsEnumerable()
+                    .Sum(x => Convert.ToDecimal(x["TotalAmount"]));
+
+                    DataTable dt_TCS = new DataTable();
+                    ProcedureExecute proc = new ProcedureExecute("prc_TCSDetails");
+                    proc.AddVarcharPara("@CustomerID", 500, strCustomer);
+                    proc.AddVarcharPara("@invoice_id", 500, hdnPageEditId.Value);
+                    proc.AddVarcharPara("@Action", 500, "ShowTDSDetails");
+                    proc.AddVarcharPara("@date", 500, Convert.ToString(dt_PLQuote.Date.ToString("dd-MM-yyyy")));
+                    proc.AddVarcharPara("@totalAmount", 500, Convert.ToString(TotalsumObject));
+                    proc.AddVarcharPara("@taxableAmount", 500, Convert.ToString(sumObject));
+                    proc.AddVarcharPara("@branch_id", 500, strBranch);
+                    dt_TCS = proc.GetTable();
+
+                    if (dt_TCS != null && dt_TCS.Rows.Count > 0 && ddlInventory.SelectedValue == "Y")
                     {
-                        validate = "TCSMandatory";
+                        if (Convert.ToDecimal(dt_TCS.Rows[0]["Amount"]) > 0 && Convert.ToDecimal(txtTCSAmount.Text) == 0)
+                        {
+                            validate = "TCSMandatory";
+                        }
                     }
                 }
-
 
                 //REV 13.0 End
                 //////////////////  TCS section  /////////////////////////
