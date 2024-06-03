@@ -1,6 +1,7 @@
 ﻿<%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                17-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                03-06-2024        2.0.42           Priti               0027504 : Unable to generate IRN getting and msg "dispatchDetails.location size must be between 3 and 100"
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="Branch_Correspondance.aspx.cs" Inherits="ERP.OMS.Management.Master.Branch_Correspondance" %>
@@ -1006,7 +1007,10 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
                                                                         </dxe:GridViewDataTextColumn>
 
+                                                                       <%-- Rev 2.0 
                                                                         <dxe:GridViewDataTextColumn FieldName="Address2" VisibleIndex="6" Caption="Address2" PropertiesTextEdit-MaxLength="500">
+                                                                        Rev 2.0 End--%>
+                                                                        <dxe:GridViewDataTextColumn FieldName="Address2" VisibleIndex="6" Caption="Address2" PropertiesTextEdit-MaxLength="100" >
                                                                             <EditFormSettings Visible="True" VisibleIndex="6" />
                                                                             <CellStyle CssClass="gridcellleft">
                                                                             </CellStyle>
