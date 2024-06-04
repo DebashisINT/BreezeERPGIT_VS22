@@ -437,30 +437,31 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
 
             }
 
+            //Rev 2.0
             if (inclsOrExclsv == "I") {
                 for (var taxCount = 0; taxCount < taxes.length; taxCount++) {
                     if (TaxTypeMode == "SGST") {
                         if (taxes[taxCount].TaxTypeCode == "SGST" || taxes[taxCount].TaxTypeCode == "CGST") {
-                            if (taxes[taxCount].Taxes_ApplicableOn == "G") {
-                             
+                            if (taxes[taxCount].Taxes_ApplicableOn == "G") {                             
                                // TaxChargesAmount = Math.trunc((TaxChargesAmount + (GrosstotalAmount / (100 + totalTaxchargesRate)) * taxes[taxCount].Rate)*100)/100;
                                 TaxChargesAmount = RoundUp(TaxChargesAmount + ((GrosstotalAmount / (100 + totalTaxchargesRate)) * taxes[taxCount].Rate), 2);
                             }
-                            else if (taxes[taxCount].Taxes_ApplicableOn == "N") {
-                                //TaxChargesAmount = TaxChargesAmount + ((NettotalAmount / (100 + totalTaxchargesRate)) * taxes[taxCount].Rate);
+                            else if (taxes[taxCount].Taxes_ApplicableOn == "N") {                               
                                 TaxChargesAmount = TaxChargesAmount + RoundUp(((NettotalAmount / (100 + totalTaxchargesRate)) * taxes[taxCount].Rate), 2);
                             }
                         }
                     }
                 }
             }
+            //Rev 2.0 End
         }
     }
 
     if (inclsOrExclsv == "I") {
 
-       
+        //Rev 2.0 
         if (TaxTypeMode == "IGST") {
+        //Rev 2.0 End
             var backProcessRate = (1 + (totalTaxchargesRate / 100));
             if (TaxApplicableOn == "G") {
                 TaxChargesAmount = (GrosstotalAmount - (GrosstotalAmount / backProcessRate));
@@ -470,8 +471,9 @@ caluculateAndSetGST = function (AmountEditor, chargesEditor, TotalAmountEditor, 
             else {
                 TaxChargesAmount = (NettotalAmount - (NettotalAmount / backProcessRate));
             }
+        //Rev 2.0 
         }
-
+        //Rev 2.0 End
 
 
 
