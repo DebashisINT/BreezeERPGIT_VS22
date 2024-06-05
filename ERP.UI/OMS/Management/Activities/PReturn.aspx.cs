@@ -3,6 +3,7 @@
                                                  Session["MultiUOMData"] has been renamed to Session["MultiUOMDataPRET"]
                                                  Mantis: 26843
  Rev 2.0      Priti      V2.0.41   13-11-2023    0026641: Tax amount is not calculating for the Purchase Return for partial qty
+ Rev 3.0	  Priti	     V2.0.43   05-06-2024	 0027280: Alternate UOM is not saving while making a Purchase Return entry
 *******************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -2675,7 +2676,12 @@ namespace ERP.OMS.Management.Activities
 
                     if (Warehousedt != null && Warehousedt.Rows.Count > 0)
                     {
-                        tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "TotalQuantity", "BatchID", "SerialID", "AltQuantity", "AltUOM");
+                        //Rev 3.0
+                        //tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "TotalQuantity", "BatchID", "SerialID", "AltQuantity", "AltUOM");
+                        
+                        tempWarehousedt = Warehousedt.DefaultView.ToTable(false, "Product_SrlNo", "LoopID", "WarehouseID", "TotalQuantity", "BatchID", "SerialID", "AltQuantity", "AltUOM", "MfgDate", "ExpiryDate");
+                        //Rev 3.0 End
+
                     }
                     else
                     {
@@ -2687,6 +2693,8 @@ namespace ERP.OMS.Management.Activities
                         tempWarehousedt.Columns.Add("SerialID", typeof(string));
                         tempWarehousedt.Columns.Add("AltQuantity", typeof(string));
                         tempWarehousedt.Columns.Add("AltUOM", typeof(string));
+                        tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                        tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
                     }
                 }
                 else
@@ -2699,6 +2707,8 @@ namespace ERP.OMS.Management.Activities
                     tempWarehousedt.Columns.Add("SerialID", typeof(string));
                     tempWarehousedt.Columns.Add("AltQuantity", typeof(string));
                     tempWarehousedt.Columns.Add("AltUOM", typeof(string));
+                    tempWarehousedt.Columns.Add("MfgDate", typeof(string));
+                    tempWarehousedt.Columns.Add("ExpiryDate", typeof(string));
 
                 }
 
@@ -3743,6 +3753,33 @@ namespace ERP.OMS.Management.Activities
                 DataSet dsInst = new DataSet();
                 // SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings["DBConnectionDefault"]);
 
+                //REV 3.0
+                foreach (DataRow wtrow in Warehousedt.Rows)
+                {
+                    string strMfgDate = Convert.ToString(wtrow["MfgDate"]).Trim();
+                    string strExpiryDate = Convert.ToString(wtrow["ExpiryDate"]).Trim();
+
+                    if (strMfgDate != "")
+                    {
+                        string DD = strMfgDate.Substring(0, 2);
+                        string MM = strMfgDate.Substring(3, 2);
+                        string YYYY = strMfgDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["MfgDate"] = Date;
+                    }
+
+                    if (strExpiryDate != "")
+                    {
+                        string DD = strExpiryDate.Substring(0, 2);
+                        string MM = strExpiryDate.Substring(3, 2);
+                        string YYYY = strExpiryDate.Substring(6, 4);
+                        string Date = YYYY + '-' + MM + '-' + DD;
+
+                        wtrow["ExpiryDate"] = Date;
+                    }
+                }
+                //REV 3.0 End
                 SqlConnection con = new SqlConnection(Convert.ToString(System.Web.HttpContext.Current.Session["ErpConnection"]));
                 // Rev  Manis 24428
                 //SqlCommand cmd = new SqlCommand("prc_CRMPurchaseReturn", con);
