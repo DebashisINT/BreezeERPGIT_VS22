@@ -2,6 +2,7 @@
     1.0   Pallab    V2.0.38   20-04-2023      25868: Add Vendor Payment/Receipt module design modification
     2.0   Sanchita  V2.0.41   01-11-2023      26952: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/Bank
     3.0   Priti     V2.0.43   23-04-2023      0027390: Instrument No. field in Cash/Bank Voucher will be mandatory if Bank selected in Cash/BankAfter selection of "Currency "  if curser keep in Rate filed and scroll down by the mouse then value getting 9999.
+    4.0   Priti     V2.0.43   05-06-2024      0027448: Invoice Selection Tab data showing outside of its area in Vendor Payment Screen.
 =========================================================End Revision History===================================================================================================--%>
 
 <%@ Page Title="VendorPaymentReceipt" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="VendorPaymentReceipt.aspx.cs" Inherits="ERP.OMS.Management.Activities.VendorPaymentReceipt" %>
@@ -1187,10 +1188,10 @@ function Currency_Rate() {
 
 
         <%--Batch Product Popup Start--%>
-
+            <%--REV 4.0  add GridViewProperties-Settings-HorizontalScrollBarMode="Auto" for ASPxGridLookup "documentLookUp" & change Height,Width for ASPxPopupControl--%>
         <dxe:ASPxPopupControl ID="DocumentpopUp" runat="server" ClientInstanceName="cDocumentpopUp"
-            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="400"
-            Width="700" HeaderText="Select Document Number" AllowResize="true" ResizingMode="Postponed" Modal="true">
+            CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="430px"
+            Width="610px" HeaderText="Select Document Number" AllowResize="true" ResizingMode="Postponed" Modal="true">
             <%--  <headertemplate>
                 <span>Select Document Number</span>
             </headertemplate>--%>
@@ -1198,13 +1199,13 @@ function Currency_Rate() {
                 <dxe:PopupControlContentControl runat="server">
                     <label><strong>Search By Document Number</strong></label>
                     <span style="color: red;">[Press ESC key to Cancel]</span>
-                    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanelDocumentNo" ClientInstanceName="cCallbackPanelDocumentNo"
+                    <dxe:ASPxCallbackPanel runat="server" ID="CallbackPanelDocumentNo" ClientInstanceName="cCallbackPanelDocumentNo" 
                         OnCallback="CallbackPanelDocumentNo_Callback">
                         <PanelCollection>
                             <dxe:PanelContent runat="server">
-                                <dxe:ASPxGridLookup ID="documentLookUp" runat="server" ClientInstanceName="cdocumentLookUp" Width="800"
+                                <dxe:ASPxGridLookup ID="documentLookUp" runat="server" ClientInstanceName="cdocumentLookUp" Width="600px"
                                     KeyFieldName="DocumentID" TextFormatString="{1}" MultiTextSeparator=", " ClientSideEvents-TextChanged="DocumentSelected"
-                                    ClientSideEvents-KeyDown="DocumentlookUpKeyDown" OnDataBinding="documentLookUp_DataBinding">
+                                    ClientSideEvents-KeyDown="DocumentlookUpKeyDown" OnDataBinding="documentLookUp_DataBinding" GridViewProperties-Settings-HorizontalScrollBarMode="Auto">
                                     <Columns>
 
                                         <dxe:GridViewDataColumn FieldName="DocDate" Caption="Document Date" Width="100">
