@@ -13,7 +13,8 @@
  * Rev 8.0      Sanchita      V2.0.43     16-05-2024     While making transaction Base rate showing less value of 1paise for this item code - 41B0150HE0181
                                                          Mantis: 27459     
  * Rev 9.0      Sanchita      V2.0.43     22-05-2024     Send mail option should be enabled if the setting "Is Mail Send Option Require In Sales Invoice?" is true in Sales Invoice. Mantis: 27462                                                        
-  ******************************************************************************************************************************/
+ * Rev 10.0     Priti         V2.0.43     10-06-2024     TCS Calculation & posting is not working in the Sales Invoice. Mantis : 0027484
+ ******************************************************************************************************************************/
 
 $(document).ready(function () {
     var mode = $('#hdAddOrEdit').val();
@@ -7192,7 +7193,9 @@ function ShowTCS() {
     obj.taxableAmount = taxableAmount;
     obj.branch_id = $("#ddl_Branch").val();
 
-    if (invoice_id == "" || invoice_id == null) {
+    //Rev 10.0
+    // if (invoice_id == "" || invoice_id == null) {
+    //Rev 10.0 End
         $.ajax({
             type: "POST",
             url: 'SalesInvoice.aspx/getTCSDetails',
@@ -7213,11 +7216,12 @@ function ShowTCS() {
 
             }
         });
-    }
-    else {
-        cGridTCSdocs.PerformCallback();
-    }
-
+    //Rev 10.0
+    //}
+    //else {
+    //    cGridTCSdocs.PerformCallback();
+    //}
+    //Rev 10.0 End
 
 
     $("#tcsModal").modal('show');
