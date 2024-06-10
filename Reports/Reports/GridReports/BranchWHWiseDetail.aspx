@@ -3,6 +3,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 1.0                13-03-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                27-11-2023        2.0.40           Debashis            0027032 : New Coloumn Branch Req No and Branch Req Date required in Branch 
                                                                                     Warehouse Wise Stock Detail Report.
+3.0                10-06-2024        V2.0.43          Sanchita            27487: Two new coloumns field required as "Created Date" and "Created By" in Branch/Warehouse wise stock – Detail report    
 ====================================================== Revision History ===============================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="BranchWHWiseDetail.aspx.cs" Inherits="Reports.Reports.GridReports.BranchWHWiseDetail" %>
@@ -1521,120 +1522,132 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TRANS_TYPE" Width="130px" Caption="Document Type" VisibleIndex="12">
+                                <%--Rev 3.0--%>
+                                 <dxe:GridViewDataTextColumn FieldName="CREATEDDATE" Width="100px" Caption="Created Date" PropertiesTextEdit-DisplayFormatString="dd-MM-yyyy" VisibleIndex="12" HeaderStyle-CssClass="colDisable">
+                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                     <Settings AutoFilterCondition="Contains" />
+                                 </dxe:GridViewDataTextColumn>
+
+                                <dxe:GridViewDataTextColumn FieldName="CREATEDBY" Width="130px" Caption="Created By" VisibleIndex="13">
+                                    <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>
+                                <%--End of Rev 3.0--%>
+
+                                <dxe:GridViewDataTextColumn FieldName="TRANS_TYPE" Width="130px" Caption="Document Type" VisibleIndex="14">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="REMARKS" Width="130px" Caption="Remarks" VisibleIndex="13">
+                                <dxe:GridViewDataTextColumn FieldName="REMARKS" Width="130px" Caption="Remarks" VisibleIndex="15">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="REPLACEABLETYPE" Width="90px" Caption="Type" VisibleIndex="14">
+                                <dxe:GridViewDataTextColumn FieldName="REPLACEABLETYPE" Width="90px" Caption="Type" VisibleIndex="16">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ENTITYCODE" Width="90px" Caption="Entity Code" VisibleIndex="15">
+                                <dxe:GridViewDataTextColumn FieldName="ENTITYCODE" Width="90px" Caption="Entity Code" VisibleIndex="17">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ENTITYNAME" Width="130px" Caption="Entity Name" VisibleIndex="16">
+                                <dxe:GridViewDataTextColumn FieldName="ENTITYNAME" Width="130px" Caption="Entity Name" VisibleIndex="18">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="REFNO" Width="90px" Caption="Ref. No." VisibleIndex="17">
+                                <dxe:GridViewDataTextColumn FieldName="REFNO" Width="90px" Caption="Ref. No." VisibleIndex="19">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTY" Width="200px" Caption="Party Name" VisibleIndex="18">
+                                <dxe:GridViewDataTextColumn FieldName="PARTY" Width="200px" Caption="Party Name" VisibleIndex="20">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTYINVNO" Width="130px" Caption="Party Inv. No." VisibleIndex="19">
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVNO" Width="130px" Caption="Party Inv. No." VisibleIndex="21">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="PARTYINVDT" Width="90px" Caption="Party Inv. Date" VisibleIndex="20">
+                                <dxe:GridViewDataTextColumn FieldName="PARTYINVDT" Width="90px" Caption="Party Inv. Date" VisibleIndex="22">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="EMPNAME" Width="130px" Caption="Employee Name" VisibleIndex="21">
+                                <dxe:GridViewDataTextColumn FieldName="EMPNAME" Width="130px" Caption="Employee Name" VisibleIndex="23">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="TECHNAME" Width="130px" Caption="Technician Name" VisibleIndex="22">
+                                <dxe:GridViewDataTextColumn FieldName="TECHNAME" Width="130px" Caption="Technician Name" VisibleIndex="24">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="SERIALNO" Width="130px" Caption="Serial No." VisibleIndex="23">
+                                <dxe:GridViewDataTextColumn FieldName="SERIALNO" Width="130px" Caption="Serial No." VisibleIndex="25">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
                                 <%--Rev 2.0 Mantis: 0027032--%>
-                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQNO" Width="130px" Caption="Branch Req. No." VisibleIndex="24">
+                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQNO" Width="130px" Caption="Branch Req. No." VisibleIndex="26">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQDATE" Width="110px" Caption="Branch Req. Date" VisibleIndex="25">
+                                <dxe:GridViewDataTextColumn FieldName="BRANCHREQDATE" Width="110px" Caption="Branch Req. Date" VisibleIndex="27">
                                     <CellStyle CssClass="gridcellleft" Wrap="true"></CellStyle>
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
                                 <%--End of Rev 2.0 Mantis: 0027032--%>
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_QTY" Width="90px" Caption="Opening Qty." VisibleIndex="26" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OP_QTY" Width="90px" Caption="Opening Qty." VisibleIndex="28" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OP_ALTQTY" Width="100px" Caption="Opening Alt. Qty." VisibleIndex="27" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OP_ALTQTY" Width="100px" Caption="Opening Alt. Qty." VisibleIndex="29" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="IN_QTY" Width="90px" Caption="Received Qty." VisibleIndex="28" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="IN_QTY" Width="90px" Caption="Received Qty." VisibleIndex="30" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                     <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ALTIN_QTY" Width="90px" Caption="Recd. Alt. Qty." VisibleIndex="29" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="ALTIN_QTY" Width="90px" Caption="Recd. Alt. Qty." VisibleIndex="31" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Width="90px" Caption="Delivered Qty." VisibleIndex="30" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="OUT_QTY" Width="90px" Caption="Delivered Qty." VisibleIndex="32" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="ALTOUT_QTY" Width="90px" Caption="Delv. Alt. Qty." VisibleIndex="31" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="ALTOUT_QTY" Width="90px" Caption="Delv. Alt. Qty." VisibleIndex="33" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BALQTY" Width="90px" Caption="Balance Qty." VisibleIndex="32" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="BALQTY" Width="90px" Caption="Balance Qty." VisibleIndex="34" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn FieldName="BALALTQTY" Width="100px" Caption="Balance Alt. Qty." VisibleIndex="33" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
+                                <dxe:GridViewDataTextColumn FieldName="BALALTQTY" Width="100px" Caption="Balance Alt. Qty." VisibleIndex="36" PropertiesTextEdit-DisplayFormatString="#####,##,##,###0.0000;" HeaderStyle-CssClass="colDisable">
                                      <CellStyle HorizontalAlign="Right"></CellStyle>
                                     <HeaderStyle HorizontalAlign="Right" />
                                     <Settings AutoFilterCondition="Contains" />
