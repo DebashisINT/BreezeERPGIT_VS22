@@ -1,4 +1,8 @@
-﻿<%@ Page Language="C#" Title="Registration" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/Erp.Master" CodeBehind="HRrecruitmentagent_Registration.aspx.cs" Inherits="ERP.OMS.Management.Master.HRrecruitmentagent_Registration" %>
+﻿<%--==========================================================Revision History ============================================================================================   
+   1.0   Priti      V2.0.43     10-06-2024     0027524:Vendor VINEET KEDIA Pan Number Valid from and Valid upto showing 01-01-1990
+========================================== End Revision History =======================================================================================================--%>
+
+<%@ Page Language="C#" Title="Registration" AutoEventWireup="true" MasterPageFile="~/OMS/MasterPage/Erp.Master" CodeBehind="HRrecruitmentagent_Registration.aspx.cs" Inherits="ERP.OMS.Management.Master.HRrecruitmentagent_Registration" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
@@ -890,8 +894,10 @@
                         ctxtRegAuthName.SetEnabled(false)
                         cCmbProofType.SetValue(1);
                         ctxtNumber.SetText(grid.cpedit.split('~')[3]);
-                        cdtValid.SetDate(new Date());
-                        cdtIssue.SetDate(new Date());
+                        //Rev 1.0
+                        // cdtValid.SetDate(new Date());
+                        //  cdtIssue.SetDate(new Date());
+                        //Rev 1.0 End
                         if (verified == '1') {
 
                             ccmbVerify.SetText('Verified');
