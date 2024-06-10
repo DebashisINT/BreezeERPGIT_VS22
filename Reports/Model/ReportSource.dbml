@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="PK02122020" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=3.7.30.86,1480\SQLEXPRESS;Initial Catalog=PK02122020;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="PK02122020ConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GTPL" Class="ReportSourceDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Table Name="dbo.v_ReportCustomer" Member="v_ReportCustomers">
     <Type Name="v_ReportCustomer">
       <Column Name="Nid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
@@ -3859,58 +3858,6 @@
       <Column Name="SCONTACTPERSON" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.BRANCHWHWISESTOCKDETSUM_REPORT" Member="BRANCHWHWISESTOCKDETSUM_REPORTs">
-    <Type Name="BRANCHWHWISESTOCKDETSUM_REPORT">
-      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="SEQ" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="SL" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="BRANCHDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PRODID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PRODCODE" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="PRODDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="WHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="WHDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="CLASSDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="BRANDNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="DOCNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="DOCDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="DOCUMENT_DATE_ORDERBY" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="STOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="ALTSTOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="TRANS_TYPE" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="REMARKS" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
-      <Column Name="REPLACEABLETYPE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="PARTY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="PARTYINVNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PARTYINVDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="ENTITYCODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="ENTITYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="REFNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="EMPCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="EMPNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="TECHCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TECHNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
-      <Column Name="SERIALNO" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
-      <Column Name="BRANCHREQNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="BRANCHREQDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="OP_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="OP_ALTQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="IN_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="ALTIN_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="OUT_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="ALTOUT_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="BALQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="BALALTQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
-      <Column Name="DETAILID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
-      <Column Name="INOUTTYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.SALESQUOTATIONREGISTERDETSUM_REPORT" Member="SALESQUOTATIONREGISTERDETSUM_REPORTs">
     <Type Name="SALESQUOTATIONREGISTERDETSUM_REPORT">
       <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -4339,6 +4286,60 @@
       <Column Name="PR_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
       <Column Name="CL_DEBIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
       <Column Name="CL_CREDIT" Type="System.Decimal" DbType="Decimal(38,2)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BRANCHWHWISESTOCKDETSUM_REPORT" Member="BRANCHWHWISESTOCKDETSUM_REPORTs">
+    <Type Name="BRANCHWHWISESTOCKDETSUM_REPORT">
+      <Column Name="USERID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SEQ" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="REPORTTYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SL" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCH_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="BRANCHDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PRODID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PRODCODE" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="PRODDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="WHID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="WHDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PROJ_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="PROJ_NAME" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="CLASSDESC" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="BRANDNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="DOC_ID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="DOCNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DOCDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="DOCUMENT_DATE_ORDERBY" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="STOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="ALTSTOCKUOM" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="TRANS_TYPE" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="MODULE_TYPE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="REMARKS" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="REPLACEABLETYPE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="PARTY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="PARTYINVNO" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PARTYINVDT" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="ENTITYCODE" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ENTITYNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="REFNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="EMPCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="EMPNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="TECHCODE" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TECHNAME" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="SERIALNO" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="BRANCHREQNO" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="BRANCHREQDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="OP_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="OP_ALTQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="IN_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="ALTIN_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="OUT_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="ALTOUT_QTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="BALQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="BALALTQTY" Type="System.Decimal" DbType="Decimal(38,4)" CanBeNull="true" />
+      <Column Name="DETAILID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="INOUTTYPE" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="CREATEDBY" Type="System.String" DbType="NVarChar(300)" CanBeNull="true" />
+      <Column Name="CREATEDDATE" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PRC_PARTYWISEAGEINSUMGDET_REPORT" Method="PRC_PARTYWISEAGEINSUMGDET_REPORT" IsComposable="true">

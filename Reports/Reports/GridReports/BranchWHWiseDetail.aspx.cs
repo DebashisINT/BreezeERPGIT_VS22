@@ -1,6 +1,7 @@
 ﻿#region =======================Revision History=============================================================================================================================
 //1.0   v2 .0.32    Debashis    26/08/2022  'Project' selection required in reports [As like Purchase GRN Register].Refer: 0025145
-//2.0   v2 .0.40    Debashis    27/11/2023  New Coloumn Branch Req No and Branch Req Date required in Branch Warehouse Wise Stock Detail Report.Refer: 0027032
+//2.0   v2 .0.40    Debashis    27/11/2023   New Coloumn Branch Req No and Branch Req Date required in Branch Warehouse Wise Stock Detail Report.Refer: 0027032
+//3.0   V2 .0.43    Sanchita    10/06/2024   27487: Two new coloumns field required as "Created Date" and "Created By" in Branch/Warehouse wise stock – Detail report 
 #endregion =======================Revision History==========================================================================================================================
 using DevExpress.Web;
 using DevExpress.Web.Mvc;
@@ -233,7 +234,10 @@ namespace Reports.Reports.GridReports
                 //string selectQuery = "SELECT BRANCHDESC,WHDESC,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
                 //Rev 2.0 Mantis: 0027032
                 //string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
-                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,BRANCHREQNO,BRANCHREQDATE,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
+                // Rev 3.0
+                //string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,BRANCHREQNO,BRANCHREQDATE,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
+                string selectQuery = "SELECT BRANCHDESC,WHDESC,PROJ_NAME,PRODCODE,PRODDESC,CLASSDESC,BRANDNAME,STOCKUOM,ALTSTOCKUOM,DOCNO,DOCDATE,TRANS_TYPE,REMARKS,REPLACEABLETYPE,ENTITYCODE,ENTITYNAME,REFNO,PARTY,PARTYINVNO,PARTYINVDT,EMPNAME,TECHNAME,SERIALNO,BRANCHREQNO,BRANCHREQDATE,OP_QTY,OP_ALTQTY,IN_QTY,ALTIN_QTY,OUT_QTY,ALTOUT_QTY,BALQTY,BALALTQTY,CREATEDBY,CREATEDDATE FROM BRANCHWHWISESTOCKDETSUM_REPORT Where USERID=" + Convert.ToInt32(Session["userid"]) + " AND PRODCODE<>'Gross Total :' AND REPORTTYPE='Details' order by SEQ";
+                // End of Rev 3.0
                 //End of Rev 2.0 Mantis: 0027032
                 //End of Rev 1.0 0025145
                 SqlDataAdapter myCommand = new SqlDataAdapter(selectQuery, con);
@@ -265,6 +269,10 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Add(new DataColumn("Alternate Unit", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Document No", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Date", typeof(string)));
+                // Rev 3.0
+                dtExport.Columns.Add(new DataColumn("Created Date", typeof(string)));
+                dtExport.Columns.Add(new DataColumn("Created By", typeof(string)));
+                // End of Rev 3.0
                 dtExport.Columns.Add(new DataColumn("Document Type", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Remarks", typeof(string)));
                 dtExport.Columns.Add(new DataColumn("Type", typeof(string)));
@@ -307,6 +315,10 @@ namespace Reports.Reports.GridReports
                     row2["Alternate Unit"] = dr1["ALTSTOCKUOM"];
                     row2["Document No"] = dr1["DOCNO"];
                     row2["Date"] = dr1["DOCDATE"];
+                    // Rev 3.0
+                    row2["Created Date"] = dr1["CREATEDDATE"];
+                    row2["Created By"] = dr1["CREATEDBY"];
+                    // End of Rev 3.0
                     row2["Document Type"] = dr1["TRANS_TYPE"];
                     row2["Remarks"] = dr1["REMARKS"];
                     row2["Type"] = dr1["REPLACEABLETYPE"];
@@ -385,6 +397,10 @@ namespace Reports.Reports.GridReports
                 dtExport.Columns.Remove("ALTSTOCKUOM");
                 dtExport.Columns.Remove("DOCNO");
                 dtExport.Columns.Remove("DOCDATE");
+                // Rev 3.0
+                dtExport.Columns.Remove("CREATEDDATE");
+                dtExport.Columns.Remove("CREATEDBY");
+                // End of Rev 3.0
                 dtExport.Columns.Remove("TRANS_TYPE");
                 dtExport.Columns.Remove("REMARKS");
                 dtExport.Columns.Remove("REPLACEABLETYPE");
@@ -883,11 +899,19 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[26].Visible = true;
                 //ShowGrid.Columns[28].Visible = true;
                 //ShowGrid.Columns[30].Visible = true;
+
+                // Rev 3.0
+                // ShowGrid.Columns[8].Visible = true;
+                //ShowGrid.Columns[26].Visible = true;
+                //ShowGrid.Columns[28].Visible = true;
+                //ShowGrid.Columns[30].Visible = true;
+                //ShowGrid.Columns[32].Visible = true;
                 ShowGrid.Columns[8].Visible = true;
-                ShowGrid.Columns[26].Visible = true;
                 ShowGrid.Columns[28].Visible = true;
                 ShowGrid.Columns[30].Visible = true;
                 ShowGrid.Columns[32].Visible = true;
+                ShowGrid.Columns[34].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 2.0 Mantis: 0027032
                 //End of Rev 1.0 0025145
             }
@@ -917,11 +941,18 @@ namespace Reports.Reports.GridReports
                 //ShowGrid.Columns[26].Visible = false;
                 //ShowGrid.Columns[28].Visible = false;
                 //ShowGrid.Columns[30].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[8].Visible = false;
+                //ShowGrid.Columns[26].Visible = false;
+                //ShowGrid.Columns[28].Visible = false;
+                //ShowGrid.Columns[30].Visible = false;
+                //ShowGrid.Columns[32].Visible = false;
                 ShowGrid.Columns[8].Visible = false;
-                ShowGrid.Columns[26].Visible = false;
                 ShowGrid.Columns[28].Visible = false;
                 ShowGrid.Columns[30].Visible = false;
                 ShowGrid.Columns[32].Visible = false;
+                ShowGrid.Columns[34].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 2.0 Mantis: 0027032
                 //End of Rev 1.0 0025145
             }
@@ -931,8 +962,12 @@ namespace Reports.Reports.GridReports
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[13].Visible = true;
                 //ShowGrid.Columns[14].Visible = true;
-                ShowGrid.Columns[14].Visible = true;
-                ShowGrid.Columns[15].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[14].Visible = true;
+                //ShowGrid.Columns[15].Visible = true;
+                ShowGrid.Columns[16].Visible = true;
+                ShowGrid.Columns[17].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
@@ -940,8 +975,12 @@ namespace Reports.Reports.GridReports
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[13].Visible = false;
                 //ShowGrid.Columns[14].Visible = false;
-                ShowGrid.Columns[14].Visible = false;
-                ShowGrid.Columns[15].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[14].Visible = false;
+                //ShowGrid.Columns[15].Visible = false;
+                ShowGrid.Columns[16].Visible = false;
+                ShowGrid.Columns[17].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
 
@@ -949,14 +988,20 @@ namespace Reports.Reports.GridReports
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[16].Visible = true;
-                ShowGrid.Columns[17].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[17].Visible = true;
+                ShowGrid.Columns[19].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[16].Visible = false;
-                ShowGrid.Columns[17].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[17].Visible = false;
+                ShowGrid.Columns[19].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
 
@@ -965,8 +1010,12 @@ namespace Reports.Reports.GridReports
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[17].Visible = true;
                 //ShowGrid.Columns[18].Visible = true;
-                ShowGrid.Columns[18].Visible = true;
-                ShowGrid.Columns[19].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[18].Visible = true;
+                //ShowGrid.Columns[19].Visible = true;
+                ShowGrid.Columns[20].Visible = true;
+                ShowGrid.Columns[21].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
@@ -974,8 +1023,12 @@ namespace Reports.Reports.GridReports
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[17].Visible = false;
                 //ShowGrid.Columns[18].Visible = false;
-                ShowGrid.Columns[18].Visible = false;
-                ShowGrid.Columns[19].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[18].Visible = false;
+                //ShowGrid.Columns[19].Visible = false;
+                ShowGrid.Columns[20].Visible = false;
+                ShowGrid.Columns[21].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
 
@@ -983,14 +1036,20 @@ namespace Reports.Reports.GridReports
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[19].Visible = true;
-                ShowGrid.Columns[20].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[20].Visible = true;
+                ShowGrid.Columns[22].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[19].Visible = false;
-                ShowGrid.Columns[20].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[20].Visible = false;
+                ShowGrid.Columns[22].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
 
@@ -998,14 +1057,20 @@ namespace Reports.Reports.GridReports
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[20].Visible = true;
-                ShowGrid.Columns[21].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[21].Visible = true;
+                ShowGrid.Columns[23].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[20].Visible = false;
-                ShowGrid.Columns[21].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[21].Visible = false;
+                ShowGrid.Columns[23].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
 
@@ -1013,14 +1078,20 @@ namespace Reports.Reports.GridReports
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[21].Visible = true;
-                ShowGrid.Columns[22].Visible = true;
+                // Rev 3.0
+                //ShowGrid.Columns[22].Visible = true;
+                ShowGrid.Columns[24].Visible = true;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             else
             {
                 //Rev 1.0 0025145
                 //ShowGrid.Columns[21].Visible = false;
-                ShowGrid.Columns[22].Visible = false;
+                // Rev 3.0
+                //ShowGrid.Columns[22].Visible = false;
+                ShowGrid.Columns[24].Visible = false;
+                // End of Rev 3.0
                 //End of Rev 1.0 0025145
             }
             //Rev 1.0 0025145
