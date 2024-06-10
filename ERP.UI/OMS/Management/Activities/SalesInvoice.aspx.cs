@@ -2867,6 +2867,8 @@ namespace ERP.OMS.Management.Activities
                 // End of Rev 7.0
 
 
+
+
                 //REV 13.0
                 if (hdnbranchwiseTCS.Value == "1")
                 {
@@ -2893,10 +2895,30 @@ namespace ERP.OMS.Management.Activities
                         {
                             validate = "TCSMandatory";
                         }
+                        //REV 13.0
+                        else
+                        {
+                            txtTCSSection.Text = "0";
+                            txtTCSapplAmount.Text = "0";
+                            txtTCSpercentage.Text = "0";
+                            txtTCSAmount.Text = "0";
+                        }
+                        //REV 13.0 End
                     }
+                    //REV 13.0
+                    else
+                    {
+                        txtTCSSection.Text = "0";
+                        txtTCSapplAmount.Text = "0";
+                        txtTCSpercentage.Text = "0";
+                        txtTCSAmount.Text = "0";
+                    }
+                    //REV 13.0 End
                 }
 
                 //REV 13.0 End
+
+
                 //////////////////  TCS section  /////////////////////////
                 string strTCScode = Convert.ToString(txtTCSSection.Text);
                 string strTCSappl = Convert.ToString(txtTCSapplAmount.Text);
