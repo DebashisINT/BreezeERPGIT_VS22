@@ -5892,29 +5892,22 @@ namespace ERP.OMS.Management.Activities
                     BranchStateCode = Convert.ToString(BranchTable.Rows[0][0]);
                     BranchGSTIN = Convert.ToString(BranchTable.Rows[0][1]);
                 }
-
-
-
                 string ShippingState = "";
-
                 //ShippingState = lblShippingStateText.Value;
                 ShippingState = Purchase_BillingShipping.GeteShippingStateCode();
-                //if (hdnPlaceOfSupply.Value != null && hdnPlaceOfSupply.Value != "")
-                //{
-                //    ShippingState = hdnPlaceOfSupply.Value.Split('~')[2].ToString();
-
-                //}
-
                 //REV 6.0
                 if (hdnPlaceOfSupply.Value != null && hdnPlaceOfSupply.Value != "")
                 {
-                    ShippingState = hdnPlaceOfSupply.Value.Split('~')[1].ToString();
-                }
+                    ShippingState = hdnPlaceOfSupply.Value.Split('~')[2].ToString();
+                }                
+                //if (hdnPlaceOfSupply.Value != null && hdnPlaceOfSupply.Value != "")
+                //{
+                //    ShippingState = hdnPlaceOfSupply.Value.Split('~')[1].ToString();
+                //}
                 //REV 6.0 End
 
                 if (ShippingState.Trim() != "" && BranchStateCode != "")
                 {
-
                     if (BranchStateCode != "")
                     {
                         if (BranchStateCode == ShippingState)
@@ -5930,7 +5923,6 @@ namespace ERP.OMS.Management.Activities
                                         dr.Delete();
                                     }
                                 }
-
                             }
                             else
                             {
@@ -5954,9 +5946,7 @@ namespace ERP.OMS.Management.Activities
                                 }
                             }
                             taxDetail.AcceptChanges();
-
                         }
-
                     }
                 }
 
