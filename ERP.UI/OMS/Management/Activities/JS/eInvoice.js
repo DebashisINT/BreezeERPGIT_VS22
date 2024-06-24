@@ -1,6 +1,7 @@
 ﻿//====================================================Revision History =========================================================================
 //1.0   v2.0.37	Priti	13-03-2023	0025686:Eway Bill Cancel not working for Transit Sales Invoice & Credit Note
 //2.0   v2.0.41	Priti	10-11-2023	0026981:Need to Restrict IRN Cancellation for Sales Return(Credit Note) if the Credit Note is Adjusted
+//3.0   v2.0.43	Priti	21-06-2024	0027546:Without cancel remarks system allowing to submit for cancel but system error showing of object reference.
 //====================================================End Revision History=====================================================================
 
 
@@ -870,28 +871,36 @@ function PINtoPINDistanceSubmitTSI() {
 
 function CancelIRNSubmit() {
     if ($("#hdnCancelIRNType").val() == 'SILine') {
-        var otherdet = {};
-        otherdet.irn = $("#hdnCancelIRNNo").val();
-        otherdet.type = $("#hdnCancelIRNType").val();
-        otherdet.cancelReason = $("#ddlCancelReason").val();
-        otherdet.cancelRemarks = $("#txtCancelRemarks").val();
-        //Rev 2.0
-        otherdet.InvoiceId = $("#hdnInvoiceId").val();
-        //Rev 2.0  End
 
-
-        $.ajax({
-            type: "POST",
-            url: "einvoice.aspx/CancelIRN",
-            //data: "{'ProductName':'" + ProductName + "'}",
-            data: JSON.stringify(otherdet),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                jAlert(msg.d);
-                cGrdQuotation.Refresh();
-            }
-        });
+        //REV 3.0
+        if ($("#txtCancelRemarks").val() == "") {
+            jAlert("Please enter Cancel Remarks to proceed.");
+        }
+        else {
+        //REV 3.0 End
+            var otherdet = {};
+            otherdet.irn = $("#hdnCancelIRNNo").val();
+            otherdet.type = $("#hdnCancelIRNType").val();
+            otherdet.cancelReason = $("#ddlCancelReason").val();
+            otherdet.cancelRemarks = $("#txtCancelRemarks").val();
+            //Rev 2.0
+            otherdet.InvoiceId = $("#hdnInvoiceId").val();
+            //Rev 2.0  End
+            $.ajax({
+                type: "POST",
+                url: "einvoice.aspx/CancelIRN",
+                //data: "{'ProductName':'" + ProductName + "'}",
+                data: JSON.stringify(otherdet),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    jAlert(msg.d);
+                    cGrdQuotation.Refresh();
+                }
+            });
+        //REV 3.0
+        }
+        //REV 3.0 End
     }
     else if ($("#hdnCancelIRNType").val() == 'SIBulk') {
         cGrdQuotation.PerformCallback('CancelIRN~' + $("#ddlCancelReason").val() + '~' + $("#txtCancelRemarks").val());
@@ -1628,21 +1637,31 @@ function grdEndcallbackewaybillSR(s, e) {
 }
 
 function CancelEwaSubmit() {
-    if ($("#hdnEwayBillType").val() == 'SI') {
-        cGrdQuotationewaybillSI.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
-    }
-    else if ($("#hdnEwayBillType").val() == 'UPDATESI') {
-        cGrdQuotationewaybillSI.PerformCallback('UpdateEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
-    }
-    else if ($("#hdnEwayBillType").val() == 'TSI') {
-        cGrdQuotationewaybillTSI.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
-    }
-    else if ($("#hdnEwayBillType").val() == 'SR') {
-        cGrdQuotationewaybillCR.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
-    }
 
-    $("#hdnEwayBillType").val("");
-    $("#hdnEwayBillNo").val("");
+    //REV 3.0
+    if ($("#txtEwayCancelRemarks").val() == "") {
+        jAlert("Please enter Cancel Remarks to proceed.");
+    }
+    else {
+    //REV 3.0 END
+        if ($("#hdnEwayBillType").val() == 'SI') {
+            cGrdQuotationewaybillSI.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
+        }
+        else if ($("#hdnEwayBillType").val() == 'UPDATESI') {
+            cGrdQuotationewaybillSI.PerformCallback('UpdateEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
+        }
+        else if ($("#hdnEwayBillType").val() == 'TSI') {
+            cGrdQuotationewaybillTSI.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
+        }
+        else if ($("#hdnEwayBillType").val() == 'SR') {
+            cGrdQuotationewaybillCR.PerformCallback('CancelEwayBill~' + $("#hdnEwayBillNo").val() + "~" + $("#ddlEwaybillCancelReason").val() + "~" + $("#txtEwayCancelRemarks").val());
+        }
+
+        $("#hdnEwayBillType").val("");
+        $("#hdnEwayBillNo").val("");
+    //REV 3.0
+    }
+    //REV 3.0 END
 }
 
 function grdEndcallbackewaybillSI(s, e) {
