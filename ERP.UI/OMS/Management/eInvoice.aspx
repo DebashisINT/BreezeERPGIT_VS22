@@ -10,7 +10,7 @@
     Namespace="DevExpress.Data.Linq" TagPrefix="dx" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta name="csrf-token" content="XYZ123" />
-    <script src="Activities/JS/eInvoice.js?v5.3"></script>
+    <script src="Activities/JS/eInvoice.js?v5.6"></script>
     <link href="CSS/einvoiceStyle.css" rel="stylesheet" />
     <style type="text/css">
         .new-box {
