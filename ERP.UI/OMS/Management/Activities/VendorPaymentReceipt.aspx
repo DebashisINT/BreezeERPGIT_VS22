@@ -436,6 +436,16 @@ function Currency_Rate() {
                 margin: 3px 0 !important;
         }
 
+        #documentLookUp_DDD_PW-1
+        {
+            width: 97% !important;
+        }
+
+        #documentLookUp_DDD_gv
+        {
+            width: 100% !important;
+        }
+
     </style>
     <%--Rev end 1.0--%>
 </asp:Content>
@@ -1191,7 +1201,7 @@ function Currency_Rate() {
             <%--REV 4.0  add GridViewProperties-Settings-HorizontalScrollBarMode="Auto" for ASPxGridLookup "documentLookUp" & change Height,Width for ASPxPopupControl--%>
         <dxe:ASPxPopupControl ID="DocumentpopUp" runat="server" ClientInstanceName="cDocumentpopUp"
             CloseAction="CloseButton" PopupHorizontalAlign="WindowCenter" PopupVerticalAlign="WindowCenter" Height="430px"
-            Width="610px" HeaderText="Select Document Number" AllowResize="true" ResizingMode="Postponed" Modal="true">
+            Width="800px" HeaderText="Select Document Number" AllowResize="true" ResizingMode="Postponed" Modal="true">
             <%--  <headertemplate>
                 <span>Select Document Number</span>
             </headertemplate>--%>
@@ -1203,32 +1213,32 @@ function Currency_Rate() {
                         OnCallback="CallbackPanelDocumentNo_Callback">
                         <PanelCollection>
                             <dxe:PanelContent runat="server">
-                                <dxe:ASPxGridLookup ID="documentLookUp" runat="server" ClientInstanceName="cdocumentLookUp" Width="600px"
+                                <dxe:ASPxGridLookup ID="documentLookUp" runat="server" ClientInstanceName="cdocumentLookUp" Width="600"
                                     KeyFieldName="DocumentID" TextFormatString="{1}" MultiTextSeparator=", " ClientSideEvents-TextChanged="DocumentSelected"
                                     ClientSideEvents-KeyDown="DocumentlookUpKeyDown" OnDataBinding="documentLookUp_DataBinding" GridViewProperties-Settings-HorizontalScrollBarMode="Auto">
                                     <Columns>
 
-                                        <dxe:GridViewDataColumn FieldName="DocDate" Caption="Document Date" Width="100">
+                                        <dxe:GridViewDataColumn FieldName="DocDate" Caption="Document Date" Width="17%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
 
 
-                                        <dxe:GridViewDataColumn FieldName="DocumentNumber" Caption="Document Number" Width="150">
+                                        <dxe:GridViewDataColumn FieldName="DocumentNumber" Caption="Document Number" Width="17%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
 
-                                        <dxe:GridViewDataColumn FieldName="PartyInvoiceNo" Caption="Party Invoice No" Width="150">
+                                        <dxe:GridViewDataColumn FieldName="PartyInvoiceNo" Caption="Party Invoice No" Width="17%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
 
-                                        <dxe:GridViewDataColumn FieldName="PartyInvoiceDate" Caption="Party Inv. Date" Width="150">
+                                        <dxe:GridViewDataColumn FieldName="PartyInvoiceDate" Caption="Party Inv. Date" Width="17%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
-                                        <dxe:GridViewDataColumn FieldName="branch" Caption="Unit" Width="150">
+                                        <dxe:GridViewDataColumn FieldName="branch" Caption="Unit" Width="16%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
 
-                                        <dxe:GridViewDataColumn FieldName="UnPaidAmount" Caption="UnPaid Amount" Width="100">
+                                        <dxe:GridViewDataColumn FieldName="UnPaidAmount" Caption="UnPaid Amount" Width="16%">
                                             <Settings AutoFilterCondition="Contains" />
                                         </dxe:GridViewDataColumn>
 
