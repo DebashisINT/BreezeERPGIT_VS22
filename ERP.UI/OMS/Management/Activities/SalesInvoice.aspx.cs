@@ -19,7 +19,8 @@
 * Mantis: 27462      
 * Rev 13.0     Priti         V2.0.43     27-04-2024  TCS Calculation & posting is not working in the Sales Invoice. Mantis : 0027484
 
-* 
+* Rev 14.0     Priti         V2.0.44     04-07-2024  TCS is not recalculating at the time of modifying the Invoice. Mantis : 0027605
+ 
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -815,6 +816,7 @@ namespace ERP.OMS.Management.Activities
 
                         if (Request.QueryString["InvType"] == "I")
                         {
+                            //
                             //REV 13.0
                             if (hdnbranchwiseTCS.Value == "1")
                             {
@@ -2868,11 +2870,13 @@ namespace ERP.OMS.Management.Activities
 
 
 
-
+                //REV 14.0
                 //REV 13.0
-                if (hdnbranchwiseTCS.Value == "1")
-                {
-                    sumObject = Quotationdt.AsEnumerable()
+
+                //if (hdnbranchwiseTCS.Value == "1")
+                //{
+                //REV 14.0 END
+                sumObject = Quotationdt.AsEnumerable()
                     .Sum(x => Convert.ToDecimal(x["Amount"]));
 
                     TotalsumObject = Quotationdt.AsEnumerable()
@@ -2893,7 +2897,12 @@ namespace ERP.OMS.Management.Activities
                     {
                         if (Convert.ToDecimal(dt_TCS.Rows[0]["Amount"]) > 0 && Convert.ToDecimal(txtTCSAmount.Text) == 0)
                         {
+                            
                             validate = "TCSMandatory";
+                        }
+                        else if (Convert.ToDecimal(dt_TCS.Rows[0]["Amount"]) != Convert.ToDecimal(txtTCSAmount.Text))
+                        {
+                        validate = "TCSMandatory";
                         }
                         //REV 13.0
                         else
@@ -2904,15 +2913,15 @@ namespace ERP.OMS.Management.Activities
                             txtTCSAmount.Text = "0";
                         }
                         //REV 13.0 End
-                    }
-                    //REV 13.0
-                    else
-                    {
-                        txtTCSSection.Text = "0";
-                        txtTCSapplAmount.Text = "0";
-                        txtTCSpercentage.Text = "0";
-                        txtTCSAmount.Text = "0";
-                    }
+                    //}
+                    ////REV 13.0
+                    //else
+                    //{
+                    //    txtTCSSection.Text = "0";
+                    //    txtTCSapplAmount.Text = "0";
+                    //    txtTCSpercentage.Text = "0";
+                    //    txtTCSAmount.Text = "0";
+                    //}
                     //REV 13.0 End
                 }
 
