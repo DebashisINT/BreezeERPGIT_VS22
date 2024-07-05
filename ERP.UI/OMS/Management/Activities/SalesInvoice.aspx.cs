@@ -2876,7 +2876,7 @@ namespace ERP.OMS.Management.Activities
                 //if (hdnbranchwiseTCS.Value == "1")
                 //{
                 //REV 14.0 END
-                sumObject = Quotationdt.AsEnumerable()
+                    sumObject = Quotationdt.AsEnumerable()
                     .Sum(x => Convert.ToDecimal(x["Amount"]));
 
                     TotalsumObject = Quotationdt.AsEnumerable()
@@ -2903,28 +2903,15 @@ namespace ERP.OMS.Management.Activities
                         else if (Convert.ToDecimal(dt_TCS.Rows[0]["Amount"]) != Convert.ToDecimal(txtTCSAmount.Text))
                         {
                         validate = "TCSMandatory";
-                        }
-                        //REV 13.0
-                        else
-                        {
-                            txtTCSSection.Text = "0";
-                            txtTCSapplAmount.Text = "0";
-                            txtTCSpercentage.Text = "0";
-                            txtTCSAmount.Text = "0";
-                        }
-                        //REV 13.0 End
-                    //}
-                    ////REV 13.0
-                    //else
-                    //{
-                    //    txtTCSSection.Text = "0";
-                    //    txtTCSapplAmount.Text = "0";
-                    //    txtTCSpercentage.Text = "0";
-                    //    txtTCSAmount.Text = "0";
-                    //}
-                    //REV 13.0 End
-                }
-
+                        }                     
+                    }
+                    else
+                    {
+                        txtTCSSection.Text = "0";
+                        txtTCSapplAmount.Text = "0";
+                        txtTCSpercentage.Text = "0";
+                        txtTCSAmount.Text = "0";
+                    }
                 //REV 13.0 End
 
 
