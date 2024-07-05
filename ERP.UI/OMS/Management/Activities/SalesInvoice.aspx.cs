@@ -20,6 +20,7 @@
 * Rev 13.0     Priti         V2.0.43     27-04-2024  TCS Calculation & posting is not working in the Sales Invoice. Mantis : 0027484
 
 * Rev 14.0     Priti         V2.0.44     04-07-2024  TCS is not recalculating at the time of modifying the Invoice. Mantis : 0027605
+* Rev 15.0     Priti         V2.0.44     05-07-2024  TCS on Sales module should activate based on the settings. Mantis : 	0027607
  
  ****************************************************************************************************************************************************************************/
 using System;
@@ -383,6 +384,24 @@ namespace ERP.OMS.Management.Activities
                     }
                 }
                 //REV 13.0 End
+
+                //REV 15.0
+                string IsTCSActivatedforSITSI = ComBL.GetSystemSettingsResult("IsTCSActivatedforSITSI");
+                if (!String.IsNullOrEmpty(IsTCSActivatedforSITSI))
+                {
+                    if (IsTCSActivatedforSITSI == "Yes")
+                    {
+                        hdnIsTCSActivatedforSITSI.Value = "1";
+                    }
+                    else if (IsTCSActivatedforSITSI.ToUpper().Trim() == "NO")
+                    {
+                        hdnIsTCSActivatedforSITSI.Value = "0";
+                    }
+                }
+                //REV 15.0 End
+
+
+
                 //REV 10.0
                 string IsDuplicateItemAllowedOrNot = ComBL.GetSystemSettingsResult("IsDuplicateItemAllowedOrNot");
                 if (!String.IsNullOrEmpty(IsDuplicateItemAllowedOrNot))
@@ -818,7 +837,7 @@ namespace ERP.OMS.Management.Activities
                         {
                             //
                             //REV 13.0
-                            if (hdnbranchwiseTCS.Value == "1")
+                            if (hdnIsTCSActivatedforSITSI.Value == "1")
                             {
                                 divTCS.Style.Add("display", "inline-block;");
                             }

@@ -336,8 +336,8 @@ function OpenSetTCS()
 
                 var TCSHeaderDetails = msg.d.TCSDetails;
                 if (TCSHeaderDetails != null) {
-              
 
+                    $("#tblTCSDetails").text("");
                     for (var i = 0; i < TCSHeaderDetails.length; i++) {
                         $("#tblTCSDetails").append("<tr><td>" + TCSHeaderDetails[i].SLNO + "</td><td>" + TCSHeaderDetails[i].Invoice_Number + "</td><td>" + TCSHeaderDetails[i].branch_description + "</td><td>" + TCSHeaderDetails[i].Doc_Type + "</td><td>" + TCSHeaderDetails[i].Invoice_Date + "</td><td>" + TCSHeaderDetails[i].TaxableAmount + "</td><td>" + TCSHeaderDetails[i].NetAmount + "</td><td>" + TCSHeaderDetails[i].TaxableRunning + "</td><td>" + TCSHeaderDetails[i].NetRunning + "</td></tr>");
                     }
