@@ -13,6 +13,7 @@
    8.0   Priti      V2.0.42     02-01-2024     Mantis : 0027050 A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
    9.0   Sanchita   V2.0.43     22-05-2024     Send mail option should be enabled if the setting "Is Mail Send Option Require In Sales Invoice?" is true in Sales Invoice. Mantis: 27462                                                
    10.0  Priti      V2.0.43     27-04-2024     TCS Calculation & posting is not working in the Sales Invoice. Mantis : 0027484
+   11.0  Priti      V2.0.44     05-07-2024     TCS on Sales module should activate based on the settings. Mantis : 	0027607
 
 ========================================== End Revision History =======================================================================================================--%>
 
@@ -37,7 +38,7 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%-- <script src="JS/SearchPopup.js?v=2.0"></script>--%>
     <link href="CSS/SalesInvoice.css" rel="stylesheet" />
-    <script src="JS/SalesInvoice.js?v=3.6"></script>
+    <script src="JS/SalesInvoice.js?v=3.8"></script>
     <script src="../../Tax%20Details/Js/TaxDetailsItemlevelNew.js?v=3.7" type="text/javascript"></script>
     <style>
         .wrapHolder#pageheaderContent {
@@ -2210,7 +2211,7 @@ $(document).ready(function () {
                                             </dxe:ASPxButton>
                                             <span id="divTCS" runat="server">
                                                 <%--Mantis Issue 24789  [ ClientVisible="false"  added]--%>
-                                                <dxe:ASPxButton ID="ASPxButton6" ClientInstanceName="cbtn_TCS"  runat="server" AutoPostBack="False" Text="Add TC&#818;S" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
+                                                <dxe:ASPxButton ID="ASPxButton6" ClientInstanceName="cbtn_TCS" ClientVisible="false" runat="server" AutoPostBack="False" Text="Add TC&#818;S" CssClass="btn btn-primary" meta:resourcekey="btnSaveRecordsResource1" UseSubmitBehavior="False">
                                                     <ClientSideEvents Click="function(s, e) {ShowTCS();}" />
                                                 </dxe:ASPxButton>
                                             </span>
@@ -4665,6 +4666,10 @@ $(document).ready(function () {
     <%-- Rev 10.0--%>
     <asp:HiddenField runat="server" ID="hdnbranchwiseTCS" />
     <%-- Rev 10.0 End--%>
+
+     <%-- Rev 11.0--%>
+ <asp:HiddenField runat="server" ID="hdnIsTCSActivatedforSITSI" />
+ <%-- Rev 11.0 End--%>
 
      <!--Schedule Modal -->
     <div class="modal fade" id="ScheduleModel" role="dialog">

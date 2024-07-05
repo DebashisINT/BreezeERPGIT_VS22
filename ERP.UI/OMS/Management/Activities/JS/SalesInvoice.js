@@ -7194,7 +7194,7 @@ function ShowTCS() {
     obj.branch_id = $("#ddl_Branch").val();
 
     //Rev 10.0
-    // if (invoice_id == "" || invoice_id == null) {
+   //  if (invoice_id == "" || invoice_id == null) {
     //Rev 10.0 End
         $.ajax({
             type: "POST",
@@ -7216,12 +7216,12 @@ function ShowTCS() {
 
             }
         });
-    //Rev 10.0
+  //  Rev 10.0
     //}
     //else {
     //    cGridTCSdocs.PerformCallback();
     //}
-    //Rev 10.0 End
+   // Rev 10.0 End
 
 
     $("#tcsModal").modal('show');
