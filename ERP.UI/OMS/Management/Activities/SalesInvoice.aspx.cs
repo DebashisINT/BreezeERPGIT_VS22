@@ -835,14 +835,19 @@ namespace ERP.OMS.Management.Activities
 
                         if (Request.QueryString["InvType"] == "I")
                         {
-                            //
+                            //REV 15.0
                             //REV 13.0
                             if (hdnIsTCSActivatedforSITSI.Value == "1")
                             {
                                 divTCS.Style.Add("display", "inline-block;");
                             }
+                            else
+                            {
+                                divTCS.Style.Add("display", "none;");
+                            }
                             //divTCS.Style.Add("display", "inline-block;");
                             //REV 13.0 END
+                            //REV 15.0 End
                         }
                         else
                         {
