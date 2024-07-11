@@ -19,7 +19,7 @@
  * Rev 9.0      Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                     Mantis : 0027050
  * Rev 10.0     Priti         V2.0.43   24-04-2024  IRN generation failed for sales invoice where it is showing tax issue. Mantis : 0027163
-                                                   
+ * Rev 11.0     Sanchita      V2.0.43   11-07-2024  Sales Order is not modified if using copy feature. Mantis : 27556                                                  
  **********************************************************************************************************/
 using System;
 using System.Configuration;
@@ -3702,16 +3702,31 @@ namespace ERP.OMS.Management.Activities
                     string MainOrderID = string.Empty;
                     if (Convert.ToString(Request.QueryString["key"]) != null && Convert.ToString(Request.QueryString["key"]) != "")
                     {
-                        Session["OrderID"] = Convert.ToString(Request.QueryString["key"]);
-                        if (!string.IsNullOrEmpty(Convert.ToString(Session["OrderID"])))
+                        // Rev 11.0
+                        if(Request.QueryString["type"] == "COPY")
                         {
-
-                            MainOrderID = Convert.ToString(Session["OrderID"]);
+                            MainOrderID = "ADD";
+                            Session["OrderID"] = "ADD";
                         }
                         else
                         {
-                            MainOrderID = "";
+                            // End of Rev 11.0
+
+                            Session["OrderID"] = Convert.ToString(Request.QueryString["key"]);
+                            if (!string.IsNullOrEmpty(Convert.ToString(Session["OrderID"])))
+                            {
+
+                                MainOrderID = Convert.ToString(Session["OrderID"]);
+                            }
+                            else
+                            {
+                                MainOrderID = "";
+                            }
+
+                            // Rev Sanchita
                         }
+                        // End of Rev Sanchita
+                        
                     }
                     else
                     {
