@@ -39,6 +39,7 @@ using ERP.OMS.Management.Activities.UserControls;
 using DevExpress.Xpo;
 using ERP.OMS.Tax_Details.ClassFile;
 using ERP.Models;
+using static ERP.OMS.Management.Master.management_master_RootBuildingInsertUpdate;
 
 namespace ERP.OMS.Management.Activities
 {
@@ -2999,6 +3000,12 @@ namespace ERP.OMS.Management.Activities
                    }
 
                     //End
+
+
+                   
+
+
+
                     //datatable for MultiUOm start chinmoy 14-01-2020
                     DataTable MultiUOMDetails = new DataTable();
                     if (Session["MultiUOMData"] != null)
@@ -3099,6 +3106,36 @@ namespace ERP.OMS.Management.Activities
                         }
                     }
                     //Rev 9.0 END
+
+                    //15-07-2024 
+
+                    foreach (DataRow dr in SalesOrderdt.Rows)
+                    {
+                        string IsInventory = getProductIsInventoryExists(Convert.ToString(dr["ProductID"]));
+                        if (Convert.ToString(dr["ProductID"]) != "0")
+                        {
+                            if (IsInventory.ToUpper() != "N")
+                            {
+                                string strSrlNo = Convert.ToString(dr["SrlNo"]);
+                                decimal strProductQuantity = Convert.ToDecimal(dr["Quantity"]);
+                                string ProductID=Convert.ToString(dr["ProductID"]);
+                                decimal strWarehouseQuantity = 0;
+                                GetQuantityBaseOnProductWH(strSrlNo, ProductID, ref strWarehouseQuantity);
+
+                                //if (strWarehouseQuantity != 0)
+                                //{
+                                if (strProductQuantity != strWarehouseQuantity)
+                                {
+                                    validate = "checkWarehouseQty";
+                                    grid.JSProperties["cpProductSrlIDCheck1"] = strSrlNo;
+                                    break;
+                                }
+                                //}
+                            }
+                        }
+
+                    }
+
 
 
                     decimal DocTotalAmount = 0;
@@ -9430,6 +9467,34 @@ namespace ERP.OMS.Management.Activities
                 strschemavalue = strschematype + "~" + strschemalength;
             }
             return Convert.ToString(strschemavalue);
+        }
+        public void GetQuantityBaseOnProductWH(string strProductSrlNo,string ProductID, ref decimal WarehouseQty)
+        {
+            decimal sum = 0;
+
+            DataTable Warehousedt = new DataTable();
+            if (Session["SC_WarehouseData"] != null)
+            {
+                Warehousedt = (DataTable)Session["SC_WarehouseData"];
+                for (int i = 0; i < Warehousedt.Rows.Count; i++)
+                {
+                    DataRow dr = Warehousedt.Rows[i];
+                    string Product_SrlNo = Convert.ToString(dr["Product_SrlNo"]);
+                    string WarehouseID= Convert.ToString(dr["WarehouseID"]);
+                    string BatchID= Convert.ToString(dr["BatchID"]);
+                    string SerialID= Convert.ToString(dr["SerialID"]);
+
+                    if (strProductSrlNo == Product_SrlNo)
+                    {
+                        string strQuantity = (Convert.ToString(dr["Quantity"]) != "") ? Convert.ToString(dr["Quantity"]) : "0";
+                        var weight = Decimal.Parse(Regex.Match(strQuantity, "[0-9]*\\.*[0-9]*").Value);
+
+                        sum = sum + Convert.ToDecimal(weight);
+                    }
+                }
+            }
+
+            WarehouseQty = sum;
         }
         public void GetQuantityBaseOnProduct(string strProductSrlNo, ref decimal WarehouseQty)
         {
