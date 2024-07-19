@@ -4,6 +4,7 @@
 //    3.0   Priti   V2.0.38   07-06-2023    0026257: Excess Qty for an Item to be Stock Transferred automatically to a specific Warehouse while making Issue for Prod
 //    4.0   Priti   V2.0.43   24-01-2024    Mantis: 0027207 Batchwise stock has been issued from Challan before receiving date which caused negative stock.
 //    5.0   Priti   V2.0.43   22-02-2024    Mantis: 0027218 Batchwise stock has been issued from any stock out module before receiving date which caused negative stock
+//    6.0   Sanchita    V2.0.45     19-07-2024      27634: An error is showing while making Warehouse wise Stock Transfer  
 //========================================== End Revision History =======================================================================================================
 
 
@@ -1176,7 +1177,11 @@ function gridCustomButtonClick(s, e) {
                 div_Batch.style.display = 'block';
                 div_Serial.style.display = 'none';
                 div_Quantity.style.display = 'block';
-                cCmbBatch.PerformCallback('BindBatch~' + "0");
+                // Rev 6.0
+                //cCmbBatch.PerformCallback('BindBatch~' + "0");
+                var PostingDate = cdtTDate.GetValueString();
+                cCmbBatch.PerformCallback('BindBatch~' + "0" + '~' + PostingDate);
+                // End of Rev 6.0
                 cGrdWarehouse.PerformCallback('Display~' + SrlNo);
                 $("#ADelete").css("display", "block");//Subhabrata
                 SelectedWarehouseID = "0";
@@ -1233,7 +1238,11 @@ function gridCustomButtonClick(s, e) {
                 div_Batch.style.display = 'block';
                 div_Serial.style.display = 'block';
                 div_Quantity.style.display = 'none';
-                cCmbBatch.PerformCallback('BindBatch~' + "0");
+                // Rev 6.0
+                //cCmbBatch.PerformCallback('BindBatch~' + "0");
+                var PostingDate = cdtTDate.GetValueString();
+                cCmbBatch.PerformCallback('BindBatch~' + "0" + '~' + PostingDate);
+                // End of Rev 6.0
                 cGrdWarehouse.PerformCallback('Display~' + SrlNo);
                 $("#ADelete").css("display", "none");//Subhabrata
                 SelectedWarehouseID = "0";
@@ -1266,7 +1275,11 @@ function CallbackPanelEndCall(s, e) {
         SelectSerial = strSrlID;
 
         cCmbWarehouse.PerformCallback('BindWarehouse~' + strWarehouse);
-        cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+        // Rev 6.0
+        //cCmbBatch.PerformCallback('BindBatch~' + strWarehouse);
+        var PostingDate = cdtTDate.GetValueString();
+        cCmbBatch.PerformCallback('BindBatch~' + strWarehouse + '~' + PostingDate);
+        // End of Rev 6.0
         checkListBox.PerformCallback('EditSerial~' + strWarehouse + '~' + strBatchID + '~' + strSrlID);
 
         cCmbWarehouse.SetValue(strWarehouse);
@@ -1931,7 +1944,11 @@ function SaveWarehouse() {
                 cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
                  // Rev 2.0
                 /* cCmbBatch.PerformCallback('BindBatch~' + "");*/
-                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+                // Rev 6.0
+                //cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+                var PostingDate = cdtTDate.GetValueString();
+                cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+                // End of Rev 6.0
                  // Rev 2.0 End
                 checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
                 ctxtQuantity.SetValue("0");
@@ -1944,9 +1961,13 @@ function SaveWarehouse() {
         }
         else {
             cCmbWarehouse.PerformCallback('BindWarehouse~' + WarehouseID);
-             // Rev 2.0 
+             // Rev 2.0
             /* cCmbBatch.PerformCallback('BindBatch~' + "");*/
-            cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+            // Rev 6.0
+            //cCmbBatch.PerformCallback('BindBatch~' + WarehouseID);
+            var PostingDate = cdtTDate.GetValueString();
+            cCmbBatch.PerformCallback('BindBatch~' + WarehouseID + '~' + PostingDate);
+            // End of Rev 6.0
              // Rev 2.0 End
             checkListBox.PerformCallback('BindSerial~' + "" + '~' + "");
             ctxtQuantity.SetValue("0");
