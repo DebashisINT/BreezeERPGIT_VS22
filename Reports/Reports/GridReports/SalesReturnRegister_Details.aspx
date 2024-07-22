@@ -872,9 +872,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="200px" FieldName="SALESMAN_NAME"
                                     VisibleIndex="7">
                                 </dxe:GridViewDataTextColumn>
-                                <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="200px"
+                                <%--Rev Debashis--%>
+                                <%--<dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="200px"
+                                    VisibleIndex="8">
+                                </dxe:GridViewDataTextColumn>--%>
+                                <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="200px"
                                     VisibleIndex="8">
                                 </dxe:GridViewDataTextColumn>
+                                <%--End of Rev Debashis--%>
                                <%-- Rev Sayantani--%>
                                 <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_Name" Width="200px"
                                     VisibleIndex="9">

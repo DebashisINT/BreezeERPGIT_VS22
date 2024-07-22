@@ -1273,9 +1273,15 @@
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="300px" VisibleIndex="23">
+                                <%--Rev Debashis--%>
+                               <%-- <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="300px" VisibleIndex="23">
+                                    <Settings AutoFilterCondition="Contains" />
+                                </dxe:GridViewDataTextColumn>--%>
+                                 <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="300px" VisibleIndex="23">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
+                                <%--End of Rev Debashis--%>
+
                                  <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_Name" Width="100px" VisibleIndex="24">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
