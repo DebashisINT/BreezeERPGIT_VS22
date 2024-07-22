@@ -7,6 +7,13 @@
                                               Refer: 0025941
 4.0   V2.0.43     Sachita     19/01/2024      Two columns required in Sales Invoice Register - detail Report
                                               Refer: 26815
+5.0   V2.0.43     Debashis    22/07/2024      Item Description spelling needs to rectify in the following Reports -
+                                              Sales Invoice Register - Detail
+                                              Purchase Invoice Register - Detail
+                                              Purchase Order Register - Detail
+                                              Purchase Return Register - Detail
+                                              Sales Return Register - Detail
+                                              Refer: 0027641
 ===================================End of Revision History=====================================================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesRegister_Details" %>
@@ -1273,14 +1280,14 @@
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
 
-                                <%--Rev Debashis--%>
+                                <%--Rev 5.0--%>
                                <%-- <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="300px" VisibleIndex="23">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>--%>
                                  <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="300px" VisibleIndex="23">
                                     <Settings AutoFilterCondition="Contains" />
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis--%>
+                                <%--End of Rev 5.0--%>
 
                                  <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_Name" Width="100px" VisibleIndex="24">
                                     <Settings AutoFilterCondition="Contains" />
