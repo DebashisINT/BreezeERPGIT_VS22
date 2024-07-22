@@ -922,9 +922,15 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     <PropertiesTextEdit DisplayFormatString="dd-MM-yyyy"></PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
-                                <dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="250px"
+                                <%--Rev Debashis--%>
+                                <%--<dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="250px"
+                                    VisibleIndex="14">
+                                </dxe:GridViewDataTextColumn>--%>
+                                <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="250px"
                                     VisibleIndex="14">
                                 </dxe:GridViewDataTextColumn>
+                                <%--End of Rev Debashis--%>
+
                                 <dxe:GridViewDataTextColumn FieldName="QUANTITY" Caption="Qty" Width="70px" VisibleIndex="15">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>
                                      <HeaderStyle HorizontalAlign="Right" />
