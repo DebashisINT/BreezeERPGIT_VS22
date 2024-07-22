@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.43    Debashis    22/07/2024  Customer code is required in the Sales Order register detail report (ENH).Refer: 0027636
+#endregion=======================End Revision History====================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -112,19 +116,21 @@ namespace Reports.Reports.GridReports
                 {
                     BRANCH_ID = hdnSelectedBranches.Value;
                 }
-                string stroldunitchk = (chkoldunit.Checked) ? "1" : "0";
-                if (Convert.ToString(stroldunitchk) == "0")
-                {
-                    //ShowGridRet.Columns[15].Visible = false;
-                    //ShowGridRet.Columns[19].Visible = false;
-                    ShowGridRet.Columns[20].Visible = false;
-                }
-                else
-                {
-                    //ShowGridRet.Columns[15].Visible = true;
-                    //ShowGridRet.Columns[19].Visible = true;
-                    ShowGridRet.Columns[20].Visible = true;
-                }
+                //Rev 1.0
+                //string stroldunitchk = (chkoldunit.Checked) ? "1" : "0";
+                //if (Convert.ToString(stroldunitchk) == "0")
+                //{
+                //    //ShowGridRet.Columns[15].Visible = false;
+                //    //ShowGridRet.Columns[19].Visible = false;
+                //    ShowGridRet.Columns[20].Visible = false;
+                //}
+                //else
+                //{
+                //    //ShowGridRet.Columns[15].Visible = true;
+                //    //ShowGridRet.Columns[19].Visible = true;
+                //    ShowGridRet.Columns[20].Visible = true;
+                //}
+                //End of Rev 1.0
             }
         }
         public void Date_finyearwise(string Finyear)
@@ -406,19 +412,21 @@ namespace Reports.Reports.GridReports
                 QuoComponent += "," + Quo;
             }
             BRANCH_ID = QuoComponent.TrimStart(',');
-            string stroldunitchk = (chkoldunit.Checked) ? "1" : "0";
-            if (Convert.ToString(stroldunitchk) == "0")
-            {
-                //ShowGridRet.Columns[15].Visible = false;
-                //ShowGridRet.Columns[19].Visible = false;
-                ShowGridRet.Columns[20].Visible = false;
-            }
-            else
-            {
-                //ShowGridRet.Columns[15].Visible = true;
-                //ShowGridRet.Columns[19].Visible = true;
-                ShowGridRet.Columns[20].Visible = true;
-            }
+            //Rev 1.0
+            //string stroldunitchk = (chkoldunit.Checked) ? "1" : "0";
+            //if (Convert.ToString(stroldunitchk) == "0")
+            //{
+            //    //ShowGridRet.Columns[15].Visible = false;
+            //    //ShowGridRet.Columns[19].Visible = false;
+            //    ShowGridRet.Columns[20].Visible = false;
+            //}
+            //else
+            //{
+            //    //ShowGridRet.Columns[15].Visible = true;
+            //    //ShowGridRet.Columns[19].Visible = true;
+            //    ShowGridRet.Columns[20].Visible = true;
+            //}
+            //End of Rev 1.0
             string TRAN_TYPE = "SR";
 
             //Rev Subhra 20-12-2018   0017670
@@ -529,12 +537,18 @@ namespace Reports.Reports.GridReports
             if (Convert.ToString(stroldunitchk) == "0")
             {
                 //ShowGridRet.Columns[19].Visible = false;
-                ShowGridRet.Columns[20].Visible = false;
+                //Rev 1.0
+                //ShowGridRet.Columns[20].Visible = false;
+                ShowGridRet.Columns[21].Visible = false;
+                //End of Rev 1.0
             }
             else
             {
                 //ShowGridRet.Columns[19].Visible = true;
-                ShowGridRet.Columns[20].Visible = true;
+                //Rev 1.0
+                //ShowGridRet.Columns[20].Visible = true;
+                ShowGridRet.Columns[21].Visible = true;
+                //End of Rev 1.0
             }
         }
 

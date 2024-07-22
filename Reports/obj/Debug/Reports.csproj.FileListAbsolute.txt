@@ -27,7 +27,6 @@ E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\DevExpress.XtraTreeList.v15.1.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\EntityLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Excel.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\itextsharp.dll
-E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Newtonsoft.Json.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\UtilityLayer.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Aspose.Pdf.Kit.dll
 E:\PROJECTS\BreezeERPGIT_VS22\Reports\bin\Ionic.Zip.dll
