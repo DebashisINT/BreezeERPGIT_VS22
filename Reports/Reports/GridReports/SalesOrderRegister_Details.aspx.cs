@@ -1,4 +1,8 @@
-﻿using DevExpress.Web;
+﻿#region =======================Revision History=========================================================================================================
+//1.0   v2 .0.43    Debashis    22/07/2024  Customer code is required in the Sales Order register detail report (ENH).Refer: 0027636
+#endregion=======================End Revision History====================================================================================================
+
+using DevExpress.Web;
 using DevExpress.Web.Mvc;
 using EntityLayer.CommonELS;
 using System;
@@ -73,9 +77,9 @@ namespace Reports.Reports.GridReports
                 Session["exportval2"] = null;
                 //Session["dt_SalesRegisterRpt"] = null;
                 //Session["dt_SalesRegisterRpt2"] = null;
-
-                ShowGrid.Columns[26].Visible = false;
-
+                //Rev 1.0
+                //ShowGrid.Columns[26].Visible = false;
+                //End of Rev 1.0
                 dtFrom = DateTime.Now;
                 dtTo = DateTime.Now;
 
@@ -566,13 +570,19 @@ namespace Reports.Reports.GridReports
 
             if(chkCreateBy.Checked==false)
             {
-                ShowGrid.Columns[26].Visible = false;
+                //Rev 1.0
+                //ShowGrid.Columns[26].Visible = false;
+                ShowGrid.Columns[28].Visible = false;
+                //End of Rev 1.0
             }
             else
             {
-                ShowGrid.Columns[26].Visible = true;
+                //Rev 1.0
+                //ShowGrid.Columns[26].Visible = true;
+                ShowGrid.Columns[28].Visible = true;
+                //End of Rev 1.0
             }
-            
+
             //ShowGrid.ExpandAll();
         }
         #endregion
