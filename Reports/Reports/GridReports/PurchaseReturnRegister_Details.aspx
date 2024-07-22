@@ -2,6 +2,13 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                27-04-2023        2.0.38           Pallab              25949 : Purchase Return Register - Detail module zoom popup upper part visible issue fix
+3.0                22-07-2024        2.0.43           Debashis            Item Description spelling needs to rectify in the following Reports -
+                                                                          Sales Invoice Register - Detail
+                                                                          Purchase Invoice Register - Detail
+                                                                          Purchase Order Register - Detail
+                                                                          Purchase Return Register - Detail
+                                                                          Sales Return Register - Detail
+                                                                          Refer: 0027641
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="PurchaseReturnRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.PurchaseReturnRegister_Details" %>
@@ -878,14 +885,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                     VisibleIndex="5">
                                   </dxe:GridViewDataTextColumn>
                                
-                                <%--Rev Debashis--%>
+                                <%--Rev 3.0--%>
                                 <%--<dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="200px"
                                     VisibleIndex="6">
                                 </dxe:GridViewDataTextColumn>--%>
                                 <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="200px"
                                     VisibleIndex="6">
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis--%>
+                                <%--End of Rev 3.0--%>
 
                                 <dxe:GridViewDataTextColumn FieldName="QUANTITY" Caption="Qty" Width="70px" VisibleIndex="8">
                                     <PropertiesTextEdit DisplayFormatString="0.00"></PropertiesTextEdit>

@@ -2,6 +2,13 @@
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                22-02-2023        2.0.36           Pallab              25575 : Report pages design modification
 2.0                21-09-2023        2.0.39           Pallab              26839: Sales Return Register-Details module zoom popup position issue and after click invoice column console error fix
+3.0                22-07-2024        2.0.43           Debashis            Item Description spelling needs to rectify in the following Reports -
+                                                                          Sales Invoice Register - Detail
+                                                                          Purchase Invoice Register - Detail
+                                                                          Purchase Order Register - Detail
+                                                                          Purchase Return Register - Detail
+                                                                          Sales Return Register - Detail
+                                                                          Refer: 0027641
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true" CodeBehind="SalesReturnRegister_Details.aspx.cs" Inherits="Reports.Reports.GridReports.SalesReturnRegister_Details" %>
@@ -872,14 +879,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                 <dxe:GridViewDataTextColumn Caption="Salesman Name" Width="200px" FieldName="SALESMAN_NAME"
                                     VisibleIndex="7">
                                 </dxe:GridViewDataTextColumn>
-                                <%--Rev Debashis--%>
+                                <%--Rev 3.0--%>
                                 <%--<dxe:GridViewDataTextColumn Caption="Item Descprition" FieldName="ITEM_DESCRIPTION" Width="200px"
                                     VisibleIndex="8">
                                 </dxe:GridViewDataTextColumn>--%>
                                 <dxe:GridViewDataTextColumn Caption="Item Description" FieldName="ITEM_DESCRIPTION" Width="200px"
                                     VisibleIndex="8">
                                 </dxe:GridViewDataTextColumn>
-                                <%--End of Rev Debashis--%>
+                                <%--End of Rev 3.0--%>
                                <%-- Rev Sayantani--%>
                                 <dxe:GridViewDataTextColumn Caption="UOM" FieldName="UOM_Name" Width="200px"
                                     VisibleIndex="9">
