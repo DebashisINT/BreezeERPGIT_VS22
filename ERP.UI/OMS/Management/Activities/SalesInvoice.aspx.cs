@@ -588,8 +588,10 @@ namespace ERP.OMS.Management.Activities
                     //End Rev Rajdip
                     if (Convert.ToString(Request.QueryString["key"]) != "ADD")
                     {
-                        chkSendMail.Visible = false;
-                        chkSendMail.Checked = false;
+                        //Rev 15.0
+                        //chkSendMail.Visible = false;
+                        //chkSendMail.Checked = false;
+                        //Rev 15.0 End
                         lblHeadTitle.Text = "Modify Sales Invoice";
                         hdnPageStatus.Value = "update";
                         divScheme.Style.Add("display", "none");
@@ -1607,6 +1609,18 @@ namespace ERP.OMS.Management.Activities
                 hdnSegment3.Value = Segment3;
                 hdnSegment4.Value = Segment4;
                 hdnSegment5.Value = Segment5;
+
+                //REV 15.0
+                bool IsMailSend= Convert.ToBoolean(QuotationEditdt.Rows[0]["IsMailSend"]);
+                if(IsMailSend==true)
+                {
+                    chkSendMail.Checked=true;
+                }
+                else
+                {
+                    chkSendMail.Checked = false;
+                }
+                //REV 15.0 End
 
                 //ASPxTextBox txtDriverName = (ASPxTextBox)VehicleDetailsControl.FindControl("txtDriverName");
                 //ASPxTextBox txtPhoneNo = (ASPxTextBox)VehicleDetailsControl.FindControl("txtPhoneNo");
@@ -6575,7 +6589,17 @@ namespace ERP.OMS.Management.Activities
         {
             try
             {
-
+                //Rev 15.0
+                int SendMailChecked = 0;
+                if (chkSendMail.Checked)
+                {
+                    SendMailChecked = 1;
+                }
+                else
+                {
+                    SendMailChecked = 0;
+                }
+                //Rev 15.0 End
                 // Mantis Issue 24425, 24428
                 if (MultiUOMDetails.Columns.Contains("MultiUOMSR"))
                 {
@@ -6666,6 +6690,9 @@ namespace ERP.OMS.Management.Activities
                 cmd.Parameters.AddWithValue("@ProjectSite", strProjectSite);
                 // End of Rev 7.0
 
+                //Rev 15.0
+                cmd.Parameters.AddWithValue("@IsMailSend", SendMailChecked);
+                //Rev 15.0 End
 
                 cmd.Parameters.Add("@ReturnValue", SqlDbType.VarChar, 50);
                 cmd.Parameters.Add("@ReturnInvoiceID", SqlDbType.VarChar, 50);
