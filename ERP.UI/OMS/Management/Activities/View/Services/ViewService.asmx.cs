@@ -1,7 +1,8 @@
 ﻿//*********************************************************************************************************
 //  Rev 1.0      Sanchita      V2.0.40   17-10-2023      New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project / Site
 //                                                       Mantis: 26871
-//  Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
+//  Rev 2.0      Sanchita      V2.0.40   18-10-2023      Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
+//  Rev 3.0      Priti         V2.0.44	 24-07-2024	     0027624: Send mail check box is not showing in the modify mode or in view mode of Sales Invoice.
 // **********************************************************************************************************
 using DataAccessLayer;
 using System;
@@ -102,10 +103,12 @@ namespace ERP.OMS.Management.Activities.View.Services
                                  RFQDate = Convert.ToString(dr["RFQDate"]),
                                  ProjectSite = Convert.ToString(dr["ProjectSite"]),
                                  ShowRFQ = Convert.ToString(dr["ShowRFQ"]),
-                                 ShowProjectSite = Convert.ToString(dr["ShowProjectSite"])
+                                 ShowProjectSite = Convert.ToString(dr["ShowProjectSite"]),
                                  // End of Rev 1.0
 
-
+                                 // Rev 3.0
+                                 IsMailSend = Convert.ToBoolean(dr["IsMailSend"]),
+                                 // Rev 3.0 End
 
                              }).FirstOrDefault();
 
@@ -823,6 +826,10 @@ namespace ERP.OMS.Management.Activities.View.Services
         public string ShowProjectSite { get; set; }
 
         // End of Rev 1.0
+
+        // Rev 3.0
+        public bool IsMailSend { get; set; }
+        // Rev 3.0 End
 
     }
 

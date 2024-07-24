@@ -2,6 +2,7 @@
 Rev 1.0      Sanchita      V2.0.40   17-10-2023  New Fields required in Sales Quotation - RFQ Number, RFQ Date, Project/Site
                                                  Mantis : 26871
 Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
+Rev 3.0      Priti         V2.0.44   24-07-2024  0027624: Send mail check box is not showing in the modify mode or in view mode of Sales Invoice.
 **********************************************************************************************************-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -9,7 +10,7 @@ Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sale
     <title></title>
 
     <script src="../../../../assests/js/jquery.min.js"></script>
-    <script src="JS/Invoice.js?v1=1.1"></script>
+    <script src="JS/Invoice.js?v1=1.2"></script>
 
     <script src="../../../../assests/bootstrap/js/bootstrap.min.js"></script>
 
@@ -185,6 +186,11 @@ Rev 2.0      Sanchita      V2.0.40   18-10-2023  Few Fields required in the Sale
                         <label id="lblChallanDate"></label>
                     </div>
                 </td>
+                <!--Rev 3.0-->
+                <td>
+                    <input type="checkbox" id="chkSendEmail" disabled> <label>Send Email</label>
+                </td>
+                <!--Rev 3.0 End-->
             </tr>
             <tr>
                 <td>
