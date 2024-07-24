@@ -3,6 +3,7 @@
 //                                                       Mantis: 26871
 //  Rev 2.0      Sanchita      V2.0.40   18-10-2023      Few Fields required in the Sales Quotation Entry Module for the Purpose of Quotation Print from ERP. Mantis: 26868
 //  Rev 3.0      Priti         V2.0.41   27-11-2023      Transporter  Details are not showing in the Sales Invoice in the View Mode. Mantis: 0027045
+//  Rev 4.0      Priti         V2.0.44   24-07-2024      0027624: Send mail check box is not showing in the modify mode or in view mode of Sales Invoice.
 // ********************************************************************************************************************************************
 var warehousrdet
 var Details;
@@ -629,9 +630,11 @@ function InvoiceDetails(InvoiceId)
                            document.getElementById('lblFinanceChallanNo').style.display = 'none'
                            document.getElementById('lblFinanceChallanDate').style.display = 'none'
                            $('#divFinanceDetails').css('display','none')
-                       }
-
-
+                }
+                //REV 4.0
+                if (headerDet.IsMailSend == true) document.getElementById("chkSendEmail").checked = true;
+                else document.getElementById("chkSendEmail").checked = false;
+                //REV 4.0 END
 
             }
         });

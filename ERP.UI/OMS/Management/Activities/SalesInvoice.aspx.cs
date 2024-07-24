@@ -20,8 +20,8 @@
 * Rev 13.0     Priti         V2.0.43     27-04-2024  TCS Calculation & posting is not working in the Sales Invoice. Mantis : 0027484
 
 * Rev 14.0     Priti         V2.0.44     04-07-2024  TCS is not recalculating at the time of modifying the Invoice. Mantis : 0027605
-* Rev 15.0     Priti         V2.0.44     05-07-2024  TCS on Sales module should activate based on the settings. Mantis : 	0027607
- 
+* Rev 15.0     Priti         V2.0.44     05-07-2024  TCS on Sales module should activate based on the settings. 0027624:  : 	0027607
+* Rev 16.0     Priti         V2.0.44     24-07-2024  Send mail check box is not showing in the modify mode or in view mode of Sales Invoice.0027624: 0027624: 
  ****************************************************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -588,10 +588,11 @@ namespace ERP.OMS.Management.Activities
                     //End Rev Rajdip
                     if (Convert.ToString(Request.QueryString["key"]) != "ADD")
                     {
-                        //Rev 15.0
+                        //Rev 16.0
                         //chkSendMail.Visible = false;
                         //chkSendMail.Checked = false;
-                        //Rev 15.0 End
+                        chkSendMail.Enabled = false;
+                        //Rev 16.0 End
                         lblHeadTitle.Text = "Modify Sales Invoice";
                         hdnPageStatus.Value = "update";
                         divScheme.Style.Add("display", "none");
