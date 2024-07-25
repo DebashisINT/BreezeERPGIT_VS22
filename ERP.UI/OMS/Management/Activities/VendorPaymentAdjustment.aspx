@@ -473,7 +473,8 @@
                                     <CellStyle Wrap="False" HorizontalAlign="Right" CssClass="gridcellleft"></CellStyle>
                                     <PropertiesTextEdit Style-HorizontalAlign="Right">
                                         <MaskSettings Mask="&lt;0..999999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                        <ClientSideEvents LostFocus="gridAdjustAmtLostFocus" KeyUp="gridAdjustAmtLostFocus" />
+                                       <%-- <ClientSideEvents LostFocus="gridAdjustAmtLostFocus" KeyUp="gridAdjustAmtLostFocus" />--%>
+                                         <ClientSideEvents LostFocus="gridAdjustAmtLostFocus" />
                                     </PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 

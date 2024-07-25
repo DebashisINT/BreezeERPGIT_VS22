@@ -888,7 +888,9 @@ function gridAdjustAmtLostFocus(s, e) {
         //return;
     }
     grid.GetEditor("RemainingBalance").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()) - s.GetValue());
-
+    //REV 1.0
+    ShowRunningTotal();
+    //REV 1.0 End
 }
 
 function GridAddnewRow() {

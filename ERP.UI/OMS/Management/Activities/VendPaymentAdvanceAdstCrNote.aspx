@@ -207,7 +207,7 @@
     <%--Rev end 1.0--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <script src="JS/VendorAdvAdstCrNote.js?v=1.2"></script>
+    <script src="JS/VendorAdvAdstCrNote.js?v=1.5"></script>
     <dxe:ASPxGlobalEvents ID="GlobalEvents" runat="server">
         <ClientSideEvents ControlsInitialized="AllControlInitilize" />
     </dxe:ASPxGlobalEvents>
@@ -467,7 +467,8 @@
                                     <CellStyle Wrap="False" HorizontalAlign="Right" CssClass="gridcellleft"></CellStyle>
                                     <PropertiesTextEdit Style-HorizontalAlign="Right">
                                         <MaskSettings Mask="&lt;0..999999999999&gt;.&lt;00..99&gt;" AllowMouseWheel="false" />
-                                        <ClientSideEvents LostFocus="gridAdjustAmtLostFocus" KeyUp="gridAdjustAmtLostFocus" />
+                                       <%-- <ClientSideEvents LostFocus="gridAdjustAmtLostFocus" KeyUp="gridAdjustAmtLostFocus" />--%>
+                                         <ClientSideEvents LostFocus="gridAdjustAmtLostFocus"  />
                                     </PropertiesTextEdit>
                                 </dxe:GridViewDataTextColumn>
 
