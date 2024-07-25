@@ -1,4 +1,7 @@
-﻿/*****************
+﻿//====================================================Revision History =========================================================================
+//1.0   v2.0.44	    Priti	    24-07-2024	    0027592: Auto Calculation Required for the following Vendor  adjustment modules
+//====================================================End Revision History=====================================================================
+/*****************
 Global variable*/
 
 var ReceiptList = [];
@@ -503,12 +506,76 @@ function SetDoc(id, Name, e) {
     grid.GetEditor("DocumentType").SetText(doctype);
     grid.GetEditor("Currency").SetText(cur);
 
+    //REV 1.0
+
+    var OsAmt = cOsAmt.GetValue();
+    var AdjAmt = cAdjAmt.GetValue();
+    if (parseFloat(cAdjAmt.GetValue()) < parseFloat(cOsAmt.GetValue())) {
+        if (parseFloat(cAdjAmt.GetValue()) == 0) {
+            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) <= parseFloat(cOsAmt.GetValue())) {
+                grid.GetEditor("AdjAmt").SetValue(grid.GetEditor("OsAmt").GetValue());
+            }
+            else {
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()));
+            }
+        }
+        else {
+            if (parseFloat(grid.GetEditor("OsAmt").GetValue()) < (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()));
+            }
+            else if (parseFloat(grid.GetEditor("OsAmt").GetValue()) > (parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()))) {
+                grid.GetEditor("AdjAmt").SetValue(parseFloat(cOsAmt.GetValue()) - parseFloat(cAdjAmt.GetValue()));
+            }
+        }
+        ShowRunningTotal();
+    }
+    else {
+        if (grid.GetVisibleRowsOnPage() > 1) {
+
+            PopOnPicked(grid.GetEditor("DocumentType").GetText() + grid.GetEditor("DocumentId").GetText());
+            grid.DeleteRow(globalRowindex);
+            SuffuleSerialNumber();
+            ShowRunningTotal();
+        }
+    }
+
+    //REV 1.0 END
+
     CreateDocumentList();
     //grid.batchEditApi.EndEdit();
 
     $('#DocumentModel').modal('hide');
 }
+//Rev 1.0
+function GetTotalAmount() {
 
+    var totalAmount = 0;
+
+    for (var i = 0; i < 1000; i++) {
+        if (grid.GetRow(i)) {
+            if (grid.GetRow(i).style.display != "none") {
+                grid.batchEditApi.StartEdit(i, 2);
+                totalAmount = totalAmount + DecimalRoundoff(grid.GetEditor("AdjAmt").GetText(), 2);
+            }
+        }
+    }
+
+    for (i = -1; i > -1000; i--) {
+        if (grid.GetRow(i)) {
+            if (grid.GetRow(i).style.display != "none") {
+                grid.batchEditApi.StartEdit(i, 2);
+                totalAmount = totalAmount + DecimalRoundoff(grid.GetEditor("AdjAmt").GetText(), 2);
+            }
+        }
+    }
+
+    return totalAmount;
+}
+function ShowRunningTotal() {
+    var TotAmt = DecimalRoundoff(GetTotalAmount(), 2);
+    cAdjAmt.SetValue(TotAmt.toString());
+}
+//REv 1.0 End
 function gridDocNoKeyDown(s, e) {
     if (e.htmlEvent.key == "Enter" || e.code == "NumpadEnter") {
         gridDocNobuttonClick();
@@ -657,7 +724,9 @@ function gridAdjustAmtLostFocus(s, e) {
         //return;
     }
     grid.GetEditor("RemainingBalance").SetValue(parseFloat(grid.GetEditor("OsAmt").GetValue()) - s.GetValue());
-
+    //REV 1.0
+    ShowRunningTotal();
+    //REV 1.0 End
 }
 
 function GridAddnewRow() {
@@ -672,6 +741,9 @@ function gridCustomButtonClick(s, e) {
             PopOnPicked(grid.GetEditor("DocumentType").GetText() + grid.GetEditor("DocumentId").GetText());
             grid.DeleteRow(e.visibleIndex);
             SuffuleSerialNumber();
+            //Rev 1.0
+            ShowRunningTotal();
+            //Rev 1.0 End
         }
     }
     else if (e.buttonID == 'AddNew') {
