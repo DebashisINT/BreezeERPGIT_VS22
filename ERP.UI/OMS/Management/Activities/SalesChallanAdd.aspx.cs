@@ -3328,13 +3328,13 @@ namespace ERP.OMS.Management.Activities
                                 {
                                     cpstockVal = 0;
                                 }
-
+                                decimal Quantity = 0;
                                 foreach (DataRow drWH in newDt.Rows)
                                 {
                                     string BatchIDdrWH = Convert.ToString(drWH["BatchID"]);
                                     string WarehouseIDdrWH = Convert.ToString(drWH["WarehouseID"]);
                                     string strProductIDdrWH = Convert.ToString(drWH["ProductID"]);
-                                    decimal Quantity = Convert.ToDecimal(drWH["Quantity"]);
+                                     Quantity = Convert.ToDecimal(drWH["Quantity"]);
 
                                     if (BatchID == BatchIDdrWH && WarehouseID == WarehouseIDdrWH && strProductID == strProductIDdrWH)
                                     {
@@ -3347,6 +3347,14 @@ namespace ERP.OMS.Management.Activities
                                         }
                                     }
                                 }
+                                if (Quantity > cpstockVal)
+                                {
+                                    validate = "checkWarehouseBatchQty";
+                                    grid.JSProperties["cpProductSrlIDCheck1"] = strSrlNo;
+                                    break;
+
+                                }
+
                             }
                         }
                     }
