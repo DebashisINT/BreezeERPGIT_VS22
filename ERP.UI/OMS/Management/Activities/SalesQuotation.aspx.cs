@@ -15,7 +15,7 @@
                                                     Mantis: 0027046
 * Rev 9.0       Priti         V2.0.42   02-01-2024  A settings is required for the Duplicates Items Allowed or not in the Transaction Module.
                                                     Mantis : 0027050
-
+* Rev 10.0      Sanchita      V2.0.44   26-07-2024  27586: While coping any Quotation document number generating as a "Auto"     
  ***************************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -924,23 +924,33 @@ namespace ERP.OMS.Management.Activities
                 ddl_PosGstSalesOrder.Value = PosForGst;
                 //Rev work close 06.07.2022 mantise no:25008
 
-                string RevisionNo = Convert.ToString(QuotationEditdt.Rows[0]["Order_RevisionNo"]);
-                txtRevisionNo.Text = RevisionNo;
-                string ApproveProjectRem = Convert.ToString(QuotationEditdt.Rows[0]["Project_ApproveRejectREmarks"]);
-                txtAppRejRemarks.Text = ApproveProjectRem;
-                hdnApproveStatus.Value = Convert.ToString(QuotationEditdt.Rows[0]["Project_ApproveStatus"]);
+                // Rev 10.0
+                if (Convert.ToString(Request.QueryString["Typenew"]) != "Copy")
+                {
+                    // End of Rev 10.0
+
+                    string RevisionNo = Convert.ToString(QuotationEditdt.Rows[0]["Order_RevisionNo"]);
+                    txtRevisionNo.Text = RevisionNo;
+                    string ApproveProjectRem = Convert.ToString(QuotationEditdt.Rows[0]["Project_ApproveRejectREmarks"]);
+                    txtAppRejRemarks.Text = ApproveProjectRem;
+                    hdnApproveStatus.Value = Convert.ToString(QuotationEditdt.Rows[0]["Project_ApproveStatus"]);
 
 
-                if (hdnApproveStatus.Value == "1" && hdnPageStatForApprove.Value=="QN" && hdnApprovalsettings.Value == "1")
-                {
-                    lbl_ApprovalMSg.Visible = true;
-                    lbl_ApprovalMSg.Text = "**********Already Approved.";
+                    if (hdnApproveStatus.Value == "1" && hdnPageStatForApprove.Value == "QN" && hdnApprovalsettings.Value == "1")
+                    {
+                        lbl_ApprovalMSg.Visible = true;
+                        lbl_ApprovalMSg.Text = "**********Already Approved.";
+                    }
+                    else
+                    {
+                        lbl_ApprovalMSg.Visible = false;
+                        lbl_ApprovalMSg.Text = "";
+                    }
+
+                    // Rev 10.0
                 }
-                else
-                {
-                    lbl_ApprovalMSg.Visible = false;
-                    lbl_ApprovalMSg.Text = "";
-                }
+                // End of Rev 10.0
+
                 string isLastEntry = Convert.ToString(QuotationEditdt.Rows[0]["isLastEntry"]);
                 string ProjectValidFrom = Convert.ToString(QuotationEditdt.Rows[0]["Quote_Validfrom"]);
                 string ProjectValidUpto = Convert.ToString(QuotationEditdt.Rows[0]["Quote_Validupto"]);
