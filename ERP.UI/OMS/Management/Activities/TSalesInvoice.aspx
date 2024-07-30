@@ -3,6 +3,7 @@
    2.0   Pallab    V2.0.38     16-05-2023       0026143: Add Transit Sales Invoice module design modification & check in small device
    3.0	 Priti     V2.0.38     15-06-2023       0026345: Transit Sales Invoice is generating duplicate Invoice
    4.0	 Pallab    V2.0.40     31-07-2023       0026645: Add Transit Sales Invoice module all bootstrap modal outside click event disable
+   5.0	 Priti    V2.0.44     30-07-2024       0027654: While saving Transit Sales Invoice fraction value getting difference between Gross Amount and Amount. - msg "check gst value"
 ========================================== End Revision History =======================================================================================================--%>
 
 <%@ Page Title="Transit Sales Invoice" Language="C#" MasterPageFile="~/OMS/MasterPage/ERP.Master" AutoEventWireup="true"
@@ -19,7 +20,10 @@
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <script src="JS/SearchPopup.js"></script>
     <style type="text/css">
-        
+        #aspxTaxpopUp_PW-1
+        {
+        top: 36% !important;
+        }
     </style>
 
 
@@ -1583,7 +1587,10 @@
                         document.getElementById('hdnQty').value = grid.GetEditor('Quantity').GetText();
                         var StockQuantity = strMultiplier * QuantityValue;
                         // var Amount = Math.round(QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
-                        var Amount = (QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
+                        //REV 5.0
+                      //  var Amount = (QuantityValue * strFactor * (strSalePrice / strRate)).toFixed(2);
+                        var Amount = parseFloat(Math.round(QuantityValue * strFactor * (strSalePrice / strRate) * 100) / 100).toFixed(2);
+                        //REV 5.0 End
                         clblTaxProdGrossAmt.SetText(Amount);
                         // clblProdNetAmt.SetText(Math.round(grid.GetEditor('Amount').GetValue()).toFixed(2));
                         clblProdNetAmt.SetText(grid.GetEditor('Amount').GetValue());
@@ -6274,13 +6281,9 @@ function fn_Edit(keyValue) {
                                                     <ClientSideEvents EndCallback="cmbContactPersonEndCall" GotFocus="function(s,e){cContactPerson.ShowDropDown();}" />
                                                 </dxe:ASPxComboBox>
                                             </div>
-
                                             <div class="col-md-3">
-
                                                 <dxe:ASPxLabel ID="ASPxLabel11" runat="server" Text="Transit Purchase Invoice" CssClass="hide">
                                                 </dxe:ASPxLabel>
-
-
                                                 <asp:RadioButtonList ID="rdl_SaleInvoice" runat="server" RepeatDirection="Horizontal" onchange="return selectValue();">
                                                     <asp:ListItem Text="Transit Purchase Invoice" Value="TPB"></asp:ListItem>
                                                 </asp:RadioButtonList>
