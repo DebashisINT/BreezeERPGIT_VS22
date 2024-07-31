@@ -1,6 +1,7 @@
 ﻿/***********************************************************************************************************
  * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
  * 2.0    30-01-2024       V2.0.43     Sanchita     27208: Customer Industry Mapping - features required through Import facility.
+ * 3.0    31-07-2024       V2.0.44     Priti        0027653: While Importing Customer Master getting an msg in log "Column 'Transaction Category*' Does Not Belong To Table ."
  **************************************************************************************************************/
 using System;
 using System.Data;
@@ -941,6 +942,9 @@ namespace ERP.OMS.Management.Master
                                 string ShippingAddress3 = Convert.ToString(row["Shipping-Address3"]);
                                 string ShippingLandmark = Convert.ToString(row["Shipping Landmark"]);
                                 string ShippingPhone = Convert.ToString(row["Shipping-Phone*"]);
+
+
+
                                 string ShippingPin = ShipPin;
                                 /*string ShippingDist = ship_city_id;
                                 string ShippingState = ship_state_id;
@@ -952,7 +956,9 @@ namespace ERP.OMS.Management.Master
                                 // End of Rev 1.0
                                 string UserId = Convert.ToString(HttpContext.Current.Session["userid"]);
                                 string ContactType = Convert.ToString(ContType);
-                               
+                                //Rev 3.0
+                                string _Status = Convert.ToString(row["Status*"]);
+                                //Rev 3.0 End
 
                                 //DataSet dt2 = objCustomer.InsertCustomerDataFromExcel
                                 //    (CustomerCode, CustomerName, PrintName, CreditDays, CreditLimit, Account,
@@ -966,7 +972,9 @@ namespace ERP.OMS.Management.Master
                                     Registered, GSTIN, TransactionCategory, AddressBillType, EMAILID, BillingContactPerson, BillingAddress1, BillingAddress2,
                                         BillingAddress3, BillingLandmark, BillingPhone, BillingPin, 
                                         AddressShipType, ShippingAddress1, ShippingAddress2, ShippingAddress3, ShippingLandmark,
-                                        ShippingPhone, ShippingPin,  GroupCode, UserId, ContactType, NumberSchemaId);
+                                        ShippingPhone, ShippingPin,  GroupCode, UserId, ContactType, NumberSchemaId
+                                        , _Status
+                                        );
                                
                                 if (dt2 != null && dt2.Tables[0].Rows.Count > 0)
                                 {

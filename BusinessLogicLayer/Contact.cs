@@ -1,12 +1,14 @@
 ﻿/***********************************************************************************************************
  * 1.0    02-01-2024       V2.0.42     Sanchita     Settings required to Check Duplicate Customer Master Name. Mantis: 27125
- **************************************************************************************************************/
+ * 2.0    31-07-2024       V2.0.44     Priti        0027653: While Importing Customer Master getting an msg in log "Column 'Transaction Category*' Does Not Belong To Table ."
+**************************************************************************************************************/
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DataAccessLayer;
 using System.Data;
+using System.Net.NetworkInformation;
 namespace BusinessLogicLayer
 {
    public class Contact
@@ -326,9 +328,9 @@ namespace BusinessLogicLayer
                 string Registered, string GSTIN, string TransactionCategory, string AddressBillType, string EMAILID, string BillingContactPerson, string BillingAddress1, string BillingAddress2,
                 string BillingAddress3,string BillingLandmark, string BillingPhone, string BillingPin, 
                string AddressShipType, string ShippingAddress1, string ShippingAddress2, string ShippingAddress3,string ShippingLandmark, string ShippingPhone,
-               // Rev 1.0
-               //string ShippingPin, string GroupCode, string UserId, string ContactType, int NumberSchemaId)
-               string ShippingPin, int GroupCode, string UserId, string ContactType, int NumberSchemaId)
+        // Rev 1.0
+        //string ShippingPin, string GroupCode, string UserId, string ContactType, int NumberSchemaId)
+               string ShippingPin, int GroupCode, string UserId, string ContactType, int NumberSchemaId, string _Status)
                 // End of Rev 1.0
                 {              
                DataSet ds = new DataSet();
@@ -382,7 +384,10 @@ namespace BusinessLogicLayer
                // End of Rev 1.0
                proc.AddIntegerPara("@UserId", Convert.ToInt32(UserId));
                proc.AddVarcharPara("@ContactType",55, ContactType);
-               proc.AddIntegerPara("@NumberSchemaId", NumberSchemaId);               
+               proc.AddIntegerPara("@NumberSchemaId", NumberSchemaId);
+               // Rev 2.0
+               proc.AddVarcharPara("@Status", 200, _Status);
+               // End of Rev 2.0
                ds = proc.GetDataSet();
                return ds;
            }
