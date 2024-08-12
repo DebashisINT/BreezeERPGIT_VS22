@@ -10694,7 +10694,7 @@ function ProjectValueChange(s, e) {
                 Modal="True" ContentStyle-VerticalAlign="Top" EnableHierarchyRecreation="True"
                 ContentStyle-CssClass="pad">
                 <ClientSideEvents Closing="function(s, e) {
-	closeWarehouse(s, e);}" />
+	             closeWarehouse(s, e);}" />
                 <ContentStyle VerticalAlign="Top" CssClass="pad">
                 </ContentStyle>
                 <ContentCollection>
