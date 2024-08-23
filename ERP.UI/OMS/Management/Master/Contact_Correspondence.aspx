@@ -1,6 +1,7 @@
 <%--================================================== Revision History =============================================
 Rev Number         DATE              VERSION          DEVELOPER           CHANGES
 1.0                16-03-2023        2.0.36           Pallab              25733 : Master pages design modification
+2.0                23-08-2024        2.0.44           Priti               0027615:Auto email of the Sales Invoice should consider CC email recipients too from the Customer.
 ====================================================== Revision History =============================================--%>
 
 <%@ Page Title="Correspondence" Language="C#" AutoEventWireup="True" MasterPageFile="~/OMS/MasterPage/Erp.Master"
@@ -1956,28 +1957,9 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                             VisibleIndex="1">
                                                                             <PropertiesComboBox ValueType="System.String" Width="100%">
 
-
-
-
-
-
-
                                                                                 <%--  <ClientSideEvents SelectedIndexChanged="function(s, e) { OnEmilTypeChanged(s); }"></ClientSideEvents>--%>
 
-
-
-
-
-
-
-
                                                                                 <ClientSideEvents SelectedIndexChanged="function(s, e) { gridEmail.PerformCallback(); }" />
-
-
-
-
-
-
 
 
                                                                                 <ClientSideEvents SelectedIndexChanged="function(s, e) {
@@ -2082,7 +2064,11 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                             <PropertiesTextEdit MaxLength="200" Width="100%">
                                                                                 <ValidationSettings ErrorDisplayMode="ImageWithTooltip" ErrorTextPosition="right" SetFocusOnError="True">
                                                                                     <%--<RequiredField IsRequired="true" ErrorText="Mandatory" />--%>
-                                                                                    <RegularExpression ErrorText="Enter valid Email ID" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />
+                                                                                   <%-- REV 2.0--%>
+                                                                                <%--   <RegularExpression ErrorText="Enter valid Email ID" ValidationExpression="\w+([-+.,']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />--%>
+
+                                                                                <RegularExpression ErrorText="Enter valid Email ID" ValidationExpression="(([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)(\s*(;|,)\s*|\s*$))*" />
+                                                                                    <%-- REV 2.0 END--%>
                                                                                 </ValidationSettings>
                                                                             </PropertiesTextEdit>
                                                                         </dxe:GridViewDataTextColumn>
@@ -2697,13 +2683,16 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
 
         <asp:SqlDataSource ID="Email" runat="server"
             DeleteCommand="EmailDelete" DeleteCommandType="StoredProcedure" InsertCommand="insert_correspondence_email"
-            InsertCommandType="StoredProcedure" SelectCommand="select Isdefault,eml_id,eml_cntId,eml_entity,eml_type,eml_email,eml_ccEmail,eml_website,CreateDate,CreateUser,case when eml_Status='N' then 'Deactive' else 'Active' end as status,(case when eml_facility=1 then '1' when eml_facility=2 then '2' else null end) as eml_facility from tbl_master_email where eml_cntId=@EmlId"
+            InsertCommandType="StoredProcedure" 
+            SelectCommand="select Isdefault,eml_id,eml_cntId,eml_entity,eml_type,eml_email,eml_ccEmail,eml_website,CreateDate,CreateUser,case when eml_Status='N' then 'Deactive' else 'Active' end as status,(case when eml_facility=1 then '1' when eml_facility=2 then '2' else null end) as eml_facility from tbl_master_email where eml_cntId=@EmlId"
             UpdateCommand="update tbl_master_email set Isdefault=@Isdefault,eml_type=@eml_type,eml_email=@eml_email,eml_ccEmail=@eml_ccEmail,eml_website=@eml_website,LastModifyDate=getdate(),LastModifyUser=@CreateUser,eml_facility=(case when ltrim(rtrim(@eml_type))='Official' then @eml_facility else '2' end) where eml_id=@eml_id">
+
             <DeleteParameters>
                 <asp:Parameter Name="eml_id" Type="int32" />
                 <asp:SessionParameter Name="CreateUser" SessionField="userid" Type="int32" />
             </DeleteParameters>
             <UpdateParameters>
+                <asp:SessionParameter Name="EmlId" SessionField="KeyVal_InternalID_New" Type="string" />
                 <asp:Parameter Name="eml_type" Type="string" />
                 <asp:Parameter Name="eml_email" Type="string" />
                 <asp:Parameter Name="eml_ccEmail" Type="string" />
