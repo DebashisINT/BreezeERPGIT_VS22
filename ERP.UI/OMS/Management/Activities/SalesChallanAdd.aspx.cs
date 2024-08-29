@@ -3342,18 +3342,24 @@ namespace ERP.OMS.Management.Activities
                                         if (BatchID == BatchIDdrWH && WarehouseID == WarehouseIDdrWH && strProductID == strProductIDdrWH)
                                         {
                                             if (Quantity > cpstockVal)
-                                            {
+                                            { 
                                                 validate = "checkWarehouseBatchQty";
-                                                grid.JSProperties["cpProductSrlIDCheck1"] = strSrlNo;
+                                                //grid.JSProperties["cpProductSrlIDCheck1"] = strSrlNo;
                                                 break;
-
                                             }
                                         }
                                     }
                                     if (Quantity > cpstockVal)
                                     {
+                                        string ProductsName = "";
+                                        string strSQL = "select sProducts_Name from Master_sProducts  where sProducts_ID="+strProductID;
+                                        DataTable dtSQL = oDBEngine.GetDataTable(strSQL);
+                                        if (dtSQL != null && dtSQL.Rows.Count > 0)
+                                        {
+                                            ProductsName = Convert.ToString(dtSQL.Rows[0]["sProducts_Name"]);
+                                        }
                                         validate = "checkWarehouseBatchQty";
-                                        grid.JSProperties["cpProductSrlIDCheck1"] = strSrlNo;
+                                        grid.JSProperties["cpcheckWarehouseBatchQty"] = strSrlNo+"~"+ ProductsName;
                                         break;
 
                                     }

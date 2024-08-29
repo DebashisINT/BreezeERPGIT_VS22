@@ -4270,11 +4270,14 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                     cnt++;
                 }               
                 grid.cpSaveSuccessOrFail = null;
-                var SrlNo = grid.cpProductSrlIDCheck1;
-                var msg = "Product entered quantity more than stock quantity.Can not proceed  for SL No. " + SrlNo;
+                var strMessage = grid.cpcheckWarehouseBatchQty;
+
+                var SrlNo = strMessage.split("~")[0].toString();
+                var ProductName = strMessage.split("~")[1].toString();
+                var msg = "Product entered quantity more than stock quantity.Can not proceed  for SL No. " + SrlNo + " & Produc Name" + ProductName;
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = null;
-                grid.cpProductSrlIDCheck1 = null;
+                grid.cpcheckWarehouseBatchQty = null;
             }
             //Rev 10.0 End
             else if (grid.cpSaveSuccessOrFail == "MoreThanStock") {
