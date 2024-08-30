@@ -7,6 +7,8 @@
 //                                                     if the settings "Show Other Condition" is set as "Yes"
 //5.0   Priti       V2.0.41    07-12-2023	 0027000:EInvoice Changes to be done due to the change in the Flynn Version from Ver 1.0 to Ver 3.0 by Vayana
 //6.0  	Priti       V2.0.43    01-02-2024	 0027207:Batchwise stock has been issued from Challan before receiving date which caused negative stock
+//8.0   Priti       V2.0.44    30-08-2024    Batch showing negative due to exceed stock entry allowed from Sales Challan. Mantis: 0027625
+
 #endregion//====================================================End Revision History=====================================================================
 
 using System;
@@ -2983,7 +2985,6 @@ namespace ERP.OMS.Management.Activities
 
                             dr["MfgDate"] = Date;
                         }
-
                         if (strExpiryDate != "")
                         {
                             string DD = strExpiryDate.Substring(0, 2);
@@ -2993,10 +2994,91 @@ namespace ERP.OMS.Management.Activities
 
                             dr["ExpiryDate"] = Date;
                         }
-
                     }
                     tempWarehousedt.AcceptChanges();
                 }
+                //Rev 8.0
+                if (hdnPageStatus.Value == "first")
+                {
+                    if (Session["SI_WarehouseData"] != null)
+                    {
+                        DataTable Warehousedt = (DataTable)Session["SI_WarehouseData"];
+                        foreach (DataRow dr in Warehousedt.Rows)
+                        {
+                            string BatchID = Convert.ToString(dr["BatchID"]);
+                            string WarehouseID = Convert.ToString(dr["WarehouseID"]);
+                            string strProductID = Convert.ToString(dr["ProductID"]);
+                            decimal cpstockVal = 0;
+                            string strSrlNo = Convert.ToString(dr["SrlNo"]);
+
+                            if (BatchID != "")
+                            {
+                                var newDt = Warehousedt.AsEnumerable()
+                               .GroupBy(n => new
+                               {
+                                   WarehouseID = n.Field<string>("WarehouseID"),
+                                   BatchID = n.Field<string>("BatchID"),
+                                   ProductID = n.Field<string>("ProductID")
+                               }
+                                )
+                              .Select(g =>
+                              {
+                                  var row = Warehousedt.NewRow();
+                                  row["BatchID"] = g.Select(y => y["BatchID"]).FirstOrDefault();
+                                  row["ProductID"] = g.Select(y => y["ProductID"]).FirstOrDefault();
+                                  row["WarehouseID"] = g.Select(y => y["WarehouseID"]).FirstOrDefault();
+                                  row["Quantity"] = g.Sum(r => r.Field<decimal>("Quantity"));
+                                  return row;
+                              }).CopyToDataTable();
+
+                                DataTable dt2 = oDBEngine.GetDataTable("Select dbo.fn_CheckAvailableStockByBatchIdOpeningGRN(" + strBranch + ",'" + Convert.ToString(HttpContext.Current.Session["LastCompany"]) + "','" + Convert.ToString(HttpContext.Current.Session["LastFinYear"]) + "'," + strProductID + "," + WarehouseID + "," + BatchID + ",'" + strInvoiceDate + "') as branchopenstock");
+
+                                if (dt2.Rows.Count > 0)
+                                {
+                                    cpstockVal = Convert.ToDecimal(dt2.Rows[0]["branchopenstock"]);
+                                }
+                                else
+                                {
+                                    cpstockVal = 0;
+                                }
+                                decimal Quantity = 0;
+                                foreach (DataRow drWH in newDt.Rows)
+                                {
+                                    string BatchIDdrWH = Convert.ToString(drWH["BatchID"]);
+                                    string WarehouseIDdrWH = Convert.ToString(drWH["WarehouseID"]);
+                                    string strProductIDdrWH = Convert.ToString(drWH["ProductID"]);
+                                    Quantity = Convert.ToDecimal(drWH["Quantity"]);
+
+                                    if (BatchID == BatchIDdrWH && WarehouseID == WarehouseIDdrWH && strProductID == strProductIDdrWH)
+                                    {
+                                        if (Quantity > cpstockVal)
+                                        {
+                                            validate = "checkWarehouseBatchQty";                                            
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (Quantity > cpstockVal)
+                                {
+                                    string ProductsName = "";
+                                    string strSQL = "select sProducts_Name from Master_sProducts  where sProducts_ID=" + strProductID;
+                                    DataTable dtSQL = oDBEngine.GetDataTable(strSQL);
+                                    if (dtSQL != null && dtSQL.Rows.Count > 0)
+                                    {
+                                        ProductsName = Convert.ToString(dtSQL.Rows[0]["sProducts_Name"]);
+                                    }
+                                    validate = "checkWarehouseBatchQty";
+                                    grid.JSProperties["cpcheckWarehouseBatchQty"] = strSrlNo + "~" + ProductsName;
+                                    break;
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+                //Rev 8.0 End
+
 
                 //datatable for MultiUOm start chinmoy 14-01-2020
                 DataTable MultiUOMDetails = new DataTable();
@@ -3674,13 +3756,13 @@ namespace ERP.OMS.Management.Activities
 
 
                                 }
-                                else
-                                {
-                                    validate = "checkAcurateTaxAmount";
-                                    grid.JSProperties["cpSerialNo"] = SerialID;
-                                    grid.JSProperties["cpProductName"] = ProductName;
-                                    break;
-                                }
+                                //else
+                                //{
+                                //    validate = "checkAcurateTaxAmount";
+                                //    grid.JSProperties["cpSerialNo"] = SerialID;
+                                //    grid.JSProperties["cpProductName"] = ProductName;
+                                //    break;
+                                //}
 
                             }
 
@@ -3705,7 +3787,9 @@ namespace ERP.OMS.Management.Activities
                 if (validate == "outrange" || validate == "duplicate" || validate == "checkWarehouse" || validate == "duplicateProduct" || validate == "nullAmount" || validate == "nullQuantity" || validate == "transporteMandatory" || validate == "TCMandatory" || validate == "minSalePriceMust" || validate == "MRPLess"
                     || validate == "DueDateLess" || validate == "BillingShippingNotLoaded" || validate == "SalesmanMandatory" || validate == "OrderTaggingMandatory"
                     || validate == "checkMultiUOMData" || validate == "TCSMandatory" || validate == "ZeroTaxSalesInvoice" || validate == "checkAcurateTaxAmount" || validate == "MoreThanStock" || validate == "ZeroStock"
-                   || validate == "TDSMandatory")
+                   || validate == "TDSMandatory"
+                   || validate == "checkWarehouseBatchQty"
+                   )
                 {
                     grid.JSProperties["cpSaveSuccessOrFail"] = validate;
                 }
@@ -6829,7 +6913,10 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("SrlNo", typeof(string));
                     Warehousedt.Columns.Add("WarehouseID", typeof(string));
                     Warehousedt.Columns.Add("WarehouseName", typeof(string));
-                    Warehousedt.Columns.Add("Quantity", typeof(string));
+                    //REV 8.0
+                    //Warehousedt.Columns.Add("Quantity", typeof(string));
+                    Warehousedt.Columns.Add("Quantity", typeof(decimal));
+                    //REV 8.0 END
                     Warehousedt.Columns.Add("BatchID", typeof(string));
                     Warehousedt.Columns.Add("BatchNo", typeof(string));
                     Warehousedt.Columns.Add("SerialID", typeof(string));
@@ -6850,6 +6937,9 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("Status", typeof(string));
                     Warehousedt.Columns.Add("AltQty", typeof(string));
                     Warehousedt.Columns.Add("AltUOM", typeof(string));
+                    //Rev 8.0
+                    Warehousedt.Columns.Add("ProductID", typeof(string));
+                    //Rev 8.0 End
 
                 }
 
@@ -6899,7 +6989,10 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("SrlNo", typeof(string));
                     Warehousedt.Columns.Add("WarehouseID", typeof(string));
                     Warehousedt.Columns.Add("WarehouseName", typeof(string));
-                    Warehousedt.Columns.Add("Quantity", typeof(string));
+                    //REV 8.0
+                    //Warehousedt.Columns.Add("Quantity", typeof(string));
+                    Warehousedt.Columns.Add("Quantity", typeof(decimal));
+                    //REV 8.0 END
                     Warehousedt.Columns.Add("BatchID", typeof(string));
                     Warehousedt.Columns.Add("BatchNo", typeof(string));
                     Warehousedt.Columns.Add("SerialID", typeof(string));
@@ -6920,6 +7013,9 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt.Columns.Add("Status", typeof(string));
                     Warehousedt.Columns.Add("AltQty", typeof(string));
                     Warehousedt.Columns.Add("AltUOM", typeof(string));
+                    //Rev 8.0
+                    Warehousedt.Columns.Add("ProductID", typeof(string));
+                    //Rev 8.0 End
                 }
 
                 bool IsDelete = false;
@@ -7051,7 +7147,7 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, ProductID);
                         }
                         else
                         {
@@ -7085,7 +7181,7 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM,ProductID);
 
                             }
                             else if (editWarehouseID == whID)
@@ -7135,7 +7231,7 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, ProductID);
                         }
                         else
                         {
@@ -7167,7 +7263,7 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, ProductID);
                             }
                             else if (editWarehouseID == whID)
                             {
@@ -7216,7 +7312,7 @@ namespace ERP.OMS.Management.Activities
 
                         if (updaterows.Length == 0)
                         {
-                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                            Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, ProductID);
                         }
                         else
                         {
@@ -7248,7 +7344,7 @@ namespace ERP.OMS.Management.Activities
                             if (updaterows.Length == 0)
                             {
                                 IsDelete = true;
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, Qty, BatchID, BatchName, "0", "", Sales_UOM_Name, Sales_UOM_Code, Convert.ToDecimal(Qty) + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, Qty, "D", AltQty, AltUOM, ProductID);
                             }
                             else if (editWarehouseID == whID)
                             {
@@ -7450,12 +7546,12 @@ namespace ERP.OMS.Management.Activities
                                 decimal BalanceStk = Convert.ToDecimal(Trans_Stock) - Convert.ToDecimal(stkqtn);
                                 string maxID = (Convert.ToString(Warehousedt.Compute("MAX([SrlNo])", "")) != "") ? Convert.ToString(Convert.ToInt32(Warehousedt.Compute("MAX([SrlNo])", "")) + 1) : "1";
 
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, SerialIDList.Length, BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, SerialIDList.Length + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, SerialIDList.Length, "D", AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, SerialIDList.Length, BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, SerialIDList.Length + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, SerialIDList.Length, "D", AltQty, AltUOM, ProductID);
                             }
                             else
                             {
                                 string maxID = (Convert.ToString(Warehousedt.Compute("MAX([SrlNo])", "")) != "") ? Convert.ToString(Convert.ToInt32(Warehousedt.Compute("MAX([SrlNo])", "")) + 1) : "1";
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, "", "", BatchID, "", strSrlID, strSrlName, "", Sales_UOM_Code, "", "", Stk_UOM_Code, "", "", "", "", "", "", loopId, SerialIDList.Length, "D", AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, "", "", BatchID, "", strSrlID, strSrlName, "", Sales_UOM_Code, "", "", Stk_UOM_Code, "", "", "", "", "", "", loopId, SerialIDList.Length, "D", AltQty, AltUOM, ProductID);
                             }
                         }
                     }
@@ -7527,12 +7623,12 @@ namespace ERP.OMS.Management.Activities
                                 decimal BalanceStk = Convert.ToDecimal(Trans_Stock) - Convert.ToDecimal(stkqtn);
                                 string maxID = (Convert.ToString(Warehousedt.Compute("MAX([SrlNo])", "")) != "") ? Convert.ToString(Convert.ToInt32(Warehousedt.Compute("MAX([SrlNo])", "")) + 1) : "1";
 
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, SerialIDList.Length, BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, SerialIDList.Length + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, SerialIDList.Length, repute, AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, WarehouseName, SerialIDList.Length, BatchID, BatchName, strSrlID, strSrlName, Sales_UOM_Name, Sales_UOM_Code, SerialIDList.Length + " " + Sales_UOM_Name, Stk_UOM_Name, Stk_UOM_Code, stkqtn + " " + Stk_UOM_Name, Conversion_Multiplier, Convert.ToString(Math.Round(Convert.ToDecimal(Trans_Stock))) + " " + Stk_UOM_Name, Convert.ToString(Math.Round(BalanceStk, 2)) + " " + Stk_UOM_Name, MfgDate, ExpiryDate, loopId, SerialIDList.Length, repute, AltQty, AltUOM, ProductID);
                             }
                             else
                             {
                                 string maxID = (Convert.ToString(Warehousedt.Compute("MAX([SrlNo])", "")) != "") ? Convert.ToString(Convert.ToInt32(Warehousedt.Compute("MAX([SrlNo])", "")) + 1) : "1";
-                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, "", "", BatchID, "", strSrlID, strSrlName, "", Sales_UOM_Code, "", "", Stk_UOM_Code, "", "", "", "", "", "", loopId, SerialIDList.Length, repute, AltQty, AltUOM);
+                                Warehousedt.Rows.Add(ProductSerialID, maxID, WarehouseID, "", "", BatchID, "", strSrlID, strSrlName, "", Sales_UOM_Code, "", "", Stk_UOM_Code, "", "", "", "", "", "", loopId, SerialIDList.Length, repute, AltQty, AltUOM, ProductID);
                             }
                         }
                     }
@@ -7576,97 +7672,99 @@ namespace ERP.OMS.Management.Activities
                     Warehousedt = (DataTable)Session["SI_WarehouseData"];
                 }
 
-                DataRow[] result = Warehousedt.Select("SrlNo ='" + strKey + "'");
-                foreach (DataRow row in result)
-                {
-                    strLoopID = row["LoopID"].ToString();
-                }
-
+                //Rev 8.0
+                //DataRow[] result = Warehousedt.Select("SrlNo ='" + strKey + "'");
+                //foreach (DataRow row in result)
+                //{
+                //    strLoopID = row["LoopID"].ToString();
+                //}
+                //Rev 8.0 End
                 if (Warehousedt != null && Warehousedt.Rows.Count > 0)
                 {
-                    int count = 0;
-                    bool IsFirst = false, IsAssign = false;
-                    string WarehouseName = "", Quantity = "", BatchNo = "", SalesUOMName = "", SalesQuantity = "", StkUOMName = "", StkQuantity = "", ConversionMultiplier = "", AvailableQty = "", BalancrStk = "", MfgDate = "", ExpiryDate = "";
+                    //Rev 8.0 
+                    //int count = 0;
+                    //bool IsFirst = false, IsAssign = false;
+                    //string WarehouseName = "", Quantity = "", BatchNo = "", SalesUOMName = "", SalesQuantity = "", StkUOMName = "", StkQuantity = "", ConversionMultiplier = "", AvailableQty = "", BalancrStk = "", MfgDate = "", ExpiryDate = "";
 
 
-                    for (int i = 0; i < Warehousedt.Rows.Count; i++)
-                    {
-                        DataRow dr = Warehousedt.Rows[i];
-                        string delSrlID = Convert.ToString(dr["SrlNo"]);
-                        string delLoopID = Convert.ToString(dr["LoopID"]);
+                    //for (int i = 0; i < Warehousedt.Rows.Count; i++)
+                    //{
+                    //    DataRow dr = Warehousedt.Rows[i];
+                    //    string delSrlID = Convert.ToString(dr["SrlNo"]);
+                    //    string delLoopID = Convert.ToString(dr["LoopID"]);
 
-                        if (strPreLoopID != delLoopID)
-                        {
-                            count = 0;
-                        }
+                    //    if (strPreLoopID != delLoopID)
+                    //    {
+                    //        count = 0;
+                    //    }
 
-                        if ((delLoopID == strLoopID) && (strKey == delSrlID) && count == 0)
-                        {
-                            IsFirst = true;
+                    //    if ((delLoopID == strLoopID) && (strKey == delSrlID) && count == 0)
+                    //    {
+                    //        IsFirst = true;
 
-                            WarehouseName = Convert.ToString(dr["WarehouseName"]);
-                            Quantity = Convert.ToString(dr["Quantity"]);
-                            BatchNo = Convert.ToString(dr["BatchNo"]);
-                            SalesUOMName = Convert.ToString(dr["SalesUOMName"]);
-                            SalesQuantity = Convert.ToString(dr["SalesQuantity"]);
-                            StkUOMName = Convert.ToString(dr["StkUOMName"]);
-                            StkQuantity = Convert.ToString(dr["StkQuantity"]);
-                            ConversionMultiplier = Convert.ToString(dr["ConversionMultiplier"]);
-                            AvailableQty = Convert.ToString(dr["AvailableQty"]);
-                            BalancrStk = Convert.ToString(dr["BalancrStk"]);
-                            MfgDate = Convert.ToString(dr["MfgDate"]);
-                            ExpiryDate = Convert.ToString(dr["ExpiryDate"]);
+                    //        WarehouseName = Convert.ToString(dr["WarehouseName"]);
+                    //        Quantity = Convert.ToString(dr["Quantity"]);
+                    //        BatchNo = Convert.ToString(dr["BatchNo"]);
+                    //        SalesUOMName = Convert.ToString(dr["SalesUOMName"]);
+                    //        SalesQuantity = Convert.ToString(dr["SalesQuantity"]);
+                    //        StkUOMName = Convert.ToString(dr["StkUOMName"]);
+                    //        StkQuantity = Convert.ToString(dr["StkQuantity"]);
+                    //        ConversionMultiplier = Convert.ToString(dr["ConversionMultiplier"]);
+                    //        AvailableQty = Convert.ToString(dr["AvailableQty"]);
+                    //        BalancrStk = Convert.ToString(dr["BalancrStk"]);
+                    //        MfgDate = Convert.ToString(dr["MfgDate"]);
+                    //        ExpiryDate = Convert.ToString(dr["ExpiryDate"]);
 
-                            //dr.Delete();
-                        }
-                        else
-                        {
-                            if (delLoopID == strLoopID)
-                            {
-                                if (strKey == delSrlID)
-                                {
-                                    //dr.Delete();
-                                }
-                                else
-                                {
-                                    decimal S_Quantity = Convert.ToDecimal(dr["TotalQuantity"]);
-                                    dr["Quantity"] = S_Quantity - 1;
-                                    dr["TotalQuantity"] = S_Quantity - 1;
+                    //        //dr.Delete();
+                    //    }
+                    //    else
+                    //    {
+                    //        if (delLoopID == strLoopID)
+                    //        {
+                    //            if (strKey == delSrlID)
+                    //            {
+                    //                //dr.Delete();
+                    //            }
+                    //            else
+                    //            {
+                    //                decimal S_Quantity = Convert.ToDecimal(dr["TotalQuantity"]);
+                    //                dr["Quantity"] = S_Quantity - 1;
+                    //                dr["TotalQuantity"] = S_Quantity - 1;
 
-                                    if (IsFirst == true && IsAssign == false)
-                                    {
-                                        IsAssign = true;
+                    //                if (IsFirst == true && IsAssign == false)
+                    //                {
+                    //                    IsAssign = true;
 
-                                        dr["WarehouseName"] = WarehouseName;
-                                        dr["BatchNo"] = BatchNo;
-                                        dr["SalesUOMName"] = SalesUOMName;
-                                        dr["SalesQuantity"] = (S_Quantity - 1) + " " + SalesUOMName;//SalesQuantity;
-                                        dr["StkUOMName"] = StkUOMName;
-                                        dr["StkQuantity"] = StkQuantity;
-                                        dr["ConversionMultiplier"] = ConversionMultiplier;
-                                        dr["AvailableQty"] = AvailableQty;
-                                        dr["BalancrStk"] = BalancrStk;
-                                        dr["MfgDate"] = MfgDate;
-                                        dr["ExpiryDate"] = ExpiryDate;
-                                    }
-                                    else
-                                    {
-                                        if (IsAssign == false)
-                                        {
-                                            IsAssign = true;
-                                            SalesUOMName = Convert.ToString(dr["SalesUOMName"]);
-                                            dr["SalesQuantity"] = (S_Quantity - 1) + " " + SalesUOMName;//SalesQuantity;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                    //                    dr["WarehouseName"] = WarehouseName;
+                    //                    dr["BatchNo"] = BatchNo;
+                    //                    dr["SalesUOMName"] = SalesUOMName;
+                    //                    dr["SalesQuantity"] = (S_Quantity - 1) + " " + SalesUOMName;//SalesQuantity;
+                    //                    dr["StkUOMName"] = StkUOMName;
+                    //                    dr["StkQuantity"] = StkQuantity;
+                    //                    dr["ConversionMultiplier"] = ConversionMultiplier;
+                    //                    dr["AvailableQty"] = AvailableQty;
+                    //                    dr["BalancrStk"] = BalancrStk;
+                    //                    dr["MfgDate"] = MfgDate;
+                    //                    dr["ExpiryDate"] = ExpiryDate;
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (IsAssign == false)
+                    //                    {
+                    //                        IsAssign = true;
+                    //                        SalesUOMName = Convert.ToString(dr["SalesUOMName"]);
+                    //                        dr["SalesQuantity"] = (S_Quantity - 1) + " " + SalesUOMName;//SalesQuantity;
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                        strPreLoopID = delLoopID;
-                        count++;
-                    }
-                    Warehousedt.AcceptChanges();
-
+                    //    strPreLoopID = delLoopID;
+                    //    count++;
+                    //}
+                    //Warehousedt.AcceptChanges();
+                    //Rev 8.0 End
 
                     for (int i = 0; i < Warehousedt.Rows.Count; i++)
                     {
