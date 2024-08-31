@@ -2077,37 +2077,12 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                             <EditFormCaptionStyle HorizontalAlign="Right" VerticalAlign="Top" Wrap="False">
                                                                             </EditFormCaptionStyle>
                                                                             <PropertiesTextEdit MaxLength="200" Width="100%">
-
-
-
-
-
-
-
                                                                                 <ValidationSettings ErrorDisplayMode="ImageWithTooltip" ErrorTextPosition="right" SetFocusOnError="True">
-
-
-
-
-
-
-
-                                                                                    <RegularExpression ErrorText="Enter Valid CC Email ID" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />
-
-
-
-
-
-
-
+                                                                                    <%-- REV 2.0--%>
+                                                                                   <%-- <RegularExpression ErrorText="Enter Valid CC Email ID" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" />--%>
+                                                                                     <RegularExpression ErrorText="Enter Valid CC Email ID" ValidationExpression="(([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)(\s*(;|,)\s*|\s*$))*" />
+                                                                                     <%-- REV 2.0 END--%>
                                                                                 </ValidationSettings>
-
-
-
-
-
-
-
                                                                             </PropertiesTextEdit>
                                                                         </dxe:GridViewDataTextColumn>
                                                                         <dxe:GridViewDataTextColumn FieldName="status" VisibleIndex="6" Caption="Status">
