@@ -973,7 +973,7 @@
                 var strMessage = grid.cpcheckWarehouseBatchQty;
                 var SrlNo = strMessage.split("~")[0].toString();
                 var ProductName = strMessage.split("~")[1].toString();
-                var msg = "Product entered quantity more than stock quantity.Can not proceed  for SL No. " + SrlNo + " & Produc Name" + ProductName;
+                var msg = "Product entered quantity more than stock quantity.Can not proceed  for SL No. " + SrlNo + " & Product Name " + ProductName;
                 jAlert(msg);
                 grid.cpSaveSuccessOrFail = null;
                 grid.cpcheckWarehouseBatchQty = null;
