@@ -3287,7 +3287,8 @@ namespace ERP.OMS.Management.Activities
 
 
                     //Rev 8.0
-                    if (hdnPageStatus.Value == "first")
+                    if (Convert.ToString(Request.QueryString["key"]) == "ADD")
+                       // if (hdnPageStatus.Value == "first")
                     {
                         if (Session["SC_WarehouseData"] != null)
                         {
