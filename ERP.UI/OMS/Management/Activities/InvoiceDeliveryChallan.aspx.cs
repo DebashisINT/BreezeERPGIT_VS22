@@ -2998,7 +2998,8 @@ namespace ERP.OMS.Management.Activities
                     tempWarehousedt.AcceptChanges();
                 }
                 //Rev 8.0
-                if (hdnPageStatus.Value == "first")
+                
+                if (Convert.ToString(Request.QueryString["key"]) == "ADD")
                 {
                     if (Session["SI_WarehouseData"] != null)
                     {
