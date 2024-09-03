@@ -4702,6 +4702,7 @@ namespace ERP.OMS.Management.Activities
                         grid.JSProperties["cpComponent"] = "true";
                     }
                 }
+                
             }
             else if (strSplitCommand == "GridBlank")
             {

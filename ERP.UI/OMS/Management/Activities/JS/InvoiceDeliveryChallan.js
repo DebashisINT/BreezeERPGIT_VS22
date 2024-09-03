@@ -2826,15 +2826,7 @@ function SaveExit_ButtonClick() {
         return;
     }
 
-    //var VehNumlen = $("#lstAssignTo").val();
-
-    //if (VehNumlen.length > 1) {
-    //     LoadingPanel.Hide();
-    //    jAlert("Cannot select more than one vehicle.");
-    //    flag = false;
-    //    return;
-    //}
-
+    
 
     $.ajax({
         type: "POST",
@@ -2846,18 +2838,7 @@ function SaveExit_ButtonClick() {
         success: function (r) {
             //$("#hdnEntityType").val(r.d);
             var val = r.d;
-            //if (val[0].CustomerId =="")
-            //{
-            //    LoadingPanel.Hide();
-            //    flag = false;
-            //    jAlert("Please select registered customer.")
-            //}
-            //if (val[0].BranchCompany =="")
-            //{
-            //    LoadingPanel.Hide();
-            //    flag = false;
-            //    jAlert("This Branch/Company are not map with EInvoice.")
-            //}
+            
             if (val != null) {
                 if (val[0].BranchCompany != "") {
                     if (val[0].CustomerId != "") {
@@ -3105,6 +3086,7 @@ function SaveExit_ButtonClick() {
                     $('#hdfIsDelete').val('I');
 
                     grid.batchEditApi.EndEdit();
+                   
                     grid.UpdateEdit();
                 }
 
