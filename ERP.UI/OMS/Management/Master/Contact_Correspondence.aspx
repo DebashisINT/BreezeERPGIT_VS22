@@ -1037,7 +1037,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                             <CellStyle CssClass="gridcellleft">
                                                                             </CellStyle>
                                                                         </dxe:GridViewDataTextColumn>
-                                                                        <dxe:GridViewDataTextColumn FieldName="Address1" VisibleIndex="5" Caption="Address1" PropertiesTextEdit-MaxLength="500">
+                                                                        <dxe:GridViewDataTextColumn FieldName="Address1" VisibleIndex="5" Caption="Address1" PropertiesTextEdit-MaxLength="100">
                                                                             <EditFormSettings Visible="True" VisibleIndex="5" />
                                                                             <CellStyle CssClass="gridcellleft abc">
                                                                             </CellStyle>
@@ -1046,7 +1046,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
                                                                             <PropertiesTextEdit Width="100%"></PropertiesTextEdit>
                                                                         </dxe:GridViewDataTextColumn>
 
-                                                                        <dxe:GridViewDataTextColumn FieldName="Address2" VisibleIndex="6" Caption="Address2" PropertiesTextEdit-MaxLength="500">
+                                                                        <dxe:GridViewDataTextColumn FieldName="Address2" VisibleIndex="6" Caption="Address2" PropertiesTextEdit-MaxLength="100">
                                                                             <EditFormSettings Visible="True" VisibleIndex="6" />
                                                                             <CellStyle CssClass="gridcellleft">
                                                                             </CellStyle>
