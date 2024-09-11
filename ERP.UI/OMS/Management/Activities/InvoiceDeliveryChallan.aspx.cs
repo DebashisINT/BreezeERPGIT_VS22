@@ -3043,11 +3043,14 @@ namespace ERP.OMS.Management.Activities
                                     cpstockVal = 0;
                                 }
                                 decimal Quantity = 0;
+                                string strProductIDdrWH = "";
+                                string WarehouseIDdrWH = "";
+                                string BatchIDdrWH = "";
                                 foreach (DataRow drWH in newDt.Rows)
                                 {
-                                    string BatchIDdrWH = Convert.ToString(drWH["BatchID"]);
-                                    string WarehouseIDdrWH = Convert.ToString(drWH["WarehouseID"]);
-                                    string strProductIDdrWH = Convert.ToString(drWH["ProductID"]);
+                                     BatchIDdrWH = Convert.ToString(drWH["BatchID"]);
+                                     WarehouseIDdrWH = Convert.ToString(drWH["WarehouseID"]);
+                                     strProductIDdrWH = Convert.ToString(drWH["ProductID"]);
                                     Quantity = Convert.ToDecimal(drWH["Quantity"]);
 
                                     if (BatchID == BatchIDdrWH && WarehouseID == WarehouseIDdrWH && strProductID == strProductIDdrWH)
@@ -3059,19 +3062,22 @@ namespace ERP.OMS.Management.Activities
                                         }
                                     }
                                 }
-                                if (Quantity > cpstockVal)
+                                if (BatchID == BatchIDdrWH && WarehouseID == WarehouseIDdrWH && strProductID == strProductIDdrWH)
                                 {
-                                    string ProductsName = "";
-                                    string strSQL = "select sProducts_Name from Master_sProducts  where sProducts_ID=" + strProductID;
-                                    DataTable dtSQL = oDBEngine.GetDataTable(strSQL);
-                                    if (dtSQL != null && dtSQL.Rows.Count > 0)
+                                    if (Quantity > cpstockVal)
                                     {
-                                        ProductsName = Convert.ToString(dtSQL.Rows[0]["sProducts_Name"]);
-                                    }
-                                    validate = "checkWarehouseBatchQty";
-                                    grid.JSProperties["cpcheckWarehouseBatchQty"] = strSrlNo + "~" + ProductsName;
-                                    break;
+                                        string ProductsName = "";
+                                        string strSQL = "select sProducts_Name from Master_sProducts  where sProducts_ID=" + strProductID;
+                                        DataTable dtSQL = oDBEngine.GetDataTable(strSQL);
+                                        if (dtSQL != null && dtSQL.Rows.Count > 0)
+                                        {
+                                            ProductsName = Convert.ToString(dtSQL.Rows[0]["sProducts_Name"]);
+                                        }
+                                        validate = "checkWarehouseBatchQty";
+                                        grid.JSProperties["cpcheckWarehouseBatchQty"] = strSrlNo + "~" + ProductsName;
+                                        break;
 
+                                    }
                                 }
 
                             }
