@@ -31,7 +31,7 @@ Rev Number         DATE              VERSION          DEVELOPER           CHANGE
     <link href="CSS/SearchPopup.css" rel="stylesheet" />
     <%-- <script src="JS/SearchPopup.js"></script>--%>
     <script src="JS/SearchPopupDatatable.js"></script>
-    <script src="JS/PurchaseInvoiceAdd.js?v=4.3"></script>
+    <script src="JS/PurchaseInvoiceAdd.js?v=4.5"></script>
     <style type="text/css">
         .CUSTOM-CLASS .tooltip-inner {
             background: #268c7e

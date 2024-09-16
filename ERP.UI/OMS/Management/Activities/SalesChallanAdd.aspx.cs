@@ -3302,7 +3302,7 @@ namespace ERP.OMS.Management.Activities
                                 string strSrlNo = Convert.ToString(dr["SrlNo"]);
 
 
-                                if (BatchID != "")
+                                if (BatchID != "" && BatchID != "0")
                                 {
                                     var newDt = Warehousedt.AsEnumerable()
                                    .GroupBy(n => new
