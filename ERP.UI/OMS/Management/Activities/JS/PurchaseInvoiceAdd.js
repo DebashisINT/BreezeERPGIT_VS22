@@ -5961,6 +5961,11 @@ function OnCustomButtonClick(s, e) {
 
                             // Code Above Added by sam to set focus on TDS gridview on 05022018
                             var TDSValue = cddl_TdsScheme.GetValue();
+                            //Rev Priti
+                            if (TDSValue == null) {
+                                TDSValue = 0;
+                            }
+                            //Rev Priti End 
                             cgridinventory.PerformCallback(ProductID + '~' + Amt + '~' + 'ShowBindGrid' + '~' + 'CheckApplicableAmt'+'~'+ TDSValue);
                             var slno = grid.GetEditor('SrlNo').GetValue();
                             if ($('#hdntdschecking').val() != '') {
