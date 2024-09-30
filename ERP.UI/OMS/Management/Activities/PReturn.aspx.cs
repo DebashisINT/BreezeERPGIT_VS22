@@ -4,6 +4,7 @@
                                                  Mantis: 26843
  Rev 2.0      Priti      V2.0.41   13-11-2023    0026641: Tax amount is not calculating for the Purchase Return for partial qty
  Rev 3.0	  Priti	     V2.0.43   05-06-2024	 0027280: Alternate UOM is not saving while making a Purchase Return entry
+ Rev 4.0	  Priti	     V2.0.45   30-09-2024	 0027733: Purchase Return Shipping Address and Billing Address not showing
 *******************************************************************************************************************************/
 using System;
 using System.Configuration;
@@ -355,7 +356,10 @@ namespace ERP.OMS.Management.Activities
                         Session["PRWS_WarehouseData"] = dt;
 
                         Session["PRWS_QuotationAddressDtl"] = objPurchaseReturnBL.GetPurchaseReturnBillingAddress(strPurchaseReturnId); ;
-
+                        //Rev 4.0
+                        DataTable dtBillingShipping = objPurchaseReturnBL.GetPurchaseReturnBillingAddress(strPurchaseReturnId);
+                        Purchase_BillingShipping.SetBillingShippingTable(dtBillingShipping);
+                        //Rev 4.0 End
                         #endregion
 
                         #region Debjyoti Get Tax Details in Edit Mode
