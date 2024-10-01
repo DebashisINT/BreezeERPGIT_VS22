@@ -424,16 +424,18 @@ namespace ServiceManagement.ServiceManagement.Transaction
             if (apply.Action != "edit")
             {
                 string schmID = apply.CmbScheme.Split('~')[0].ToString();
-                string docNo = checkNMakeJVCode(strPurchaseNumber, Convert.ToInt32(schmID));
+                // Rev Sanchita
+                //string docNo = checkNMakeJVCode(strPurchaseNumber, Convert.ToInt32(schmID));
 
-                if (docNo.Split('~')[0].ToString() == "ok")
-                {
-                    DocumentNo = docNo.Split('~')[1].ToString();
-                }
-                else
-                {
-                    return "";
-                }
+                //if (docNo.Split('~')[0].ToString() == "ok")
+                //{
+                //    DocumentNo = docNo.Split('~')[1].ToString();
+                //}
+                //else
+                //{
+                //    return "";
+                //}
+                // End of Rev Sanchita
             }
             else
             {
@@ -468,7 +470,10 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         ProcedureExecute proc = new ProcedureExecute("PRC_SRVReceiptChallanInsertUpdate");
                         proc.AddVarcharPara("@EntryType", 25, Convert.ToString(apply.EntryType));
                         proc.AddVarcharPara("@NumberingScheme", 100, Convert.ToString(apply.CmbScheme));
-                        proc.AddVarcharPara("@DocumentNumber", 500, Convert.ToString(DocumentNo));
+                        // Rev Sanchita
+                        //proc.AddVarcharPara("@DocumentNumber", 500, Convert.ToString(DocumentNo));
+                        proc.AddVarcharPara("@DocumentNumber", 500, strPurchaseNumber);
+                        // End of Rev Sanchita
                         proc.AddVarcharPara("@DocumentDate", 10, Convert.ToString(apply.date));
                         proc.AddVarcharPara("@Branch", 10, Convert.ToString(apply.branch));
                         proc.AddVarcharPara("@EntityCode", 300, apply.EntityCode);
@@ -486,10 +491,20 @@ namespace ServiceManagement.ServiceManagement.Transaction
 
                         proc.AddPara("@sendSMS", apply.sendSMS);
                         //  proc.AddVarcharPara("@is_success", 500, "", QueryParameterDirection.Output);
+                        // Rev Sanchita
+                        proc.AddPara("@SchemeId", apply.CmbScheme.Split('~')[0].ToString());
+                        proc.AddVarcharPara("@ReturnValue", 500, "", QueryParameterDirection.Output);
+                        // End of Rev Sanchita
+
                         dtview = proc.GetTable();
                         // output = Convert.ToString(proc.GetParaValue("@is_success"));
                         //if (NoOfRowEffected > 0)
                         //{
+
+                        // Rev Sanchita
+                        output = Convert.ToString(proc.GetParaValue("@ReturnValue"));
+                        // End of Rev Sanchita
+
                         if (dtview != null && dtview.Rows.Count > 0)
                         {
                             output = "true~" + dtview.Rows[0]["DocumentID"].ToString() + "~" + DocumentNo + "~" + apply.Action;
@@ -724,6 +739,7 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         int UCCLen = uccCode.Length;
                         int decimalPartLen = 0;
                         string uccCodeSubstring = "";
+
                         if (scheme_type == 2)
                         {
                             decimalPartLen = UCCLen - (prefCompCode.Length + sufxCompCode.Length) - 8;
