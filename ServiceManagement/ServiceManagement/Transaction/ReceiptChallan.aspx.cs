@@ -1,4 +1,8 @@
-﻿using BusinessLogicLayer;
+﻿//========================================================== Revision History ============================================================================================
+// 1.0   Priti V2.0.45   04/10/2024        27732: Duplicate Document Number is getting created from Receipt Challan
+//========================================== End Revision History =======================================================================================================--%>
+
+using BusinessLogicLayer;
 using DataAccessLayer;
 using DevExpress.Web;
 using System;
@@ -419,12 +423,16 @@ namespace ServiceManagement.ServiceManagement.Transaction
             string strCompanyID = Convert.ToString(HttpContext.Current.Session["LastCompany"]);
             string FinYear = Convert.ToString(HttpContext.Current.Session["LastFinYear"]);
             string output = string.Empty;
+            //Rev 1.0
+            string ReturnValue = string.Empty;
+            Int32 ReturnID = 0;
             string DocumentNo = "";
             string strPurchaseNumber = Convert.ToString(apply.DocumentNumber);
+            //Rev 1.0 End
             if (apply.Action != "edit")
             {
                 string schmID = apply.CmbScheme.Split('~')[0].ToString();
-                // Rev Sanchita
+                //Rev 1.0 
                 //string docNo = checkNMakeJVCode(strPurchaseNumber, Convert.ToInt32(schmID));
 
                 //if (docNo.Split('~')[0].ToString() == "ok")
@@ -435,7 +443,9 @@ namespace ServiceManagement.ServiceManagement.Transaction
                 //{
                 //    return "";
                 //}
-                // End of Rev Sanchita
+                //Rev 1.0 End
+
+
             }
             else
             {
@@ -470,10 +480,10 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         ProcedureExecute proc = new ProcedureExecute("PRC_SRVReceiptChallanInsertUpdate");
                         proc.AddVarcharPara("@EntryType", 25, Convert.ToString(apply.EntryType));
                         proc.AddVarcharPara("@NumberingScheme", 100, Convert.ToString(apply.CmbScheme));
-                        // Rev Sanchita
+                        //Rev 1.0 
                         //proc.AddVarcharPara("@DocumentNumber", 500, Convert.ToString(DocumentNo));
                         proc.AddVarcharPara("@DocumentNumber", 500, strPurchaseNumber);
-                        // End of Rev Sanchita
+                        //Rev 1.0 End
                         proc.AddVarcharPara("@DocumentDate", 10, Convert.ToString(apply.date));
                         proc.AddVarcharPara("@Branch", 10, Convert.ToString(apply.branch));
                         proc.AddVarcharPara("@EntityCode", 300, apply.EntityCode);
@@ -491,24 +501,36 @@ namespace ServiceManagement.ServiceManagement.Transaction
 
                         proc.AddPara("@sendSMS", apply.sendSMS);
                         //  proc.AddVarcharPara("@is_success", 500, "", QueryParameterDirection.Output);
-                        // Rev Sanchita
-                        proc.AddPara("@SchemeId", apply.CmbScheme.Split('~')[0].ToString());
+                        //Rev 1.0 
+                        if (apply.Action != "edit")
+                        {
+                            proc.AddPara("@SchemeId", apply.CmbScheme.Split('~')[0].ToString());
+                        }
+                       
                         proc.AddVarcharPara("@ReturnValue", 500, "", QueryParameterDirection.Output);
-                        // End of Rev Sanchita
+                        proc.AddBigIntegerPara("@ReturnID", 0,QueryParameterDirection.Output);
+                        //Rev 1.0 End
 
                         dtview = proc.GetTable();
                         // output = Convert.ToString(proc.GetParaValue("@is_success"));
                         //if (NoOfRowEffected > 0)
                         //{
 
-                        // Rev Sanchita
-                        output = Convert.ToString(proc.GetParaValue("@ReturnValue"));
-                        // End of Rev Sanchita
+                        //Rev 1.0 
+                        ReturnValue = Convert.ToString(proc.GetParaValue("@ReturnValue"));
+                        ReturnID = Convert.ToInt32(proc.GetParaValue("@ReturnID"));
 
-                        if (dtview != null && dtview.Rows.Count > 0)
-                        {
-                            output = "true~" + dtview.Rows[0]["DocumentID"].ToString() + "~" + DocumentNo + "~" + apply.Action;
-                        }
+
+                        //if (dtview != null && dtview.Rows.Count > 0)
+                        //{
+                        //    output = "true~" + dtview.Rows[0]["DocumentID"].ToString() + "~" + ReturnValue + "~" + apply.Action;
+                        //}
+
+                        output = "true~" + ReturnID.ToString() + "~" + ReturnValue + "~" + apply.Action;
+
+                        //Rev 1.0 End
+
+
 
                         //}
                     }
