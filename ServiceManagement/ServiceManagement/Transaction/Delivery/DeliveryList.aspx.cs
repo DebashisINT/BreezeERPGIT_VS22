@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿/***********************************************************************************************************************************
+ * Rev 1.0      Sanchita    16/10/2024      0027747: Need to Implement existing SMS sending to Normal link instead of Bitly for GTPL
+ * *********************************************************************************************************************************/
+using BusinessLogicLayer;
 using BusinessLogicLayer.ServiceManagement;
 using DataAccessLayer;
 using DevExpress.Web;
@@ -641,16 +644,25 @@ namespace ServiceManagement.ServiceManagement.Transaction.Delivery
                     string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
                     //string baseUrl = "https://3.7.30.86:85";
                     //string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?id=" + Convert.ToString(ReceiptChallanID) + "&UniqueKey=" + Convert.ToString(DataBase);
-                    string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "&FINYEAR=" + @FINYEAR + "&RCID=" + Convert.ToString(ReceiptChallanID) +"&ISCREATEORPREVIEW=P" + "&DataBase=" + Convert.ToString(DataBase);
+                    // Rev 1.0
+                    //string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "&FINYEAR=" + @FINYEAR + "&RCID=" + Convert.ToString(ReceiptChallanID) +"&ISCREATEORPREVIEW=P" + "&DataBase=" + Convert.ToString(DataBase);
 
-                    //string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
-                    string tinyURL = ShortURL(LongURL);
+                    ////string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+                    //string tinyURL = ShortURL(LongURL);
+
+                    string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "%26FINYEAR=" + @FINYEAR + "%26RCID=" + Convert.ToString(ReceiptChallanID) + "%26ISCREATEORPREVIEW=P" + "%26DataBase=" + Convert.ToString(DataBase);
+
+                    // End of Rev 1.0
+
                     //End of Mantis Issue 24713
                     int user_id = Convert.ToInt32(HttpContext.Current.Session["userid"]);
                     ProcedureExecute proc = new ProcedureExecute("PRC_DeliveryDetails");
                     proc.AddVarcharPara("@ACTION", 500, "UpdateConfirmDelivery");
                     proc.AddPara("@ReceiptChallan_ID", Convert.ToString(ReceiptChallanID));
-                    proc.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                    // Rev 1.0
+                    //proc.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                    proc.AddPara("@longURL", Convert.ToString(LongURL));
+                    // End of Rev 1.0
                     NoOfRowEffected = proc.RunActionQuery();
                     
                     if (NoOfRowEffected > 0)
