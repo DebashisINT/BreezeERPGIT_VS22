@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿/***********************************************************************************************************************************
+ * Rev 1.0      Sanchita    16/10/2024      0027747: Need to Implement existing SMS sending to Normal link instead of Bitly for GTPL
+ * *********************************************************************************************************************************/
+using BusinessLogicLayer;
 using DataAccessLayer;
 using System;
 using System.Collections.Generic;
@@ -397,13 +400,23 @@ namespace ServiceManagement.STBManagement.STBSchemeRequisition
                                 string DataBase = con.Database;
 
                                 string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
-                                string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "&AU=" + Convert.ToString(apply.ApprovalEmployee)
-                                                    + "&UniqueKey=" + Convert.ToString(DataBase);
-                                string tinyURL = ShortURL(LongURL);
+                                // Rev 1.0
+                                //string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "&AU=" + Convert.ToString(apply.ApprovalEmployee)
+                                //                    + "&UniqueKey=" + Convert.ToString(DataBase);
+
+                                //string tinyURL = ShortURL(LongURL);
+
+                                string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "%26AU=" + Convert.ToString(apply.ApprovalEmployee)
+                                                    + "%26UniqueKey=" + Convert.ToString(DataBase);
+
+                                // End of Rev 1.0
 
                                 ProcedureExecute proc1 = new ProcedureExecute("PRC_STBRequisitionInsertUpdate");
                                 proc1.AddPara("@Action", Convert.ToString("ApprovalSendSMS"));
-                                proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                                // Rev 1.0
+                                //proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                                proc1.AddPara("@longURL", Convert.ToString(LongURL));
+                                // End of Rev 1.0
                                 proc1.AddPara("@DocumentNumber", Convert.ToString(dtview.Rows[0]["DocumentNo"].ToString()));
                                 proc1.AddPara("@ApprovalEmployee", apply.ApprovalEmployee);
                                 dtview = proc1.GetTable();

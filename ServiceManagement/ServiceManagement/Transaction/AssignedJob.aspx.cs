@@ -1,4 +1,7 @@
-﻿using BusinessLogicLayer;
+﻿/***********************************************************************************************************************************
+ * Rev 1.0      Sanchita    16/10/2024      0027747: Need to Implement existing SMS sending to Normal link instead of Bitly for GTPL
+ * *********************************************************************************************************************************/
+using BusinessLogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -667,16 +670,24 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         //rev Pratik
                         //string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
                         //                    + "&UniqueKey=" + Convert.ToString(DataBase);
-                        string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
-                                            + "&UniqueKey=" + Convert.ToString(DataBase) + "&user_id=" + Convert.ToString(user_id);
-                        //End of rev Pratik
+                        //// Rev 1.0
+                        //string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
+                        //                    + "&UniqueKey=" + Convert.ToString(DataBase) + "&user_id=" + Convert.ToString(user_id);
+                        ////End of rev Pratik
 
-                        //string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
-                        string tinyURL = ShortURL(LongURL);
+                        ////string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+                        //string tinyURL = ShortURL(LongURL);
+
+                        string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "%26AU=" + Convert.ToString(Technician_ID)
+                                            + "%26UniqueKey=" + Convert.ToString(DataBase) + "%26user_id=" + Convert.ToString(user_id);
+                        // End of Rev 1.0
 
                         ProcedureExecute proc1 = new ProcedureExecute("PRC_AssignJobDetails");
                         proc1.AddPara("@Action", Convert.ToString("ApprovalSendSMS"));
-                        proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                        // Rev 1.0
+                        //proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
+                        proc1.AddPara("@longURL", Convert.ToString(LongURL));
+                        // End of Rev 1.0
                         //Mantis Issue 24897
                         //proc1.AddPara("@DocumentNumber", Convert.ToString(ReceiptChallan_ID));
                         proc1.AddPara("@ReceiptChallan_ID", Convert.ToString(ReceiptChallan_ID));
