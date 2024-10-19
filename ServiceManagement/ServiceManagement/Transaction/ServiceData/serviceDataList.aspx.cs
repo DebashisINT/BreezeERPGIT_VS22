@@ -657,15 +657,13 @@ namespace ServiceManagement.ServiceManagement.Transaction.ServiceData
 
                 string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
                 //string baseUrl = "https://3.7.30.86:85";
-                // Rev 1.0
-                //string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + ReceiptChallan_ID + "&AU=" + Convert.ToString(0)
-                //                    + "&UniqueKey=" + Convert.ToString(DataBase);
+                
+                string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + ReceiptChallan_ID + "&AU=" + Convert.ToString(0)
+                                    + "&UniqueKey=" + Convert.ToString(DataBase);
 
                 ////string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+                // Rev 1.0
                 //string tinyURL = ShortURL(LongURL);
-
-                string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + ReceiptChallan_ID + "%26AU=" + Convert.ToString(0)
-                                    + "%26UniqueKey=" + Convert.ToString(DataBase);
                 // End of Rev 1.0
 
                 ProcedureExecute proc1 = new ProcedureExecute("PRC_AssignJobDetails");
@@ -673,6 +671,8 @@ namespace ServiceManagement.ServiceManagement.Transaction.ServiceData
                 // Rev 1.0
                 //proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
                 proc1.AddPara("@longURL", Convert.ToString(LongURL));
+                proc1.AddPara("@baseUrl", Convert.ToString(baseUrl));
+                proc1.AddPara("@DataBase", Convert.ToString(DataBase));
                 // End of Rev 1.0
                 proc1.AddPara("@ReceiptChallan_ID", Convert.ToString(ReceiptChallan_ID));
                 proc1.AddPara("@TECHNICIAN_ID", Convert.ToString(0));
