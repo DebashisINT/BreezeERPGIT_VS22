@@ -11,7 +11,7 @@ namespace ServiceManagement.Controllers
 {
     public class DecryptShortURLController : Controller
     {
-        public ActionResult Index(int id)
+        public ActionResult Index(string id)
         {
             string LongURL = "";
             string ky = "GTPL";

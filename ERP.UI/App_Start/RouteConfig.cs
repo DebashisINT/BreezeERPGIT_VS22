@@ -13,6 +13,14 @@ namespace ERP
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Rev Sanchita
+            routes.MapRoute(
+                name: "CustomRoute",
+                url: "DecryptShortURL/{id}",
+                defaults: new { controller = "DecryptShortURL", action = "Index", id = UrlParameter.Optional }
+            );
+            // End of Rev Sanchita
+
             routes.MapRoute(
              name: "Default1",
              url: "{controller}/{action}/{Company_Code}",
