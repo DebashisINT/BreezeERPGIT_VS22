@@ -141,5 +141,3 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\System.Web.WebPages.Deploy
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\System.Web.WebPages.Razor.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\obj\Debug\ServiceManagement.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\obj\Debug\ServiceM.33B559E0.Up2Date
-D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\Microsoft.Owin.Security.dll
-D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\Microsoft.Owin.Security.Cookies.dll

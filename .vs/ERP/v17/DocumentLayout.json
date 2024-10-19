@@ -3,92 +3,48 @@
   "WorkspaceRootPath": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\receiptchallan.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\receiptchallan.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\app_start\\routeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|d:\\git\\github\\breezeerpgit_vs22\\servicemanagement\\servicemanagement\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|d:\\git\\github\\breezeerpgit_vs22\\servicemanagement\\controllers\\decryptshorturlcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\controllers\\decryptshorturlcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\receiptchallan.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\receiptchallan.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|d:\\git\\github\\breezeerpgit_vs22\\erp.ui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|solutionrelative:erp.ui\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\js\\receiptchallan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\js\\receiptchallan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\erp.ui\\oms\\management\\activities\\branchtransferin.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|solutionrelative:erp.ui\\oms\\management\\activities\\branchtransferin.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\erp.ui\\oms\\management\\activities\\branchrequisitionreturn.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|solutionrelative:erp.ui\\oms\\management\\activities\\branchrequisitionreturn.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\erp.ui\\oms\\management\\activities\\invoicedeliverychallan.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2B7ADE9-0B60-49C9-AC01-8D3B3A2641D8}|ERP.UI\\ERP.csproj|solutionrelative:erp.ui\\oms\\management\\activities\\invoicedeliverychallan.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\servicedata\\servicedataentry.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\servicedata\\servicedataentry.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\stbschemerequisition\\stbschemerequisition.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\stbschemerequisition\\stbschemerequisition.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\stbschemereceived\\stbschemereceivedadd.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\stbschemereceived\\stbschemereceivedadd.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\requisition\\stbrequisitionadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\requisition\\stbrequisitionadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\moneyreceipt\\index.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\moneyreceipt\\index.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\moneyreceipt\\index.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\moneyreceipt\\index.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\stb\\stbadd.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\stb\\stbadd.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\servicedata\\servicedatalist.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\servicedata\\servicedatalist.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\js\\stbreceiving.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\js\\stbreceiving.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\servicedata\\technicianassign.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\servicedata\\technicianassign.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\stb\\stbadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\stb\\stbadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\servicedata\\technicianassign.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\servicedata\\technicianassign.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\search\\searchqueries.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\search\\searchqueries.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\js\\search.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\js\\search.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{E0403CE7-71F7-4D02-85D1-1EE7125C1E75}|DataAccessLayer\\DataAccessLayer.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\dataaccesslayer\\procedureexecute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0403CE7-71F7-4D02-85D1-1EE7125C1E75}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\procedureexecute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\delivery\\deliveryservicedetails.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\delivery\\deliveryservicedetails.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\stbschemerequisition\\stbschemerequisition.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\stbschemerequisition\\stbschemerequisition.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\stbmanagement\\requisition\\stbrequisitionadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\stbmanagement\\requisition\\stbrequisitionadd.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\delivery\\deliverylist.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\delivery\\deliverylist.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\servicemanagement\\transaction\\assignedjob.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -102,11 +58,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Login.aspx",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Login.aspx",
               "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Login.aspx",
@@ -114,276 +70,143 @@
               "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Login.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-30T11:24:41.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-18T14:15:45.683Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Web.config",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\Web.config",
-              "RelativeDocumentMoniker": "ERP.UI\\Web.config",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\Web.config",
-              "RelativeToolTip": "ERP.UI\\Web.config",
-              "ViewState": "AQIAAIUBAAAAAAAAAAAIwIYBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-09-30T11:13:11.283Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Web.config",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Web.config",
-              "RelativeDocumentMoniker": "ServiceManagement\\Web.config",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Web.config",
-              "RelativeToolTip": "ServiceManagement\\Web.config",
-              "ViewState": "AQIAAKoAAAAAAAAAAAAAwL8AAAB5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-09-30T11:10:02.326Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BranchTransferIn.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\BranchTransferIn.aspx.cs",
-              "RelativeDocumentMoniker": "ERP.UI\\OMS\\Management\\Activities\\BranchTransferIn.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\BranchTransferIn.aspx.cs",
-              "RelativeToolTip": "ERP.UI\\OMS\\Management\\Activities\\BranchTransferIn.aspx.cs",
-              "ViewState": "AQIAAMgHAAAAAAAAAAAswNYHAAA2AAAA",
+              "DocumentIndex": 0,
+              "Title": "RouteConfig.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\App_Start\\RouteConfig.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\App_Start\\RouteConfig.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\App_Start\\RouteConfig.cs",
+              "RelativeToolTip": "ServiceManagement\\App_Start\\RouteConfig.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAABAAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:40:53.944Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BranchRequisitionReturn.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\BranchRequisitionReturn.aspx.cs",
-              "RelativeDocumentMoniker": "ERP.UI\\OMS\\Management\\Activities\\BranchRequisitionReturn.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\BranchRequisitionReturn.aspx.cs",
-              "RelativeToolTip": "ERP.UI\\OMS\\Management\\Activities\\BranchRequisitionReturn.aspx.cs",
-              "ViewState": "AQIAAOECAAAAAAAAAAAWwPQCAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:40:27.571Z"
+              "WhenOpened": "2024-10-19T12:18:58.515Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "InvoiceDeliveryChallan.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\InvoiceDeliveryChallan.aspx.cs",
-              "RelativeDocumentMoniker": "ERP.UI\\OMS\\Management\\Activities\\InvoiceDeliveryChallan.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ERP.UI\\OMS\\Management\\Activities\\InvoiceDeliveryChallan.aspx.cs",
-              "RelativeToolTip": "ERP.UI\\OMS\\Management\\Activities\\InvoiceDeliveryChallan.aspx.cs",
-              "ViewState": "AQIAAJ8OAAAAAAAAAAAmwKwOAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:39:19.834Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
               "Title": "STBSchemeRequisition.aspx.cs",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\STBSchemeRequisition\\STBSchemeRequisition.aspx.cs",
               "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\STBSchemeRequisition\\STBSchemeRequisition.aspx.cs",
               "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\STBSchemeRequisition\\STBSchemeRequisition.aspx.cs",
               "RelativeToolTip": "ServiceManagement\\STBManagement\\STBSchemeRequisition\\STBSchemeRequisition.aspx.cs",
-              "ViewState": "AQIAAIEBAAAAAAAAAAAWwJwBAAAYAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAmwCsAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:07:34.718Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ReceiptChallan.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx.cs",
-              "ViewState": "AQIAAPkCAAAAAAAAAAAQwA8DAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:15:13.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T11:02:01.903Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ReceiptChallan.aspx",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ReceiptChallan.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-30T08:51:18.493Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ReceiptChallan.js",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "ViewState": "AQIAABYCAAAAAAAAAAAAACICAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-09-30T08:13:55.227Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "STBSchemeReceivedAdd.aspx",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\STBSchemeReceived\\STBSchemeReceivedAdd.aspx",
-              "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\STBSchemeReceived\\STBSchemeReceivedAdd.aspx",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\STBSchemeReceived\\STBSchemeReceivedAdd.aspx",
-              "RelativeToolTip": "ServiceManagement\\STBManagement\\STBSchemeReceived\\STBSchemeReceivedAdd.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-30T09:07:21Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "STBRequisitionAdd.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
-              "ViewState": "AQIAABQCAAAAAAAAAAAcwDcCAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:05:22.297Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "index.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx.cs",
-              "ViewState": "AQIAANAAAAAAAAAAAAAMwOsAAABjAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:04:57.685Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "serviceDataEntry.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataEntry.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataEntry.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataEntry.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataEntry.aspx.cs",
-              "ViewState": "AQIAAHkBAAAAAAAAAAAAAIEBAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:59:16.545Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "index.aspx",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx",
-              "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx",
-              "RelativeToolTip": "ServiceManagement\\STBManagement\\MoneyReceipt\\index.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-30T09:04:48.917Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "stbAdd.aspx",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-30T09:04:35.174Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
               "Title": "serviceDataList.aspx.cs",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataList.aspx.cs",
               "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataList.aspx.cs",
               "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataList.aspx.cs",
               "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\serviceDataList.aspx.cs",
-              "ViewState": "AQIAADwCAAAAAAAAAAAMwHwCAAANAAAA",
+              "ViewState": "AQIAAIMCAAAAAAAAAAAAAIYCAABFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T09:02:28.829Z"
+              "WhenOpened": "2024-10-16T11:01:55.729Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "stbAdd.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\STB\\stbAdd.aspx.cs",
-              "ViewState": "AQIAAJEBAAAAAAAAAAAiwLUBAAAAAAAA",
+              "DocumentIndex": 9,
+              "Title": "STBRequisitionAdd.aspx.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
+              "RelativeToolTip": "ServiceManagement\\STBManagement\\Requisition\\STBRequisitionAdd.aspx.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:47:24.323Z"
+              "WhenOpened": "2024-10-16T11:01:57.161Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "STBReceiving.js",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\STBReceiving.js",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\STBReceiving.js",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\STBReceiving.js",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\STBReceiving.js",
-              "ViewState": "AQIAAKgBAAAAAAAAAAAcwMsBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-09-30T08:46:57.277Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "searchqueries.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\search\\searchqueries.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\search\\searchqueries.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\search\\searchqueries.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\search\\searchqueries.aspx.cs",
-              "ViewState": "AQIAAP0CAAAAAAAAAAAswBkDAABYAAAA",
+              "DocumentIndex": 4,
+              "Title": "TechnicianAssign.aspx.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx.cs",
+              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx.cs",
+              "ViewState": "AQIAAGEAAAAAAAAAAAAAAGEAAABLAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:19:48.95Z"
+              "WhenOpened": "2024-10-18T08:57:05.906Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "search.js",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\search.js",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\search.js",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\search.js",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\search.js",
-              "ViewState": "AQIAAEYCAAAAAAAAAAAWwFkCAAA4AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-09-30T08:19:21.211Z"
+              "DocumentIndex": 5,
+              "Title": "TechnicianAssign.aspx",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx",
+              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx",
+              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\ServiceData\\TechnicianAssign.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-10-18T10:08:59.847Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "DeliveryServiceDetails.aspx.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryServiceDetails.aspx.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryServiceDetails.aspx.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryServiceDetails.aspx.cs",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryServiceDetails.aspx.cs",
-              "ViewState": "AQIAAEYAAAAAAAAAAAAMwGIAAAAjAAAA",
+              "DocumentIndex": 1,
+              "Title": "DecryptShortURLController.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\DecryptShortURLController.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\Controllers\\DecryptShortURLController.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\DecryptShortURLController.cs",
+              "RelativeToolTip": "ServiceManagement\\Controllers\\DecryptShortURLController.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAUwCgAAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:11:52.123Z"
+              "WhenOpened": "2024-10-18T08:29:19.293Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 7,
+              "Title": "ProcedureExecute.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\DataAccessLayer\\ProcedureExecute.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\ProcedureExecute.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\DataAccessLayer\\ProcedureExecute.cs",
+              "RelativeToolTip": "DataAccessLayer\\ProcedureExecute.cs",
+              "ViewState": "AQIAALYAAAAAAAAAAAAqwDoDAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-17T11:01:43.751Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "ServiceManagement\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T08:29:03.16Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DeliveryList.aspx.cs",
+              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryList.aspx.cs",
+              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryList.aspx.cs",
+              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryList.aspx.cs",
+              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\Delivery\\DeliveryList.aspx.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAACFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T11:01:45.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "AssignedJob.aspx.cs",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\AssignedJob.aspx.cs",
               "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\AssignedJob.aspx.cs",
               "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\AssignedJob.aspx.cs",
               "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\AssignedJob.aspx.cs",
-              "ViewState": "AQIAAJICAAAAAAAAAAAWwKQCAABbAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAACFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-30T08:02:05.102Z"
+              "WhenOpened": "2024-10-16T11:01:43.13Z",
+              "EditorCaption": ""
             }
           ]
         }
