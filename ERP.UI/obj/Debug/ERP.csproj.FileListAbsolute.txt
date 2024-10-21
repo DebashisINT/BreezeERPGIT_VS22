@@ -611,11 +611,6 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EntityLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\UtilityLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\BusinessLogicLayer.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\DataAccessLayer.pdb
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\DocumentFormat.OpenXml.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\Microsoft.Web.Infrastructure.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE.xml
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\EnvDTE80.xml
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.AssemblyReference.cache
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.OMS.Reports.XtraReports.CustomerCRDRNoteXtraReport.resources
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.OMS.Reports.XtraReports.CustomerReceiptPaymentXtraReport.resources
@@ -652,7 +647,6 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.OMS.Reports.XtraReports.Ven
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.GenerateResource.cache
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.dll.licenses
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CoreCompileInputs.cache
-D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CopyComplete
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.pdb
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\bin\ERP.dll.config
@@ -714,3 +708,5 @@ C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.CopyComplete
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.dll
 C:\Projects\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.pdb
 E:\GIT22\BreezeERPGIT_VS22\ERP.UI\bin\System.Web.Http.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\bin\stdole.dll
+D:\GIT\GitHub\BreezeERPGIT_VS22\ERP.UI\obj\Debug\ERP.csproj.Up2Date

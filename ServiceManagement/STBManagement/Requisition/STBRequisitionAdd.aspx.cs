@@ -527,13 +527,12 @@ namespace ServiceManagement.STBManagement.Requisition
                                 string DataBase = con.Database;
 
                                 string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
-                                // Rev 1.0
-                                //string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "&AU=" + Convert.ToString(apply.ApprovalEmployee)
-                                //                    + "&UniqueKey=" + Convert.ToString(DataBase);
-                                //string tinyURL = ShortURL(LongURL);
 
-                                string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "%26AU=" + Convert.ToString(apply.ApprovalEmployee)
-                                                    + "%26UniqueKey=" + Convert.ToString(DataBase);
+                                string LongURL = baseUrl + "/STBManagement/reqApprovalM/reqApproval.aspx?id=" + dtview.Rows[0]["DocumentID"].ToString() + "&AU=" + Convert.ToString(apply.ApprovalEmployee)
+                                                    + "&UniqueKey=" + Convert.ToString(DataBase);
+
+                                // Rev 1.0
+                                //string tinyURL = ShortURL(LongURL);
                                 // End of Rev 1.0
 
                                 ProcedureExecute proc1 = new ProcedureExecute("PRC_STBRequisitionInsertUpdate");
@@ -541,6 +540,8 @@ namespace ServiceManagement.STBManagement.Requisition
                                 // Rev 1.0
                                 //proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
                                 proc1.AddPara("@longURL", Convert.ToString(LongURL));
+                                proc1.AddPara("@baseUrl", Convert.ToString(baseUrl));
+                                proc1.AddPara("@DataBase", Convert.ToString(DataBase));
                                 // End of Rev 1.0
                                 proc1.AddPara("@DocumentNumber", Convert.ToString(dtview.Rows[0]["DocumentNo"].ToString()));
                                 proc1.AddPara("@ApprovalEmployee", apply.ApprovalEmployee);

@@ -9,7 +9,7 @@ using System.Configuration;
 
 namespace ServiceManagement.Controllers
 {
-    public class DecryptShortURLController : Controller
+    public class ShortController : Controller
     {
         public ActionResult Index(string id)
         {
