@@ -670,16 +670,15 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         //rev Pratik
                         //string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
                         //                    + "&UniqueKey=" + Convert.ToString(DataBase);
-                        //// Rev 1.0
-                        //string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
-                        //                    + "&UniqueKey=" + Convert.ToString(DataBase) + "&user_id=" + Convert.ToString(user_id);
-                        ////End of rev Pratik
+                        
+                        string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "&AU=" + Convert.ToString(Technician_ID)
+                                            + "&UniqueKey=" + Convert.ToString(DataBase) + "&user_id=" + Convert.ToString(user_id);
+                        //End of rev Pratik
 
-                        ////string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+                        //string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+
+                        // Rev 1.0
                         //string tinyURL = ShortURL(LongURL);
-
-                        string LongURL = baseUrl + "/ServiceManagement/Transaction/serviceData/TechnicianAssign.aspx?id=" + dt.Rows[0]["ID"].ToString() + "%26AU=" + Convert.ToString(Technician_ID)
-                                            + "%26UniqueKey=" + Convert.ToString(DataBase) + "%26user_id=" + Convert.ToString(user_id);
                         // End of Rev 1.0
 
                         ProcedureExecute proc1 = new ProcedureExecute("PRC_AssignJobDetails");
@@ -687,6 +686,8 @@ namespace ServiceManagement.ServiceManagement.Transaction
                         // Rev 1.0
                         //proc1.AddPara("@tinyURL", Convert.ToString(tinyURL));
                         proc1.AddPara("@longURL", Convert.ToString(LongURL));
+                        proc1.AddPara("@baseUrl", Convert.ToString(baseUrl));
+                        proc1.AddPara("@DataBase", Convert.ToString(DataBase));
                         // End of Rev 1.0
                         //Mantis Issue 24897
                         //proc1.AddPara("@DocumentNumber", Convert.ToString(ReceiptChallan_ID));

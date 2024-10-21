@@ -16,8 +16,8 @@ namespace ERP
             // Rev Sanchita
             routes.MapRoute(
                 name: "CustomRoute",
-                url: "DecryptShortURL/{id}",
-                defaults: new { controller = "DecryptShortURL", action = "Index", id = UrlParameter.Optional }
+                url: "Short/{id}",
+                defaults: new { controller = "Short", action = "Index", id = UrlParameter.Optional }
             );
             // End of Rev Sanchita
 

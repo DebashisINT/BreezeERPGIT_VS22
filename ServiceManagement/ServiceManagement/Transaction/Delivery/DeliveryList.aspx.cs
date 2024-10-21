@@ -644,14 +644,13 @@ namespace ServiceManagement.ServiceManagement.Transaction.Delivery
                     string baseUrl = System.Configuration.ConfigurationSettings.AppSettings["baseUrl"];
                     //string baseUrl = "https://3.7.30.86:85";
                     //string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?id=" + Convert.ToString(ReceiptChallanID) + "&UniqueKey=" + Convert.ToString(DataBase);
+                    
+                    string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "&FINYEAR=" + @FINYEAR + "&RCID=" + Convert.ToString(ReceiptChallanID) + "&ISCREATEORPREVIEW=P" + "&DataBase=" + Convert.ToString(DataBase);
+
+                    //string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
+
                     // Rev 1.0
-                    //string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "&FINYEAR=" + @FINYEAR + "&RCID=" + Convert.ToString(ReceiptChallanID) +"&ISCREATEORPREVIEW=P" + "&DataBase=" + Convert.ToString(DataBase);
-
-                    ////string LongURL = "https://stackoverflow.com/questions/366115/using-tinyurl-com-in-a-net-application-possible";
                     //string tinyURL = ShortURL(LongURL);
-
-                    string LongURL = baseUrl + "/ServiceManagement/Transaction/Delivery/DeliveryServiceDetails.aspx?COMPANYID=" + @COMPANYID + "%26FINYEAR=" + @FINYEAR + "%26RCID=" + Convert.ToString(ReceiptChallanID) + "%26ISCREATEORPREVIEW=P" + "%26DataBase=" + Convert.ToString(DataBase);
-
                     // End of Rev 1.0
 
                     //End of Mantis Issue 24713
@@ -662,6 +661,8 @@ namespace ServiceManagement.ServiceManagement.Transaction.Delivery
                     // Rev 1.0
                     //proc.AddPara("@tinyURL", Convert.ToString(tinyURL));
                     proc.AddPara("@longURL", Convert.ToString(LongURL));
+                    proc.AddPara("@baseUrl", Convert.ToString(baseUrl));
+                    proc.AddPara("@DataBase", Convert.ToString(DataBase));
                     // End of Rev 1.0
                     NoOfRowEffected = proc.RunActionQuery();
                     
