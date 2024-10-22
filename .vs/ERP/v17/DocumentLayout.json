@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|d:\\git\\github\\breezeerpgit_vs22\\servicemanagement\\controllers\\srvfileuploaddeliverycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\controllers\\srvfileuploaddeliverycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|d:\\git\\github\\breezeerpgit_vs22\\servicemanagement\\servicemanagement\\transaction\\js\\receiptchallan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\servicemanagement\\transaction\\js\\receiptchallan.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\servicemanagement\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{17049A6D-C90D-430D-8C25-186E7840816B}|ServiceManagement\\ServiceManagement.csproj|solutionrelative:servicemanagement\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -31,32 +23,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ReceiptChallan.js",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "RelativeDocumentMoniker": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "RelativeToolTip": "ServiceManagement\\ServiceManagement\\Transaction\\JS\\ReceiptChallan.js",
-              "ViewState": "AQIAAMoCAAAAAAAAAAAAAN8CAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-10-22T11:33:37.055Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SRVFileuploadDeliveryController.cs",
-              "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\SRVFileuploadDeliveryController.cs",
-              "RelativeDocumentMoniker": "ServiceManagement\\Controllers\\SRVFileuploadDeliveryController.cs",
-              "ToolTip": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Controllers\\SRVFileuploadDeliveryController.cs",
-              "RelativeToolTip": "ServiceManagement\\Controllers\\SRVFileuploadDeliveryController.cs",
-              "ViewState": "AQIAAPwAAAAAAAAAAAAcwA0BAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-22T11:03:02.532Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "web.config",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Views\\web.config",
               "RelativeDocumentMoniker": "ServiceManagement\\Views\\web.config",
@@ -68,7 +34,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\GIT\\GitHub\\BreezeERPGIT_VS22\\ServiceManagement\\Web.config",
               "RelativeDocumentMoniker": "ServiceManagement\\Web.config",
