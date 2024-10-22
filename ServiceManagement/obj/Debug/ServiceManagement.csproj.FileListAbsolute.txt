@@ -120,7 +120,6 @@ D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\ServiceManagement.pdb
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\BusinessLogicLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\DataAccessLayer.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\EntityLayer.dll
-D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\Newtonsoft.Json.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\System.Net.Http.Formatting.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\System.Web.Optimization.dll
 D:\GIT\GitHub\BreezeERPGIT_VS22\ServiceManagement\bin\UtilityLayer.dll
